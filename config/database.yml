@@ -26,5 +26,5 @@ production:
   <<: *default
   database: pre_pwpr_db
   username: adm1n_pwpr
-  password: MyS3cur3Password
+  password: <%= ENV['PP_PWPR_DATABASE_PASSWORD'] %>
   host: pre-pwpr-db.cd8c5ykxx371.eu-west-1.rds.amazonaws.com

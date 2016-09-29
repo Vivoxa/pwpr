@@ -7,6 +7,13 @@ gem 'rails', '4.2.7'
 # gem 'sqlite3'
 gem 'pry'
 
+gem 'bootstrap', '~> 4.0.0.alpha4'
+gem 'sprockets-rails', :require => 'sprockets/railtie'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-tether', '>= 1.1.0'
+end
+
 gem 'mysql2', '~> 0.3.18'
 
 # Use SCSS for stylesheets

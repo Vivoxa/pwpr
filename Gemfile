@@ -5,10 +5,6 @@ gem 'rails', '4.2.7'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 
-group :development, :test do
-    gem 'rspec-rails', '~> 3.5'
-end
-
 gem 'bootstrap', '~> 4.0.0.alpha4'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
 

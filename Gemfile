@@ -5,8 +5,11 @@ gem 'rails', '4.2.7'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 
-group :development, :test do
-    gem 'rspec-rails', '~> 3.5'
+gem 'bootstrap', '~> 4.0.0.alpha4'
+gem 'sprockets-rails', :require => 'sprockets/railtie'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-tether', '>= 1.1.0'
 end
 
 gem 'mysql2', '~> 0.3.18'
@@ -57,4 +60,3 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-

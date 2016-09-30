@@ -1,3 +1,4 @@
+@import "bootstrap";
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -10,6 +11,18 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+
+body {
+  margin-top: 70px;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+}
+.btn-group, .btn-group-vertical {
+    margin-top: 5px;
+}
+
+.navbar-brand {
+	padding-right: 50px;
+}

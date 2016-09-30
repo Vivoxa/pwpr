@@ -14,6 +14,8 @@ default: &default
 development:
   <<: *default
   database: dev_pwpr_db
+  host: pppwpr_db_1
+  port: 3306
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

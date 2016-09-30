@@ -12,6 +12,8 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end
 
+gem 'devise'
+
 gem 'mysql2', '~> 0.3.18'
 
 group :development do

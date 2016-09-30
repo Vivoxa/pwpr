@@ -14,7 +14,7 @@ default: &default
 development:
   <<: *default
   database: dev_pwpr_db
-  host: pppwpr_db_1
+  host: <%= ENV['APP_HOST'] || 'localhost' %>
   port: 3306
 
 # Warning: The database defined as "test" will be erased and

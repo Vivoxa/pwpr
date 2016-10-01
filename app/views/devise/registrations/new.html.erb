@@ -1,0 +1,23 @@
+<% title "Sign up" %>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.email_field :email, placeholder: "Email", class: "devise-lgn", autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.password_field :password, placeholder: "Password", class: "devise-lgn", autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.password_field :password_confirmation, placeholder: "Confirm password", class: "devise-lgn", autocomplete: "off" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Sign up", class: ["btn", "btn-success", "devise-btn"] %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>

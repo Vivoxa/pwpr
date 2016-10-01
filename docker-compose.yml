@@ -6,6 +6,7 @@ services:
     stdin_open: true
     environment:
       - APP_HOST=pppwpr_db_1
+      - DOCKER_IP=192.168.99.100
     volumes:
       - .:/pp_pwpr
     ports:

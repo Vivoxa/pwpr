@@ -26,6 +26,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
+  gem "letter_opener"
 
   # Ruby style code analysis tool
   gem 'rubocop'

@@ -2,10 +2,11 @@ version: '2'
 services:
   app:
     build: .
-    command: bash -c "bundle && RAILS_ENV=preprod bundle exec rake assets:precompile && RAILS_ENV=preprod bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "bundle && RAILS_ENV=development bundle exec rails s -p 3000 -b '0.0.0.0'"
+    container_name: pwpr_app
     stdin_open: true
     environment:
-      - APP_HOST=pppwpr_db_1
+      - DOCKER_DB_HOST=pwpr_db_1
       - DOCKER_IP=192.168.99.100
       - PP_PWPR_DATABASE_PASSWORD=MyS3cur3Password
       - SECRET_KEY_BASE=0c64deb461266abb601d62b86780c92e8220f1e80fcaa2faa48a8005b7c4cf5dba4f921f5be0e288558a0c3f10ce23302bb54f593a19e7b6260cdd29ebb04760
@@ -17,6 +18,7 @@ services:
       - db
   db:
     image: library/mysql:5.6.22
+    container_name: pwpr_db_1
     ports:
       - "3306:3306"
     environment:

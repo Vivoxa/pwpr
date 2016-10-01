@@ -14,7 +14,7 @@ default: &default
 development:
   <<: *default
   database: dev_pwpr_db
-  host: pppwpr_db_1
+  host: <%= ENV['APP_HOST'] || 'localhost' %>
   port: 3306
 
 # Warning: The database defined as "test" will be erased and
@@ -24,9 +24,16 @@ test:
   <<: *default
   database: test_pwpr_db
 
-production:
+preprod:
   <<: *default
   database: pre_pwpr_db
   username: adm1n_pwpr
   password: <%= ENV['PP_PWPR_DATABASE_PASSWORD'] %>
   host: pre-pwpr-db.cd8c5ykxx371.eu-west-1.rds.amazonaws.com
+
+production:
+  <<: *default
+  database: prod_pwpr_db
+  username: adm1n_pwpr
+  password: <%= ENV['PROD_PWPR_DATABASE_PASSWORD'] %>
+  host:

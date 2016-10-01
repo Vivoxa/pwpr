@@ -12,6 +12,8 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end
 
+gem 'devise'
+
 gem 'mysql2', '~> 0.3.18'
 
 group :development do
@@ -20,6 +22,10 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+end
+
+group :preprod, :development do
+  gem "letter_opener"
 end
 
 group :development, :test do

@@ -5,9 +5,5 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   royce_roles %w[admin scheme_owner scheme_user_r scheme_user_rw scheme_user_rwe]
-  after_initialize :set_default_role, :if => :new_record?
 
-  def set_default_role
-    self.role ||= :user
-  end
 end

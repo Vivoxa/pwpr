@@ -13,6 +13,7 @@ source 'https://rails-assets.org' do
 end
 
 gem 'devise'
+gem 'royce'
 
 gem 'mysql2', '~> 0.3.18'
 

@@ -14,6 +14,9 @@ AllCops:
     - '**db/**/*'
     - 'bin/**'
 
+Documentation:
+  Enabled: false
+
 Metrics/ClassLength:
   Exclude:
     - '**/spec/**'

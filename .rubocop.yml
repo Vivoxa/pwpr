@@ -8,13 +8,11 @@ AllCops:
 AllCops:
   TargetRubyVersion: 2.3
   Exclude:
-    - '**/db/**'
-    - 'ui/**'
     - '**/*.rake'
-    - '**/*seeds.rb'
     - '**/Rakefile'
     - '**/Gemfile'
-    - script/**
+    - '**db/**/*'
+    - 'bin/**'
 
 Metrics/ClassLength:
   Exclude:

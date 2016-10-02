@@ -13,13 +13,13 @@
   <body>
     <div class="container-fluid">
       <header>
+       <%= render 'layouts/messages' %>
         <%= render 'layouts/navigation' %>
         <%= render 'layouts/auth_nav_links' %>
       </header>
     </div>
 
     <main role="main">
-       <%= render 'layouts/messages' %>
        <%= yield %>
     </main>
 

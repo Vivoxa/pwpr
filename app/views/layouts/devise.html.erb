@@ -8,8 +8,13 @@
   </head>
   <body>
     <div class="container-fluid">
+      <header>
+        <%= render 'layouts/auth_nav_links' %>
+      </header>
+
       <nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
         <a class="navbar-brand" href="#"><%= image_tag("leaf1.png", size: "28x28", :alt => "company logo") %></a>
+
         <ul class="nav navbar-nav">
           <li class="nav-item active">
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -19,7 +24,7 @@
               <%- if controller_name != 'sessions' %>
                 <%= link_to "Log in", new_session_path(resource_name), class: "btn btn-primary btn-sm" %>
               <% end -%>
-          </li>
+            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">About Us</a>
@@ -32,18 +37,19 @@
           </li>
         </ul>
       </nav>
-            </div>
+    </div>
 
-            <div class="col-md-3" style="min-height:500px" ></div>
-            <div class="col-md-6" style="min-height:500px" >
-              <h1 style="text-align:center"><%= content_for :title  %></h1>
-<div class="col-md-3" style="min-height:500px"></div>
-<div class="col-md-6"style="margin-top:40px">
-              <%= yield %>
-</div>
-<div class="col-md-3" style="min-height:500px"></div>
+    <div class="col-md-3" style="min-height:500px" ></div>
+    <div class="col-md-6" style="min-height:500px" >
+      <h1 style="text-align:center"><%= content_for :title  %></h1>
+      <div class="col-md-3" style="min-height:500px"></div>
+      <div class="col-md-6"style="margin-top:40px">
+        <%= render 'layouts/messages' %>
+        <%= yield %>
+      </div>
+      <div class="col-md-3" style="min-height:500px"></div>
+    </div>
 
-            </div>
-            <div class="col-md-3" style="min-height:500px" ></div>
+    <div class="col-md-3" style="min-height:500px" ></div>
   </body>
 </html>

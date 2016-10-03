@@ -1,21 +1,21 @@
 <% title "Sign in" %>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
+  <div class="field centre">
     <%= f.email_field :email, class: "devise-lgn", autofocus: true, placeholder: "Email" %>
   </div>
 
-  <div class="field">
+  <div class="field centre">
     <%= f.password_field :password, class: "devise-lgn", autocomplete: "off", placeholder: "Password" %>
   </div>
 
   <% if devise_mapping.rememberable? -%>
-    <div class="field">
+    <div class="field  centre">
       <%= f.check_box :remember_me %>
       <%= f.label :remember_me %>
     </div>
   <% end -%>
 
-  <div class="actions">
+  <div class="actions centre">
     <%= f.submit "Log in", class: ["btn", "btn-primary", "devise-btn"] %>
   </div>
 <% end %>

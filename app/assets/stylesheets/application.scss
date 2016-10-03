@@ -13,6 +13,8 @@
  *
  */
 
+@import "devise_overrides";
+
 body {
   margin-top: 70px;
 }
@@ -25,14 +27,4 @@ body {
 
 .navbar-brand {
 	padding-right: 50px;
-}
-.devise-btn {
-  margin-top: 2px;
-  margin-bottom: 2px;
-  width: 290px
-}
-.devise-lgn {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 290px
 }

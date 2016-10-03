@@ -3,7 +3,7 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
 
-  <div class="field">
+  <div class="field centre">
     <%= f.email_field :email, placeholder: "Email", class: "devise-lgn", autofocus: true %>
   </div>
 
@@ -11,21 +11,21 @@
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-  <div class="field">
+  <div class="field centre">
     <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
     <%= f.password_field :password, placeholder: "Password", class: "devise-lgn", autocomplete: "off" %>
   </div>
 
-  <div class="field">
+  <div class="field centre">
     <%= f.password_field :password_confirmation, placeholder: "Confirm password", class: "devise-lgn", autocomplete: "off" %>
   </div>
 
-  <div class="field">
+  <div class="field centre">
     <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
     <%= f.password_field :current_password, placeholder: "Current password", class: "devise-lgn", autocomplete: "off" %>
   </div>
 
-  <div class="actions">
+  <div class="actions centre">
     <%= f.submit "Update", class: ["btn", "btn-success", "devise-btn"] %>
   </div>
 <% end %>

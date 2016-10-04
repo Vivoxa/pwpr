@@ -1,2 +1,31 @@
+# frozen_string_literal: true
 class AdminController < ApplicationController
+  # before_action :authenticate_admin!
+  # before_action :admin_only
+
+  def index
+    # Show a categorized list of users based on type (scheme and member)
+  end
+
+  def show
+    # We need to figure a scope to search for users dynamically based on the category
+    # in order to be able to search for the one clicked on in the right table
+    # @user = User.find(params[:id])
+
+    # redirect_to :back, :alert => "Access denied." unless current_admin && @user == current_admin
+
+    # We also need to redirect to the clicked user show action on the relevant controller (scheme or member)
+  end
+
+  private
+
+  def admin_only
+    # redirect_to :back, alert: 'Access denied.' unless current_admin
+  end
+
+  def secure_params
+    # We need to pull the params for the correct "user"
+
+    # params.require(:user).permit(:role)
+  end
 end

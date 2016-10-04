@@ -15,7 +15,7 @@ class MemberController < ApplicationController
   def update
     # @member = Member.find(params[:id])
     # if @member.update_attributes(secure_params)
-      redirect_to member_path, :notice => "User updated."
+    redirect_to member_path, notice: 'User updated.'
     # else
     #   redirect_to member_path, :alert => "Unable to update user."
     # end
@@ -27,7 +27,7 @@ class MemberController < ApplicationController
     # redirect_to :back, :alert => "Action denied." and return unless current_member.admin? && @member == current_member
 
     # member.destroy
-    redirect_to member_path, :notice => "User deleted."
+    redirect_to member_path, notice: 'User deleted.'
   end
 
   private

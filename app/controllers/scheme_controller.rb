@@ -3,7 +3,6 @@ class SchemeController < ApplicationController
   # before_action :authenticate_scheme!
   # before_action :scheme_and_admin_user_only
 
-
   def index
     # Show a categorized list of users based on type (scheme(admins) and member)
   end
@@ -21,7 +20,7 @@ class SchemeController < ApplicationController
   def update
     # @scheme = Scheme.find(params[:id])
     # if @scheme.update_attributes(secure_params)
-      redirect_to scheme_path, :notice => "User updated."
+    redirect_to scheme_path, notice: 'User updated.'
     # else
     #   redirect_to scheme_path, :alert => "Unable to update user."
     # end
@@ -33,7 +32,7 @@ class SchemeController < ApplicationController
     # redirect_to :back, :alert => "Action denied." and return unless current_admin && current_scheme.admin? && scheme == current_scheme
 
     # member.destroy
-    redirect_to scheme_path, :notice => "User deleted."
+    redirect_to scheme_path, notice: 'User deleted.'
   end
 
   private

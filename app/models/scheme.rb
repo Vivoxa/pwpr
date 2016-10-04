@@ -6,4 +6,7 @@ class Scheme < ActiveRecord::Base
     :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
    royce_roles %w(owner admin user_r user_rw)
+
+   attr_accessor :name
+
 end

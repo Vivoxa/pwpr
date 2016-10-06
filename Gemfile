@@ -28,15 +28,19 @@ end
 
 group :development, :test do
   gem 'factory_girl_rails'
-  gem 'rspec-rails', '~> 3.5'
-
-  # Ruby style code analysis tool
-  gem 'rubocop'
-  gem 'rubocop-rspec'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'pry'
+
+  # Build gems
+  gem 'rspec-rails', '~> 3.5'
+  gem 'rubocop'
+  gem 'rubocop-rspec'
+  gem 'fudge'
+  gem 'flog'
+  gem 'flay'
+  gem 'brakeman'
 end
 
 # Use SCSS for stylesheets

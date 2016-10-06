@@ -1,0 +1,44 @@
+exclude = '^\.\/(config|spec|db|matchers)\/'
+
+# Prepare DB for test
+task_group :prepare_for_test, about: 'Preparing for test...' do
+  shell "echo 'Setting up test DB...'"
+  rake 'db:drop db:create RAILS_ENV=test'
+  shell "echo 'Completed!'"
+
+  shell "echo 'Loading startpoint and migrating...'"
+  rake 'db:schema:load db:migrate RAILS_ENV=test'
+  shell "echo 'Completed!'"
+end
+build :prepare_for_test, about: 'Preparing for test...', &Proc.new { task_group(:prepare_for_test) }
+
+# Testing for code duplication, complexity and style violations
+task_group :code_analysis, about: 'Running code analysis...' do
+  shell 'rubocop --require rubocop-rspec --color'
+  task :flay, exclude: exclude
+  task :flog, exclude: exclude
+end
+build :code_analysis, about: 'Running code analysis...', &Proc.new { task_group(:code_analysis) }
+
+# Running rspec spec suite
+task_group :rspec, about: 'Running Rspec suite...' do
+  task :rspec, '--profile', coverage: 100
+end
+build :rspec, about: 'Running Rspec suite...', &Proc.new { task_group(:rspec) }
+
+# Test application security vulnerabilities
+task_group :security, about: 'Running security check...' do
+  task :brakeman, max: 1
+end
+build :security, about: 'Running security check...', &Proc.new { task_group(:security) }
+
+# Default full build
+build :default do
+  clean_bundler_env do
+    task_group :prepare_for_test
+    shell 'bundle install --quiet'
+    task_group :code_analysis
+    task_group :security
+    task_group :rspec
+  end
+end

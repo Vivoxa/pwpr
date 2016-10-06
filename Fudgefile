@@ -22,7 +22,7 @@ build :code_analysis, about: 'Running code analysis...', &Proc.new { task_group(
 
 # Running rspec spec suite
 task_group :rspec, about: 'Running Rspec suite...' do
-  task :rspec, '--profile', coverage: 100
+  task :rspec, '--profile'
 end
 build :rspec, about: 'Running Rspec suite...', &Proc.new { task_group(:rspec) }
 

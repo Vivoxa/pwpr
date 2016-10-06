@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class AdminController < ApplicationController
+class AdminsController < ApplicationController
   # before_action :authenticate_admin!
   # before_action :admin_only
 
@@ -26,6 +26,6 @@ class AdminController < ApplicationController
   def secure_params
     # We need to pull the params for the correct "user"
 
-    # params.require(:user).permit(:role)
+    # params.require(:admin).permit(:role)
   end
 end

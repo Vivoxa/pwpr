@@ -7,4 +7,5 @@ class SchemeOperator < ActiveRecord::Base
   royce_roles %w(owner admin user_r user_rw)
 
   attr_accessor :name
+  has_and_belongs_to_many :schemes
 end

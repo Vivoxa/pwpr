@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161005065755) do
+ActiveRecord::Schema.define(version: 20161005170624) do
 
   create_table "royce_connector", force: :cascade do |t|
     t.integer  "roleable_id",   limit: 4,   null: false
@@ -54,5 +54,20 @@ ActiveRecord::Schema.define(version: 20161005065755) do
 
   add_index "scheme_operators", ["email"], name: "index_scheme_operators_on_email", unique: true, using: :btree
   add_index "scheme_operators", ["reset_password_token"], name: "index_scheme_operators_on_reset_password_token", unique: true, using: :btree
+
+  create_table "scheme_operators_schemes", id: false, force: :cascade do |t|
+    t.integer "scheme_operator_id", limit: 4, null: false
+    t.integer "scheme_id",          limit: 4, null: false
+  end
+
+  add_index "scheme_operators_schemes", ["scheme_id"], name: "index_scheme_operators_schemes_on_scheme_id", using: :btree
+  add_index "scheme_operators_schemes", ["scheme_operator_id"], name: "index_scheme_operators_schemes_on_scheme_operator_id", using: :btree
+
+  create_table "schemes", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.boolean  "active"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
 end

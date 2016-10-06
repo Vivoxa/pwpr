@@ -1,11 +1,9 @@
-class SchemeOperator < ActiveRecord::Base
+class Admin < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :trackable, :validatable, :confirmable
-
-  royce_roles %w(owner admin user_r user_rw)
+         :recoverable, :rememberable, :trackable, :validatable
+  royce_roles %w(full_access)
 
   attr_accessor :name
-  has_and_belongs_to_many :schemes
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SchemeOperator, type: :model do
+RSpec.describe CompanyOperator, type: :model do
   before do
     subject.email = 'nigelsurtees@wvivoxa.com'
     subject.password = 'khgsdfgaskgfdkag'
@@ -9,7 +9,7 @@ RSpec.describe SchemeOperator, type: :model do
 
   context 'Roles' do
     it 'expects the correct roles to be available' do
-      expect(SchemeOperator.available_role_names).to eq %w(owner admin user_r user_rw)
+      expect(CompanyOperator.available_role_names).to eq %w(owner admin user_r user_rw)
     end
 
     it 'expects owner to be an available role' do
@@ -33,7 +33,7 @@ RSpec.describe SchemeOperator, type: :model do
     end
 
     context 'when assigning a role' do
-      it 'expects the SchemeOperator to have that role' do
+      it 'expects the CompanyOperator to have that role' do
         subject.add_role :owner
         expect(subject.has_role? :owner).to be true
         expect(subject.owner?).to be true
@@ -45,7 +45,7 @@ RSpec.describe SchemeOperator, type: :model do
     end
 
     context 'when removing a role' do
-      it 'expects the SchemeOperator to NOT have that role' do
+      it 'expects the CompanyOperator to NOT have that role' do
         subject.add_role :owner
         expect(subject.has_role? :owner).to be true
         subject.remove_role :owner

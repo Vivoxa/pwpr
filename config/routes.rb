@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
-  devise_for :scheme_operators
+  devise_for :admins
+  resources :schemes
+  devise_for :scheme_operators, :controllers => {:registrations => "devise_overrides/registrations"}
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   # resources :welcomes, only: :index

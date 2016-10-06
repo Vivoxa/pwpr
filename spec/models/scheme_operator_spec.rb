@@ -33,7 +33,7 @@ RSpec.describe SchemeOperator, type: :model do
     end
 
     context 'when assigning a role' do
-      it 'expects the scheme to have that role' do
+      it 'expects the SchemeOperator to have that role' do
         subject.add_role :owner
         expect(subject.has_role? :owner).to be true
         expect(subject.owner?).to be true
@@ -45,7 +45,7 @@ RSpec.describe SchemeOperator, type: :model do
     end
 
     context 'when removing a role' do
-      it 'expects the scheme to NOT have that role' do
+      it 'expects the SchemeOperator to NOT have that role' do
         subject.add_role :owner
         expect(subject.has_role? :owner).to be true
         subject.remove_role :owner

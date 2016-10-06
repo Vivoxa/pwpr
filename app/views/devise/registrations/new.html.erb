@@ -4,16 +4,23 @@
   <%= devise_error_messages! %>
 
   <div class="field centre">
-    <%= f.email_field :email, placeholder: "Email", class: "devise-lgn", autofocus: true %>
+    <%= f.email_field :email, placeholder: "Email", class: "devise-lgn form-control", autofocus: true %>
   </div>
 
   <div class="field centre">
-    <%= f.password_field :password, placeholder: "Password", class: "devise-lgn", autocomplete: "off" %>
+    <%= f.password_field :password, placeholder: "Password", class: "devise-lgn form-control", autocomplete: "off" %>
   </div>
 
   <div class="field centre">
-    <%= f.password_field :password_confirmation, placeholder: "Confirm password", class: "devise-lgn", autocomplete: "off" %>
+    <%= f.password_field :password_confirmation, placeholder: "Confirm password", class: "devise-lgn form-control", autocomplete: "off" %>
   </div>
+
+  <% if current_admin %>
+    <div class="field centre">
+      <%= f.collection_select :scheme_ids, Scheme.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
+    </div>
+  <% end %>
+
 
   <div class="actions centre">
     <%= f.submit "Sign up", class: ["btn", "btn-success", "devise-btn"] %>

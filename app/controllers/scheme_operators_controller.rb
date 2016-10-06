@@ -12,7 +12,7 @@ class SchemeOperatorsController < ApplicationController
     # in order to be able to search for the one clicked on in the right table
     @scheme_operator = SchemeOperator.find(params[:id])
 
-    redirect_to scheme_operators_path, :alert => "Access denied." unless current_scheme_operator || current_admin && @scheme_operator == current_admin
+    redirect_to scheme_operators_path, alert: 'Access denied.' unless current_scheme_operator || current_admin && @scheme_operator == current_admin
 
     redirect_to company_operator_show_path if @company_operator.is_member?
   end
@@ -23,14 +23,14 @@ class SchemeOperatorsController < ApplicationController
     if @scheme_operator.update_attributes(secure_params)
       redirect_to scheme_operator_path, notice: 'User updated.'
     else
-      redirect_to scheme_operator_path, :alert => "Unable to update user."
+      redirect_to scheme_operator_path, alert: 'Unable to update user.'
     end
   end
 
   def destroy
     @scheme_operator = SchemeOperator.find(params[:id])
 
-    redirect_to :back, :alert => "Action denied." and return unless priviledged_user
+    redirect_to(:back, alert: 'Action denied.') && return unless priviledged_user
 
     @scheme_operator.destroy
     redirect_to scheme_operator_path, notice: 'User deleted.'

@@ -23,7 +23,7 @@ class AdminsController < ApplicationController
   private
 
   def admin_only
-    # redirect_to admins_path, alert: 'Access denied.' unless current_admin
+    redirect_to admins_path, alert: 'Access denied.' unless current_admin
   end
 
   def secure_params

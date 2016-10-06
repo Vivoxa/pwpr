@@ -32,7 +32,7 @@ class SchemeOperatorsController < ApplicationController
 
     redirect_to :back, :alert => "Action denied." and return unless priviledged_user
 
-    # @scheme_operator.destroy
+    @scheme_operator.destroy
     redirect_to scheme_operator_path, notice: 'User deleted.'
   end
 

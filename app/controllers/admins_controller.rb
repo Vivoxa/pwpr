@@ -15,7 +15,7 @@ class AdminsController < ApplicationController
     # in order to be able to search for the one clicked on in the right table
     # @user = User.find(params[:id])
 
-    # redirect_to :back, :alert => "Access denied." unless current_admin && @user == current_admin
+    # redirect_to admins_path, :alert => "Access denied." unless current_admin && @user == current_admin
 
     # We also need to redirect to the clicked user show action on the relevant controller (scheme or member)
   end
@@ -23,7 +23,7 @@ class AdminsController < ApplicationController
   private
 
   def admin_only
-    # redirect_to :back, alert: 'Access denied.' unless current_admin
+    # redirect_to admins_path, alert: 'Access denied.' unless current_admin
   end
 
   def secure_params

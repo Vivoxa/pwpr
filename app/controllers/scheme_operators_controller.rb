@@ -12,7 +12,7 @@ class SchemeOperatorsController < ApplicationController
     # in order to be able to search for the one clicked on in the right table
     @scheme_operator = SchemeOperator.find(params[:id])
 
-    redirect_to :back, :alert => "Access denied." unless current_scheme_operator || current_admin && @scheme_operator == current_admin
+    redirect_to scheme_operators_path, :alert => "Access denied." unless current_scheme_operator || current_admin && @scheme_operator == current_admin
 
     redirect_to company_operator_show_path if @company_operator.is_member?
   end
@@ -39,7 +39,7 @@ class SchemeOperatorsController < ApplicationController
   private
 
   def scheme_operator_and_admin_user_only
-    redirect_to :back, alert: 'Access denied.' unless current_scheme_operator || current_admin
+    redirect_to scheme_operator_path, alert: 'Access denied.' unless current_scheme_operator || current_admin
   end
 
   def priviledged_user

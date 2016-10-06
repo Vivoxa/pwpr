@@ -9,7 +9,7 @@ class CompanyOperatorsController < ApplicationController
   def show
     # @company_operator = CompanyOperator.find(params[:id])
 
-    # redirect_to :back, :alert => "Access denied." unless current_company_operator.admin? && @company_operator == current_company_operator
+    # redirect_to company_operators_path, :alert => "Access denied." unless current_company_operator.admin? && @company_operator == current_company_operator
   end
 
   def update
@@ -24,7 +24,7 @@ class CompanyOperatorsController < ApplicationController
   def destroy
     # @company_operator = CompanyOperator.find(params[:id])
 
-    # redirect_to :back, :alert => "Action denied." and return unless current_company_operator.admin? && @company_operator == current_company_operator
+    # redirect_to company_operators_path, :alert => "Action denied." and return unless current_company_operator.admin? && @company_operator == current_company_operator
 
     # company_operator.destroy
     redirect_to company_operators_path, notice: 'User deleted.'

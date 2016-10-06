@@ -15,7 +15,7 @@
     <%= f.password_field :password_confirmation, placeholder: "Confirm password", class: "devise-lgni form-control", autocomplete: "off" %>
   </div>
 
-  <% if self.devise_mapping.class_name == 'SchemeOperator' %>
+  <% if current_admin %>
     <div class="field centre">
       <%= f.collection_select :scheme_ids, Scheme.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
     </div>

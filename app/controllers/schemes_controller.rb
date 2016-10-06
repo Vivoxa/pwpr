@@ -1,4 +1,6 @@
 class SchemesController < ApplicationController
+  before_action :authenticate_scheme_operator!
+  before_action :scheme_operator_and_admin_user_only
   before_action :set_scheme, only: [:show, :edit, :update, :destroy]
 
   # GET /schemes
@@ -62,10 +64,15 @@ class SchemesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_scheme
-      @scheme = Scheme.find(params[:id])
-    end
+
+  def scheme_operator_and_admin_user_only
+    redirect_to :back, alert: 'Access denied.' unless current_scheme_operator || current_admin
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_scheme
+    @scheme = Scheme.find(params[:id])
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def scheme_params

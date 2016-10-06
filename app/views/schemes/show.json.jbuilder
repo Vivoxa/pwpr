@@ -1,1 +1,2 @@
-json.partial! "schemes/scheme", scheme: @scheme
+
+json.partial! 'schemes/scheme', scheme: @scheme

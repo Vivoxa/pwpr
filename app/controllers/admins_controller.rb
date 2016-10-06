@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class AdminsController < ApplicationController
   # before_action :authenticate_admin!
   # before_action :admin_only

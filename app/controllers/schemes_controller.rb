@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class SchemesController < ApplicationController
   before_action :authenticate_scheme_operator!
   before_action :scheme_operator_and_admin_user_only

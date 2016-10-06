@@ -5,6 +5,9 @@ class AdminsController < ApplicationController
 
   def index
     # Show a categorized list of users based on type (scheme and member)
+    @admins = Admin.all
+    @scheme_operators = SchemeOperator.all
+    @company_operators = CompanyOperator.all
   end
 
   def show

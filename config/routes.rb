@@ -2,7 +2,6 @@
 Rails.application.routes.draw do
   devise_for :company_operators
   devise_for :admins
-  resources :schemes
   devise_for :scheme_operators, :controllers => {:registrations => "devise_overrides/registrations"}
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -11,7 +10,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'visitors#index'
 
-  resources :admin, :scheme, :member
+  resources :admins, :scheme_operators, :company_operators, :schemes
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

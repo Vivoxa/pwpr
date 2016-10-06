@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
+  devise_for :company_operators
   devise_for :admins
   resources :schemes
   devise_for :scheme_operators, :controllers => {:registrations => "devise_overrides/registrations"}

@@ -1,7 +1,8 @@
+
 class SchemesController < ApplicationController
   before_action :authenticate_scheme_operator!
   before_action :scheme_operator_and_admin_user_only
-  before_action :set_scheme, only: [:show, :edit, :update, :destroy]
+  before_action :set_scheme, only: %i(show edit update destroy)
 
   # GET /schemes
   # GET /schemes.json
@@ -74,8 +75,8 @@ class SchemesController < ApplicationController
     @scheme = Scheme.find(params[:id])
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def scheme_params
-      params.require(:scheme).permit(:name, :active)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def scheme_params
+    params.require(:scheme).permit(:name, :active)
+  end
 end

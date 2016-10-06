@@ -1,6 +1,6 @@
+
 module DeviseOverrides
   class RegistrationsController < Devise::RegistrationsController
-
     # POST /resource
     def create
       build_resource(sign_up_params)
@@ -31,9 +31,8 @@ module DeviseOverrides
 
     # Build a devise resource passing in the session. Useful to move
     # temporary session data to the newly created user.
-    def build_resource(hash=nil)
+    def build_resource(hash = nil)
       self.resource = resource_class.new_with_session(hash || {}, session)
     end
-
   end
 end

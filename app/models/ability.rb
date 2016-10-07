@@ -3,7 +3,28 @@ class Ability
 
   def initialize(user)
     # Define abilities for the passed in user here. For example:
-    #
+
+    user ||= Visitor.new
+
+    if  user.is_a? SchemeOperator
+          require 'pry'
+          binding.pry
+      if user.owner?
+        can :manage, SchemeOperator
+          binding.pry
+        can :manage, Scheme, :scheme_operator_id => user.id
+      end
+    end
+
+    if user.is_a? CompanyOperator
+      can :manage, :all
+    end
+
+    if user.is_a?Admin
+      can :manage, :all
+    end
+  end
+
     #   user ||= User.new # guest user (not logged in)
     #   if user.admin?
     #     can :manage, :all
@@ -28,5 +49,4 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-  end
 end

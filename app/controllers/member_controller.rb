@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+
 class MemberController < ApplicationController
   # before_action :authenticate_member!
 

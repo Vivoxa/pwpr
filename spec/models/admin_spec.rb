@@ -1,3 +1,4 @@
+
 require 'rails_helper'
 
 RSpec.describe Admin, type: :model do
@@ -13,7 +14,7 @@ RSpec.describe Admin, type: :model do
     end
 
     it 'expects full_access to be an available role' do
-      expect(subject.allowed_role? :full_access).to be true
+      expect(subject.allowed_role?(:full_access)).to be true
     end
 
     it 'expects name to be an attribute' do
@@ -23,23 +24,21 @@ RSpec.describe Admin, type: :model do
     context 'when assigning a role' do
       it 'expects the Admin to have that role' do
         subject.add_role :full_access
-        expect(subject.has_role? :full_access).to be true
+        expect(subject.has_role?(:full_access)).to be true
         expect(subject.full_access?).to be true
         subject.full_access!
         expect(subject.full_access?).to be true
-        expect(subject.has_role? :full_access).to be true
-
+        expect(subject.has_role?(:full_access)).to be true
       end
     end
 
     context 'when removing a role' do
       it 'expects the Admin to NOT have that role' do
         subject.add_role :full_access
-        expect(subject.has_role? :full_access).to be true
+        expect(subject.has_role?(:full_access)).to be true
         subject.remove_role :full_access
-        expect(subject.has_role? :full_access).to be false
+        expect(subject.has_role?(:full_access)).to be false
       end
     end
-
   end
 end

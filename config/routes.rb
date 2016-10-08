@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   root 'visitors#index'
 
   resources :admins, :scheme_operators, :company_operators, :schemes
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

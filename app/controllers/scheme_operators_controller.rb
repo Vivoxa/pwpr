@@ -1,6 +1,7 @@
 class SchemeOperatorsController < ApplicationController
   before_action :authenticate_scheme_operator!
   before_action :scheme_operator_and_admin_user_only
+  load_and_authorize_resource
 
   def index
     # Show a categorized list of users based on type (scheme_operator(admins) and company_operator)

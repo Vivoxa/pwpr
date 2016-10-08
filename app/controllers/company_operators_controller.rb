@@ -1,6 +1,5 @@
-# frozen_string_literal: true
 class CompanyOperatorsController < ApplicationController
-  # before_action :authenticate_company_operator!
+  before_action :authenticate_company_operator!
 
   def index
     @company_operator = CompanyOperator.all if current_company_operator.admin?

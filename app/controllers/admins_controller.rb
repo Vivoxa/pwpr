@@ -1,6 +1,6 @@
 class AdminsController < ApplicationController
-  # before_action :authenticate_admin!
-  # before_action :admin_only
+  before_action :authenticate_admin!
+  before_action :admin_only
 
   def index
     # Show a categorized list of users based on type (scheme and member)

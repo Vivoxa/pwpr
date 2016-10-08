@@ -1,20 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= content_for?(:title) ? yield(:title) : "PpPwpr" %></title>
-    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "PpPwpr" %>">
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-    <%= csrf_meta_tags %>
-		<%= favicon_link_tag %>
+    <%= render 'layouts/layout_header' %>
   </head>
 
   <body>
     <div class="container-fluid">
       <header>
-       <%= render 'layouts/messages' %>
+        <%= render 'layouts/messages' %>
         <%= render 'layouts/navigation' %>
         <%= render 'layouts/auth_nav_links' %>
       </header>

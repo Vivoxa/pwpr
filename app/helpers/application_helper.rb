@@ -1,3 +1,4 @@
+require 'pry'
 
 module ApplicationHelper
   def title(page_title)

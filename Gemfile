@@ -41,6 +41,8 @@ group :development, :test do
   gem 'flog'
   gem 'flay'
   gem 'brakeman'
+  gem 'simplecov'
+  gem 'ruby2ruby'
 end
 
 # Use SCSS for stylesheets

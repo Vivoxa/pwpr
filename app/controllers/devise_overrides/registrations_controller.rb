@@ -1,4 +1,3 @@
-
 module DeviseOverrides
   class RegistrationsController < Devise::RegistrationsController
     # POST /resource

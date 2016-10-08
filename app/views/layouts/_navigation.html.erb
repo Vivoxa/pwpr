@@ -3,18 +3,18 @@
 
   <ul class="nav navbar-nav">
     <li class="nav-item active">
-      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-link" href=<%= root_path %>>Home <span class="sr-only">(current)</span></a>
     </li>
     <li class="nav-item">
       <div class="btn-group">
-        <button type="button" class="btn btn-primary btn-sm">Sign in</button>
+        <a class="btn btn-primary btn-sm" href="/scheme_operators/sign_up">Sign Up</a>
         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="sr-only">Toggle Dropdown</span>
         </button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Scheme Admin</a>
-          <a class="dropdown-item" href="#">Scheme Owner</a>
-          <a class="dropdown-item" href="#">Scheme Member</a>
+          <a class="dropdown-item" href="/admins/sign_in">Admins</a>
+          <a class="dropdown-item" href="/scheme_operators/sign_in">Scheme Operators</a>
+          <a class="dropdown-item" href="/company_operators/sign_in">Company Operators</a>
         </div>
       </div>
     </li>

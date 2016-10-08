@@ -7,21 +7,15 @@ class Ability
     user ||= Visitor.new
 
     if  user.is_a? SchemeOperator
-          require 'pry'
-          binding.pry
       if user.owner?
         can :manage, SchemeOperator
-          binding.pry
-        can :manage, Scheme, :scheme_operator_id => user.id
       end
     end
 
     if user.is_a? CompanyOperator
-      can :manage, :all
     end
 
     if user.is_a?Admin
-      can :manage, :all
     end
   end
 

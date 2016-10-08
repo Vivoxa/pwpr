@@ -7,7 +7,8 @@ class SchemesController < ApplicationController
   # GET /schemes
   # GET /schemes.json
   def index
-    @schemes = Scheme.all
+    @schemes = [] #Scheme.all
+    SchemeOperator.invite!( email: 'nigelsurtees@invite.com', name: 'nigel smilth', scheme_ids: [1])
   end
 
   # GET /schemes/1

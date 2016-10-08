@@ -12,7 +12,9 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end
 
+# authentication and authorisation
 gem 'devise'
+gem 'devise_invitable', '~> 1.7.0'
 gem 'cancancan', '~> 1.10'
 gem 'royce'
 

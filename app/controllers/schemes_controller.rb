@@ -67,6 +67,7 @@ class SchemesController < ApplicationController
   private
 
   def authenticate
+    redirect_to scheme_operator_session_path unless admin_signed_in? || scheme_operator_signed_in?
     if current_admin
       authenticate_admin!
     else

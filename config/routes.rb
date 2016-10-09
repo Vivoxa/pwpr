@@ -2,7 +2,7 @@
 Rails.application.routes.draw do
   devise_for :company_operators
   devise_for :admins
-  devise_for :scheme_operators, controllers: {registrations: 'devise_overrides/registrations'}
+  devise_for :scheme_operators, controllers: { registrations: 'devise_overrides/registrations', :invitations => 'devise_overrides/scheme_operator_invitations' }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   # resources :welcomes, only: :index
@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   root 'visitors#index'
 
   resources :admins, :scheme_operators, :company_operators, :schemes
+  resources :scheme_operator_invitations, only: :index
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

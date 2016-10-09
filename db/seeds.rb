@@ -50,4 +50,3 @@
                               password: @password })
       user.add_role :full_access
     end
-

@@ -2,6 +2,8 @@
 #
 module DeviseOverrides
   class RegistrationsController < Devise::RegistrationsController
+    skip_before_action :require_no_authentication
+    before_action :authenticate
     before_action :configure_permitted_parameters, if: :devise_controller?
 
     # POST /resource
@@ -43,6 +45,17 @@ module DeviseOverrides
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up) do |user_params|
         user_params.permit({scheme_ids: []}, :email, :password, :password_confirmation, :name)
+      end
+    end
+
+    private
+
+    def authenticate
+      redirect_to scheme_operator_session_path unless admin_signed_in? || scheme_operator_signed_in?
+      if current_admin
+        authenticate_admin!
+      else
+        authenticate_scheme_operator!
       end
     end
   end

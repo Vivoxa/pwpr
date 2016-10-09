@@ -4,11 +4,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   layout :layout_by_resource
 
-  protected
+  include CommonHelpers::MultiUserTypesHelper
 
-  def current_user
-    current_admin || current_scheme_operator || current_company_operator
-  end
+  protected
 
   def layout_by_resource
     if devise_controller?

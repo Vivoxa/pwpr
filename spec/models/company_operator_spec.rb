@@ -1,11 +1,32 @@
-
 require 'rails_helper'
 
 RSpec.describe CompanyOperator, type: :model do
+  let(:scheme) { Scheme.first }
+
   before do
     subject.email = 'nigelsurtees@wvivoxa.com'
     subject.password = 'khgsdfgaskgfdkag'
     subject.save
+  end
+
+  context 'Scopes' do
+    describe 'scheme_operators' do
+      let(:test_scheme_operators) { CompanyOperator.scheme_operators(scheme) }
+
+      context 'when scheme is present' do
+        it 'returns the object' do
+          expect(test_scheme_operators.first).to be_a ::SchemeOperator
+        end
+      end
+
+      context 'when scheme does not exist' do
+        let(:scheme) { Scheme.new }
+
+        it 'returns empty' do
+          expect(test_scheme_operators.size).to eq(0)
+        end
+      end
+    end
   end
 
   context 'Roles' do
@@ -25,7 +46,7 @@ RSpec.describe CompanyOperator, type: :model do
       expect(subject.allowed_role?(:company_user_r)).to be true
     end
 
-    it 'expects company_company_user_rw to be an available role' do
+    it 'expects company_user_rw to be an available role' do
       expect(subject.allowed_role?(:company_user_rw)).to be true
     end
 

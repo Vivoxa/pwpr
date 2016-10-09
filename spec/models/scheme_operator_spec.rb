@@ -2,10 +2,47 @@
 require 'rails_helper'
 
 RSpec.describe SchemeOperator, type: :model do
+  let(:scheme) { Scheme.first }
+
   before do
     subject.email = 'nigelsurtees@wvivoxa.com'
     subject.password = 'khgsdfgaskgfdkag'
+    subject.schemes << scheme
     subject.save
+  end
+
+  context 'Scopes' do
+    describe 'company_operators' do
+      let(:test_company_operators) { SchemeOperator.company_operators(scheme) }
+
+      context 'when scheme is present' do
+        it 'returns the object' do
+          expect(test_company_operators.first).to be_a ::CompanyOperator
+        end
+      end
+
+      context 'when scheme does not exist' do
+        let(:scheme) { Scheme.new }
+
+        it 'returns empty' do
+          expect(test_company_operators.size).to eq(0)
+        end
+      end
+    end
+
+    describe 'pending_scheme_operators' do
+      let(:pending_scheme_operators) { SchemeOperator.pending_scheme_operators }
+
+      context 'when scheme is present' do
+        it 'returns the object' do
+          expect(pending_scheme_operators.first).to be_a ::SchemeOperator
+        end
+
+        it 'expects objects to have a past confirmed_at' do
+          expect(pending_scheme_operators.first.confirmed_at).to be <= DateTime.now
+        end
+      end
+    end
   end
 
   context 'Roles' do

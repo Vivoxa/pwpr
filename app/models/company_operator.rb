@@ -7,4 +7,6 @@ class CompanyOperator < ActiveRecord::Base
 
   attr_accessor :name
   belongs_to :scheme
+
+  scope :scheme_operators, -> (scheme) { scheme.scheme_operators }
 end

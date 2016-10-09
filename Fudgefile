@@ -7,7 +7,7 @@ task_group :prepare_for_test, about: 'Preparing for test...' do
   shell "echo 'Completed!'"
 
   shell "echo 'Loading startpoint and migrating...'"
-  rake 'db:schema:load db:migrate RAILS_ENV=test'
+  rake 'db:schema:load db:migrate db:setup RAILS_ENV=test'
   shell "echo 'Completed!'"
 end
 build :prepare_for_test, about: 'Preparing for test...', &Proc.new { task_group(:prepare_for_test) }

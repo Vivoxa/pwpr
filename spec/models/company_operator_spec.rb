@@ -12,12 +12,11 @@ RSpec.describe CompanyOperator, type: :model do
 
   context 'Scopes' do
     describe 'scheme_operators' do
-      before do
-        @scheme_operators = CompanyOperator.scheme_operators(scheme)
-      end
+      let(:test_scheme_operators) { CompanyOperator.scheme_operators(scheme) }
+
       context 'when scheme is present' do
         it 'returns the object' do
-          expect(@scheme_operators.first).to be_a ::SchemeOperator
+          expect(test_scheme_operators.first).to be_a ::SchemeOperator
         end
       end
 
@@ -25,7 +24,7 @@ RSpec.describe CompanyOperator, type: :model do
         let(:scheme) { Scheme.new }
 
         it 'returns empty' do
-          expect(@scheme_operators.size).to eq(0)
+          expect(test_scheme_operators.size).to eq(0)
         end
       end
     end

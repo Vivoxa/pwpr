@@ -10,5 +10,5 @@ class CompanyOperator < ActiveRecord::Base
 
   belongs_to :scheme
 
-  scope :scheme_operators, -> scheme { scheme.scheme_operators }
+  scope :scheme_operators, -> (scheme) { scheme.scheme_operators }
 end

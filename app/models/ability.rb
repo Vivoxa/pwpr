@@ -6,19 +6,29 @@ class Ability
 
     user ||= Visitor.new
 
-    if user.is_a?(SchemeOperator)
-      if user.scheme_owner?
-        can :manage, SchemeOperator
-        can :manage, Scheme, id:  user.schemes.map(&:id)
-      else
-        can :read, Scheme, id:  user.schemes.map(&:id)
-      end
-    end
+    configure_scheme_operator(user) if user.is_a?(SchemeOperator)
 
-    if user.is_a?(CompanyOperator)
-    end
+    configure_company_operator(user) if user.is_a?(CompanyOperator)
 
-    if user.is_a?(Admin)
+    configure_admin(user) if user.is_a?(Admin)
+  end
+
+  private
+
+  def configure_company_operator(user)
+  end
+
+  def configure_scheme_operator(user)
+    if user.scheme_owner?
+      can :manage, SchemeOperator
+      can :manage, Scheme, id:  user.schemes.map(&:id)
+    else
+      can :read, Scheme, id:  user.schemes.map(&:id)
+    end
+  end
+
+  def configure_admin(user)
+    if user.full_access?
       can :manage, Admin
       can :manage, CompanyOperator
       can :manage, SchemeOperator

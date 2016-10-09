@@ -41,7 +41,7 @@
                               confirmation_token: random_string(20),
                               confirmation_sent_at: DateTime.now,
                               confirmed_at: DateTime.now,
-                              scheme_id: schemes[index]})
+                              scheme_id: schemes[index].id})
       user.add_role company_roles[index]
     end
 

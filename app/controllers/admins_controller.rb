@@ -1,6 +1,7 @@
 class AdminsController < ApplicationController
   before_action :authenticate_admin!
   before_action :admin_only
+  load_and_authorize_resource
 
   def index
     # Show a categorized list of users based on type (scheme and member)

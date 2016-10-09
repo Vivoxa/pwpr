@@ -1,7 +1,8 @@
 class SchemesController < ApplicationController
-  before_action :authenticate_scheme_operator!
+  before_action :authenticate
   before_action :scheme_operator_and_admin_user_only
   before_action :set_scheme, only: %i(show edit update destroy)
+  load_and_authorize_resource
 
   # GET /schemes
   # GET /schemes.json
@@ -64,6 +65,14 @@ class SchemesController < ApplicationController
   end
 
   private
+
+  def authenticate
+    if current_admin
+      authenticate_admin!
+    else
+      authenticate_scheme_operator!
+    end
+  end
 
   def scheme_operator_and_admin_user_only
     redirect_to :back, alert: 'Access denied.' unless current_scheme_operator || current_admin

@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+#
 module DeviseOverrides
   class RegistrationsController < Devise::RegistrationsController
+    before_action :configure_permitted_parameters, if: :devise_controller?
+
     # POST /resource
     def create
       build_resource(sign_up_params)
@@ -32,6 +36,14 @@ module DeviseOverrides
     # temporary session data to the newly created user.
     def build_resource(hash = nil)
       self.resource = resource_class.new_with_session(hash || {}, session)
+    end
+
+    protected
+
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_up) do |user_params|
+        user_params.permit({ scheme_ids: [] }, :email, :password, :password_confirmation, :name)
+      end
     end
   end
 end

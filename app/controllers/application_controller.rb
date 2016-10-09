@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def current_user
+    current_admin || current_scheme_operator || current_company_operator
+  end
+
   def layout_by_resource
     if devise_controller?
       'devise'

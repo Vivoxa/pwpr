@@ -7,8 +7,7 @@ class SchemesController < ApplicationController
   # GET /schemes
   # GET /schemes.json
   def index
-    @schemes = [] #Scheme.all
-    SchemeOperator.invite!( email: 'nigelsurtees@invite.com', name: 'nigel smilth', scheme_ids: [1])
+    @schemes = Scheme.all
   end
 
   # GET /schemes/1
@@ -68,6 +67,7 @@ class SchemesController < ApplicationController
   private
 
   def authenticate
+    redirect_to scheme_operator_session_path unless admin_signed_in? || scheme_operator_signed_in?
     if current_admin
       authenticate_admin!
     else

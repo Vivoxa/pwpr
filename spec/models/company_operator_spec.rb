@@ -33,23 +33,23 @@ RSpec.describe CompanyOperator, type: :model do
 
   context 'Roles' do
     it 'expects the correct roles to be available' do
-      expect(CompanyOperator.available_role_names).to eq %w(owner admin user_r user_rw)
+      expect(CompanyOperator.available_role_names).to eq %w(company_owner company_full_access company_user_r company_user_rw)
     end
 
-    it 'expects owner to be an available role' do
-      expect(subject.allowed_role?(:owner)).to be true
+    it 'expects company_owner to be an available role' do
+      expect(subject.allowed_role?(:company_owner)).to be true
     end
 
-    it 'expects admin to be an available role' do
-      expect(subject.allowed_role?(:admin)).to be true
+    it 'expects company_full_access to be an available role' do
+      expect(subject.allowed_role?(:company_full_access)).to be true
     end
 
-    it 'expects user_r to be an available role' do
-      expect(subject.allowed_role?(:user_r)).to be true
+    it 'expects company_user_r to be an available role' do
+      expect(subject.allowed_role?(:company_user_r)).to be true
     end
 
-    it 'expects user_rw to be an available role' do
-      expect(subject.allowed_role?(:user_rw)).to be true
+    it 'expects company_user_rw to be an available role' do
+      expect(subject.allowed_role?(:company_user_rw)).to be true
     end
 
     it 'expects name to be an attribute' do
@@ -58,21 +58,21 @@ RSpec.describe CompanyOperator, type: :model do
 
     context 'when assigning a role' do
       it 'expects the CompanyOperator to have that role' do
-        subject.add_role :owner
-        expect(subject.has_role?(:owner)).to be true
-        expect(subject.owner?).to be true
-        subject.admin!
-        expect(subject.admin?).to be true
-        expect(subject.has_role?(:admin)).to be true
+        subject.add_role :company_owner
+        expect(subject.has_role?(:company_owner)).to be true
+        expect(subject.company_owner?).to be true
+        subject.company_full_access!
+        expect(subject.company_full_access?).to be true
+        expect(subject.has_role?(:company_full_access)).to be true
       end
     end
 
     context 'when removing a role' do
       it 'expects the CompanyOperator to NOT have that role' do
-        subject.add_role :owner
-        expect(subject.has_role?(:owner)).to be true
-        subject.remove_role :owner
-        expect(subject.has_role?(:owner)).to be false
+        subject.add_role :company_owner
+        expect(subject.has_role?(:company_owner)).to be true
+        subject.remove_role :company_owner
+        expect(subject.has_role?(:company_owner)).to be false
       end
     end
   end

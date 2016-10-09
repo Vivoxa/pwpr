@@ -6,7 +6,7 @@ class Ability
 
     user ||= Visitor.new
 
-    if  user.is_a?(SchemeOperator)
+    if user.is_a?(SchemeOperator)
       if user.scheme_owner?
         can :manage, SchemeOperator
         can :manage, Scheme, :id =>  user.schemes.map(&:id)

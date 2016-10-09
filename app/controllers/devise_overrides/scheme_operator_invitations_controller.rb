@@ -3,10 +3,9 @@ module DeviseOverrides
     before_action :configure_permitted_parameters, if: :devise_controller?
     skip_before_action :require_no_authentication
     before_action :authenticate
-
     include CommonHelpers::MultiUserTypesHelper
 
-      # GET /resource/invitation/new
+    # GET /resource/invitation/new
     def new
       @current_user = current_user
       self.resource = resource_class.new
@@ -17,7 +16,7 @@ module DeviseOverrides
 
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:invite) do |user_params|
-        user_params.permit({ scheme_ids: [] }, :email, :name)
+        user_params.permit({scheme_ids: []}, :email, :name)
       end
     end
 

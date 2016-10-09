@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 #
 module DeviseOverrides
-  class RegistrationsController <  Devise::RegistrationsController
+  class RegistrationsController < Devise::RegistrationsController
     skip_before_action :require_no_authentication
     before_action :authenticate
     before_action :configure_permitted_parameters, if: :devise_controller?
@@ -44,7 +44,7 @@ module DeviseOverrides
 
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up) do |user_params|
-        user_params.permit({ scheme_ids: [] }, :email, :password, :password_confirmation, :name)
+        user_params.permit({scheme_ids: []}, :email, :password, :password_confirmation, :name)
       end
     end
 

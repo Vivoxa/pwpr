@@ -14,8 +14,9 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_company_operator
-    authenticate_company_operator! unless current_admin
-    authenticate_admin! unless current_company_operator
+    authenticate_company_operator! unless current_scheme_operator
+    authenticate_scheme_operator! unless current_admin
+    authenticate_admin unless current_scheme_operator || company_operator
   end
 
   def layout_by_resource

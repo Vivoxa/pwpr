@@ -1,12 +1,13 @@
 module DeviseOverrides
   class SchemeOperatorInvitationsController < Devise::InvitationsController
-    before_action :configure_permitted_parameters, if: :devise_controller?
     skip_before_action :require_no_authentication
-    before_action :authenticate
+    #efore_filter :authenticate_scheme_operator
+    before_action :configure_permitted_parameters, if: :devise_controller?
     include CommonHelpers::MultiUserTypesHelper
 
     # GET /resource/invitation/new
     def new
+      binding.pry
       @current_user = current_user
       self.resource = resource_class.new
       render :new

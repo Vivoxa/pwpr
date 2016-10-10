@@ -3,11 +3,14 @@
 module DeviseOverrides
   class RegistrationsController < Devise::RegistrationsController
     skip_before_action :require_no_authentication
-    before_action :authenticate
+    before_filter :authenticate_scheme_operator
     before_action :configure_permitted_parameters, if: :devise_controller?
 
     # POST /resource
     def create
+      require 'pry'
+      binding.pry
+
       build_resource(sign_up_params)
 
       resource.save

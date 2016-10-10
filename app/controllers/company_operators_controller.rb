@@ -1,9 +1,9 @@
 class CompanyOperatorsController < ApplicationController
-  before_action :authenticate_company_operator!
+  before_action :authenticate_company_operator
   load_and_authorize_resource
 
   def index
-    @company_operator = CompanyOperator.all if current_company_operator.admin?
+    @company_operator = CompanyOperator.all
   end
 
   def show

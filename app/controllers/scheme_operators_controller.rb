@@ -1,10 +1,8 @@
 class SchemeOperatorsController < ApplicationController
-  before_action :authenticate_scheme_operator!
-  before_action :scheme_operator_and_admin_user_only
-  load_and_authorize_resource
+  before_filter :authenticate_scheme_operator
 
   def index
-    # Show a categorized list of users based on type (scheme_operator(admins) and company_operator)
+    @scheme_operators = SchemeOperator.all
   end
 
   def show
@@ -37,10 +35,6 @@ class SchemeOperatorsController < ApplicationController
   end
 
   private
-
-  def scheme_operator_and_admin_user_only
-    redirect_to scheme_operator_path, alert: 'Access denied.' unless current_scheme_operator || current_admin
-  end
 
   def priviledged_user
     current_admin && current_scheme_operator.admin? && @scheme_operator == current_scheme_operator

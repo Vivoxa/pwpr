@@ -8,6 +8,16 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def authenticate_scheme_operator
+    authenticate_scheme_operator! unless current_admin
+    authenticate_admin! unless current_scheme_operator
+  end
+
+  def authenticate_company_operator
+    authenticate_company_operator! unless current_admin
+    authenticate_admin! unless current_company_operator
+  end
+
   def layout_by_resource
     if devise_controller?
       'devise'

@@ -2,13 +2,7 @@ exclude = '^\.\/(config|spec|db|matchers)\/'
 
 # Prepare DB for test
 task_group :prepare_for_test, about: 'Preparing for test...' do
-  shell "echo 'Setting up test DB...'"
-  rake 'db:drop db:create RAILS_ENV=test'
-  shell "echo 'Completed!'"
-
-  shell "echo 'Loading startpoint and migrating...'"
-  rake 'db:schema:load db:migrate db:setup RAILS_ENV=test'
-  shell "echo 'Completed!'"
+  shell 'script/prepare_for_test.sh'
 end
 build :prepare_for_test, about: 'Preparing for test...', &Proc.new { task_group(:prepare_for_test) }
 
@@ -36,7 +30,6 @@ build :security, about: 'Running security check...', &Proc.new { task_group(:sec
 build :default do
   clean_bundler_env do
     task_group :prepare_for_test
-    shell 'bundle install --quiet'
     task_group :code_analysis
     task_group :security
     task_group :rspec

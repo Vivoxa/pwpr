@@ -6,7 +6,6 @@ module DeviseOverrides
     # GET /resource/invitation/new
     def new
       @schemes  = if current_scheme_operator
-                    binding.pry
                     current_scheme_operator.schemes
                   elsif current_admin
                     Scheme.all

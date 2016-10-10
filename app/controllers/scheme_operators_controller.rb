@@ -2,6 +2,7 @@ class SchemeOperatorsController < ApplicationController
   before_filter :authenticate_scheme_operator
 
   def index
+    # TODO this needs scoping to a scheme
     @scheme_operators = SchemeOperator.all
   end
 

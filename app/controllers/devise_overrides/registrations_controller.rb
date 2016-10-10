@@ -8,7 +8,6 @@ module DeviseOverrides
 
     # POST /resource
     def create
-      require 'pry'
       binding.pry
 
       build_resource(sign_up_params)

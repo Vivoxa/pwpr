@@ -9,8 +9,8 @@ class ApplicationController < ActionController::Base
   protected
 
   def authenticate_scheme_operator
-    authenticate_scheme_operator! unless current_admin
-    authenticate_admin! unless current_scheme_operator
+    authenticate_scheme_operator!( force: true ) unless current_admin
+    authenticate_admin!( force: true ) unless current_scheme_operator
   end
 
   def authenticate_company_operator

@@ -4,7 +4,6 @@ class Admin < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+  include DeviseInvitable::Inviter
   royce_roles %w(full_access)
-
-  attr_accessor :name
 end

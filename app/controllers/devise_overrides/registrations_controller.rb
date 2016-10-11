@@ -6,16 +6,8 @@ module DeviseOverrides
     before_filter :authenticate_scheme_operator
     before_action :configure_permitted_parameters, if: :devise_controller?
 
-    # GET /resource/sign_up
-    def new
-      build_resource({})
-      yield resource if block_given?
-      respond_with resource
-    end
-
     # POST /resource
     def create
-      binding.pry
       build_resource(sign_up_params)
 
       resource.save

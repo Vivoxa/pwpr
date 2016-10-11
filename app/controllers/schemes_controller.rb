@@ -1,6 +1,5 @@
 class SchemesController < ApplicationController
-  before_action :authenticate
-  before_action :scheme_operator_and_admin_user_only
+  before_filter :authenticate_scheme_operator
   before_action :set_scheme, only: %i(show edit update destroy)
   load_and_authorize_resource
 
@@ -65,19 +64,6 @@ class SchemesController < ApplicationController
   end
 
   private
-
-  def authenticate
-    redirect_to scheme_operator_session_path unless admin_signed_in? || scheme_operator_signed_in?
-    if current_admin
-      authenticate_admin!
-    else
-      authenticate_scheme_operator!
-    end
-  end
-
-  def scheme_operator_and_admin_user_only
-    redirect_to :back, alert: 'Access denied.' unless current_scheme_operator || current_admin
-  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_scheme

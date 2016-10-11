@@ -14,6 +14,7 @@
     schemes = Scheme.create([{ name: 'dans pack scheme' }, { name: 'my pack scheme' }, { name: 'pack one' }, { name: 'Test scheme' }, { name: 'Synergy' }, { name: 'Packaging for you' }])
     roles = %w[scheme_owner scheme_full_access scheme_user_r scheme_owner scheme_full_access]
     company_roles = %w[company_owner company_full_access company_user_r company_user_rw company_owner company_full_access ]
+    names = ["Nigel","Dave","Lorand","Vicki","Andrew","Andi"]
 
     5.times do |index|
       user =SchemeOperator.create({ email: "#{roles[index]}_#{index}@pwpr.com",
@@ -21,6 +22,7 @@
                               confirmation_token: random_string(20),
                               confirmation_sent_at: DateTime.now,
                               confirmed_at: DateTime.now,
+                              name: names[index],
                               scheme_ids: schemes[index].id})
       user.add_role roles[index]
     end
@@ -31,6 +33,7 @@
                               confirmation_token: random_string(20),
                               confirmation_sent_at: DateTime.now,
                               confirmed_at: DateTime.now,
+                              name: names[index],
                               scheme_ids:[ schemes[index].id,schemes[ index + 1].id]})
       user.add_role :scheme_owner
     end
@@ -41,12 +44,14 @@
                               confirmation_token: random_string(20),
                               confirmation_sent_at: DateTime.now,
                               confirmed_at: DateTime.now,
+                              name: names[index],
                               scheme_id: schemes[index].id})
       user.add_role company_roles[index]
     end
 
     3.times do |index|
       user = Admin.create({ email: "admin#{index}@pwpr.com",
+                              name: names[index],
                               password: @password })
       user.add_role :full_access
     end

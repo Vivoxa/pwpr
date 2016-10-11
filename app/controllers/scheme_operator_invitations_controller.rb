@@ -1,4 +1,6 @@
 class SchemeOperatorInvitationsController < ApplicationController
+  before_filter :authenticate_scheme_operator
+
   # GET /scheme_operator_invitations
   # GET /scheme_operator_invitations.json
   def index

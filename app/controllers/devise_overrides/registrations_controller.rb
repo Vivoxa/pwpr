@@ -6,8 +6,16 @@ module DeviseOverrides
     before_filter :authenticate_scheme_operator
     before_action :configure_permitted_parameters, if: :devise_controller?
 
+    # GET /resource/sign_up
+    def new
+      build_resource({})
+      yield resource if block_given?
+      respond_with resource
+    end
+
     # POST /resource
     def create
+      binding.pry
       build_resource(sign_up_params)
 
       resource.save
@@ -44,7 +52,7 @@ module DeviseOverrides
 
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up) do |user_params|
-        user_params.permit({scheme_ids: []}, :email, :password, :password_confirmation, :name)
+        user_params.permit({scheme_ids: []}, :scheme_id, :email, :password, :password_confirmation, :name)
       end
     end
 

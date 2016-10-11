@@ -8,8 +8,6 @@ class CompanyOperatorsController < ApplicationController
 
   def show
     @company_operator = CompanyOperator.find(params[:id])
-
-    redirect_to company_operators_path, alert: 'Access denied.' unless current_company_operator.admin? && @company_operator == current_company_operator
   end
 
   def update

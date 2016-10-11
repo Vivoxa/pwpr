@@ -3,7 +3,7 @@ class CompanyOperator < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
-  royce_roles %w(company_owner company_full_access company_user_r company_user_rw)
+  royce_roles %w(co_director co_contact co_user_r co_user_rw co_user_rwe)
 
   belongs_to :scheme
 

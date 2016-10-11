@@ -5,13 +5,12 @@ module DeviseOverrides
 
     # GET /resource/invitation/new
     def new
-      @schemes  = if current_scheme_operator
-                    current_scheme_operator.schemes
-                  elsif current_admin
-                    Scheme.all
-                  else
-                    []
-                  end
+      @schemes = if current_scheme_operator&.schemes
+                 elsif current_admin
+                   Scheme.all
+                 else
+                   []
+                 end
       self.resource = resource_class.new
       render :new
     end
@@ -19,7 +18,7 @@ module DeviseOverrides
     protected
 
     def authenticate_inviter!
-      authenticate_admin!(:force => true) if current_admin
+      authenticate_admin!(force: true) if current_admin
       authenticate_scheme_operator! if current_scheme_operator
     end
 

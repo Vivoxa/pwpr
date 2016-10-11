@@ -18,15 +18,31 @@
   <div class="field centre">
     <%= f.password_field :password_confirmation, placeholder: "Confirm password", class: "devise-lgn form-control", autocomplete: "off" %>
   </div>
-  <% if current_admin %>
+  <% binding.pry %>
+  <% if request.env['REQUEST_PATH'].include?('company_operators') %>
+    <% if current_admin %>
+      <div class="field centre">
+        <%= f.collection_select :scheme_id, Scheme.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
+      </div>
+    <% end %>
+  <% if current_scheme_operator %>
     <div class="field centre">
-      <%= f.collection_select :scheme_ids, Scheme.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
+      <%= f.collection_select :scheme_id, current_scheme_operator.schemes.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
     </div>
   <% end %>
+  <% end %>
+
+  <% if request.env['REQUEST_PATH'].include?('scheme_operators') %>
+    <% if current_admin %>
+      <div class="field centre">
+        <%= f.collection_select :scheme_ids, Scheme.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
+      </div>
+    <% end %>
   <% if current_scheme_operator %>
     <div class="field centre">
       <%= f.collection_select :scheme_ids, current_scheme_operator.schemes.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
     </div>
+  <% end %>
   <% end %>
 
 

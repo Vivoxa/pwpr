@@ -1,6 +1,5 @@
 class AdminsController < ApplicationController
   before_action :authenticate_admin!
-  before_action :admin_only
   load_and_authorize_resource
 
   def index
@@ -21,10 +20,6 @@ class AdminsController < ApplicationController
   end
 
   private
-
-  def admin_only
-    redirect_to admins_path, alert: 'Access denied.' unless current_admin
-  end
 
   def secure_params
     # We need to pull the params for the correct "user"

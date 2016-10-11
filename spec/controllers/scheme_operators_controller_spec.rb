@@ -36,8 +36,16 @@ RSpec.describe SchemeOperatorsController, type: :controller do
   end
 
   context 'when scheme operator is signed in' do
+    let(:co_marti) { SchemeOperator.new }
+    before do
+      co_marti.email = 'jennifer@back_to_the_future.com'
+      co_marti.name = 'Jennifer'
+      co_marti.password = 'mypassword'
+      co_marti.confirmed_at = DateTime.now
+      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
+      co_marti.save
+    end
     context 'when SchemeOperator does NOT have the director role' do
-      let(:co_marti) { FactoryGirl.create(:scheme_operator) }
       before do
         sign_in co_marti
       end
@@ -67,9 +75,11 @@ RSpec.describe SchemeOperatorsController, type: :controller do
     end
 
     context 'when SchemeOperator has co_director role' do
-      let(:co_director) { FactoryGirl.create(:scheme_operator_with_director) }
       before do
-        sign_in co_director
+        sign_out co_marti
+        co_marti.add_role('sc_director')
+        co_marti.save
+        sign_in co_marti
       end
 
       it 'expects the admin to have access to the index action' do
@@ -78,7 +88,7 @@ RSpec.describe SchemeOperatorsController, type: :controller do
       end
 
       it 'expects the admin to have access to the show action' do
-        get :show, id: co_director.id
+        get :show, id: co_marti.id
         expect(response.status).to eq 200
       end
     end

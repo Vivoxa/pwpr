@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SchemeOperator, type: :model do
-  let(:scheme) {Scheme.first }
+  let(:scheme) { Scheme.first }
   before do
     subject.email = 'nigelsurtees@wvivoxa.com'
     subject.password = 'khgsdfgaskgfdkag'

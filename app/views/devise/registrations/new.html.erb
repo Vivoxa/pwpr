@@ -18,7 +18,7 @@
   <div class="field centre">
     <%= f.password_field :password_confirmation, placeholder: "Confirm password", class: "devise-lgn form-control", autocomplete: "off" %>
   </div>
-  <% binding.pry %>
+
   <% if request.env['REQUEST_PATH'].include?('company_operators') %>
     <% if current_admin %>
       <div class="field centre">

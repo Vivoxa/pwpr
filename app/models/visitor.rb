@@ -1,3 +1,3 @@
 class Visitor
-  royce_roles %w(read_only)
+  attr_accessor :name
 end

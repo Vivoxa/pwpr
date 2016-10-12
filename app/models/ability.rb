@@ -16,10 +16,17 @@ class Ability
   private
 
   def configure_company_operator(user)
+    if user.co_director?
+      can :manage, CompanyOperator
+    elsif user.co_contact?
+      can :read, CompanyOperator
+      can :update, CompanyOperator
+      can :edit, CompanyOperator
+    end
   end
 
   def configure_scheme_operator(user)
-    if user.scheme_owner?
+    if user.sc_director?
       can :manage, SchemeOperator
       can :manage, Scheme, id:  user.schemes.map(&:id)
     else

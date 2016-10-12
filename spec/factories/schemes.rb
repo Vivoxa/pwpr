@@ -1,7 +1,6 @@
-
 FactoryGirl.define do
   factory :scheme do
-    name 'MyString'
-    active false
+    name 'MyScheme'
+    active true
   end
 end

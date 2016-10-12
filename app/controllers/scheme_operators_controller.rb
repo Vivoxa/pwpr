@@ -1,8 +1,9 @@
 class SchemeOperatorsController < ApplicationController
   before_filter :authenticate_scheme_operator
+  load_and_authorize_resource
 
   def index
-    # TODO this needs scoping to a scheme
+    # TODO: this needs scoping to a scheme
     @scheme_operators = SchemeOperator.all
   end
 
@@ -10,36 +11,19 @@ class SchemeOperatorsController < ApplicationController
     # We need to figure a scope to search for users dynamically based on the category
     # in order to be able to search for the one clicked on in the right table
     @scheme_operator = SchemeOperator.find(params[:id])
-
-    redirect_to scheme_operators_path, alert: 'Access denied.' unless current_scheme_operator || current_admin && @scheme_operator == current_admin
-
-    redirect_to company_operator_show_path if @company_operator.is_member?
   end
 
   def update
     @scheme_operator = SchemeOperator.find(params[:id])
-
-    if @scheme_operator.update_attributes(secure_params)
-      redirect_to scheme_operator_path, notice: 'User updated.'
-    else
-      redirect_to scheme_operator_path, alert: 'Unable to update user.'
-    end
+    @scheme_operator.update_attributes(secure_params)
   end
 
   def destroy
     @scheme_operator = SchemeOperator.find(params[:id])
-
-    redirect_to(:back, alert: 'Action denied.') && return unless priviledged_user
-
     @scheme_operator.destroy
-    redirect_to scheme_operator_path, notice: 'User deleted.'
   end
 
   private
-
-  def priviledged_user
-    current_admin && current_scheme_operator.admin? && @scheme_operator == current_scheme_operator
-  end
 
   def secure_params
     # We need to pull the params and handle company_operator as well maybe?

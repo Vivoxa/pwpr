@@ -11,10 +11,6 @@
   <% end -%>
 
   <div class="field centre">
-    <%= f.text_field :name, placeholder: "Name", class: "devise-lgn form-control", autofocus: true %>
-  </div>
-
-  <div class="field centre">
     <%= f.collection_select :scheme_ids, @schemes.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
   </div>
 

@@ -11,9 +11,15 @@ class Ability
     configure_company_operator(user) if user.is_a?(CompanyOperator)
 
     configure_admin(user) if user.is_a?(Admin)
+
+    configure_visitor if user.is_a?(Visitor)
   end
 
   private
+
+  def configure_visitor
+    can %i(edit update), :scheme_operator_invitation
+  end
 
   def configure_company_operator(user)
     if user.co_director?

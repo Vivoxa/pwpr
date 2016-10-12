@@ -12,8 +12,8 @@
     end
 
     schemes = Scheme.create([{ name: 'dans pack scheme' }, { name: 'my pack scheme' }, { name: 'pack one' }, { name: 'Test scheme' }, { name: 'Synergy' }, { name: 'Packaging for you' }])
-    roles = %w[scheme_owner scheme_full_access scheme_user_r scheme_owner scheme_full_access]
-    company_roles = %w[company_owner company_full_access company_user_r company_user_rw company_owner company_full_access ]
+    roles = %w[sc_director sc_super_user sc_user_r sc_user_rw sc_user_rwe sc_director sc_super_user]
+    company_roles = %w[co_director co_contact co_user_r co_user_rw co_director co_contact ]
     names = ["Nigel","Dave","Lorand","Vicki","Andrew","Andi"]
 
     5.times do |index|
@@ -35,7 +35,7 @@
                               confirmed_at: DateTime.now,
                               name: names[index],
                               scheme_ids:[ schemes[index].id,schemes[ index + 1].id]})
-      user.add_role :scheme_owner
+      user.add_role :sc_director
     end
 
     5.times do |index|

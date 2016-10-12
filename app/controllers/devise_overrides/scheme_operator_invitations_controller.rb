@@ -1,13 +1,14 @@
 module DeviseOverrides
   class SchemeOperatorInvitationsController < Devise::InvitationsController
     before_action :configure_permitted_parameters, if: :devise_controller?
-    before_filter :authenticate_scheme_operator
+    before_filter :authenticate_scheme_operator, only: %i(new create)
     authorize_resource class: false
     include CommonHelpers::MultiUserTypesHelper
 
     # GET /resource/invitation/new
     def new
-      @schemes = if current_scheme_operator&.schemes
+      @schemes = if current_scheme_operator
+                   current_scheme_operator&.schemes
                  elsif current_admin
                    Scheme.all
                  else

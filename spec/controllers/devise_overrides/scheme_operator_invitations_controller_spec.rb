@@ -47,7 +47,9 @@ RSpec.describe DeviseOverrides::SchemeOperatorInvitationsController, type: :cont
         it 'expects a 200 response status' do
           params = {scheme_operator: {password: 'my_password', email: 'star@star.com', name: 'star', scheme_ids: [1]}}
           post :create, params
-          expect(response.status).to eq 200
+          expect(response.status).to eq 302
+          user = SchemeOperator.find_by_email('star@star.com')
+          expect(user).to be_a(SchemeOperator)
         end
       end
 

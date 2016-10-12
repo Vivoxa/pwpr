@@ -59,4 +59,30 @@ RSpec.describe DeviseOverrides::RegistrationsController, type: :controller do
       end
     end
   end
+  context 'when an Admin is signed in' do
+    let(:admin) { Admin.new }
+    before do
+      admin.email = 'the_boss@back_to_the_future.com'
+      admin.name = 'BOSS'
+      admin.password = 'mypassword'
+      admin.save
+    end
+    before do
+      sign_in admin
+    end
+
+    context 'when calling new' do
+      it 'expects a scheme operator to be created' do
+        get :new
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'when calling new' do
+      it 'expects a 200 response status' do
+        post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+        expect(response.status).to eq 200
+      end
+    end
+  end
 end

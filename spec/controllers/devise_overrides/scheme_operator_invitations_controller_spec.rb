@@ -51,9 +51,16 @@ RSpec.describe DeviseOverrides::SchemeOperatorInvitationsController, type: :cont
         sign_in co_marti
       end
 
-      context 'when calling new' do
+      context 'when calling create' do
         it 'expects a 200 response status' do
           post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+          expect(response.status).to eq 200
+        end
+      end
+
+      context 'when calling new' do
+        it 'expects a new invitation to be created' do
+          get :new
           expect(response.status).to eq 200
         end
       end

@@ -5,6 +5,7 @@ module DeviseOverrides
     skip_before_action :require_no_authentication
     before_filter :authenticate_scheme_operator
     before_action :configure_permitted_parameters, if: :devise_controller?
+    before_filter :authorise
 
     # POST /resource
     def create
@@ -50,12 +51,12 @@ module DeviseOverrides
 
     private
 
-    def authenticate
-      redirect_to scheme_operator_session_path unless admin_signed_in? || scheme_operator_signed_in?
-      if current_admin
-        authenticate_admin!
-      else
-        authenticate_scheme_operator!
+    def authorise
+      return unless current_user
+      if current_user.is_a? SchemeOperator
+        raise CanCan::AccessDenied unless current_user.sc_director?
+      elsif current_user.is_a? Admin
+        return true
       end
     end
   end

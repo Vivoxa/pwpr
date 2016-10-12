@@ -29,6 +29,8 @@ class Ability
     if user.sc_director?
       can :manage, SchemeOperator
       can :manage, Scheme, id:  user.schemes.map(&:id)
+      can :manage, :scheme_operator_invitation
+      can :manage, :registration
     else
       can :read, Scheme, id:  user.schemes.map(&:id)
     end

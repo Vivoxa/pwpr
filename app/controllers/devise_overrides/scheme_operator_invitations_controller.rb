@@ -37,7 +37,7 @@ module DeviseOverrides
             respond_with resource, location: after_invite_path_for(current_inviter, resource)
           end
         rescue
-          redirect_to scheme_operators_path
+          redirect_to scheme_operators_path, notice: "Invitation sent to #{resource.email}"
         end
       else
         respond_with_navigational(resource) { render :new }

@@ -1,6 +1,6 @@
 class SchemeOperatorInvitationsController < ApplicationController
   before_filter :authenticate_scheme_operator
-  load_and_authorize_resource class: false
+  authorize_resource class: SchemeOperatorInvitationsController
 
   # GET /scheme_operator_invitations
   # GET /scheme_operator_invitations.json

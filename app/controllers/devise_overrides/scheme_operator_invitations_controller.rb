@@ -2,7 +2,8 @@ module DeviseOverrides
   class SchemeOperatorInvitationsController < Devise::InvitationsController
     before_action :configure_permitted_parameters, if: :devise_controller?
     before_filter :authenticate_scheme_operator, only: %i(new create)
-    authorize_resource class: false
+    authorize_resource class: SchemeOperatorInvitationsController
+
     include CommonHelpers::MultiUserTypesHelper
 
     # GET /resource/invitation/new
@@ -36,7 +37,7 @@ module DeviseOverrides
             respond_with resource, location: after_invite_path_for(current_inviter, resource)
           end
         rescue
-          redirect_to scheme_operators_path
+          redirect_to scheme_operators_path, status: :ok
         end
       else
         respond_with_navigational(resource) { render :new }

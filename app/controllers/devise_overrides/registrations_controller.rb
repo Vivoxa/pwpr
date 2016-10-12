@@ -1,11 +1,10 @@
 # frozen_string_literal: true
-#
 module DeviseOverrides
   class RegistrationsController < Devise::RegistrationsController
     skip_before_action :require_no_authentication
     before_filter :authenticate_scheme_operator
     before_action :configure_permitted_parameters, if: :devise_controller?
-    before_filter :authorise
+    authorize_resource class: RegistrationsController
 
     # POST /resource
     def create
@@ -46,17 +45,6 @@ module DeviseOverrides
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up) do |user_params|
         user_params.permit({scheme_ids: []}, :scheme_id, :email, :password, :password_confirmation, :name)
-      end
-    end
-
-    private
-
-    def authorise
-      return unless current_user
-      if current_user.is_a? SchemeOperator
-        raise CanCan::AccessDenied unless current_user.sc_director?
-      elsif current_user.is_a? Admin
-        return true
       end
     end
   end

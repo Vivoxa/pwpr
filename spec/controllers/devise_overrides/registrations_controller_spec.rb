@@ -4,14 +4,6 @@ RSpec.describe DeviseOverrides::RegistrationsController, type: :controller do
   end
 
   context 'when scheme operator is NOT signed in' do
-    context 'when calling index' do
-      xit 'expects to be redirected to sign in' do
-        get :index
-        expect(response.status).to eq 302
-        expect(response.body).to include('scheme_operators/sign_in')
-      end
-    end
-
     context 'when calling create' do
       it 'expects to be redirected to sign in' do
         post :create, params: {}
@@ -66,6 +58,7 @@ RSpec.describe DeviseOverrides::RegistrationsController, type: :controller do
       admin.name = 'BOSS'
       admin.password = 'mypassword'
       admin.save
+      admin.full_access!
     end
     before do
       sign_in admin

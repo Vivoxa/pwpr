@@ -4,14 +4,6 @@ RSpec.describe DeviseOverrides::SchemeOperatorInvitationsController, type: :cont
   end
 
   context 'when scheme operator is NOT signed in' do
-    context 'when calling index' do
-      xit 'expects to be redirected to sign in' do
-        get :index
-        expect(response.status).to eq 302
-        expect(response.body).to include('scheme_operators/sign_in')
-      end
-    end
-
     context 'when calling create' do
       it 'expects to be redirected to sign in' do
         get :new
@@ -53,7 +45,8 @@ RSpec.describe DeviseOverrides::SchemeOperatorInvitationsController, type: :cont
 
       context 'when calling create' do
         it 'expects a 200 response status' do
-          post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+          params = {scheme_operator: {password: 'my_password', email: 'star@star.com', name: 'star', scheme_ids: [1]}}
+          post :create, params
           expect(response.status).to eq 200
         end
       end

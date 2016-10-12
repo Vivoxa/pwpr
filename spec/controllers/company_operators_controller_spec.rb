@@ -61,7 +61,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
 
       context 'when calling destroy' do
         it 'expects a CanCan AccessDenied error to be raised' do
-          expect { get :update, id: co_marti.id }.to raise_error(CanCan::AccessDenied)
+          expect { get :destroy, id: co_marti.id }.to raise_error(CanCan::AccessDenied)
         end
       end
     end
@@ -80,6 +80,22 @@ RSpec.describe CompanyOperatorsController, type: :controller do
       it 'expects the admin to have access to the show action' do
         get :show, id: co_director.id
         expect(response.status).to eq 200
+      end
+
+      context 'when calling update' do
+        it 'expects the company operator to be updated' do
+          get :update, id: co_director.id, company_operator: {id: co_director.id}
+          expect(subject.notice).to eq('User updated.')
+          expect(response.status).to eq 200
+        end
+      end
+
+      context 'when calling destroy' do
+        it 'expects the company operator to be destroyed' do
+          get :destroy, id: co_director.id
+          expect(response.status).to eq 200
+          expect(subject.notice).to eq('User deleted.')
+        end
       end
     end
   end

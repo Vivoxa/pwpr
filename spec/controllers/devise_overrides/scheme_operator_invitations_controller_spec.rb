@@ -1,4 +1,4 @@
-RSpec.describe DeviseOverrides::RegistrationsController, type: :controller do
+RSpec.describe DeviseOverrides::SchemeOperatorInvitationsController, type: :controller do
   before do
     @request.env['devise.mapping'] = Devise.mappings[:scheme_operator]
   end
@@ -14,7 +14,7 @@ RSpec.describe DeviseOverrides::RegistrationsController, type: :controller do
 
     context 'when calling create' do
       it 'expects to be redirected to sign in' do
-        post :create, params: {}
+        get :new
         expect(response.status).to eq 302
         expect(response.body).to include('scheme_operators/sign_in')
       end
@@ -38,7 +38,7 @@ RSpec.describe DeviseOverrides::RegistrationsController, type: :controller do
 
       context 'when calling new' do
         it 'expects a CanCan AccessDenied error to be raised' do
-          expect { post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last] }.to raise_error(CanCan::AccessDenied)
+          expect { get :new }.to raise_error(CanCan::AccessDenied)
         end
       end
     end

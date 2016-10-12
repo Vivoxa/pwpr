@@ -31,7 +31,13 @@ class Ability
       can :manage, Scheme, id:  user.schemes.map(&:id)
       can :manage, :scheme_operator_invitation
       can :manage, :registration
-    else
+      can :manage, Scheme
+    elsif user.sc_super_user?
+      can :manage, SchemeOperator
+      can :manage, Scheme, id:  user.schemes.map(&:id)
+      can :manage, :scheme_operator_invitation
+      can :manage, :registration
+    elsif user.sc_user_r?
       can :read, Scheme, id:  user.schemes.map(&:id)
     end
   end

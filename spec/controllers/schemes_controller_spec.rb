@@ -48,7 +48,7 @@ RSpec.describe SchemesController, type: :controller do
     end
 
     describe 'GET #new' do
-      xit 'assigns a new scheme as @scheme' do
+      it 'assigns a new scheme as @scheme' do
         get :new, {}, session: valid_session
         expect(assigns(:scheme)).to be_a_new(Scheme)
       end

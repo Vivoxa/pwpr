@@ -28,6 +28,15 @@ class Ability
       can :read, CompanyOperator
       can :update, CompanyOperator
       can :edit, CompanyOperator
+    elsif user.co_user?
+      if user.sc_user_r?
+        can :read, Scheme, id:  user.schemes.map(&:id)
+      elsif user.sc_user_rw?
+        can :edit, Scheme, id:  user.schemes.map(&:id)
+        can :update, Scheme, id:  user.schemes.map(&:id)
+      elsif user.sc_user_rwe?
+        can :manage, Scheme, id:  user.schemes.map(&:id)
+      end
     end
   end
 
@@ -45,8 +54,15 @@ class Ability
       can :manage, DeviseOverrides::SchemeOperatorInvitationsController
       can :manage, SchemeOperatorInvitationsController
       can :manage, DeviseOverrides:: RegistrationsController
-    elsif user.sc_user_r?
-      can :read, Scheme, id:  user.schemes.map(&:id)
+    elsif user.sc_user?
+      if user.sc_user_r?
+        can :read, Scheme, id:  user.schemes.map(&:id)
+      elsif user.sc_user_rw?
+        can :edit, Scheme, id:  user.schemes.map(&:id)
+        can :update, Scheme, id:  user.schemes.map(&:id)
+      elsif user.sc_user_rwe?
+        can :manage, Scheme, id:  user.schemes.map(&:id)
+      end
     end
   end
 

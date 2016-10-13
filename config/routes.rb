@@ -13,6 +13,11 @@ Rails.application.routes.draw do
   resources :admins, :scheme_operators, :company_operators, :schemes
   resources :scheme_operator_invitations, only: :index
 
+  resources :scheme_operators, :company_operators do
+    resources :permissions, only: [:show]
+    match 'permissions', to: 'permissions#show', via: [:get, :post]
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

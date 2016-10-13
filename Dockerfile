@@ -7,4 +7,4 @@ ADD Gemfile.lock /pp_pwpr/Gemfile.lock
 RUN bundle install
 ADD . /pp_pwpr
 EXPOSE 3000
-CMD bash -c "bundle && RAILS_ENV=preprod bundle exec rails s -p 3000 -b '0.0.0.0'"
+CMD bash -c "bundle && RAILS_ENV=preprod bundle exec rake db:setup && RAILS_ENV=preprod bundle exec rails s -p 3000 -b '0.0.0.0'"

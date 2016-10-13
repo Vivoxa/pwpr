@@ -30,7 +30,9 @@ RSpec.describe DeviseOverrides::RegistrationsController, type: :controller do
 
       context 'when calling new' do
         it 'expects a CanCan AccessDenied error to be raised' do
-          expect { post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last] }.to raise_error(CanCan::AccessDenied)
+          post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+          expect(flash[:alert]).to be_present
+          expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
     end

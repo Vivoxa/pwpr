@@ -13,11 +13,7 @@ module DeviseOverrides
       resource.save
       yield resource if block_given?
       if resource.persisted?
-        if resource.is_a? SchemeOperator
-          schemes = Scheme.where(id: params['scheme_operator']['scheme_ids'])
-
-          resource.schemes = schemes
-        end
+        assign_schemes(resource)
         if resource.active_for_authentication?
           set_flash_message! :notice, :signed_up
           sign_up(resource_name, resource)
@@ -41,6 +37,10 @@ module DeviseOverrides
     end
 
     protected
+
+    def assign_schemes(resource)
+      resource.schemes = Scheme.where(id: params['scheme_operator']['scheme_ids']) if resource.is_a? SchemeOperator
+    end
 
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up) do |user_params|

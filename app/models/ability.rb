@@ -11,9 +11,15 @@ class Ability
     configure_company_operator(user) if user.is_a?(CompanyOperator)
 
     configure_admin(user) if user.is_a?(Admin)
+
+    configure_visitor if user.is_a?(Visitor)
   end
 
   private
+
+  def configure_visitor
+    can %i(edit update), DeviseOverrides::SchemeOperatorInvitationsController
+  end
 
   def configure_company_operator(user)
     if user.co_director?
@@ -29,7 +35,17 @@ class Ability
     if user.sc_director?
       can :manage, SchemeOperator
       can :manage, Scheme, id:  user.schemes.map(&:id)
-    else
+      can :manage, DeviseOverrides::RegistrationsController
+      can :manage, DeviseOverrides::SchemeOperatorInvitationsController
+      can :manage, SchemeOperatorInvitationsController
+      can :manage, Scheme
+    elsif user.sc_super_user?
+      can :manage, SchemeOperator
+      can :manage, Scheme, id:  user.schemes.map(&:id)
+      can :manage, DeviseOverrides::SchemeOperatorInvitationsController
+      can :manage, SchemeOperatorInvitationsController
+      can :manage, DeviseOverrides:: RegistrationsController
+    elsif user.sc_user_r?
       can :read, Scheme, id:  user.schemes.map(&:id)
     end
   end
@@ -40,6 +56,7 @@ class Ability
       can :manage, CompanyOperator
       can :manage, SchemeOperator
       can :manage, Scheme
+      can :manage, DeviseOverrides:: RegistrationsController
     end
   end
 

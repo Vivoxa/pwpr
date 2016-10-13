@@ -42,7 +42,7 @@ RSpec.describe CompanyOperator, type: :model do
       expect(subject.allowed_role?(:co_contact)).to be true
     end
 
-    it 'expects co_user_r to be an available role' do
+    it 'expects co_user to be an available role' do
       expect(subject.allowed_role?(:co_user)).to be true
     end
 

@@ -45,10 +45,13 @@ RSpec.describe DeviseOverrides::RegistrationsController, type: :controller do
         sign_in co_marti
       end
 
-      context 'when calling new' do
+      context 'when calling create' do
         it 'expects a 200 response status' do
-          post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
-          expect(response.status).to eq 200
+          post :create, scheme_operator: {email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', scheme_ids: [Scheme.last]}
+          expect(response.status).to eq 302
+          so_user = SchemeOperator.find_by_email('freddy@pwpr.com')
+          expect(so_user).to be_a(SchemeOperator)
+          expect(so_user.name).to eq 'freddy'
         end
       end
     end

@@ -45,7 +45,7 @@ RSpec.describe SchemeOperator, type: :model do
 
   context 'Roles' do
     it 'expects the correct roles to be available' do
-      expect(SchemeOperator.available_role_names).to eq %w(sc_director sc_super_user sc_user_r sc_user_rw sc_user_rwe)
+      expect(SchemeOperator.available_role_names).to eq %w(sc_director sc_super_user sc_user sc_user_r sc_user_rw sc_user_rwe)
     end
 
     it 'expects sc_director to be an available role' do
@@ -54,6 +54,10 @@ RSpec.describe SchemeOperator, type: :model do
 
     it 'expects sc_super_user to be an available role' do
       expect(subject.allowed_role?(:sc_super_user)).to be true
+    end
+
+    it 'expects sc_user to be an available role' do
+      expect(subject.allowed_role?(:sc_user)).to be true
     end
 
     it 'expects sc_user_r to be an available role' do

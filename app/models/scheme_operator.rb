@@ -3,11 +3,19 @@ class SchemeOperator < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
-  royce_roles %w(sc_director sc_super_user sc_user_r sc_user_rw sc_user_rwe)
+  royce_roles %w(sc_director sc_super_user sc_user sc_user_r sc_user_rw sc_user_rwe)
 
   has_and_belongs_to_many :schemes
   validates_presence_of :schemes
 
   scope :company_operators, -> (scheme) { scheme.company_operators }
   scope :pending_scheme_operators, -> { where('confirmed_at <= NOW()') }
+
+  def user_roles
+    %w(sc_director sc_super_user sc_user)
+  end
+
+  def user_permissions
+    %w(sc_user_r sc_user_rw sc_user_rwe)
+  end
 end

@@ -1,0 +1,11 @@
+<%= form_tag do %>
+  <h2>Permissions</h2>
+  <%= check_box_tag(permissions: :perm1) %>
+  <%= label_tag(permissions: :perm1, "perm1") %>
+  <%= check_box_tag(permissions: :perm2) %>
+  <%= label_tag(permissions: :perm2, "perm2") %>
+  <%= check_box_tag(permissions: :perm3) %>
+  <%= label_tag(permissions: :perm3, "perm3") %>
+
+  <%= submit_tag("Save") %>
+<%= end %>

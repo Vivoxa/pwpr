@@ -9,6 +9,24 @@ RSpec.describe CompanyOperator, type: :model do
     subject.save
   end
 
+  describe 'Constants' do
+    it 'load the ROLES constant' do
+      expect(subject.class::ROLES).not_to be_nil
+    end
+
+    it 'expects ROLES to be set correctly' do
+      expect(subject.class::ROLES).to eq %w(co_director co_contact co_user)
+    end
+
+    it 'load the PERMISSIONS constant' do
+      expect(subject.class::PERMISSIONS).not_to be_nil
+    end
+
+    it 'expects PERMISSIONS to be set correctly' do
+      expect(subject.class::PERMISSIONS).to eq %w(co_user_r co_user_rw co_user_rwe)
+    end
+  end
+
   context 'Scopes' do
     describe 'scheme_operators' do
       let(:test_scheme_operators) { CompanyOperator.scheme_operators(scheme) }

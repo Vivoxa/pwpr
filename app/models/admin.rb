@@ -5,7 +5,7 @@ class Admin < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   include DeviseInvitable::Inviter
 
-  ROLES = %w(full_access)
-  PERMISSIONS = %w()
+  ROLES = %w(full_access).freeze
+  PERMISSIONS = %w().freeze
   royce_roles ROLES + PERMISSIONS
 end

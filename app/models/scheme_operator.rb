@@ -4,8 +4,8 @@ class SchemeOperator < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  ROLES = %w(sc_director sc_super_user sc_user)
-  PERMISSIONS = %w(sc_user_r sc_user_rw sc_user_rwe)
+  ROLES = %w(sc_director sc_super_user sc_user).freeze
+  PERMISSIONS = %w(sc_user_r sc_user_rw sc_user_rwe).freeze
   royce_roles ROLES + PERMISSIONS
 
   has_and_belongs_to_many :schemes

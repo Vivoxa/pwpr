@@ -1,0 +1,2 @@
+module AdminOperatorPermissionsHelper
+end

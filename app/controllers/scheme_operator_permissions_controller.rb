@@ -1,2 +1,0 @@
-class SchemeOperatorPermissionsController < ApplicationController
-end

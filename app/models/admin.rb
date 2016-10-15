@@ -4,5 +4,8 @@ class Admin < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   include DeviseInvitable::Inviter
-  royce_roles %w(full_access)
+
+  ROLES = %w(full_access)
+  PERMISSIONS = %w()
+  royce_roles ROLES + PERMISSIONS
 end

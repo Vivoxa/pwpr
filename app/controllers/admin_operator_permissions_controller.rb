@@ -1,2 +1,0 @@
-class AdminOperatorPermissionsController < ApplicationController
-end

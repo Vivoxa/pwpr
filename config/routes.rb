@@ -13,6 +13,17 @@ Rails.application.routes.draw do
   resources :admins, :scheme_operators, :company_operators, :schemes
   resources :scheme_operator_invitations, only: :index
 
+  resources :scheme_operators do
+    resources :scheme_operators_permissions
+  end
+
+  resources :company_operators do
+    resources :company_operators_permissions
+  end
+
+  resources :admin do
+    resources :admin_permissions
+  end
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

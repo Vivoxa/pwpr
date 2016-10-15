@@ -1,2 +1,0 @@
-class CompanyOperatorPermissionsController < ApplicationController
-end

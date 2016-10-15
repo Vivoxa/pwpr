@@ -30,7 +30,9 @@ RSpec.describe DeviseOverrides::RegistrationsController, type: :controller do
 
       context 'when calling new' do
         it 'expects a CanCan AccessDenied error to be raised' do
-          expect { post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last] }.to raise_error(CanCan::AccessDenied)
+          post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+          expect(flash[:alert]).to be_present
+          expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
     end
@@ -43,10 +45,13 @@ RSpec.describe DeviseOverrides::RegistrationsController, type: :controller do
         sign_in co_marti
       end
 
-      context 'when calling new' do
+      context 'when calling create' do
         it 'expects a 200 response status' do
-          post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
-          expect(response.status).to eq 200
+          post :create, scheme_operator: {email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', scheme_ids: [Scheme.last]}
+          expect(response.status).to eq 302
+          so_user = SchemeOperator.find_by_email('freddy@pwpr.com')
+          expect(so_user).to be_a(SchemeOperator)
+          expect(so_user.name).to eq 'freddy'
         end
       end
     end

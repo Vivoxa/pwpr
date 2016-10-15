@@ -51,25 +51,33 @@ RSpec.describe SchemeOperatorsController, type: :controller do
       end
       context 'when calling index' do
         it 'expects a CanCan AccessDenied error to be raised' do
-          expect { get 'index' }.to raise_error(CanCan::AccessDenied)
+          get :index
+          expect(flash[:alert]).to be_present
+          expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
 
       context 'when calling show' do
         it 'expects a CanCan AccessDenied error to be raised' do
-          expect { get :show, id: co_marti.id }.to raise_error(CanCan::AccessDenied)
+          get :show, id: co_marti.id
+          expect(flash[:alert]).to be_present
+          expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
 
       context 'when calling update' do
         it 'expects a CanCan AccessDenied error to be raised' do
-          expect { put :update, id: co_marti.id }.to raise_error(CanCan::AccessDenied)
+          put :update, id: co_marti.id
+          expect(flash[:alert]).to be_present
+          expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
 
       context 'when calling destroy' do
         it 'expects a CanCan AccessDenied error to be raised' do
-          expect { put :update, id: co_marti.id }.to raise_error(CanCan::AccessDenied)
+          put :update, id: co_marti.id
+          expect(flash[:alert]).to be_present
+          expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
     end

@@ -1,3 +1,16 @@
+<% if @current_user %>
+  <% @login_path = '/scheme_operators/sign_out' %>
+  <% @login_btn_text = 'Sign Out' %>
+  <% @login_btn_style = 'btn-primary' %>
+<% else %>
+  <% @login_path = "/scheme_operators/sign_in" %>
+  <% @login_btn_text = "Sign In" %>
+  <% @admins_sign_path = '/admins/sign_in' %>
+  <% @so_sign_path = '/scheme_operators/sign_in' %>
+  <% @co_sign_path = '/company_operators/sign_in' %>
+  <% @login_btn_style = 'btn-success' %>
+<% end %>
+
 <nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
   <a class="navbar-brand" href="#"><%= image_tag("leaf1.png", size: "28x28", :alt => "company logo") %></a>
 
@@ -7,15 +20,17 @@
     </li>
     <li class="nav-item">
       <div class="btn-group">
-        <a class="btn btn-primary btn-sm" href="/scheme_operators/sign_up">Sign Up</a>
-        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <a class="btn <%= @login_btn_style %> btn-sm" href=<%= @login_path %>><%= @login_btn_text %></a>
+      <% unless @current_user %>
+        <button type="button" class="btn <%= @login_btn_style %> btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="sr-only">Toggle Dropdown</span>
         </button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="/admins/sign_in">Admins</a>
-          <a class="dropdown-item" href="/scheme_operators/sign_in">Scheme Operators</a>
-          <a class="dropdown-item" href="/company_operators/sign_in">Company Operators</a>
+          <a class="dropdown-item" href=<%= @admins_sign_path %>>Admins</a>
+          <a class="dropdown-item" href=<%= @so_sign_path %>>Scheme Operators</a>
+          <a class="dropdown-item" href=<%= @co_sign_path %>>Company Operators</a>
         </div>
+      <% end %>
       </div>
     </li>
     <li class="nav-item">
@@ -27,10 +42,11 @@
     <li class="nav-item">
       <a class="nav-link" href="#">Historic Data</a>
     </li>
+    <li class="nav-item">
+    </li>
   </ul>
 
-    <form class="form-inline pull-xs-right">
-      <input class="form-control" type="text" placeholder="Search">
-      <button class="btn btn-outline-info" type="submit">Search</button>
-    </form>
+  <div class="form-inline pull-xs-right">
+    <button class="btn btn-sm btn-outline-info" style="margin-top:5px" type="submit"><%= @current_user.email if @current_user %></button>
+  </div>
 </nav>

@@ -30,7 +30,9 @@ RSpec.describe DeviseOverrides::SchemeOperatorInvitationsController, type: :cont
 
       context 'when calling new' do
         it 'expects a CanCan AccessDenied error to be raised' do
-          expect { get :new }.to raise_error(CanCan::AccessDenied)
+          get :new
+          expect(flash[:alert]).to be_present
+          expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
     end

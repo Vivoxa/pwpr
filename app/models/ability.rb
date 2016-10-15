@@ -21,22 +21,27 @@ class Ability
     can %i(edit update), DeviseOverrides::SchemeOperatorInvitationsController
   end
 
+  def full_access
+    can :read, CompanyOperator
+    can :update, CompanyOperator
+    can :edit, CompanyOperator
+    can :new, CompanyOperator
+    can :create, CompanyOperator
+  end
+
   def configure_company_operator(user)
     if user.co_director?
       can :manage, CompanyOperator
     elsif user.co_contact?
+      full_access
+    elsif user.co_user_r?
       can :read, CompanyOperator
-      can :update, CompanyOperator
-      can :edit, CompanyOperator
-    elsif user.co_user?
-      if user.sc_user_r?
-        can :read, Scheme, id:  user.schemes.map(&:id)
-      elsif user.sc_user_rw?
-        can :edit, Scheme, id:  user.schemes.map(&:id)
-        can :update, Scheme, id:  user.schemes.map(&:id)
-      elsif user.sc_user_rwe?
-        can :manage, Scheme, id:  user.schemes.map(&:id)
-      end
+    elsif user.co_user_rw?
+      can :read, CompanyOperator
+      can :new, CompanyOperator
+      can :create, CompanyOperator
+    elsif user.co_user_rwe?
+      full_access
     end
   end
 
@@ -53,16 +58,9 @@ class Ability
       can :manage, Scheme, id:  user.schemes.map(&:id)
       can :manage, DeviseOverrides::SchemeOperatorInvitationsController
       can :manage, SchemeOperatorInvitationsController
-      can :manage, DeviseOverrides:: RegistrationsController
-    elsif user.sc_user?
-      if user.sc_user_r?
-        can :read, Scheme, id:  user.schemes.map(&:id)
-      elsif user.sc_user_rw?
-        can :edit, Scheme, id:  user.schemes.map(&:id)
-        can :update, Scheme, id:  user.schemes.map(&:id)
-      elsif user.sc_user_rwe?
-        can :manage, Scheme, id:  user.schemes.map(&:id)
-      end
+      can :manage, DeviseOverrides::RegistrationsController
+    elsif user.sc_user_r?
+      can :read, Scheme, id:  user.schemes.map(&:id)
     end
   end
 
@@ -72,7 +70,7 @@ class Ability
       can :manage, CompanyOperator
       can :manage, SchemeOperator
       can :manage, Scheme
-      can :manage, DeviseOverrides:: RegistrationsController
+      can :manage, DeviseOverrides::RegistrationsController
     end
   end
 

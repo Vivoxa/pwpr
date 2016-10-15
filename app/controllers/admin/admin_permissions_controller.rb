@@ -1,6 +1,6 @@
-class AdminOperatorPermissionsController < ApplicationController
+class AdminPermissionsController < ApplicationController
   before_filter :authenticate_admin!
-  authorize_resource class: AdminOperator
+  authorize_resource class: Admin
 
   def show
     @user = Admin.find_by_id(params[:id])

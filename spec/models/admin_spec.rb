@@ -1,4 +1,3 @@
-
 require 'rails_helper'
 
 RSpec.describe Admin, type: :model do
@@ -39,6 +38,37 @@ RSpec.describe Admin, type: :model do
         subject.remove_role :full_access
         expect(subject.has_role?(:full_access)).to be false
       end
+    end
+  end
+  context 'abilities' do
+    context 'with Role full_access' do
+      let(:admin_full_access) { FactoryGirl.create(:admin_full_access) }
+      let(:ability) { Ability.new(admin_full_access) }
+
+      it_behaves_like 'an admin manager'
+
+      it_behaves_like 'a company operator manager'
+
+      it_behaves_like 'a scheme manager'
+
+      it_behaves_like 'a scheme operator manager'
+
+      it_behaves_like 'a registration manager'
+    end
+
+    context 'with no Role' do
+      let(:admin) { FactoryGirl.create(:admin) }
+      let(:ability) { Ability.new(admin) }
+
+      it_behaves_like 'NOT an admin manager'
+
+      it_behaves_like 'NOT a company operator manager'
+
+      it_behaves_like 'NOT a scheme operator manager'
+
+      it_behaves_like 'NOT a scheme manager'
+
+      it_behaves_like 'NOT a registration manager'
     end
   end
 end

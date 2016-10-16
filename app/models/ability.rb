@@ -53,6 +53,7 @@ class Ability
       can :manage, DeviseOverrides::SchemeOperatorInvitationsController
       can :manage, SchemeOperatorInvitationsController
       can :manage, Scheme
+      can :manage, SchemeOperator::SchemeOperatorPermissionsController
     elsif user.sc_super_user?
       can :manage, SchemeOperator
       can :manage, Scheme, id:  user.schemes.map(&:id)

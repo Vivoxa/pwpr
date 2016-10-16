@@ -15,7 +15,7 @@
     roles = %w[sc_director sc_super_user sc_user_r sc_user_rw sc_user_rwe sc_director sc_super_user]
     company_roles = %w[co_director co_contact co_user_r co_user_rw co_director co_contact ]
     names = ["Nigel","Dave","Lorand","Vicki","Andrew","Andi"]
-    businesses = Business.create([{name: 'dans pack business', membership_id: 'mem-01'}, { name: 'my pack business', membership_id: 'mem-02' }, {name: 'pack one business', membership_id: 'mem-03' }, {name: 'test business', membership_id: 'mem-04' }, {name: 'synergy business', membership_id: 'mem-05' }, { name: 'pack for you business', membership_id: 'mem-06' }])
+    businesses = Business.create([{name: 'dans pack business', membership_id: 'mem-01', NPWD: 'NPWD-1', SIC: 'SIC-1'}, { name: 'my pack business', membership_id: 'mem-02', NPWD: 'NPWD-1', SIC: 'SIC-1' }, {name: 'pack one business', membership_id: 'mem-03', NPWD: 'NPWD-1', SIC: 'SIC-1' }, {name: 'test business', membership_id: 'mem-04', NPWD: 'NPWD-1', SIC: 'SIC-1' }, {name: 'synergy business', membership_id: 'mem-05', NPWD: 'NPWD-1', SIC: 'SIC-1' }, { name: 'pack for you business', membership_id: 'mem-06', NPWD: 'NPWD-1', SIC: 'SIC-1' }])
     schemes.each_with_index do |scheme, index|
       businesses[index].scheme = scheme
       businesses[index].save!

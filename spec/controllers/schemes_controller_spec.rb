@@ -21,7 +21,7 @@ RSpec.describe SchemesController, type: :controller do
     end
 
     let(:invalid_attributes) do
-      {first_name: 'MyScheme', active: true}
+      {name: 'MyScheme', active: true}
     end
 
     # This should return the minimal set of values that should be in the session
@@ -91,6 +91,8 @@ RSpec.describe SchemesController, type: :controller do
 
         it 'updates the requested scheme' do
           scheme = Scheme.create! valid_attributes
+          co_marti.scheme_ids << scheme.id
+          co_marti.save
           put :update, {id: scheme.to_param, scheme: new_attributes}, session: valid_session
           scheme.reload
           skip('Add assertions for updated state')
@@ -98,12 +100,16 @@ RSpec.describe SchemesController, type: :controller do
 
         it 'assigns the requested scheme as @scheme' do
           scheme = Scheme.create! valid_attributes
+          co_marti.scheme_ids << scheme.id
+          co_marti.save
           put :update, {id: scheme.to_param, scheme: valid_attributes}, session: valid_session
           expect(assigns(:scheme)).to eq(scheme)
         end
 
         it 'redirects to the scheme' do
           scheme = Scheme.create! valid_attributes
+          co_marti.schemes << scheme
+          co_marti.save
           put :update, {id: scheme.to_param, scheme: valid_attributes}, session: valid_session
           expect(response).to redirect_to(scheme)
         end
@@ -112,6 +118,8 @@ RSpec.describe SchemesController, type: :controller do
       context 'with invalid params' do
         it 'assigns the scheme as @scheme' do
           scheme = Scheme.create! valid_attributes
+          co_marti.schemes << scheme
+          co_marti.save
           put :update, {id: scheme.to_param, scheme: invalid_attributes}, session: valid_session
           expect(assigns(:scheme)).to eq(scheme)
         end
@@ -121,6 +129,8 @@ RSpec.describe SchemesController, type: :controller do
     describe 'DELETE #destroy' do
       it 'destroys the requested scheme' do
         scheme = Scheme.create! valid_attributes
+        co_marti.schemes << scheme
+        co_marti.save
         expect do
           delete :destroy, {id: scheme.to_param}, session: valid_session
         end.to change(Scheme, :count).by(-1)
@@ -128,6 +138,8 @@ RSpec.describe SchemesController, type: :controller do
 
       it 'redirects to the schemes list' do
         scheme = Scheme.create! valid_attributes
+        co_marti.schemes << scheme
+        co_marti.save
         delete :destroy, {id: scheme.to_param}, session: valid_session
         expect(response).to redirect_to(schemes_url)
       end

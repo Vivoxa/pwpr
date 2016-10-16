@@ -1,3 +1,4 @@
+module CompanyOperator
 class CompanyOperator::CompanyOperatorPermissionsController < ApplicationController
   before_filter :authenticate_company_operator
   authorize_resource class: CompanyOperator
@@ -19,7 +20,7 @@ class CompanyOperator::CompanyOperatorPermissionsController < ApplicationControl
       permissions.each do |p|
         @user.add_role p
       end
-    rescue => e
+    rescue
       redirect_to company_operator_show_path, error: "An error occured! User #{@user.email}'s permissions were not updated.", status: :unprocessable_entity # 422
     end
 

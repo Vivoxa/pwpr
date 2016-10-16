@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AdminPermissionsController, type: :controller do
+RSpec.describe Admin::AdminPermissionsController, type: :controller do
   context 'when admin is NOT signed in' do
     context 'when calling show' do
       it 'expects to be redirected to sign in' do
@@ -44,7 +44,7 @@ RSpec.describe AdminPermissionsController, type: :controller do
     end
 
     it 'expects the admin to be updated' do
-      get :update, id: admin_marti.id, admin: {id: admin_marti.id}
+      get :update, id: admin_doc.id, admin: {id: admin_doc.id}
       expect(response.status).to eq 200
     end
   end

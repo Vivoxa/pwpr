@@ -19,7 +19,7 @@ class SchemeOperator::SchemeOperatorPermissionsController < ApplicationControlle
       permissions.each do |p|
         @user.add_role p
       end
-    rescue => e
+    rescue
       redirect_to scheme_operator_show_path, error: "An error occured! User #{@user.email}'s permissions were not updated.", status: :unprocessable_entity # 422
     end
 

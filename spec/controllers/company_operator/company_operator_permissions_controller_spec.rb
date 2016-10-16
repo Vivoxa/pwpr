@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CompanyOperatorPermissionsController, type: :controller do
+RSpec.describe CompanyOperator::CompanyOperatorPermissionsController, type: :controller do
   context 'when company operator is NOT signed in' do
     context 'when calling show' do
       it 'expects to be redirected to sign in' do

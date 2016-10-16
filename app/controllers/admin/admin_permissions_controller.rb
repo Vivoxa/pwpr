@@ -19,7 +19,7 @@ class Admin::AdminPermissionsController < ApplicationController
       permissions.each do |p|
         @user.add_role p
       end
-    rescue => e
+    rescue
       redirect_to admin_show_path, error: "An error occured! User #{@user.email}'s permissions were not updated.", status: :unprocessable_entity # 422
     end
 

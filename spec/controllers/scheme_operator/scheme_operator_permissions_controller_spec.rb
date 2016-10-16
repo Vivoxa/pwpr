@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SchemeOperatorPermissionsController, type: :controller do
+RSpec.describe SchemeOperator::SchemeOperatorPermissionsController, type: :controller do
   context 'when scheme operator is NOT signed in' do
     context 'when calling show' do
       it 'expects to be redirected to sign in' do

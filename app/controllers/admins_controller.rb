@@ -43,10 +43,10 @@ class AdminsController < ApplicationController
         @user.add_role p
       end
     rescue
-      redirect_to admin_show_path, error: "An error occured! User #{@user.email}'s permissions were not updated.", status: :unprocessable_entity # 422
+      redirect_to admin_path @user.id, error: "An error occured! User #{@user.email}'s permissions were not updated.", status: :unprocessable_entity # 422
     end
 
-    redirect_to admin_show_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 200 if
+    redirect_to admin_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 200 if
   end
 
   private

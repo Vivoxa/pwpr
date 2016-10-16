@@ -13,19 +13,9 @@ Rails.application.routes.draw do
   resources :schemes
   resources :scheme_operator_invitations, only: :index
 
-  resources :admins do
-    get 'permissions' => 'admins#permissions'
-    put 'update_permissions' => 'admins#update_permissions'
-  end
-
-  resources :scheme_operators do
-    get 'permissions' => 'scheme_operators#permissions'
-    put 'update_permissions' => 'scheme_operators#update_permissions'
-  end
-
-  resources :company_operators do
-    get 'permissions' => 'company_operators#permissions'
-    put 'update_permissions' => 'company_operators#update_permissions'
+  resources :admins, :scheme_operators, :company_operators do
+    get 'permissions', action: :permissions
+    put 'update_permissions', action: :update_permissions
   end
 
   # Example of regular route:

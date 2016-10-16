@@ -51,10 +51,10 @@ class CompanyOperatorsController < ApplicationController
         @user.add_role p
       end
     rescue
-      redirect_to company_operator_show_path, error: "An error occured! User #{@user.email}'s permissions were not updated.", status: :unprocessable_entity # 422
+      redirect_to company_operator_path @user.id, error: "An error occured! User #{@user.email}'s permissions were not updated.", status: :unprocessable_entity # 422
     end
 
-    redirect_to company_operator_show_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 200 if
+    redirect_to company_operator_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 200 if
   end
 
   private

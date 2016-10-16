@@ -2,14 +2,17 @@ class CompanyOperatorsController < ApplicationController
   before_action :authenticate_company_operator
   load_and_authorize_resource
 
+  # GET /company_operators
   def index
     @company_operator = CompanyOperator.all
   end
 
+  # GET /company_operators/:id
   def show
     @company_operator = CompanyOperator.find(params[:id])
   end
 
+  # PATCH/PUT /company_operators/:id
   def update
     @company_operator = CompanyOperator.find(params[:id])
     if @company_operator.update_attributes(secure_params)
@@ -19,18 +22,21 @@ class CompanyOperatorsController < ApplicationController
     end
   end
 
+  # DELETE /company_operators/:id
   def destroy
     @company_operator = CompanyOperator.find(params[:id])
     @company_operator.destroy
     redirect_to company_operators_path, notice: 'User deleted.', status: :ok
   end
 
+  # GET /company_operators/:id/permissions
   def permissions
     @user = CompanyOperator.find_by_id(params[:id])
     @available_roles = CompanyOperator::ROLES
     @available_permissions = CompanyOperator::PERMISSIONS
   end
 
+  # PATCH/PUT /company_operators/:id/update_permissions
   def update_permissions
     @user = CompanyOperator.find_by_id(params[:id])
 

@@ -1,11 +1,11 @@
-class SchemeOperatorPermissionsController < ApplicationController
+class SchemeOperator::SchemeOperatorPermissionsController < ApplicationController
   before_filter :authenticate_scheme_operator
   authorize_resource class: SchemeOperator
 
   def show
     @user = SchemeOperator.find_by_id(params[:id])
-    @available_roles = user.available_roles - SchemeOperator::PERMISSIONS
-    @available_permissions = user.available_roles - SchemeOperator::ROLES
+    @available_roles = SchemeOperator::ROLES
+    @available_permissions = SchemeOperator::PERMISSIONS
   end
 
   def update

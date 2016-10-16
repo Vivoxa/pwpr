@@ -1,4 +1,4 @@
-class AdminPermissionsController < ApplicationController
+class Admin::AdminPermissionsController < ApplicationController
   before_filter :authenticate_admin!
   authorize_resource class: Admin
 

@@ -1,4 +1,4 @@
-class CompanyOperatorPermissionsController < ApplicationController
+class CompanyOperator::CompanyOperatorPermissionsController < ApplicationController
   before_filter :authenticate_company_operator
   authorize_resource class: CompanyOperator
 

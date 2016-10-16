@@ -1,0 +1,24 @@
+<%= form_tag do %>
+  <h2>Roles</h2>
+  <%= radio_button_tag(:role, "sc_director") %>
+  <%= label_tag(:role, "Director") %>
+  <%= radio_button_tag(:role, "sc_super_user") %>
+  <%= label_tag(:role, "Super User") %>
+  <%= radio_button_tag(:role, "sc_user") %>
+  <%= label_tag(:role, "User") %>
+
+  <h2>Permissions</h2>
+
+<%= collection_check_boxes(:permissions, :permission, SchemeOperator.available_role_names, :id, :name_with_initial) do |b| %>
+  <%= b.label { b.check_box } %>
+<%= end %>
+
+  <%= check_box_tag(permissions: :sc_user_r) %>
+  <%= label_tag(permissions: :sc_user_r, "Read") %>
+  <%= check_box_tag(permissions: :sc_user_rw) %>
+  <%= label_tag(permissions: :sc_user_rw, "Write") %>
+  <%= check_box_tag(permissions: :sc_user_rwe) %>
+  <%= label_tag(permissions: :sc_user_rwe, "Edit") %>
+
+  <%= submit_tag("Save") %>
+<%= end %>

@@ -36,7 +36,7 @@ class SchemeOperatorsController < ApplicationController
 
   # PATCH/PUT /scheme_operators/:id/update_permissions
   def update_permissions
-    @user = SchemeOperator.find_by_id(params[:id])
+    @user = SchemeOperator.find_by_id(params[:scheme_operator_id])
 
     begin
       # Add role
@@ -48,11 +48,12 @@ class SchemeOperatorsController < ApplicationController
       permissions.each do |p|
         @user.add_role p
       end
-    rescue
+    rescue => e
       redirect_to scheme_operator_path @user.id, error: "An error occured! User #{@user.email}'s permissions were not updated.", status: :unprocessable_entity # 422
+      return
     end
 
-    redirect_to scheme_operator_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 200 if
+    redirect_to scheme_operator_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 200
   end
 
   private

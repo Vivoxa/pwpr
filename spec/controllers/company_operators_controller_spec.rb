@@ -187,7 +187,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
 
       context 'when calling permissions' do
         it 'expects the co_contact to not have access to the destroy action' do
-          get :permissions, id: CompanyOperator.last.id
+          get :permissions, company_operator_id: CompanyOperator.last.id
           expect(flash[:alert]).to be_present
           expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
@@ -195,7 +195,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
 
       context 'when calling update_permissions' do
         it 'expects the co_contact to not have access to the destroy action' do
-          put :update_permissions, id: CompanyOperator.last.id
+          put :update_permissions, company_operator_id: CompanyOperator.last.id
           expect(flash[:alert]).to be_present
           expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end

@@ -30,7 +30,7 @@ class AdminsController < ApplicationController
 
   # PATCH/PUT /admins/:id/update_permissions
   def update_permissions
-    @user = Admin.find_by_id(params[:id])
+    @user = Admin.find_by_id(params[:admin_id])
 
     begin
       # Add role
@@ -44,6 +44,7 @@ class AdminsController < ApplicationController
       end
     rescue
       redirect_to admin_path @user.id, error: "An error occured! User #{@user.email}'s permissions were not updated.", status: :unprocessable_entity # 422
+      return
     end
 
     redirect_to admin_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 200 if

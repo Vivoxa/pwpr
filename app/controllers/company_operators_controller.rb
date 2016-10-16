@@ -38,20 +38,21 @@ class CompanyOperatorsController < ApplicationController
 
   # PATCH/PUT /company_operators/:id/update_permissions
   def update_permissions
-    @user = CompanyOperator.find_by_id(params[:id])
+    @user = CompanyOperator.find_by_id(params[:company_operator_id])
 
     begin
       # Add role
-      @user.add_role params[:role]
+      @user.add_role params[:role] if params[:role]
 
-      permissions = params[:permissions] # This should be and array/hash of selected permissions
+      permissions = params[:permissions] ? params[:permissions] : [] # This should be and array/hash of selected permissions
 
       # Add roles for permissions
       permissions.each do |p|
-        @user.add_role p
+        @user.add_role p if p
       end
     rescue
       redirect_to company_operator_path @user.id, error: "An error occured! User #{@user.email}'s permissions were not updated.", status: :unprocessable_entity # 422
+      return
     end
 
     redirect_to company_operator_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 200 if

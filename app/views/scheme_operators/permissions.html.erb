@@ -4,7 +4,7 @@
     <%= @available_roles.each do |role| %>
       <div class="radio">
         <label>
-          <input type="radio" name=<%= role %> id="roleOption" value=<%= role.to_sym %> checked>
+          <input type="radio" name=<%= role %> id="roleOption" value=<%= role %> checked>
           <%= role.capitalize %>
         </label>
       </div>
@@ -16,8 +16,8 @@
     <%= @current_permissions.each do |permission| %>
       <div class="checkbox disabled">
         <label>
-          <input type="checkbox" value=<%= permission.to_sym %> checked disabled>
-          <%= permission.capitalize%>
+          <input type="checkbox" value=<%= permission %> checked disabled>
+          <%= permission.capitalize %>
         </label>
       </div>
     <%= end %>
@@ -25,8 +25,8 @@
     <%= @available_permissions.each do |permission| %>
       <div class="checkbox">
         <label>
-          <input type="checkbox" value=<%= permission.to_sym %>>
-          <%= permission.capitalize%>
+          <input type="checkbox" value=<%= permission %>>
+          <%= permission.capitalize %>
         </label>
       </div>
     <%= end %>

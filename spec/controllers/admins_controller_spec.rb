@@ -94,7 +94,7 @@ RSpec.describe AdminsController, type: :controller do
 
     it 'expects the admin to have access to the update_permissions action' do
       put :update_permissions, admin_id: Admin.last.id
-      expect(response.status).to eq 200
+      expect(response.status).to eq 302
     end
   end
 end

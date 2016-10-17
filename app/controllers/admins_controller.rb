@@ -47,7 +47,7 @@ class AdminsController < ApplicationController
       return
     end
 
-    redirect_to admin_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 200 if
+    redirect_to admin_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 302
   end
 
   private

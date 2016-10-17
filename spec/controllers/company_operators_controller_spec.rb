@@ -148,7 +148,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
       context 'when calling update_permissions' do
         it 'expects the company operator permissions to be updated' do
           put :update_permissions, company_operator_id: CompanyOperator.last.id
-          expect(response.status).to eq 200
+          expect(response.status).to eq 302
         end
       end
     end

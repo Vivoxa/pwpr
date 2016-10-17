@@ -55,7 +55,7 @@ class CompanyOperatorsController < ApplicationController
       return
     end
 
-    redirect_to company_operator_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 200 if
+    redirect_to company_operator_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 302
   end
 
   private

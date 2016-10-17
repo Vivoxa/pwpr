@@ -156,7 +156,7 @@ RSpec.describe SchemeOperatorsController, type: :controller do
       context 'when calling update_permissions' do
         it 'expects the scheme operator permissions to be updated' do
           put :update_permissions, scheme_operator_id: SchemeOperator.last.id
-          expect(response.status).to eq 200
+          expect(response.status).to eq 302
         end
       end
     end

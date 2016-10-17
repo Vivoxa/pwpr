@@ -40,20 +40,20 @@ class SchemeOperatorsController < ApplicationController
 
     begin
       # Add role
-      @user.add_role params[:role]
+      @user.add_role params[:role] if params[:role]
 
-      permissions = params[:permissions] # This should be and array/hash of selected permissions
+      permissions = params[:permissions] ? params[:permissions] : [] # This should be and array/hash of selected permissions
 
       # Add roles for permissions
       permissions.each do |p|
-        @user.add_role p
+        @user.add_role p if p
       end
     rescue => e
       redirect_to scheme_operator_path @user.id, error: "An error occured! User #{@user.email}'s permissions were not updated.", status: :unprocessable_entity # 422
       return
     end
 
-    redirect_to scheme_operator_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 200
+    redirect_to scheme_operator_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 302
   end
 
   private

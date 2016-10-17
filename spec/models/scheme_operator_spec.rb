@@ -152,17 +152,17 @@ RSpec.describe SchemeOperator, type: :model do
 
       let(:ability) { Ability.new(scheme_operator) }
 
-      it_behaves_like 'a reader', CompanyOperator
+      it_behaves_like 'a reader', SchemeOperator
 
-      it_behaves_like 'an editor', CompanyOperator
+      it_behaves_like 'an editor', SchemeOperator
 
-      it_behaves_like 'an updater', CompanyOperator
+      it_behaves_like 'an updater', SchemeOperator
 
-      it_behaves_like 'a writer', CompanyOperator
+      it_behaves_like 'a writer', SchemeOperator
 
       it_behaves_like 'NOT an admin manager'
 
-      it_behaves_like 'NOT a destroyer', CompanyOperator
+      it_behaves_like 'NOT a destroyer', SchemeOperator
 
       it_behaves_like 'NOT a scheme operator manager'
 
@@ -171,19 +171,26 @@ RSpec.describe SchemeOperator, type: :model do
       it_behaves_like 'a registration manager'
     end
 
-    context 'with co_user_r role' do
-      let(:company_operator_with_co_user_r) { FactoryGirl.create(:company_operator_with_co_user_r) }
-      let(:ability) { Ability.new(company_operator_with_co_user_r) }
+    context 'with sc_user_r role' do
+      before do
+        scheme_operator.add_role(:sc_user_r)
+      end
 
-      it_behaves_like 'a reader', CompanyOperator
+      after do
+        scheme_operator.remove_role(:sc_user_r)
+      end
 
-      it_behaves_like 'NOT an editor', CompanyOperator
+      let(:ability) { Ability.new(scheme_operator) }
 
-      it_behaves_like 'NOT an updater', CompanyOperator
+      it_behaves_like 'a reader', SchemeOperator
 
-      it_behaves_like 'NOT a writer', CompanyOperator
+      it_behaves_like 'NOT an editor', SchemeOperator
 
-      it_behaves_like 'NOT a destroyer', CompanyOperator
+      it_behaves_like 'NOT an updater', SchemeOperator
+
+      it_behaves_like 'NOT a writer', SchemeOperator
+
+      it_behaves_like 'NOT a destroyer', SchemeOperator
 
       it_behaves_like 'NOT an admin manager'
 
@@ -194,21 +201,28 @@ RSpec.describe SchemeOperator, type: :model do
       it_behaves_like 'NOT a registration manager'
     end
 
-    context 'with co_user_rw role' do
-      let(:company_operator_with_co_user_rw) { FactoryGirl.create(:company_operator_with_co_user_rw) }
-      let(:ability) { Ability.new(company_operator_with_co_user_rw) }
+    context 'with sc_user_rw role' do
+      before do
+        scheme_operator.add_role(:sc_user_rw)
+      end
 
-      it_behaves_like 'a reader', CompanyOperator
+      after do
+        scheme_operator.remove_role(:sc_user_rw)
+      end
 
-      it_behaves_like 'a writer', CompanyOperator
+      let(:ability) { Ability.new(scheme_operator) }
+
+      it_behaves_like 'a reader', SchemeOperator
+
+      it_behaves_like 'NOT an editor', SchemeOperator
+
+      it_behaves_like 'NOT an updater', SchemeOperator
+
+      it_behaves_like 'a writer', SchemeOperator
+
+      it_behaves_like 'NOT a destroyer', SchemeOperator
 
       it_behaves_like 'NOT an admin manager'
-
-      it_behaves_like 'NOT an editor', CompanyOperator
-
-      it_behaves_like 'NOT an updater', CompanyOperator
-
-      it_behaves_like 'NOT a destroyer', CompanyOperator
 
       it_behaves_like 'NOT a scheme operator manager'
 
@@ -217,21 +231,28 @@ RSpec.describe SchemeOperator, type: :model do
       it_behaves_like 'NOT a registration manager'
     end
 
-    context 'with co_user_rwe role' do
-      let(:company_operator_with_co_user_rwe) { FactoryGirl.create(:company_operator_with_co_user_rwe) }
-      let(:ability) { Ability.new(company_operator_with_co_user_rwe) }
+    context 'with sc_user_rwe role' do
+      before do
+        scheme_operator.add_role(:sc_user_rwe)
+      end
 
-      it_behaves_like 'a reader', CompanyOperator
+      after do
+        scheme_operator.remove_role(:sc_user_rwe)
+      end
 
-      it_behaves_like 'a writer', CompanyOperator
+      let(:ability) { Ability.new(scheme_operator) }
+
+      it_behaves_like 'a reader', SchemeOperator
+
+      it_behaves_like 'an editor', SchemeOperator
+
+      it_behaves_like 'an updater', SchemeOperator
+
+      it_behaves_like 'a writer', SchemeOperator
+
+      it_behaves_like 'NOT a destroyer', SchemeOperator
 
       it_behaves_like 'NOT an admin manager'
-
-      it_behaves_like 'an editor', CompanyOperator
-
-      it_behaves_like 'an updater', CompanyOperator
-
-      it_behaves_like 'NOT a destroyer', CompanyOperator
 
       it_behaves_like 'NOT a scheme operator manager'
 

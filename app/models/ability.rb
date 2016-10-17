@@ -62,12 +62,22 @@ class Ability
       configure_sc_super_user(user, scheme_associated_so_ids, company_operator_associated_ids)
     elsif user.sc_user_r?
       can :read, Scheme, id:  user.schemes.map(&:id)
+      can :read, SchemeOperator
+    elsif user.sc_user_rw?
+      can :read, Scheme, id:  user.schemes.map(&:id)
+      can :read, SchemeOperator
+      can %i(new create), SchemeOperator
+    elsif user.sc_user_rwe?
+      can :read, Scheme, id:  user.schemes.map(&:id)
+      can :read, SchemeOperator
+      can %i(new create update edit), SchemeOperator
     end
   end
 
   def configure_sc_super_user(user, scheme_associated_so_ids, company_operator_associated_ids)
     can :manage, SchemeOperator, id: scheme_associated_so_ids
     can %i(new create), SchemeOperator
+    cannot :destroy, SchemeOperator
     can :manage, Scheme, id:  user.scheme_ids
     can %i(new create), Scheme
     can :manage, DeviseOverrides::SchemeOperatorInvitationsController
@@ -97,6 +107,7 @@ class Ability
       can :manage, SchemeOperator
       can :manage, Scheme
       can :manage, DeviseOverrides::RegistrationsController
+      can :manage, DeviseOverrides::SchemeOperatorInvitationsController
     end
   end
 

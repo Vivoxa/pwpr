@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'visitors#index'
 
-  resources :admins, :scheme_operators, :company_operators, :schemes
+  resources :admins, :scheme_operators, :company_operators, :schemes, :businesses
   resources :scheme_operator_invitations, only: :index
 
   # Example of regular route:

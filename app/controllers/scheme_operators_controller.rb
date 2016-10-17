@@ -34,7 +34,7 @@ class SchemeOperatorsController < ApplicationController
     @available_permissions = SchemeOperator::PERMISSIONS
   end
 
-  # PATCH/PUT /scheme_operators/:id/update_permissions
+  # PUT /scheme_operators/:id/update_permissions
   def update_permissions
     @user = SchemeOperator.find_by_id(params[:scheme_operator_id])
 

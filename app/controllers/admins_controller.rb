@@ -28,7 +28,7 @@ class AdminsController < ApplicationController
     @available_permissions = Admin::PERMISSIONS
   end
 
-  # PATCH/PUT /admins/:id/update_permissions
+  # PUT /admins/:id/update_permissions
   def update_permissions
     @user = Admin.find_by_id(params[:admin_id])
 

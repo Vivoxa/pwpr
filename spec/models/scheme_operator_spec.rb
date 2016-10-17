@@ -162,7 +162,7 @@ RSpec.describe SchemeOperator, type: :model do
 
       it_behaves_like 'NOT an admin manager'
 
-      it_behaves_like 'NOT a destroyer', SchemeOperator
+      it_behaves_like 'NOT a destroyer', CompanyOperator
 
       it_behaves_like 'NOT a scheme operator manager'
 

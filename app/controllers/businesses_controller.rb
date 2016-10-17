@@ -1,5 +1,6 @@
 class BusinessesController < ApplicationController
   before_action :set_business, only: %i(show edit update destroy)
+  before_filter :authenticate_scheme_operator
 
   # GET /businesses
   # GET /businesses.json
@@ -15,6 +16,8 @@ class BusinessesController < ApplicationController
   # GET /businesses/new
   def new
     @business = Business.new
+    @schemes = current_user.schemes
+    raise 'The currently logged in Scheme Operator must have at least one Scheme to create a business' if @schemes.empty?
   end
 
   # GET /businesses/1/edit
@@ -24,6 +27,7 @@ class BusinessesController < ApplicationController
   # POST /businesses
   # POST /businesses.json
   def create
+    @schemes = current_user.schemes
     @business = Business.new(business_params)
 
     respond_to do |format|

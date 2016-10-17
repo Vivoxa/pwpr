@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'businesses/edit', type: :view do
   before do
-    @business = assign(:business, Business.create!(NPWD: 'jghfjf', SIC: 'gyg'))
+    @business = assign(:business, Business.create!(scheme_id: 1, NPWD: 'jghfjf', SIC: 'gyg'))
   end
 
   it 'renders the edit business form' do

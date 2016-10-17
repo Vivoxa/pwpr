@@ -33,7 +33,8 @@ class CompanyOperatorsController < ApplicationController
   def permissions
     @user = CompanyOperator.find_by_id(params[:id])
     @available_roles = CompanyOperator::ROLES
-    @available_permissions = CompanyOperator::PERMISSIONS
+    @available_permissions = CompanyOperator::PERMISSIONS - @user.role_list
+    @current_permissions = @user.role_list - @available_roles
   end
 
   # PATCH/PUT /company_operators/:id/update_permissions

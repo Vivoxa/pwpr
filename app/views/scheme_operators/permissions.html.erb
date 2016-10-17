@@ -1,0 +1,36 @@
+<%= form_tag, :url => scheme_operator_update_permissions_path(@user.id) do %>
+  <div class="roles">
+    <h2>User Roles</h2>
+    <%= @available_roles.each do |role| %>
+      <div class="radio">
+        <label>
+          <input type="radio" name=<%= role %> id="roleOption" value=<%= role.to_sym %> checked>
+          <%= role.capitalize %>
+        </label>
+      </div>
+    <%= end %>
+  </div>
+
+  <div class="permissions">
+    <h2>User Permissions</h2>
+    <%= @current_permissions.each do |permission| %>
+      <div class="checkbox disabled">
+        <label>
+          <input type="checkbox" value=<%= permission.to_sym %> checked disabled>
+          <%= permission.capitalize%>
+        </label>
+      </div>
+    <%= end %>
+
+    <%= @available_permissions.each do |permission| %>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value=<%= permission.to_sym %>>
+          <%= permission.capitalize%>
+        </label>
+      </div>
+    <%= end %>
+  </div>
+
+  <button type="submit" class="btn btn-default">Save Permissions</button>
+<%= end %>

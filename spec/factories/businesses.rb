@@ -5,6 +5,6 @@ FactoryGirl.define do
     company_no 'MyString'
     NPWD 'MyString'
     SIC 'MyString'
-    scheme nil
+    scheme_id 1
   end
 end

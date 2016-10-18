@@ -22,7 +22,7 @@ class AdminsController < ApplicationController
   end
 
   # GET /admins/:id/permissions
- def permissions
+  def permissions
     @user = Admin.find_by_id(params[:admin_id])
     @available_roles = Admin::ROLES
     @available_permissions = Admin::PERMISSIONS

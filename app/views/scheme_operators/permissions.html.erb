@@ -1,36 +1,28 @@
-<%= form_tag, :url => scheme_operator_update_permissions_path(@user.id) do %>
+<%= form_tag scheme_operator_update_permissions_path, method: 'put', :id => params[:scheme_operator_id] do %>
   <div class="roles">
-    <h2>User Roles</h2>
-    <%= @available_roles.each do |role| %>
-      <div class="radio">
-        <label>
-          <input type="radio" name=<%= role %> id="roleOption" value=<%= role %> checked>
-          <%= role.capitalize %>
-        </label>
-      </div>
-    <%= end %>
+    <h3>User Roles</h3>
+    <ul>
+      <% @available_roles.each do |role| %>
+        <li>
+          <%= radio_button_tag "role", role, @user.role_list.include?(role) -%>
+          <%= h role.capitalize -%>
+        </li>
+      <% end %>
+    </ul>
   </div>
 
   <div class="permissions">
-    <h2>User Permissions</h2>
-    <%= @current_permissions.each do |permission| %>
-      <div class="checkbox disabled">
-        <label>
-          <input type="checkbox" value=<%= permission %> checked disabled>
-          <%= permission.capitalize %>
-        </label>
-      </div>
-    <%= end %>
+    <h3>User Permissions</h3>
+    <ul>
+      <% @available_permissions.each do |permission| %>
+        <% checked_disabled = @user.role_list.include? permission %>
+        <li>
+          <%= check_box_tag "permissions[]", permission, @user.role_list.include?(permission) -%>
+          <%= h permission.capitalize -%>
+        </li>
+      <% end %>
+    </ul>
 
-    <%= @available_permissions.each do |permission| %>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" value=<%= permission %>>
-          <%= permission.capitalize %>
-        </label>
-      </div>
-    <%= end %>
   </div>
-
-  <button type="submit" class="btn btn-default">Save Permissions</button>
-<%= end %>
+  <%= submit_tag "Save Permissions" -%>
+<% end %>

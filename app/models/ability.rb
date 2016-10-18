@@ -21,47 +21,83 @@ class Ability
     can %i(edit update), DeviseOverrides::SchemeOperatorInvitationsController
   end
 
-  def full_access
-    can :read, CompanyOperator
-    can :update, CompanyOperator
-    can :edit, CompanyOperator
-    can :new, CompanyOperator
-    can :create, CompanyOperator
+  def full_access(user)
+    can :read, CompanyOperator, id: user.business.company_operator_ids
+    can :update, CompanyOperator, id: user.business.company_operator_ids
+    can :edit, CompanyOperator, id: user.business.company_operator_ids
+    can %i(new create), CompanyOperator
   end
 
   def configure_company_operator(user)
     if user.co_director?
-      can :manage, CompanyOperator
+      can :manage, CompanyOperator, id: user.business.company_operator_ids
+      can %i(new create), CompanyOperator
     elsif user.co_contact?
-      full_access
+      full_access(user)
     elsif user.co_user_r?
-      can :read, CompanyOperator
+      can :read, CompanyOperator, id: user.id
     elsif user.co_user_rw?
-      can :read, CompanyOperator
+      can :read, CompanyOperator, id: user.id
       can :new, CompanyOperator
       can :create, CompanyOperator
     elsif user.co_user_rwe?
-      full_access
+      full_access(user)
     end
   end
 
   def configure_scheme_operator(user)
+    scheme_associated_so_ids = user.schemes.each.map(&:scheme_operator_ids).flatten
+    company_operator_associated_ids = []
+    user.schemes.each do |scheme|
+      scheme.businesses.each do |business|
+        company_operator_associated_ids << business.company_operator_ids
+      end
+    end
+    company_operator_associated_ids = company_operator_associated_ids.flatten
+    company_operator_associated_ids = [1] if company_operator_associated_ids.empty?
+
     if user.sc_director?
-      can :manage, SchemeOperator
-      can :manage, Scheme, id:  user.schemes.map(&:id)
-      can :manage, DeviseOverrides::RegistrationsController
-      can :manage, DeviseOverrides::SchemeOperatorInvitationsController
-      can :manage, SchemeOperatorInvitationsController
-      can :manage, Scheme
+      configure_sc_director(user, scheme_associated_so_ids, company_operator_associated_ids)
     elsif user.sc_super_user?
-      can :manage, SchemeOperator
-      can :manage, Scheme, id:  user.schemes.map(&:id)
-      can :manage, DeviseOverrides::SchemeOperatorInvitationsController
-      can :manage, SchemeOperatorInvitationsController
-      can :manage, DeviseOverrides::RegistrationsController
+      configure_sc_super_user(user, scheme_associated_so_ids, company_operator_associated_ids)
     elsif user.sc_user_r?
       can :read, Scheme, id:  user.schemes.map(&:id)
+      can :read, SchemeOperator
+    elsif user.sc_user_rw?
+      can :read, Scheme, id:  user.schemes.map(&:id)
+      can :read, SchemeOperator
+      can %i(new create), SchemeOperator
+    elsif user.sc_user_rwe?
+      can :read, Scheme, id:  user.schemes.map(&:id)
+      can :read, SchemeOperator
+      can %i(new create update edit), SchemeOperator
     end
+  end
+
+  def configure_sc_super_user(user, scheme_associated_so_ids, company_operator_associated_ids)
+    can :manage, SchemeOperator, id: scheme_associated_so_ids
+    can %i(new create), SchemeOperator
+    cannot :destroy, SchemeOperator
+    can :manage, Scheme, id:  user.scheme_ids
+    can %i(new create), Scheme
+    can :manage, DeviseOverrides::SchemeOperatorInvitationsController
+    can :manage, SchemeOperatorInvitationsController
+    can :manage, DeviseOverrides::RegistrationsController
+    can :manage, CompanyOperator, id: company_operator_associated_ids
+    cannot :destroy, CompanyOperator
+    can %i(new create), CompanyOperator
+  end
+
+  def configure_sc_director(user, scheme_associated_so_ids, company_operator_associated_ids)
+    can :manage, SchemeOperator, id: scheme_associated_so_ids
+    can %i(new create), SchemeOperator
+    can :manage, Scheme, id:  user.scheme_ids
+    can %i(new create), Scheme
+    can :manage, DeviseOverrides::RegistrationsController
+    can :manage, DeviseOverrides::SchemeOperatorInvitationsController
+    can :manage, SchemeOperatorInvitationsController
+    can :manage, CompanyOperator, id: company_operator_associated_ids
+    can %i(new create), CompanyOperator
   end
 
   def configure_admin(user)
@@ -71,6 +107,7 @@ class Ability
       can :manage, SchemeOperator
       can :manage, Scheme
       can :manage, DeviseOverrides::RegistrationsController
+      can :manage, DeviseOverrides::SchemeOperatorInvitationsController
     end
   end
 

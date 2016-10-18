@@ -9,39 +9,39 @@ RSpec.describe SchemeOperator, type: :model do
     subject.save
   end
 
-  context 'Scopes' do
-    describe 'company_operators' do
-      let(:test_company_operators) { SchemeOperator.company_operators(scheme) }
+  # context 'Scopes' do
+  # describe 'company_operators' do
+  #   let(:test_company_operators) { SchemeOperator.company_operators(scheme) }
 
-      context 'when scheme is present' do
-        it 'returns the object' do
-          expect(test_company_operators.first).to be_a ::CompanyOperator
-        end
-      end
+  #   context 'when scheme is present' do
+  #     it 'returns the object' do
+  #       expect(test_company_operators.first).to be_a ::CompanyOperator
+  #     end
+  #   end
 
-      context 'when scheme does not exist' do
-        let(:scheme) { Scheme.new }
+  #   context 'when scheme does not exist' do
+  #     let(:scheme) { Scheme.new }
 
-        it 'returns empty' do
-          expect(test_company_operators.size).to eq(0)
-        end
-      end
-    end
+  #     it 'returns empty' do
+  #       expect(test_company_operators.size).to eq(0)
+  #     end
+  #   end
+  # end
 
-    describe 'pending_scheme_operators' do
-      let(:pending_scheme_operators) { SchemeOperator.pending_scheme_operators }
+  # describe 'pending_scheme_operators' do
+  #   let(:pending_scheme_operators) { SchemeOperator.pending_scheme_operators }
 
-      context 'when scheme is present' do
-        it 'returns the object' do
-          expect(pending_scheme_operators.first).to be_a ::SchemeOperator
-        end
+  #   context 'when scheme is present' do
+  #     it 'returns the object' do
+  #       expect(pending_scheme_operators.first).to be_a ::SchemeOperator
+  #     end
 
-        it 'expects objects to have a past confirmed_at' do
-          expect(pending_scheme_operators.first.confirmed_at).to be <= DateTime.now
-        end
-      end
-    end
-  end
+  #     it 'expects objects to have a past confirmed_at' do
+  #       expect(pending_scheme_operators.first.confirmed_at).to be <= DateTime.now
+  #     end
+  #   end
+  # end
+  # nd
 
   context 'Roles' do
     context 'Constants' do
@@ -116,6 +116,175 @@ RSpec.describe SchemeOperator, type: :model do
         subject.remove_role :sc_director
         expect(subject.has_role?(:sc_director)).to be false
       end
+    end
+  end
+
+  context 'Abitlites' do
+    let(:scheme_operator) do
+      SchemeOperator.create(name:                 'rspec owner',
+                            email:                'rspec@test.com',
+                            password:             'my_password',
+                            confirmation_token:   '12345678912345678912',
+                            confirmation_sent_at: DateTime.now,
+                            confirmed_at:         DateTime.now,
+                            scheme_ids:           Scheme.last.id)
+    end
+    context 'with NO Role' do
+      let(:ability) { Ability.new(scheme_operator) }
+
+      it_behaves_like 'NOT an admin manager'
+
+      it_behaves_like 'NOT a company operator manager'
+
+      it_behaves_like 'NOT a scheme operator manager'
+
+      it_behaves_like 'NOT a scheme manager'
+
+      it_behaves_like 'NOT a registration manager'
+
+      it_behaves_like 'NOT a business manager'
+    end
+
+    context 'with sc_director role' do
+      before do
+        scheme_operator.add_role(:sc_director)
+      end
+
+      after do
+        scheme_operator.remove_role(:sc_director)
+      end
+
+      let(:ability) { Ability.new(scheme_operator) }
+
+      it_behaves_like 'NOT an admin manager'
+
+      it_behaves_like 'a writer', CompanyOperator
+
+      it_behaves_like 'a writer', SchemeOperator
+
+      it_behaves_like 'a writer', Scheme
+
+      it_behaves_like 'a registration manager'
+    end
+
+    context 'with sc_super_user role' do
+      before do
+        scheme_operator.add_role(:sc_super_user)
+      end
+
+      after do
+        scheme_operator.remove_role(:sc_super_user)
+      end
+
+      let(:ability) { Ability.new(scheme_operator) }
+
+      it_behaves_like 'a reader', SchemeOperator
+
+      it_behaves_like 'an editor', SchemeOperator
+
+      it_behaves_like 'an updater', SchemeOperator
+
+      it_behaves_like 'a writer', SchemeOperator
+
+      it_behaves_like 'NOT an admin manager'
+
+      it_behaves_like 'NOT a destroyer', CompanyOperator
+
+      it_behaves_like 'NOT a scheme operator manager'
+
+      it_behaves_like 'NOT a scheme manager'
+
+      it_behaves_like 'a registration manager'
+    end
+
+    context 'with sc_user_r role' do
+      before do
+        scheme_operator.add_role(:sc_user_r)
+      end
+
+      after do
+        scheme_operator.remove_role(:sc_user_r)
+      end
+
+      let(:ability) { Ability.new(scheme_operator) }
+
+      it_behaves_like 'a reader', SchemeOperator
+
+      it_behaves_like 'NOT an editor', SchemeOperator
+
+      it_behaves_like 'NOT an updater', SchemeOperator
+
+      it_behaves_like 'NOT a writer', SchemeOperator
+
+      it_behaves_like 'NOT a destroyer', SchemeOperator
+
+      it_behaves_like 'NOT an admin manager'
+
+      it_behaves_like 'NOT a scheme operator manager'
+
+      it_behaves_like 'NOT a scheme manager'
+
+      it_behaves_like 'NOT a registration manager'
+    end
+
+    context 'with sc_user_rw role' do
+      before do
+        scheme_operator.add_role(:sc_user_rw)
+      end
+
+      after do
+        scheme_operator.remove_role(:sc_user_rw)
+      end
+
+      let(:ability) { Ability.new(scheme_operator) }
+
+      it_behaves_like 'a reader', SchemeOperator
+
+      it_behaves_like 'NOT an editor', SchemeOperator
+
+      it_behaves_like 'NOT an updater', SchemeOperator
+
+      it_behaves_like 'a writer', SchemeOperator
+
+      it_behaves_like 'NOT a destroyer', SchemeOperator
+
+      it_behaves_like 'NOT an admin manager'
+
+      it_behaves_like 'NOT a scheme operator manager'
+
+      it_behaves_like 'NOT a scheme manager'
+
+      it_behaves_like 'NOT a registration manager'
+    end
+
+    context 'with sc_user_rwe role' do
+      before do
+        scheme_operator.add_role(:sc_user_rwe)
+      end
+
+      after do
+        scheme_operator.remove_role(:sc_user_rwe)
+      end
+
+      let(:ability) { Ability.new(scheme_operator) }
+
+      it_behaves_like 'a reader', SchemeOperator
+
+      it_behaves_like 'an editor', SchemeOperator
+
+      it_behaves_like 'an updater', SchemeOperator
+
+      it_behaves_like 'a writer', SchemeOperator
+
+      it_behaves_like 'NOT a destroyer', SchemeOperator
+
+      it_behaves_like 'NOT an admin manager'
+
+      it_behaves_like 'NOT a scheme operator manager'
+
+      it_behaves_like 'NOT a scheme manager'
+
+      it_behaves_like 'NOT a registration manager'
     end
   end
 end

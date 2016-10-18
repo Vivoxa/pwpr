@@ -32,6 +32,19 @@ ActiveRecord::Schema.define(version: 20161008195333) do
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
 
+  create_table "businesses", force: :cascade do |t|
+    t.string   "name",          limit: 255
+    t.string   "membership_id", limit: 255
+    t.string   "company_no",    limit: 255
+    t.string   "NPWD",          limit: 255
+    t.string   "SIC",           limit: 255
+    t.integer  "scheme_id",     limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "businesses", ["scheme_id"], name: "index_businesses_on_scheme_id", using: :btree
+
   create_table "company_operators", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
@@ -52,13 +65,13 @@ ActiveRecord::Schema.define(version: 20161008195333) do
     t.datetime "locked_at"
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.integer  "scheme_id",              limit: 4
+    t.integer  "business_id",            limit: 4
     t.string   "name",                   limit: 255
   end
 
+  add_index "company_operators", ["business_id"], name: "index_company_operators_on_business_id", using: :btree
   add_index "company_operators", ["email"], name: "index_company_operators_on_email", unique: true, using: :btree
   add_index "company_operators", ["reset_password_token"], name: "index_company_operators_on_reset_password_token", unique: true, using: :btree
-  add_index "company_operators", ["scheme_id"], name: "index_company_operators_on_scheme_id", using: :btree
 
   create_table "royce_connector", force: :cascade do |t|
     t.integer  "roleable_id",   limit: 4,   null: false
@@ -128,5 +141,6 @@ ActiveRecord::Schema.define(version: 20161008195333) do
     t.datetime "updated_at",             null: false
   end
 
-  add_foreign_key "company_operators", "schemes"
+  add_foreign_key "businesses", "schemes"
+  add_foreign_key "company_operators", "businesses"
 end

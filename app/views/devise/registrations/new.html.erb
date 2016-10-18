@@ -22,7 +22,7 @@
   <% if request.env['REQUEST_PATH'].include?('company_operators') %>
     <% if current_admin %>
       <div class="field centre">
-        <%= f.collection_select :scheme_id, Scheme.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
+        <%= f.collection_select :business_id, Business.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
       </div>
     <% end %>
   <% if current_scheme_operator %>

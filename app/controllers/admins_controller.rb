@@ -22,27 +22,39 @@ class AdminsController < ApplicationController
   end
 
   # GET /admins/:id/permissions
-  def permissions
-    @user = Admin.find_by_id(params[:id])
-    @available_roles = Admin::ROLES
-    @available_permissions = Admin::PERMISSIONS
+ def permissions
+    @user = Admins.find_by_id(params[:admin_id])
+    @available_roles = Admins::ROLES
+    @available_permissions = Admins::PERMISSIONS
   end
 
-  # PUT /admins/:id/update_permissions
+  # GET /admins/:id/permissions
   def update_permissions
-    @user = Admin.find_by_id(params[:admin_id])
+    @user = Admins.find_by_id(params[:admin_id])
+    removed_roles = Admins::ROLES - [params[:role]] + Admins::PERMISSIONS - params[:permissions]
+    current_roles = @user.role_list
 
     begin
-      # Add role
-      @user.add_role params[:role]
+      # Remove deselected roles
+      removed_roles.each do |r|
+        @user.remove_role r if r
+      end
 
-      permissions = params[:permissions] # This should be and array/hash of selected permissions
+      # Add role
+      @user.add_role params[:role] if params[:role]
+
+      permissions = params[:permissions] ? params[:permissions] : []
 
       # Add roles for permissions
       permissions.each do |p|
-        @user.add_role p
+        @user.add_role p if p
       end
     rescue
+      # Roll back roles
+      current_roles.each do |r|
+        @user.add_role r
+      end
+
       redirect_to admin_path @user.id, error: "An error occured! User #{@user.email}'s permissions were not updated.", status: :unprocessable_entity # 422
       return
     end

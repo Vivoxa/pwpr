@@ -143,11 +143,28 @@ RSpec.describe CompanyOperatorsController, type: :controller do
           get :permissions, company_operator_id: CompanyOperator.last.id
           expect(response.status).to eq 200
         end
+
+        it 'sets the correct user instance' do
+          get :permissions, company_operator_id: CompanyOperator.last.id
+          expect(assigns(:user)).to eq(CompanyOperator.last)
+        end
+
+        it 'sets the correct available_roles' do
+          get :permissions, company_operator_id: CompanyOperator.last.id
+          expect(assigns(:available_roles)).to eq(CompanyOperator::ROLES)
+        end
+
+        it 'sets the correct available_permissions' do
+          get :permissions, company_operator_id: CompanyOperator.last.id
+          expect(assigns(:available_permissions)).to eq(CompanyOperator::PERMISSIONS)
+        end
       end
 
       context 'when calling update_permissions' do
+        let(:params) { {company_operator_id: CompanyOperator.last.id, role: 'co_director', permissions: ['co_user_rwe']} }
+
         it 'expects the company operator permissions to be updated' do
-          put :update_permissions, company_operator_id: CompanyOperator.last.id
+          put :update_permissions, params
           expect(response.status).to eq 302
         end
       end

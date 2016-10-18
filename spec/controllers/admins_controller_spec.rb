@@ -87,14 +87,35 @@ RSpec.describe AdminsController, type: :controller do
       expect(response.status).to eq 200
     end
 
-    it 'expects the admin to have access to the permissions action' do
-      get :permissions, admin_id: Admin.last.id
-      expect(response.status).to eq 200
+    context 'when calling permissions' do
+      it 'expects the admin to have access to the permissions action' do
+        get :permissions, admin_id: Admin.last.id
+        expect(response.status).to eq 200
+      end
+
+      it 'sets the correct user instance' do
+        get :permissions, admin_id: Admin.last.id
+        expect(assigns(:user)).to eq(Admin.last)
+      end
+
+      it 'sets the correct available_roles' do
+        get :permissions, admin_id: Admin.last.id
+        expect(assigns(:available_roles)).to eq(Admin::ROLES)
+      end
+
+      it 'sets the correct available_permissions' do
+        get :permissions, admin_id: Admin.last.id
+        expect(assigns(:available_permissions)).to eq(Admin::PERMISSIONS)
+      end
     end
 
-    it 'expects the admin to have access to the update_permissions action' do
-      put :update_permissions, admin_id: Admin.last.id
-      expect(response.status).to eq 302
+    context 'when calling update_permissions' do
+      let(:params) { {admin_id: Admin.last.id, role: 'full', permissions: []} }
+
+      it 'expects the admin to have access to the update_permissions action' do
+        put :update_permissions, params
+        expect(response.status).to eq 302
+      end
     end
   end
 end

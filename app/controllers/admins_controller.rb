@@ -23,15 +23,15 @@ class AdminsController < ApplicationController
 
   # GET /admins/:id/permissions
  def permissions
-    @user = Admins.find_by_id(params[:admin_id])
-    @available_roles = Admins::ROLES
-    @available_permissions = Admins::PERMISSIONS
+    @user = Admin.find_by_id(params[:admin_id])
+    @available_roles = Admin::ROLES
+    @available_permissions = Admin::PERMISSIONS
   end
 
   # GET /admins/:id/permissions
   def update_permissions
-    @user = Admins.find_by_id(params[:admin_id])
-    removed_roles = Admins::ROLES - [params[:role]] + Admins::PERMISSIONS - params[:permissions]
+    @user = Admin.find_by_id(params[:admin_id])
+    removed_roles = Admin::ROLES - [params[:role]] + Admin::PERMISSIONS - params[:permissions]
     current_roles = @user.role_list
 
     begin

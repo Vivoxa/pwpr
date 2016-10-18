@@ -151,11 +151,28 @@ RSpec.describe SchemeOperatorsController, type: :controller do
           get :permissions, scheme_operator_id: SchemeOperator.last.id
           expect(response.status).to eq 200
         end
+
+        it 'sets the correct user instance' do
+          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          expect(assigns(:user)).to eq(SchemeOperator.last)
+        end
+
+        it 'sets the correct available_roles' do
+          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          expect(assigns(:available_roles)).to eq(SchemeOperator::ROLES)
+        end
+
+        it 'sets the correct available_permissions' do
+          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          expect(assigns(:available_permissions)).to eq(SchemeOperator::PERMISSIONS)
+        end
       end
 
       context 'when calling update_permissions' do
+        let(:params) { {scheme_operator_id: SchemeOperator.last.id, role: 'sc_director', permissions: ['sc_user_rwe']} }
+
         it 'expects the scheme operator permissions to be updated' do
-          put :update_permissions, scheme_operator_id: SchemeOperator.last.id
+          put :update_permissions, params
           expect(response.status).to eq 302
         end
       end

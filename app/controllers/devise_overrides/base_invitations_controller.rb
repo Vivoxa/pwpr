@@ -46,13 +46,19 @@ module DeviseOverrides
                    current_scheme_operator&.schemes
                  elsif current_admin
                    Scheme.all
+                 elsif current_company_operator
+                   [current_company_operator.business.scheme]
                  else
                    []
                  end
       businesses = []
-      @schemes.each do |scheme|
-        scheme.businesses.each do |business|
-          businesses << business
+      if current_company_operator
+        businesses << current_company_operator.business
+      else
+        @schemes.each do |scheme|
+          scheme.businesses.each do |business|
+            businesses << business
+          end
         end
       end
       @businesses = businesses.flatten

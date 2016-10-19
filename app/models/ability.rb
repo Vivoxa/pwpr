@@ -33,6 +33,7 @@ class Ability
     if user.co_director?
       can :manage, CompanyOperator, id: user.business.company_operator_ids
       can %i(new create), CompanyOperator
+      can %i(new create), DeviseOverrides::CompanyOperator::InvitationsController
     elsif user.co_contact?
       full_access(user)
     elsif user.co_user_r?

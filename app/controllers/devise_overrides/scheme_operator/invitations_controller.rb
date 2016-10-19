@@ -6,10 +6,6 @@ module DeviseOverrides
 
       include CommonHelpers::MultiUserTypesHelper
 
-      def current_inviter
-        current_admin || current_scheme_operator || current_company_operator
-      end
-
       protected
 
       def authenticate_inviter!

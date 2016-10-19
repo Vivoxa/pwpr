@@ -18,7 +18,8 @@ class Ability
   private
 
   def configure_visitor
-    can %i(edit update), DeviseOverrides::SchemeOperatorInvitationsController
+    can %i(edit update), DeviseOverrides::SchemeOperator::InvitationsController
+    can %i(edit update), DeviseOverrides::CompanyOperator::InvitationsController
   end
 
   def full_access(user)
@@ -80,7 +81,7 @@ class Ability
     cannot :destroy, SchemeOperator
     can :manage, Scheme, id:  user.scheme_ids
     can %i(new create), Scheme
-    can :manage, DeviseOverrides::SchemeOperatorInvitationsController
+    can :manage, DeviseOverrides::SchemeOperator::InvitationsController
     can :manage, SchemeOperatorInvitationsController
     can :manage, DeviseOverrides::RegistrationsController
     can :manage, CompanyOperator, id: company_operator_associated_ids
@@ -94,7 +95,8 @@ class Ability
     can :manage, Scheme, id:  user.scheme_ids
     can %i(new create), Scheme
     can :manage, DeviseOverrides::RegistrationsController
-    can :manage, DeviseOverrides::SchemeOperatorInvitationsController
+    can :manage, DeviseOverrides::SchemeOperator::InvitationsController
+    can :manage, DeviseOverrides::CompanyOperator::InvitationsController
     can :manage, SchemeOperatorInvitationsController
     can :manage, CompanyOperator, id: company_operator_associated_ids
     can %i(new create), CompanyOperator
@@ -107,7 +109,8 @@ class Ability
       can :manage, SchemeOperator
       can :manage, Scheme
       can :manage, DeviseOverrides::RegistrationsController
-      can :manage, DeviseOverrides::SchemeOperatorInvitationsController
+      can :manage, DeviseOverrides::SchemeOperator::InvitationsController
+      can :manage, DeviseOverrides::CompanyOperator::InvitationsController
     end
   end
 

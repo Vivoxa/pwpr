@@ -10,9 +10,20 @@
     </div>
   <% end -%>
 
-  <div class="field centre">
-    <%= f.collection_select :scheme_ids, @schemes.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
-  </div>
+  <% if request.env['REQUEST_PATH'].include?('company_operators') %>
+    <div class="field centre">
+      <%= select_tag :scheme_id, options_from_collection_for_select(@schemes.order(:name), :id, :name),{ class: "devise-lgn form-control", id: 'schemes_select' } %>
+    </div>
+    <div class="field centre">
+      <%= f.select :business_id, options_from_collection_for_select(@businesses, :id, :name),{}, { class: "devise-lgn form-control", id: 'business_select' } %>
+    </div>
+  <% end %>
+
+<% if request.env['REQUEST_PATH'].include?('scheme_operators') %>
+<div class="field centre">
+  <%= f.collection_select :scheme_ids, @schemes.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
+</div>
+<% end %>
 
   <div class="field centre">
     <p><%= f.submit t("devise.invitations.new.submit_button"), class: ["btn", "btn-success", "devise-btn"]  %></p>

@@ -3,6 +3,7 @@ class CompanyOperatorsController < ApplicationController
   load_and_authorize_resource
 
   # GET /company_operators
+  # TODO: requires scoping
   def index
     @company_operator = CompanyOperator.all
   end
@@ -39,35 +40,8 @@ class CompanyOperatorsController < ApplicationController
   # GET /company_operators/:id/permissions
   def update_permissions
     @user = CompanyOperator.find_by_id(params[:company_operator_id])
-    removed_roles = CompanyOperator::ROLES - [params[:role]] + CompanyOperator::PERMISSIONS - params[:permissions]
-    current_roles = @user.role_list
 
-    begin
-      # Remove deselected roles
-      removed_roles.each do |r|
-        @user.remove_role r if r
-      end
-
-      # Add role
-      @user.add_role params[:role] if params[:role]
-
-      permissions = params[:permissions] ? params[:permissions] : []
-
-      # Add roles for permissions
-      permissions.each do |p|
-        @user.add_role p if p
-      end
-    rescue
-      # Roll back roles
-      current_roles.each do |r|
-        @user.add_role r
-      end
-
-      redirect_to company_operator_path @user.id, error: "An error occured! User #{@user.email}'s permissions were not updated.", status: :unprocessable_entity # 422
-      return
-    end
-
-    redirect_to company_operator_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 302
+    modify_roles_and_permissions
   end
 
   private

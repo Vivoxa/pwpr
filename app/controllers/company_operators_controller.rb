@@ -3,6 +3,7 @@ class CompanyOperatorsController < ApplicationController
   load_and_authorize_resource
 
   # GET /company_operators
+  # TODO: requires scoping
   def index
     @company_operator = CompanyOperator.all
   end

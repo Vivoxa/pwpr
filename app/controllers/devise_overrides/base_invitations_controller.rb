@@ -5,7 +5,6 @@ module DeviseOverrides
 
     # GET /resource/invitation/new
     def new
-      binding.pry
       populate_schemes_and_businesses
       self.resource = resource_class.new
       render :new

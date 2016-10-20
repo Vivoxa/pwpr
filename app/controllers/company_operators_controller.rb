@@ -2,14 +2,17 @@ class CompanyOperatorsController < ApplicationController
   before_action :authenticate_company_operator
   load_and_authorize_resource
 
+  # GET /company_operators
   def index
     @company_operator = CompanyOperator.all
   end
 
+  # GET /company_operators/:id
   def show
     @company_operator = CompanyOperator.find(params[:id])
   end
 
+  # PATCH/PUT /company_operators/:id
   def update
     @company_operator = CompanyOperator.find(params[:id])
     if @company_operator.update_attributes(secure_params)
@@ -19,17 +22,58 @@ class CompanyOperatorsController < ApplicationController
     end
   end
 
+  # DELETE /company_operators/:id
   def destroy
     @company_operator = CompanyOperator.find(params[:id])
     @company_operator.destroy
     redirect_to company_operators_path, notice: 'User deleted.', status: :ok
   end
 
+  # GET /company_operators/:id/permissions
+  def permissions
+    @user = CompanyOperator.find_by_id(params[:company_operator_id])
+    @available_roles = CompanyOperator::ROLES
+    @available_permissions = CompanyOperator::PERMISSIONS
+  end
+
+  # GET /company_operators/:id/permissions
+  def update_permissions
+    @user = CompanyOperator.find_by_id(params[:company_operator_id])
+    removed_roles = CompanyOperator::ROLES - [params[:role]] + CompanyOperator::PERMISSIONS - params[:permissions]
+    current_roles = @user.role_list
+
+    begin
+      # Remove deselected roles
+      removed_roles.each do |r|
+        @user.remove_role r if r
+      end
+
+      # Add role
+      @user.add_role params[:role] if params[:role]
+
+      permissions = params[:permissions] ? params[:permissions] : []
+
+      # Add roles for permissions
+      permissions.each do |p|
+        @user.add_role p if p
+      end
+    rescue
+      # Roll back roles
+      current_roles.each do |r|
+        @user.add_role r
+      end
+
+      redirect_to company_operator_path @user.id, error: "An error occured! User #{@user.email}'s permissions were not updated.", status: :unprocessable_entity # 422
+      return
+    end
+
+    redirect_to company_operator_path @user.id, notice: 'Permissions updated succesfully!', status: :ok # 302
+  end
+
   private
 
   def secure_params
     # We need to pull the params and handle company_operator as well maybe?
-
     params.require(:company_operator).permit(:role)
   end
 end

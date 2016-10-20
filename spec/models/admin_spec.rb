@@ -8,6 +8,28 @@ RSpec.describe Admin, type: :model do
   end
 
   context 'Roles' do
+    context 'Constants' do
+      describe 'ROLES' do
+        it 'expects the ROLES constant to exist' do
+          expect(subject.class::ROLES).not_to be_nil
+        end
+
+        it 'load the correct values in ROLES' do
+          expect(subject.class::ROLES).to eq %w(full_access).freeze
+        end
+      end
+
+      describe 'PERMISSIONS' do
+        it 'expects the PERMISSIONS constant to exist' do
+          expect(subject.class::PERMISSIONS).not_to be_nil
+        end
+
+        it 'load the correct values in PERMISSIONS' do
+          expect(subject.class::PERMISSIONS).to eq %w().freeze
+        end
+      end
+    end
+
     it 'expects the correct roles to be available' do
       expect(Admin.available_role_names).to eq %w(full_access)
     end

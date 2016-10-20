@@ -6,7 +6,7 @@ class SchemesController < ApplicationController
   # GET /schemes
   # GET /schemes.json
   def index
-    @schemes = Scheme.all
+    @schemes = current_scheme_operator ? current_scheme_operator.schemes : Scheme.all
   end
 
   # GET /schemes/1

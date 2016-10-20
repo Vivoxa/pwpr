@@ -25,11 +25,11 @@
         <%= f.collection_select :business_id, Business.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
       </div>
     <% end %>
-  <% if current_scheme_operator %>
-    <div class="field centre">
-      <%= f.collection_select :scheme_id, current_scheme_operator.schemes.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
-    </div>
-  <% end %>
+    <% if current_scheme_operator %>
+      <div class="field centre">
+        <%= f.collection_select :scheme_id, current_scheme_operator.schemes.order(:name), :id, :name,{}, { class: "devise-lgn form-control" } %>
+      </div>
+    <% end %>
   <% end %>
 
   <% if request.env['REQUEST_PATH'].include?('scheme_operators') %>

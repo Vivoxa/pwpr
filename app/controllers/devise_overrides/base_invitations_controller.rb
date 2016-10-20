@@ -1,29 +1,20 @@
 module DeviseOverrides
-  class SchemeOperatorInvitationsController < Devise::InvitationsController
+  class BaseInvitationsController < Devise::InvitationsController
     before_action :configure_permitted_parameters, if: :devise_controller?
-    before_filter :authenticate_scheme_operator, only: %i(new create)
-    authorize_resource class: SchemeOperatorInvitationsController
-
     include CommonHelpers::MultiUserTypesHelper
 
     # GET /resource/invitation/new
     def new
-      @schemes = if current_scheme_operator
-                   current_scheme_operator&.schemes
-                 elsif current_admin
-                   Scheme.all
-                 else
-                   []
-                 end
+      populate_schemes_and_businesses
       self.resource = resource_class.new
       render :new
     end
 
     # POST /resource/invitation
     def create
+      populate_schemes_and_businesses
       self.resource = invite_resource
       resource_invited = resource.errors.empty?
-
       yield resource if block_given?
 
       if resource_invited
@@ -42,18 +33,40 @@ module DeviseOverrides
       else
         respond_with_navigational(resource) { render :new }
       end
-  end
+    end
+
+    def current_inviter
+      current_admin || current_scheme_operator || current_company_operator
+    end
 
     protected
 
-    def authenticate_inviter!
-      authenticate_admin!(force: true) if current_admin
-      authenticate_scheme_operator! if current_scheme_operator
+    def populate_schemes_and_businesses
+      @schemes = if current_scheme_operator
+                   current_scheme_operator&.schemes
+                 elsif current_admin
+                   Scheme.all
+                 elsif current_company_operator
+                   [current_company_operator.business.scheme]
+                 else
+                   []
+                 end
+      businesses = []
+      if current_company_operator
+        businesses << current_company_operator.business
+      else
+        @schemes.each do |scheme|
+          scheme.businesses.each do |business|
+            businesses << business
+          end
+        end
+      end
+      @businesses = businesses.flatten
     end
 
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:invite) do |user_params|
-        user_params.permit({scheme_ids: []}, :email, :name)
+        user_params.permit({scheme_ids: []}, :email, :name, :business_id)
       end
     end
   end

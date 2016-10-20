@@ -1,7 +1,7 @@
-RSpec.describe DeviseOverrides::SchemeOperatorInvitationsController, type: :controller do
+RSpec.describe DeviseOverrides::CompanyOperator::InvitationsController, type: :controller do
   context 'scheme operator' do
     before do
-      @request.env['devise.mapping'] = Devise.mappings[:scheme_operator]
+      @request.env['devise.mapping'] = Devise.mappings[:company_operator]
     end
 
     context 'when scheme operator is NOT signed in' do
@@ -9,7 +9,7 @@ RSpec.describe DeviseOverrides::SchemeOperatorInvitationsController, type: :cont
         it 'expects to be redirected to sign in' do
           get :new
           expect(response.status).to eq 302
-          expect(response.body).to include('scheme_operators/sign_in')
+          expect(response.body).to include('company_operators/sign_in')
         end
       end
     end
@@ -46,13 +46,17 @@ RSpec.describe DeviseOverrides::SchemeOperatorInvitationsController, type: :cont
           sign_in co_marti
         end
 
+        after do
+          sign_out co_marti
+        end
+
         context 'when calling create' do
           it 'expects a 200 response status' do
-            params = {scheme_operator: {password: 'my_password', email: 'star@star.com', name: 'star', scheme_ids: [1]}}
+            params = {company_operator: {password: 'my_password', email: 'star@star.com', name: 'star', business_id: 1}}
             post :create, params
             expect(response.status).to eq 302
-            user = SchemeOperator.find_by_email('star@star.com')
-            expect(user).to be_a(SchemeOperator)
+            user = CompanyOperator.find_by_email('star@star.com')
+            expect(user).to be_a(CompanyOperator)
           end
         end
 
@@ -69,19 +73,26 @@ RSpec.describe DeviseOverrides::SchemeOperatorInvitationsController, type: :cont
   context 'when Admin Operator' do
     context 'when Admin has full_access role' do
       before do
-        @request.env['devise.mapping'] = Devise.mappings[:scheme_operator]
+        @request.env['devise.mapping'] = Devise.mappings[:company_operator]
         admin = Admin.create(email: 'freddy@kruger.com', password: 'my password')
         admin.full_access!
         sign_in admin
       end
 
+      context '#update_businesses' do
+        it 'expects something' do
+          xhr :get, :update_businesses, scheme_id: 1, format: :js
+        end
+      end
+
       context 'when calling create' do
-        it 'expects a 200 response status' do
-          params = {scheme_operator: {invitation_sent_at: DateTime.now, password: 'my_password', email: 'star@star.com', name: 'star', scheme_ids: [1]}}
+        it 'expects a 302 response status' do
+          params = {company_operator: {invitation_sent_at: DateTime.now, password: 'my_password', email: 'star@star.com', name: 'star', business_id: 1}}
           post :create, params
           expect(response.status).to eq 302
-          user = SchemeOperator.find_by_email('star@star.com')
-          expect(user).to be_a(SchemeOperator)
+
+          user = CompanyOperator.find_by_email('star@star.com')
+          expect(user).to be_a(CompanyOperator)
         end
       end
 

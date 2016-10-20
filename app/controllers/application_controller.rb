@@ -14,14 +14,13 @@ class ApplicationController < ActionController::Base
   protected
 
   def authenticate_scheme_operator
-    authenticate_scheme_operator!(force: true) unless current_admin
-    authenticate_admin!(force: true) unless current_scheme_operator
+    return true if current_admin
+    authenticate_scheme_operator!(force: true)
   end
 
   def authenticate_company_operator
-    authenticate_company_operator!(force: true) unless current_scheme_operator
-    authenticate_scheme_operator!(force: true) unless current_company_operator
-    authenticate_admin!(force: true) unless current_scheme_operator || current_company_operator
+    return true if current_scheme_operator || current_admin
+    authenticate_company_operator!(force: true)
   end
 
   def layout_by_resource

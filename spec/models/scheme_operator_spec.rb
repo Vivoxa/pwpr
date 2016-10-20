@@ -165,6 +165,9 @@ RSpec.describe SchemeOperator, type: :model do
       it_behaves_like 'a writer', Scheme
 
       it_behaves_like 'a registration manager'
+
+      it_behaves_like 'a manager', DeviseOverrides::SchemeOperator::InvitationsController
+      it_behaves_like 'a manager', DeviseOverrides::CompanyOperator::InvitationsController
     end
 
     context 'with sc_super_user role' do

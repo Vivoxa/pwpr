@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_filter :current_user
 
   include CommonHelpers::MultiUserTypesHelper
+  include CommonHelpers::PermissionsHelper
 
   protected
 

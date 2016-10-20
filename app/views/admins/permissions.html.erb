@@ -1,0 +1,4 @@
+<%= form_tag admin_update_permissions_path, method: 'put', :id => params[:admin_id] do %>
+  <%= render 'common/permissions/permissions_selection' %>
+  <%= submit_tag "Save Permissions" -%>
+<% end %>

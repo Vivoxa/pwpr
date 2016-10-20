@@ -33,6 +33,22 @@ RSpec.describe SchemeOperatorsController, type: :controller do
         expect(response.body).to include('scheme_operators/sign_in')
       end
     end
+
+    context 'when calling permissions' do
+      it 'expects to be redirected to sign in' do
+        get :permissions, scheme_operator_id: SchemeOperator.last.id
+        expect(response.status).to eq 302
+        expect(response.body).to include('scheme_operators/sign_in')
+      end
+    end
+
+    context 'when calling update_permissions' do
+      it 'expects to be redirected to sign in' do
+        put :update_permissions, scheme_operator_id: SchemeOperator.last.id
+        expect(response.status).to eq 302
+        expect(response.body).to include('scheme_operators/sign_in')
+      end
+    end
   end
 
   context 'when scheme operator is signed in' do
@@ -80,6 +96,22 @@ RSpec.describe SchemeOperatorsController, type: :controller do
           expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
+
+      context 'when calling permissions' do
+        it 'expects a CanCan AccessDenied error to be raised' do
+          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          expect(flash[:alert]).to be_present
+          expect(flash[:alert]).to eq 'You are not authorized to access this page.'
+        end
+      end
+
+      context 'when calling update_permissions' do
+        it 'expects a CanCan AccessDenied error to be raised' do
+          put :update_permissions, scheme_operator_id: SchemeOperator.last.id
+          expect(flash[:alert]).to be_present
+          expect(flash[:alert]).to eq 'You are not authorized to access this page.'
+        end
+      end
     end
 
     context 'when SchemeOperator has sc_director role' do
@@ -90,18 +122,18 @@ RSpec.describe SchemeOperatorsController, type: :controller do
         sign_in co_marti
       end
 
-      it 'expects the admin to have access to the index action' do
+      it 'expects the sc_director to have access to the index action' do
         get 'index'
         expect(response.status).to eq 200
       end
 
-      it 'expects the admin to have access to the show action' do
+      it 'expects the sc_director to have access to the show action' do
         get :show, id: co_marti.id
         expect(response.status).to eq 200
       end
 
       context 'when calling update' do
-        it 'expects the company operator to be updated' do
+        it 'expects the scheme operator to be updated' do
           get :update, id: co_marti.id, scheme_operator: {id: co_marti.id}
           expect(response.status).to eq 200
         end
@@ -111,6 +143,37 @@ RSpec.describe SchemeOperatorsController, type: :controller do
         it 'expects the company operator to be destroyed' do
           get :destroy, id: co_marti.id
           expect(response.status).to eq 200
+        end
+      end
+
+      context 'when calling permissions' do
+        it 'expects the sc_director to have access to the permissions action' do
+          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          expect(response.status).to eq 200
+        end
+
+        it 'sets the correct user instance' do
+          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          expect(assigns(:user)).to eq(SchemeOperator.last)
+        end
+
+        it 'sets the correct available_roles' do
+          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          expect(assigns(:available_roles)).to eq(SchemeOperator::ROLES)
+        end
+
+        it 'sets the correct available_permissions' do
+          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          expect(assigns(:available_permissions)).to eq(SchemeOperator::PERMISSIONS)
+        end
+      end
+
+      context 'when calling update_permissions' do
+        let(:params) { {scheme_operator_id: SchemeOperator.last.id, role: 'sc_director', permissions: ['sc_user_rwe']} }
+
+        it 'expects the scheme operator permissions to be updated' do
+          put :update_permissions, params
+          expect(response.status).to eq 302
         end
       end
     end

@@ -29,9 +29,9 @@ build :security, about: 'Running security check...', &Proc.new { task_group(:sec
 # Default full build
 build :default do
   clean_bundler_env do
-    task_group :prepare_for_test
     task_group :code_analysis
     task_group :security
+    task_group :prepare_for_test
     task_group :rspec
   end
 end

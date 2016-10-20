@@ -25,8 +25,30 @@ RSpec.describe CompanyOperator, type: :model do
   end
 
   context 'Roles' do
+    context 'Constants' do
+      describe 'ROLES' do
+        it 'expects the ROLES constant to exist' do
+          expect(subject.class::ROLES).not_to be_nil
+        end
+
+        it 'load the correct values in ROLES' do
+          expect(subject.class::ROLES).to eq %w(co_director co_contact co_user).freeze
+        end
+      end
+
+      describe 'PERMISSIONS' do
+        it 'expects the PERMISSIONS constant to exist' do
+          expect(subject.class::PERMISSIONS).not_to be_nil
+        end
+
+        it 'load the correct values in PERMISSIONS' do
+          expect(subject.class::PERMISSIONS).to eq %w(co_user_r co_user_rw co_user_rwe).freeze
+        end
+      end
+    end
+
     it 'expects the correct roles to be available' do
-      expect(CompanyOperator.available_role_names).to eq %w(co_director co_contact co_user_r co_user_rw co_user_rwe)
+      expect(CompanyOperator.available_role_names).to eq %w(co_director co_contact co_user co_user_r co_user_rw co_user_rwe)
     end
 
     it 'expects co_director to be an available role' do
@@ -35,6 +57,10 @@ RSpec.describe CompanyOperator, type: :model do
 
     it 'expects co_cantact to be an available role' do
       expect(subject.allowed_role?(:co_contact)).to be true
+    end
+
+    it 'expects co_user to be an available role' do
+      expect(subject.allowed_role?(:co_user)).to be true
     end
 
     it 'expects co_user_r to be an available role' do

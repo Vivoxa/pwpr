@@ -14,8 +14,13 @@ end
   # You can have the root of your site routed with "root"
   root 'visitors#index'
 
-  resources :admins, :scheme_operators, :company_operators, :schemes, :businesses
+  resources :schemes, :businesses
   resources :scheme_operator_invitations, only: :index
+
+  resources :admins, :scheme_operators, :company_operators do
+    get 'permissions', action: :permissions
+    put 'update_permissions', action: :update_permissions
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

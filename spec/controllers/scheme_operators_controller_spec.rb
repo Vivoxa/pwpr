@@ -135,14 +135,14 @@ RSpec.describe SchemeOperatorsController, type: :controller do
       context 'when calling update' do
         it 'expects the scheme operator to be updated' do
           get :update, id: co_marti.id, scheme_operator: {id: co_marti.id}
-          expect(response.status).to eq 200
+          expect(response.status).to eq 302
         end
       end
 
       context 'when calling destroy' do
         it 'expects the company operator to be destroyed' do
           get :destroy, id: co_marti.id
-          expect(response.status).to eq 200
+          expect(response.status).to eq 302
         end
       end
 

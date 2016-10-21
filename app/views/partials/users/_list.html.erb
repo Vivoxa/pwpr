@@ -1,0 +1,62 @@
+<div id="main-container" class="container">
+  <div class="row">
+    <% if scheme_operator_link %>
+      <%= link_to 'Scheme Operators', scheme_operators_path, class: ['btn btn-sm btn-secondary', 'devise-btn']  %>
+    <% end %>
+    <% if company_operator_link %>
+      <%= link_to 'Company Operators', company_operators_path, class: ['btn btn-sm btn-secondary', 'devise-btn']  %>
+    <% end %>
+    <% if admin_link %>
+      <%= link_to 'Admins', admins_path, class: ['btn btn-sm btn-secondary', 'devise-btn']  %>
+    <% end %>
+    <div class="card">
+      <h3 class="card-header"><%= users.first.class.name.pluralize %></h3>
+      <div class="card-block">
+        <!--	<h4 class="card-title">Administration</h4>-->
+        <p class="card-text">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-1"><strong>ID</strong></div>
+          <div class="col-md-2"><strong>Name</strong></div>
+          <div class="col-md-2"><strong>Email</strong></div>
+          <div class="col-md-5"></div>
+        </div>
+        <%- users.each do |user| %>
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-1"><%= user.id.to_s %></div>
+            <div class="col-md-2"><%= user.name.to_s if user.name %></div>
+            <div class="col-md-4"><%= user.email.to_s %></div>
+            <div class="col-md-1">
+              <% if can? :read, user %>
+                <%= link_to 'Details', user, class: ['btn btn-sm btn-success', 'show-btn'] %>
+              <% end %>
+            </div>
+            <div class="col-md-1">
+              <% if can? :edit, user %>
+                <% if  user.is_a? SchemeOperator %>
+                  <%= link_to 'Edit', edit_scheme_operator_path(user), class: ['btn btn-sm btn-success', 'show-btn']  %>
+                <% end %>
+                <% if  user.is_a? CompanyOperator %>
+                  <%= link_to 'Edit', edit_company_operator_path(user), class: ['btn btn-sm btn-success', 'show-btn']  %>
+                <% end %>
+                <% if  user.is_a? Admin %>
+                  <%= link_to 'Edit', edit_admin_path(user), class: ['btn btn-sm btn-success', 'show-btn']  %>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="col-md-1">
+              <% if can? :destroy, user %>
+                <%= link_to 'Destroy', user,{ method: :delete, class: ['btn btn-sm btn-danger', 'show-btn'], data: { confirm: 'Are you sure?' }} %>
+              <% end %>
+            </div>
+            <div class="col-md-1"></div>
+          </div>
+        <%- end %>
+        </p>
+      </div>
+      <div class="card-footer">
+      </div>
+    </div>
+  </div>
+</div>

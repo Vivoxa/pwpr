@@ -126,15 +126,15 @@ RSpec.describe CompanyOperatorsController, type: :controller do
         it 'expects the company operator to be updated' do
           get :update, id: co_director.id, company_operator: {id: co_director.id}
           expect(subject.notice).to eq('User updated.')
-          expect(response.status).to eq 200
+          expect(response.status).to eq 302
         end
       end
 
       context 'when calling destroy' do
         it 'expects the company operator to be destroyed' do
           get :destroy, id: co_director.id
-          expect(response.status).to eq 200
-          expect(subject.notice).to eq('User deleted.')
+          expect(response.status).to eq 302
+          expect(subject.notice).to eq('Jennifer with email: jennifer@back_to_the_future.com has been deleted.')
         end
       end
 
@@ -190,7 +190,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
         it 'expects the company operator to be updated' do
           get :update, id: co_contact.id, company_operator: {id: co_contact.id}
           expect(subject.notice).to eq('User updated.')
-          expect(response.status).to eq 200
+          expect(response.status).to eq 302
         end
       end
 

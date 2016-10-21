@@ -1,4 +1,3 @@
-
 require 'rails_helper'
 
 RSpec.describe 'schemes/index', type: :view do
@@ -17,7 +16,7 @@ RSpec.describe 'schemes/index', type: :view do
 
   it 'renders a list of schemes' do
     render
-    assert_select 'tr>td', text: 'Name'.to_s, count: 2
-    assert_select 'tr>td', text: false.to_s, count: 2
+    assert_select 'h3', value: 'card-header', text: 'Name (not active)', count: 2
+    assert_select 'p', value: 'card-footer', text: '', count: 2
   end
 end

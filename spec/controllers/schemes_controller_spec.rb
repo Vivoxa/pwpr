@@ -32,6 +32,7 @@ RSpec.describe SchemesController, type: :controller do
     describe 'GET #index' do
       it 'assigns all schemes as @schemes' do
         scheme = Scheme.create! valid_attributes
+        co_marti.schemes << scheme
         get :index, {}, session: valid_session
         scheme_ids = assigns(:schemes).map(&:id)
 
@@ -111,7 +112,7 @@ RSpec.describe SchemesController, type: :controller do
           co_marti.schemes << scheme
           co_marti.save
           put :update, {id: scheme.to_param, scheme: valid_attributes}, session: valid_session
-          expect(response).to redirect_to(scheme)
+          expect(response).to redirect_to(schemes_url)
         end
       end
 

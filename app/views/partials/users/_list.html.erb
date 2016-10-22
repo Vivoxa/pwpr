@@ -20,29 +20,39 @@
         <h4 class="card-title"></h4>
 
         <%- users.each do |user| %>
-        <div class="card-header">
-
+<div class="card card-block card-outline-success" style='height:150px'>
            <div class="row">
              <div class="col-md-1"><strong>Name</strong></div>
              <div class="col-md-4"><strong>Email</strong></div>
              <div class="col-md-2"><strong>Scheme</strong></div>
-             <div class="col-md-5"></div>
+             <div class="col-md-2"><strong><%= 'Business' if user.is_a? CompanyOperator %></strong></div>
+             <div class="col-md-3"></div>
            </div>
-         </div>
-            <div class="card card-block" style='height:150px'>
+
+
           <div class="row">
 
             <div class="col-md-1"><%= user.name.to_s if user.name %></div>
             <div class="col-md-4"><%= user.email.to_s %></div>
             <% if user.is_a? SchemeOperator %>
-              <% @user_scheme = user.schemes.map{|s| s.id} %>
+
+              <div class="col-md-2">
+                <% user.schemes.each do |s| %>
+                <div class='row'>
+                  <%= s.name %>
+                </div>
+                <% end %>
+              </div>
             <% elsif user.is_a? CompanyOperator %>
-              <% @user_scheme = user.business.scheme.name %>
+              <div class="col-md-2">
+                <% user.business.scheme.name %>
+              </div>
             <% else %>
-              <% @user_scheme = 'N/A' %>
+              <div class="col-md-2">'N/A'</div>
             <% end %>
-            <div class="col-md-2"><%= @user_scheme %></div>
-            <div class="col-md-4"></div>
+
+            <div class="col-md-2"><%= user.business.name if user.is_a? CompanyOperator %></div>
+              <div class="col-md-2"></div>
             <div class="col-md-1">
               <div class="row">
                 <% if can? :read, user %>

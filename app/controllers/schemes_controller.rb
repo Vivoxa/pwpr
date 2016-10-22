@@ -6,7 +6,7 @@ class SchemesController < BaseController
   # GET /schemes
   # GET /schemes.json
   def index
-    @schemes = current_scheme_operator ? current_scheme_operator&.schemes : []
+    @schemes = current_user.schemes
   end
 
   # GET /schemes/1

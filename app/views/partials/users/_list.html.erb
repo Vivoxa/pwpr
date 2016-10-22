@@ -1,12 +1,12 @@
 <div id="main-container" class="container">
   <div class="row">
-    <% if scheme_operator_link %>
+    <% if scheme_operator_link && (can? :read, SchemeOperator) %>
       <%= link_to 'Scheme Operators', scheme_operators_path, class: ['btn btn-sm btn-secondary', 'devise-btn']  %>
     <% end %>
-    <% if company_operator_link %>
+    <% if company_operator_link && (can? :read, CompanyOperator) %>
       <%= link_to 'Company Operators', company_operators_path, class: ['btn btn-sm btn-secondary', 'devise-btn']  %>
     <% end %>
-    <% if admin_link %>
+    <% if admin_link && (can? :read, Admin) %>
       <%= link_to 'Admins', admins_path, class: ['btn btn-sm btn-secondary', 'devise-btn']  %>
     <% end %>
     <div class="card">

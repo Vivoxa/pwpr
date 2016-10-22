@@ -8,4 +8,8 @@ class Admin < ActiveRecord::Base
   ROLES = %w(full_access).freeze
   PERMISSIONS = %w().freeze
   royce_roles ROLES + PERMISSIONS
+
+  def schemes
+    Scheme.all
+  end
 end

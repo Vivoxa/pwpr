@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :company_operators, controllers: { registrations: 'devise_overrides/registrations', :invitations => 'devise_overrides/company_operator/invitations' }
 devise_scope :company_operator do
   get '/company_operators/invitation/update_businesses' => 'devise_overrides/company_operator/invitations#update_businesses', as: 'update_businesses'
+  get '/company_operators/pending' => 'company_operators#pending', as: 'pending_company_operators'
 end
 
 devise_for :admins

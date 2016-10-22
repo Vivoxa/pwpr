@@ -17,7 +17,10 @@
   <div class="field centre">
     <%= f.text_field :email, placeholder: 'Email', class: "devise-lgn form-control" %>
   </div>
-
+  <div class="field centre">
+    <%= f.label :approved %>
+    <%= f.check_box :approved, class: "devise-lgn form-control" %>
+  </div>
   <div class="actions centre">
     <%= f.submit 'Save', class: ["btn", "btn-success", "devise-btn"]  %>
   </div>

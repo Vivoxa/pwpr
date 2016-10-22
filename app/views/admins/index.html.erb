@@ -1,1 +1,10 @@
-<%= render partial: './partials/users/list', locals: { users: @admins, company_operator_link: true, scheme_operator_link: true, admin_link: false } %>
+<%= render partial: './partials/users/list',
+                     locals: { users: @admins,
+                               company_operator_link: true,
+                               scheme_operator_link: true,
+                               admin_link: false
+                               user_type: Admin,
+                               url: admins_path,
+                               active: true,
+                               pending: false
+                              } %>

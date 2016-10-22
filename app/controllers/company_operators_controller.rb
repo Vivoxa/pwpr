@@ -5,7 +5,11 @@ class CompanyOperatorsController < BaseController
   # GET /company_operators
   # TODO: requires scoping
   def index
-    @company_operator = CompanyOperator.all
+    @company_operators = CompanyOperator.where(approved: true)
+  end
+
+  def pending
+    @approved_company_operators = CompanyOperator.where(approved: false)
   end
 
   # GET /company_operators/:id
@@ -45,6 +49,6 @@ class CompanyOperatorsController < BaseController
 
   def secure_params
     # We need to pull the params and handle company_operator as well maybe?
-    params.require(:company_operator).permit(:role, :name, :email)
+    params.require(:company_operator).permit(:role, :name, :email, :approved)
   end
 end

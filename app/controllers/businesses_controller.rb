@@ -1,4 +1,4 @@
-class BusinessesController < ApplicationController
+class BusinessesController < BaseController
   before_action :set_business, only: %i(show edit update destroy)
   before_filter :authenticate_scheme_operator
 
@@ -29,40 +29,19 @@ class BusinessesController < ApplicationController
   def create
     @schemes = current_user.schemes
     @business = Business.new(business_params)
-
-    respond_to do |format|
-      if @business.save
-        format.html { redirect_to @business, notice: 'Business was successfully created.' }
-        format.json { render :show, status: :created, location: @business }
-      else
-        format.html { render :new }
-        format.json { render json: @business.errors, status: :unprocessable_entity }
-      end
-    end
+    create_business_or_scheme(@business)
   end
 
   # PATCH/PUT /businesses/1
   # PATCH/PUT /businesses/1.json
   def update
-    respond_to do |format|
-      if @business.update(business_params)
-        format.html { redirect_to @business, notice: 'Business was successfully updated.' }
-        format.json { render :show, status: :ok, location: @business }
-      else
-        format.html { render :edit }
-        format.json { render json: @business.errors, status: :unprocessable_entity }
-      end
-    end
+    update_business_or_scheme(@business, businesses_url, business_params)
   end
 
   # DELETE /businesses/1
   # DELETE /businesses/1.json
   def destroy
-    @business.destroy
-    respond_to do |format|
-      format.html { redirect_to businesses_url, notice: 'Business was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    destroy_business_or_scheme(@business, businesses_url)
   end
 
   private

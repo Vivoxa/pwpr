@@ -1,38 +1,51 @@
-<%= form_for(@business) do |f| %>
-  <% if @business.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@business.errors.count, "error") %> prohibited this business from being saved:</h2>
+<div id="main-container" class="container">
+  <div class="card">
+    <h3 class="card-header"><strong>Editing:</strong> <%= @business.name %></h3>
+    <div class="card-block">
+      <!--	<h4 class="card-title">Administration</h4>-->
+      <div class="row">
+        <%= form_for(@business) do |f| %>
+          <% if @business.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@business.errors.count, "error") %> prohibited this business from being saved:</h2>
 
-      <ul>
-        <% @business.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+              <ul>
+                <% @business.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <% if @schemes %>
+            <div class="field centre">
+              <%= f.collection_select :scheme_id, @schemes.order(:name), :id, :name,{ include_blank: 'Select a Scheme' }, { id: 'scheme_id_select', class: "devise-lgn form-control" } %>
+            </div>
+          <% end %>
+
+          <div class="field centre">
+            <%= f.text_field :name, placeholder: 'Name', class: "devise-lgn form-control" %>
+          </div>
+          <div class="field centre">
+            <%= f.text_field :membership_id, placeholder: 'Membership ID', class: "devise-lgn form-control" %>
+          </div>
+
+          <div class="field centre">
+            <%= f.text_field :NPWD, placeholder: 'NPWD', class: "devise-lgn form-control" %>
+          </div>
+
+          <div class="field centre">
+            <%= f.text_field :SIC, placeholder: 'SIC', class: "devise-lgn form-control" %>
+          </div>
+
+          <div class="actions centre">
+            <%= f.submit 'Save', class: ["btn", "btn-success", "devise-btn"]  %>
+          </div>
         <% end %>
-      </ul>
+      </div>
     </div>
-  <% end %>
-
-  <% if @schemes %>
-    <div class="field centre">
-      <%= f.collection_select :scheme_id, @schemes.order(:name), :id, :name,{ include_blank: 'Select a Scheme' }, { id: 'scheme_id_select', class: "devise-lgn form-control" } %>
+    <div class="card-footer">
+      <%= link_to 'Show', @business %> |
+      <%= link_to 'Back', businesses_path %>
     </div>
-  <% end %>
-
-  <div class="field centre">
-    <%= f.text_field :name, placeholder: 'Name', class: "devise-lgn form-control" %>
   </div>
-  <div class="field centre">
-    <%= f.text_field :membership_id, placeholder: 'Membership ID', class: "devise-lgn form-control" %>
-  </div>
-
-  <div class="field centre">
-    <%= f.text_field :NPWD, placeholder: 'NPWD', class: "devise-lgn form-control" %>
-  </div>
-
-  <div class="field centre">
-    <%= f.text_field :SIC, placeholder: 'SIC', class: "devise-lgn form-control" %>
-  </div>
-
-  <div class="actions centre">
-    <%= f.submit 'Create business', class: ["btn", "btn-success", "devise-btn"]  %>
-  </div>
-<% end %>

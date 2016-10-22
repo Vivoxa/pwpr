@@ -1,0 +1,16 @@
+<div id="main-container" class="container">
+<h1>Editing Company Operator</h1>
+  <%= link_to 'Show', @company_operator, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+  <%= link_to 'Back', company_operators_path, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+  <div class="card">
+    <h3 class="card-header"><%= @company_operator.name %></h3>
+    <div class="card-block">
+      <!--	<h4 class="card-title">Administration</h4>-->
+      <p class="card-text">
+      <%= render 'form' %>
+      </p>
+    </div>
+    <div class="card-footer">
+    </div>
+  </div>
+</div>

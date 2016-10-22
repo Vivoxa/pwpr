@@ -1,0 +1,27 @@
+<%= form_for(@company_operator) do |f| %>
+  <% if @company_operator.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@company_operator.errors.count, "error") %> prohibited this business from being saved:</h2>
+
+      <ul>
+        <% @company_operator.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field centre">
+    <%= f.text_field :name, placeholder: 'Name', class: "devise-lgn form-control" %>
+  </div>
+  <div class="field centre">
+    <%= f.text_field :email, placeholder: 'Email', class: "devise-lgn form-control" %>
+  </div>
+  <div class="field centre">
+    <%= f.label :approved %>
+    <%= f.check_box :approved, class: "devise-lgn form-control" %>
+  </div>
+  <div class="actions centre">
+    <%= f.submit 'Save', class: ["btn", "btn-success", "devise-btn"]  %>
+  </div>
+<% end %>

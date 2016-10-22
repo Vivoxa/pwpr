@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_scheme_operator_path(params[:id]) %> |
-<%= link_to 'Back', scheme_operators_path %> |
-<%= link_to 'Permissions', scheme_operator_permissions_path(scheme_operator_id: params[:id]) %>
+<div id="main-container" class="container">
+  <%= link_to 'Edit', edit_scheme_operator_path(params[:id]), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+  <%= link_to 'Permissions', scheme_operator_permissions_path(scheme_operator_id: params[:id]), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+  <%= link_to 'Back', scheme_operators_path, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
+  <%= render partial: './partials/users/show', locals: { user: @scheme_operator } %>
+</div>

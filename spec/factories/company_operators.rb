@@ -4,6 +4,7 @@ FactoryGirl.define do
     name 'Jennifer'
     password 'mypassword'
     confirmed_at DateTime.now
+    approved true
 
     co.after :build do |instance|
       instance.business_id = FactoryGirl.create(:business).id
@@ -12,6 +13,16 @@ FactoryGirl.define do
     factory :company_operator_with_director do |co_d|
       co_d.after :build do |instance|
         instance.business_id = FactoryGirl.create(:business).id
+      end
+      after(:create) do |co|
+        co.add_role 'co_director'
+      end
+    end
+
+    factory :company_operator_with_director_inactive do |co_d|
+      co_d.after :build do |instance|
+        instance.business_id = FactoryGirl.create(:business).id
+        instance.approved = false
       end
       after(:create) do |co|
         co.add_role 'co_director'

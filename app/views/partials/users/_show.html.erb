@@ -1,0 +1,28 @@
+<div class="card">
+  <h3 class="card-header"><%= user.name %></h3>
+  <div class="card-block">
+    <!--	<h4 class="card-title">Administration</h4>-->
+    <p class="card-text">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-1"><strong>ID</strong></div>
+      <div class="col-md-2"><strong>Name</strong></div>
+      <div class="col-md-4"><strong>Email</strong></div>
+      <div class="col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-1"><%= user.id.to_s %></div>
+      <div class="col-md-2"><%= user.name.to_s if user.name %></div>
+      <div class="col-md-4"><%= user.email.to_s %></div>
+      <div class="col-md-3">
+        <% if user.is_a? CompanyOperator %>
+          <div>Approved? <%= user.approved %></div>
+        <% end %>
+      </div>
+    </div>
+    </p>
+  </div>
+  <div class="card-footer">
+  </div>
+</div>

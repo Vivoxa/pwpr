@@ -2,6 +2,14 @@ require 'rails_helper'
 
 RSpec.describe CompanyOperatorsController, type: :controller do
   context 'when company operator is NOT signed in' do
+    context 'when not activated' do
+      let(:co_not_activated) { FactoryGirl.create(:company_operator_with_director_inactive) }
+      it 'expects a not activated error to be raised' do
+        sign_in co_not_activated
+        get :index
+        expect(flash[:alert]).to eq 'Your account has not been approved by your administrator yet.'
+      end
+    end
     context 'when calling index' do
       it 'expects to be redirected to sign in' do
         get :index
@@ -126,15 +134,15 @@ RSpec.describe CompanyOperatorsController, type: :controller do
         it 'expects the company operator to be updated' do
           get :update, id: co_director.id, company_operator: {id: co_director.id}
           expect(subject.notice).to eq('User updated.')
-          expect(response.status).to eq 200
+          expect(response.status).to eq 302
         end
       end
 
       context 'when calling destroy' do
         it 'expects the company operator to be destroyed' do
           get :destroy, id: co_director.id
-          expect(response.status).to eq 200
-          expect(subject.notice).to eq('User deleted.')
+          expect(response.status).to eq 302
+          expect(subject.notice).to eq('Jennifer with email: jennifer@back_to_the_future.com has been deleted.')
         end
       end
 
@@ -190,7 +198,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
         it 'expects the company operator to be updated' do
           get :update, id: co_contact.id, company_operator: {id: co_contact.id}
           expect(subject.notice).to eq('User updated.')
-          expect(response.status).to eq 200
+          expect(response.status).to eq 302
         end
       end
 

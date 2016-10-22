@@ -3,10 +3,16 @@ Rails.application.routes.draw do
   devise_for :company_operators, controllers: { registrations: 'devise_overrides/registrations', :invitations => 'devise_overrides/company_operator/invitations' }
 devise_scope :company_operator do
   get '/company_operators/invitation/update_businesses' => 'devise_overrides/company_operator/invitations#update_businesses', as: 'update_businesses'
+  get '/company_operators/pending' => 'company_operators#pending', as: 'pending_company_operators'
 end
 
-  devise_for :admins
-  devise_for :scheme_operators, controllers: { registrations: 'devise_overrides/scheme_operator/registrations', :invitations => 'devise_overrides/scheme_operator/invitations' }
+devise_for :admins
+devise_for :scheme_operators, controllers: { registrations: 'devise_overrides/scheme_operator/registrations', :invitations => 'devise_overrides/scheme_operator/invitations' }
+devise_scope :scheme_operator do
+  get '/scheme_operator/invitations/new/:id', :to => 'scheme_operator/invitation#new', :as => 'scheme_operator_invitation_new'
+end
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   # resources :welcomes, only: :index

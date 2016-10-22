@@ -13,4 +13,16 @@ class CompanyOperator < ActiveRecord::Base
   belongs_to :business
   # this scope is no longer relevant due to the change in relationship to schemes
   # scope :scheme_operators, -> (scheme) { scheme.scheme_operators }
+
+  def active_for_authentication?
+    super && approved?
+  end
+
+  def inactive_message
+    if !approved?
+      :not_approved
+    else
+      super && 'Use whatever other message'
+    end
+  end
 end

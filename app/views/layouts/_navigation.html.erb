@@ -1,14 +1,14 @@
 <% if @current_user %>
   <% @login_path = '/scheme_operators/sign_out' %>
   <% @login_btn_text = 'Sign Out' %>
-  <% @login_btn_style = 'btn-primary' %>
+  <% @login_btn_style = 'btn-outline-secondary' %>
 <% else %>
   <% @login_path = "/scheme_operators/sign_in" %>
   <% @login_btn_text = "Sign In" %>
   <% @admins_sign_path = '/admins/sign_in' %>
   <% @so_sign_path = '/scheme_operators/sign_in' %>
   <% @co_sign_path = '/company_operators/sign_in' %>
-  <% @login_btn_style = 'btn-success' %>
+  <% @login_btn_style = 'btn-outline-secondary' %>
 <% end %>
 
 <nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
@@ -20,30 +20,23 @@
     </li>
     <li class="nav-item">
       <div class="btn-group">
-      <a class="btn <%= @login_btn_style %> btn-sm" href=<%= @login_path %>><%= @login_btn_text %></a>
-      <% unless @current_user %>
-        <button type="button" class="btn <%= @login_btn_style %> btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href=<%= @admins_sign_path %>>Admins</a>
-          <a class="dropdown-item" href=<%= @so_sign_path %>>Scheme Operators</a>
-          <a class="dropdown-item" href=<%= @co_sign_path %>>Company Operators</a>
-        </div>
-      <% end %>
+        <a class="btn <%= @login_btn_style %> btn-sm" href=<%= @login_path %>><%= @login_btn_text %></a>
+        <% unless @current_user %>
+          <button type="button" class="btn <%= @login_btn_style %> btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href=<%= @admins_sign_path %>>Admins</a>
+            <a class="dropdown-item" href=<%= @so_sign_path %>>Scheme Operators</a>
+            <a class="dropdown-item" href=<%= @co_sign_path %>>Company Operators</a>
+          </div>
+        <% end %>
       </div>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Scheme</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Obligations</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Historic Data</a>
-    </li>
-    <li class="nav-item">
-    </li>
+    <% if @current_user %>
+      <%= render partial: "partials/users/users_dropdown" %>
+    <% end %>
+    <%= render partial: "partials/schemes_dropdown" %>
   </ul>
 
   <div class="form-inline pull-xs-right">

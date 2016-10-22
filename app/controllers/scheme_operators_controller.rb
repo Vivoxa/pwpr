@@ -1,4 +1,4 @@
-class SchemeOperatorsController < ApplicationController
+class SchemeOperatorsController < BaseController
   before_filter :authenticate_scheme_operator
   load_and_authorize_resource
 
@@ -15,16 +15,18 @@ class SchemeOperatorsController < ApplicationController
     @scheme_operator = SchemeOperator.find(params[:id])
   end
 
+  # GET /scheme_operators/1/edit
+  def edit
+  end
+
   # PATCH/PUT /scheme_operators/:id
   def update
-    @scheme_operator = SchemeOperator.find(params[:id])
-    @scheme_operator.update_attributes(secure_params)
+    update_operator(@scheme_operator, secure_params, scheme_operators_path)
   end
 
   # DELETE /scheme_operators/:id
   def destroy
-    @scheme_operator = SchemeOperator.find(params[:id])
-    @scheme_operator.destroy
+    destroy_operator(@scheme_operator, scheme_operators_path)
   end
 
   # GET /scheme_operators/:id/permissions
@@ -45,6 +47,6 @@ class SchemeOperatorsController < ApplicationController
 
   def secure_params
     # We need to pull the params and handle company_operator as well maybe?
-    params.require(:scheme_operator).permit(:role)
+    params.require(:scheme_operator).permit(:role, :name, :email)
   end
 end

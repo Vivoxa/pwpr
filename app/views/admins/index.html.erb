@@ -1,30 +1,10 @@
-<html>
-  <head>
-    <div>Admin Area</div>
-  </head>
-  <body>
-    <div id="main-container" class="container">
-      <ul class="nav nav-tabs" role="tablist">
-        <li class="active"><%= link_to 'Admin list', admins_path %></li>
-        <li><%= link_to 'Scheme Operators', scheme_operators_path %></li>
-        <li><%= link_to 'Company Operators', company_operators_path %></li>
-      </ul>
-      <div class="row">
-        <p>Admins</p>
-        <div class="row">
-          <div class="col-md-4">ID</div>
-          <div class="col-md-4">Name</div>
-          <div class="col-md-4">Email</div>
-        </div>
-        <%- @admins.each do |a| %>
-          <div class="row">
-            <div class="col-md-4"><%= a.id.to_s %></div>
-            <div class="col-md-4"><%= a.name.to_s if a.name %></div>
-            <div class="col-md-4"><%= a.email.to_s %></div>
-          </div>
-        <%- end %>
-      </div>
-
-    </div>
-  </body>
-</html>
+<%= render partial: './partials/users/list',
+                     locals: { users: @admins,
+                               company_operator_link: true,
+                               scheme_operator_link: true,
+                               admin_link: false
+                               user_type: Admin,
+                               url: admins_path,
+                               active: true,
+                               pending: false
+                              } %>

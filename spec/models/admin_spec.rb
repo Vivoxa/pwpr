@@ -7,6 +7,12 @@ RSpec.describe Admin, type: :model do
     subject.save
   end
 
+  context 'schemes' do
+    it 'expects admins to have access to all schemes' do
+      expect(subject.schemes).to eq(Scheme.all)
+    end
+  end
+
   context 'Roles' do
     context 'Constants' do
       describe 'ROLES' do

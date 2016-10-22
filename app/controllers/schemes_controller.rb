@@ -1,4 +1,4 @@
-class SchemesController < ApplicationController
+class SchemesController < BaseController
   before_filter :authenticate_scheme_operator
   before_action :set_scheme, only: %i(show edit update destroy)
   load_and_authorize_resource
@@ -6,7 +6,7 @@ class SchemesController < ApplicationController
   # GET /schemes
   # GET /schemes.json
   def index
-    @schemes = Scheme.all
+    @schemes = current_user.schemes
   end
 
   # GET /schemes/1
@@ -27,40 +27,19 @@ class SchemesController < ApplicationController
   # POST /schemes.json
   def create
     @scheme = Scheme.new(scheme_params)
-
-    respond_to do |format|
-      if @scheme.save
-        format.html { redirect_to @scheme, notice: 'Scheme was successfully created.' }
-        format.json { render :show, status: :created, location: @scheme }
-      else
-        format.html { render :new }
-        format.json { render json: @scheme.errors, status: :unprocessable_entity }
-      end
-    end
+    create_business_or_scheme(@scheme)
   end
 
   # PATCH/PUT /schemes/1
   # PATCH/PUT /schemes/1.json
   def update
-    respond_to do |format|
-      if @scheme.update(scheme_params)
-        format.html { redirect_to @scheme, notice: 'Scheme was successfully updated.' }
-        format.json { render :show, status: :ok, location: @scheme }
-      else
-        format.html { render :edit }
-        format.json { render json: @scheme.errors, status: :unprocessable_entity }
-      end
-    end
+    update_business_or_scheme(@scheme, schemes_url, scheme_params)
   end
 
   # DELETE /schemes/1
   # DELETE /schemes/1.json
   def destroy
-    @scheme.destroy
-    respond_to do |format|
-      format.html { redirect_to schemes_url, notice: 'Scheme was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    destroy_business_or_scheme(@scheme, schemes_url)
   end
 
   private

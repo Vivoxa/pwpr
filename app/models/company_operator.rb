@@ -5,7 +5,7 @@ class CompanyOperator < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   ROLES = %w(co_director co_contact co_user).freeze
-  PERMISSIONS = %w(co_user_r co_user_w co_user_d co_user_e).freeze
+  PERMISSIONS = %w(co_users_r co_users_w co_users_d co_users_e).freeze
   royce_roles ROLES + PERMISSIONS
 
   validates_presence_of :business

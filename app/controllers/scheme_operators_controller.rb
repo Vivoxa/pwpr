@@ -40,7 +40,7 @@ class SchemeOperatorsController < BaseController
   def update_permissions
     @user = SchemeOperator.find_by_id(params[:scheme_operator_id])
 
-    modify_roles_and_permissions
+    modify_roles_and_permissions(scheme_operator_path(@user.id))
   end
 
   private

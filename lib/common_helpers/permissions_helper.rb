@@ -42,7 +42,7 @@ module CommonHelpers
       end
     end
 
-    def add_permissions!(selected_permissions)
+    def add_permissions!
       selected_permissions.each do |p|
         @user.add_role p if p
       end

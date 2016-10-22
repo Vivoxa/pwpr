@@ -1,4 +1,50 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_business_path(@business) %> |
-<%= link_to 'Back', businesses_path %>
+<div id="main-container" class="container">
+  <div class="card">
+    <h3 class="card-header"><%= @business.name %></h3>
+    <div class="card-block">
+      <div class='col-md-4'>
+        <div class="card card-block" style='height:150px'>
+          <!--	<h4 class="card-title">Administration</h4>-->
+          <div class="row">
+            <div><strong>ID: </strong><%= @business.id.to_s %></div>
+          </div>
+          <div class="row">
+            <div><strong>Name: </strong><%= @business.name if @business.name %></div>
+          </div>
+          <div class="row">
+            <div><strong>Membership ID: </strong><%= @business.membership_id.to_s %></div>
+          </div>
+          <div class="row">
+            <div><strong>Company No: </strong><%= @business.company_no.to_s %></div>
+          </div>
+        </div>
+      </div>
+      <div class='col-md-4'>
+        <div class="card card-block" style='height:150px'>
+          <!--	<h4 class="card-title">Administration</h4>-->
+          <div class="row">
+            <div><strong>NPWD: </strong><%= @business.NPWD.to_s %></div>
+          </div>
+          <div class="row">
+            <div><strong>SIC: </strong><%= @business.SIC if @business.name %></div>
+          </div>
+          <div class="row">
+            <div><strong>Scheme: </strong><%= @business.scheme.name %></div>
+          </div>
+          <div class="row">
+            <div><strong></strong></div>
+          </div>
+        </div>
+      </div>
+      <div class='col-md-4'>
+        <div class="card card-block" style='height:150px'>
+          <!--	<h4 class="card-title">Administration</h4>-->
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <%= link_to 'Edit', edit_business_path(@business) %> |
+      <%= link_to 'Back', businesses_path %>
+    </div>
+  </div>
+</div>

@@ -5,7 +5,7 @@ class SchemeOperatorsController < BaseController
   # GET /scheme_operators
   def index
     # TODO: this needs scoping to a scheme
-    @scheme_operators = SchemeOperator.all
+    @scheme_operators = current_user.schemes.each.map{ |scheme| scheme.scheme_operators }.flatten
   end
 
   # GET /scheme_operators/:id

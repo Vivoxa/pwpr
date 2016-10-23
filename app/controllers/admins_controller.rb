@@ -5,7 +5,7 @@ class AdminsController < ApplicationController
   # GET /admins
   def index
     # Show a categorized list of users based on type (scheme and member)
-    @admins = Admin.all
+    @admins = Admin.all if current_user.has_role? :super_admin
     @scheme_operators = SchemeOperator.all
     @company_operators = CompanyOperator.all
   end

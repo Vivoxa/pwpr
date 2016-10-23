@@ -32,7 +32,7 @@ class AdminsController < ApplicationController
   def update_permissions
     @user = Admin.find_by_id(params[:admin_id])
 
-    modify_roles_and_permissions
+    modify_roles_and_permissions(admin_path(@user.id))
   end
 
   private

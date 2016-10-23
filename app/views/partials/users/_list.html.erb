@@ -11,8 +11,14 @@
             <a class="nav-link <%= @active_is_active %>" href=<%= url %>>Active</a>
           </li>
           <li class="nav-item">
-            <% @enabled = user_type == CompanyOperator ? '' : 'disabled' %>
-            <a class="nav-link <%= @enabled %> <%= @pending_is_active %>" href=<%= pending_company_operators_path %>>Pending</a>
+            <% if user_type == CompanyOperator %>
+            <% @enabled = '' %>
+            <% @pending_tab_href = 'href=' + pending_company_operators_path %>
+          <% else %>
+            <% @enabled = 'disabled' %>
+            <% @pending_tab_href = '' %>
+          <% end %>
+            <a class="nav-link" <%= @enabled %> <%= @pending_is_active && @pending_tab_href %>>Pending</a>
           </li>
         </ul>
       </div>

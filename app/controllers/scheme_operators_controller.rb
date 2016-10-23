@@ -21,7 +21,7 @@ class SchemeOperatorsController < BaseController
 
   # PATCH/PUT /scheme_operators/:id
   def update
-    update_operator(@scheme_operator, secure_params, scheme_operators_path)
+    update_object(@scheme_operator, scheme_operators_path, secure_params)
   end
 
   # DELETE /scheme_operators/:id

@@ -1,7 +1,5 @@
 <div id="main-container" class="container">
 <h1>Editing Scheme Operator</h1>
-  <%= link_to 'Show', @scheme_operator, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
-  <%= link_to 'Back', scheme_operators_path, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
   <div class="card">
     <h3 class="card-header"><%= @scheme_operator.name %></h3>
     <div class="card-block">
@@ -11,6 +9,8 @@
       </p>
     </div>
     <div class="card-footer">
+      <%= link_to 'Show', @scheme_operator, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+      <%= link_to 'Back', request.referer, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
     </div>
   </div>
 </div>

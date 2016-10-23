@@ -1,0 +1,22 @@
+<%= form_for(@admin) do |f| %>
+  <% if @admin.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@admin.errors.count, "error") %> prohibited this admin from being saved:</h2>
+
+      <ul>
+        <% @admin.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field centre">
+    <%= f.text_field :name, placeholder: 'Name', class: "devise-lgn form-control" %>
+  </div>
+  <div class="field centre">
+    <%= f.text_field :email, placeholder: 'Email', class: "devise-lgn form-control" %>
+  </div>
+  <div class="actions centre">
+    <%= f.submit 'Save', class: ["btn", "btn-success", "devise-btn"]  %>
+  </div>
+<% end %>

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AdminsController, type: :controller do
+  subject(:admin_controller) { described_class.new }
+
   context 'when admin operator is NOT signed in' do
     context 'when calling index' do
       it 'expects to be redirected to sign in' do
@@ -85,6 +87,14 @@ RSpec.describe AdminsController, type: :controller do
     it 'expects the admin to have access to the show action' do
       get :show, id: admin_doc.id
       expect(response.status).to eq 200
+    end
+
+    context 'when calling update' do
+      it 'expects the admin to be updated' do
+        get :update, id: admin_doc.id, admin: {id: admin_doc.id}
+        expect(flash[:notice]).to eq('Admin was successfully updated.')
+        expect(response.status).to eq 302
+      end
     end
 
     context 'when calling permissions' do

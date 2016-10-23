@@ -33,7 +33,7 @@ class SchemesController < BaseController
   # PATCH/PUT /schemes/1
   # PATCH/PUT /schemes/1.json
   def update
-    update_business_or_scheme(@scheme, schemes_url, scheme_params)
+    update_object(@scheme, schemes_url, scheme_params)
   end
 
   # DELETE /schemes/1

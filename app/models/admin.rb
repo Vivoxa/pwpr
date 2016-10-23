@@ -4,15 +4,27 @@ class Admin < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   include DeviseInvitable::Inviter
-
+  include CommonHelpers::PermissionsHelper
+  PERMISSIONS = (%w(admins_r admins_w admins_e admins_d) + CommonHelpers::PermissionsHelper::SHARED_SO_ADMIN_PERMISSIONS).flatten.freeze
   ROLES = %w(super_admin normal_admin restricted_admin).freeze
-  PERMISSIONS = %w(sc_users_r sc_users_w sc_users_e sc_users_d
-                  co_users_r co_users_w co_users_d co_users_e
-                  businesses_r businesses_w businesses_d businesses_e
-                  schemes_r schemes_w schemes_d schemes_e).freeze
   royce_roles ROLES + PERMISSIONS
+
+  after_create :assign_roles
 
   def schemes
     Scheme.all
+  end
+
+  def scheme_ids
+    schemes.map(&:id)
+  end
+
+  private
+
+  def assign_roles
+    add_role :super_admin
+    PERMISSIONS.each do |permission|
+      add_role permission
+    end
   end
 end

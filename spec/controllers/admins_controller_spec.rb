@@ -39,6 +39,9 @@ RSpec.describe AdminsController, type: :controller do
     let(:admin_marti) { FactoryGirl.create(:admin) }
 
     before do
+      Admin.available_roles.each do |role|
+        admin_marti.remove_role role
+      end
       sign_in admin_marti
     end
 

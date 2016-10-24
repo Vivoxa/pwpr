@@ -140,8 +140,6 @@ RSpec.describe SchemeOperator, type: :model do
 
       it_behaves_like 'NOT a scheme manager'
 
-      it_behaves_like 'NOT a registration manager'
-
       it_behaves_like 'NOT a business manager'
     end
 
@@ -164,10 +162,8 @@ RSpec.describe SchemeOperator, type: :model do
 
       it_behaves_like 'a writer', Scheme
 
-      it_behaves_like 'a registration manager'
-
-      it_behaves_like 'a manager', DeviseOverrides::SchemeOperator::InvitationsController
-      it_behaves_like 'a manager', DeviseOverrides::CompanyOperator::InvitationsController
+      it_behaves_like 'a manager', SchemeOperators::InvitationsController
+      it_behaves_like 'a manager', CompanyOperators::InvitationsController
     end
 
     context 'with sc_super_user role' do
@@ -196,8 +192,6 @@ RSpec.describe SchemeOperator, type: :model do
       it_behaves_like 'NOT a scheme operator manager'
 
       it_behaves_like 'NOT a scheme manager'
-
-      it_behaves_like 'a registration manager'
     end
 
     context 'with sc_user_r role' do
@@ -226,8 +220,6 @@ RSpec.describe SchemeOperator, type: :model do
       it_behaves_like 'NOT a scheme operator manager'
 
       it_behaves_like 'NOT a scheme manager'
-
-      it_behaves_like 'NOT a registration manager'
     end
 
     context 'with sc_user_rw role' do
@@ -256,8 +248,6 @@ RSpec.describe SchemeOperator, type: :model do
       it_behaves_like 'NOT a scheme operator manager'
 
       it_behaves_like 'NOT a scheme manager'
-
-      it_behaves_like 'NOT a registration manager'
     end
 
     context 'with sc_user_rwe role' do
@@ -286,8 +276,6 @@ RSpec.describe SchemeOperator, type: :model do
       it_behaves_like 'NOT a scheme operator manager'
 
       it_behaves_like 'NOT a scheme manager'
-
-      it_behaves_like 'NOT a registration manager'
     end
   end
 end

@@ -1,4 +1,4 @@
-RSpec.describe DeviseOverrides::SchemeOperator::InvitationsController, type: :controller do
+RSpec.describe SchemeOperators::InvitationsController, type: :controller do
   context 'scheme operator' do
     before do
       @request.env['devise.mapping'] = Devise.mappings[:scheme_operator]

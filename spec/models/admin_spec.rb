@@ -80,8 +80,6 @@ RSpec.describe Admin, type: :model do
       it_behaves_like 'a scheme manager'
 
       it_behaves_like 'a scheme operator manager'
-
-      it_behaves_like 'a registration manager'
     end
 
     context 'with no Role' do
@@ -95,8 +93,6 @@ RSpec.describe Admin, type: :model do
       it_behaves_like 'NOT a scheme operator manager'
 
       it_behaves_like 'NOT a scheme manager'
-
-      it_behaves_like 'NOT a registration manager'
     end
   end
 end

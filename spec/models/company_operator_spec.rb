@@ -111,8 +111,6 @@ RSpec.describe CompanyOperator, type: :model do
       it_behaves_like 'NOT a scheme operator manager'
 
       it_behaves_like 'NOT a scheme manager'
-
-      it_behaves_like 'NOT a registration manager'
     end
 
     context 'with co_director role' do
@@ -126,8 +124,6 @@ RSpec.describe CompanyOperator, type: :model do
       it_behaves_like 'NOT a scheme operator manager'
 
       it_behaves_like 'NOT a scheme manager'
-
-      it_behaves_like 'NOT a registration manager'
     end
 
     context 'with co_contact role' do
@@ -149,8 +145,6 @@ RSpec.describe CompanyOperator, type: :model do
       it_behaves_like 'NOT a scheme operator manager'
 
       it_behaves_like 'NOT a scheme manager'
-
-      it_behaves_like 'NOT a registration manager'
     end
 
     context 'with co_user_r role' do
@@ -172,8 +166,6 @@ RSpec.describe CompanyOperator, type: :model do
       it_behaves_like 'NOT a scheme operator manager'
 
       it_behaves_like 'NOT a scheme manager'
-
-      it_behaves_like 'NOT a registration manager'
     end
 
     context 'with co_user_rw role' do
@@ -195,8 +187,6 @@ RSpec.describe CompanyOperator, type: :model do
       it_behaves_like 'NOT a scheme operator manager'
 
       it_behaves_like 'NOT a scheme manager'
-
-      it_behaves_like 'NOT a registration manager'
     end
 
     context 'with co_user_rwe role' do
@@ -218,8 +208,6 @@ RSpec.describe CompanyOperator, type: :model do
       it_behaves_like 'NOT a scheme operator manager'
 
       it_behaves_like 'NOT a scheme manager'
-
-      it_behaves_like 'NOT a registration manager'
     end
   end
 end

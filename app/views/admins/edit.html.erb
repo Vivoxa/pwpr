@@ -1,9 +1,6 @@
 <div id="main-container" class="container">
-<h1>Editing Admin</h1>
-  <%= link_to 'Show', @admin, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
-  <%= link_to 'Back', request.referer, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
   <div class="card">
-    <h3 class="card-header"><%= @admin.name %></h3>
+    <h3 class="card-header"><strong>Editing: </strong><%= @admin.name %></h3>
     <div class="card-block">
       <!--	<h4 class="card-title">Administration</h4>-->
       <p class="card-text">
@@ -11,6 +8,8 @@
       </p>
     </div>
     <div class="card-footer">
+      <%= link_to 'Show', @admin, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+      <%= link_to 'Back', :back, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
     </div>
   </div>
 </div>

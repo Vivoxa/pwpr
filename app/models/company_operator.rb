@@ -8,11 +8,12 @@ class CompanyOperator < ActiveRecord::Base
   PERMISSIONS = %w(co_user_r co_user_rw co_user_rwe).freeze
   royce_roles ROLES + PERMISSIONS
 
+  belongs_to :business
+
   validates_presence_of :business
 
-  belongs_to :business
-  # this scope is no longer relevant due to the change in relationship to schemes
-  # scope :scheme_operators, -> (scheme) { scheme.scheme_operators }
+  # scope :active, -> { where(approved: true) }
+  # scope :pending, -> { where(approved: false) }
 
   def active_for_authentication?
     super && approved?

@@ -1,4 +1,4 @@
-module DeviseOverrides
+
   class BaseInvitationsController < Devise::InvitationsController
     before_action :configure_permitted_parameters, if: :devise_controller?
     include CommonHelpers::MultiUserTypesHelper
@@ -70,4 +70,3 @@ module DeviseOverrides
       end
     end
   end
-end

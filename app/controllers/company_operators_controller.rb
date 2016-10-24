@@ -1,12 +1,25 @@
 class CompanyOperatorsController < BaseController
   before_action :authenticate_company_operator
   load_and_authorize_resource
-
+        respond_to :js
   # GET /company_operators
   # TODO: requires scoping
   def index
     @company_operators = CompanyOperator.where(approved: true)
   end
+
+  def update_businesses
+    schemes = Scheme.where('id = ?', params[:scheme_id])
+    @businesses = if schemes.any?
+                    schemes.first.businesses
+                  else
+                    []
+                  end
+
+    respond_to do |format|
+      format.js
+    end
+   end
 
   def pending
     @approved_company_operators = CompanyOperator.where(approved: false)

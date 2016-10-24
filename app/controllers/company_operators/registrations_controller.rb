@@ -1,10 +1,11 @@
 # frozen_string_literal: true
-module DeviseOverrides
+
+  module CompanyOperators
   class RegistrationsController < Devise::RegistrationsController
     skip_before_action :require_no_authentication
     before_filter :authenticate_scheme_operator
     before_action :configure_permitted_parameters, if: :devise_controller?
-    authorize_resource class: RegistrationsController
+    authorize_resource class: CompanyOperators::RegistrationsController
 
     # POST /resource
     def create

@@ -1,15 +1,16 @@
 
 Rails.application.routes.draw do
-  devise_for :company_operators, controllers: { registrations: 'devise_overrides/registrations', :invitations => 'devise_overrides/company_operator/invitations' }
+  devise_for :company_operators, controllers: { registrations: 'company_operators/registrations', :invitations => 'company_operators/invitations' }
 devise_scope :company_operator do
-  get '/company_operators/invitation/update_businesses' => 'devise_overrides/company_operator/invitations#update_businesses', as: 'update_businesses'
+  get '/company_operators/invitation/update_businesses' => 'company_operators/invitations#update_businesses', as: 'update_businesses'
   get '/company_operators/pending' => 'company_operators#pending', as: 'pending_company_operators'
+  get '/company_operators/update_businesses' => 'company_operators#update_businesses'
 end
 
 devise_for :admins
-devise_for :scheme_operators, controllers: { registrations: 'devise_overrides/scheme_operator/registrations', :invitations => 'devise_overrides/scheme_operator/invitations' }
+devise_for :scheme_operators, controllers: { registrations: 'scheme_operators/registrations', :invitations => 'scheme_operators/invitations' }
 devise_scope :scheme_operator do
-  get '/scheme_operator/invitations/new/:id', :to => 'scheme_operator/invitation#new', :as => 'scheme_operator_invitation_new'
+  get '/scheme_operator/invitations/new/:id', :to => 'scheme_operators/invitation#new', :as => 'scheme_operator_invitation_new'
 end
 
 

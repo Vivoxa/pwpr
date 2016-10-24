@@ -1,7 +1,7 @@
-module DeviseOverrides
-  module CompanyOperator
+
+  module CompanyOperators
     class InvitationsController < BaseInvitationsController
-      authorize_resource class: DeviseOverrides::CompanyOperator::InvitationsController
+      authorize_resource class: CompanyOperators::InvitationsController
       before_filter :authenticate_company_operator, only: %i(new create)
       include CommonHelpers::MultiUserTypesHelper
 
@@ -28,4 +28,3 @@ module DeviseOverrides
       end
     end
   end
-end

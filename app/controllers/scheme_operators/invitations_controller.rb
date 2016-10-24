@@ -1,8 +1,8 @@
-module DeviseOverrides
-  module SchemeOperator
+
+  module SchemeOperators
     class InvitationsController < BaseInvitationsController
       before_filter :authenticate_scheme_operator, only: %i(new create)
-      authorize_resource class: DeviseOverrides::SchemeOperator::InvitationsController
+      authorize_resource class: SchemeOperators::InvitationsController
 
       include CommonHelpers::MultiUserTypesHelper
 
@@ -20,4 +20,3 @@ module DeviseOverrides
       end
     end
   end
-end

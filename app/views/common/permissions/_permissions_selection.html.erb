@@ -1,3 +1,12 @@
+<div id="main-container" class="container">
+  <div class="card">
+    <h3 class="card-header"><%= @user.name %>'s Permissions</h3>
+    <div class="card-block">
+          <!--	<h4 class="card-title">Administration</h4>-->
+          <div class="card card-block">
+          <div class='col-md-4'></div>
+          <div class='col-md-4'>
+          <div class="row">
 <div class="roles">
   <h3>User Roles</h3>
   <ul>
@@ -21,4 +30,14 @@
       </li>
     <% end %>
   </ul>
+</div>
+</div>
+</div>
+<div class='col-md-4'></div>
+</div>
+</div>
+<div class="card-footer">
+    <%= submit_tag "Save Permissions", class: ['btn btn-sm btn-primary'] -%>
+</div>
+</div>
 </div>

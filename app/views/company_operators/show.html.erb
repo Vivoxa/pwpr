@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 <div id="main-container" class="container">
   <%= render partial: './partials/users/show', locals: { user: @company_operator } %>
   <%= link_to 'Edit', edit_company_operator_path(params[:id]), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>

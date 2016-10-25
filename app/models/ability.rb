@@ -83,7 +83,6 @@ class Ability
     can :manage, Scheme, id:  user.scheme_ids
     can %i(new create), Scheme
     can :manage, SchemeOperators::InvitationsController
-    can :manage, SchemeOperatorInvitationsController
     can :manage, SchemeOperators::RegistrationsController
     can :manage, CompanyOperators::RegistrationsController
     can :manage, CompanyOperator, id: company_operator_associated_ids

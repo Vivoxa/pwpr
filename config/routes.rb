@@ -10,7 +10,7 @@ end
 devise_for :admins
 devise_for :scheme_operators, controllers: { registrations: 'scheme_operators/registrations', :invitations => 'scheme_operators/invitations' }
 devise_scope :scheme_operator do
-  get '/scheme_operator/invitations/new/:id', :to => 'scheme_operators/invitation#new', :as => 'scheme_operator_invitation_new'
+  get '/scheme_operators/invitations/', to: 'scheme_operators/invitations#index', :as => 'scheme_operator_invitations'
 end
 
 

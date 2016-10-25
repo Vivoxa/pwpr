@@ -73,26 +73,34 @@ RSpec.describe Admin, type: :model do
       let(:admin_full_access) { FactoryGirl.create(:admin_full_access) }
       let(:ability) { Ability.new(admin_full_access) }
 
-      it_behaves_like 'an admin manager'
+      it_behaves_like 'a manager', Admin
 
-      it_behaves_like 'a company operator manager'
+      it_behaves_like 'a manager', CompanyOperator
 
-      it_behaves_like 'a scheme manager'
+      it_behaves_like 'a manager', Scheme
 
-      it_behaves_like 'a scheme operator manager'
+      it_behaves_like 'a manager', SchemeOperator
+
+      it_behaves_like 'a manager', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'a manager', CompanyOperators::RegistrationsController
     end
 
     context 'with no Role' do
       let(:admin) { FactoryGirl.create(:admin) }
       let(:ability) { Ability.new(admin) }
 
-      it_behaves_like 'NOT an admin manager'
+      it_behaves_like 'NOT a manager', Admin
 
-      it_behaves_like 'NOT a company operator manager'
+      it_behaves_like 'NOT a manager', CompanyOperator
 
-      it_behaves_like 'NOT a scheme operator manager'
+      it_behaves_like 'NOT a manager', SchemeOperator
 
-      it_behaves_like 'NOT a scheme manager'
+      it_behaves_like 'NOT a manager', Scheme
+
+      it_behaves_like 'NOT a manager', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
   end
 end

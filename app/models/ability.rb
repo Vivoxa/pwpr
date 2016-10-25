@@ -100,7 +100,7 @@ class Ability
     can :manage, CompanyOperators::RegistrationsController
     can :manage, SchemeOperators::InvitationsController
     can :manage, CompanyOperators::InvitationsController
-    can :manage, SchemeOperatorInvitationsController
+    can :manage, SchemeOperators::InvitationsController
     can :manage, CompanyOperator, id: company_operator_associated_ids
     can %i(new create), CompanyOperator
   end

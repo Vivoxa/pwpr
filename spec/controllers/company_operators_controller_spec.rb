@@ -1,6 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe CompanyOperatorsController, type: :controller do
+  context 'when a scheme operator is signed in' do
+    let(:scheme_operator) { SchemeOperator.last }
+    before do
+      sign_in scheme_operator
+    end
+
+    it 'expects the co_director to have access to the index action' do
+      company_operator = CompanyOperator.find(3)
+      company_operator.approved = true
+      company_operator.save
+      get 'index'
+      expect(response.status).to eq 200
+      expect(assigns(:company_operators)).to eq [company_operator]
+    end
+  end
+
   context 'when company operator is NOT signed in' do
     context 'when not activated' do
       let(:co_not_activated) { FactoryGirl.create(:company_operator_with_director_inactive) }

@@ -15,6 +15,7 @@ RSpec.describe SchemeOperators::InvitationsController, type: :controller do
           co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
           co_marti.save
         end
+
         context 'when SchemeOperator does NOT have the director role' do
           before do
             sign_in co_marti

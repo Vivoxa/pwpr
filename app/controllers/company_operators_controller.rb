@@ -7,11 +7,11 @@ class CompanyOperatorsController < BaseController
   # GET /company_operators
   # TODO: requires scoping
   def index
-    @company_operators = current_user.business.company_operators.where(approved: true)
+    @company_operators = get_company_operators(true)
   end
 
   def pending
-    @pending_company_operators = current_user.business.company_operators.where(approved: false)
+    @pending_company_operators = get_company_operators(false)
   end
 
   # GET /company_operators/:id
@@ -48,6 +48,20 @@ class CompanyOperatorsController < BaseController
   end
 
   private
+
+  def get_company_operators(approved = true)
+    if current_company_operator
+      current_user.business.company_operators.where(approved: approved)
+    else
+      company_operators = []
+      current_user.schemes.each do |scheme|
+        scheme.businesses.each do |business|
+          company_operators << business.company_operators.where(approved: approved)
+        end
+      end
+      company_operators.flatten
+    end
+  end
 
   def secure_params
     # We need to pull the params and handle company_operator as well maybe?

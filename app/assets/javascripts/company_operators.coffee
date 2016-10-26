@@ -3,7 +3,6 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
   $(document).on 'change', '#schemes_select', (evt) ->
-    debugger;
     $.ajax 'update_businesses',
       type: 'GET'
       dataType: 'script'

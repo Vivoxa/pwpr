@@ -2,18 +2,67 @@ require 'rails_helper'
 
 RSpec.describe CompanyOperatorsController, type: :controller do
   context 'when a scheme operator is signed in' do
-    let(:scheme_operator) { SchemeOperator.last }
+    let(:scheme_operator) { SchemeOperator.new }
+    let(:business) do
+      Business.create(scheme_id:     scheme_operator.schemes.first.id,
+                      NPWD:          'kgkgk',
+                      SIC:           'khgifk',
+                      name:          'business 1',
+                      membership_id: 'mem-1',
+                      company_no:    '123456789')
+    end
     before do
+      scheme_operator.email = 'jennifer@back_to_the_future.com'
+      scheme_operator.name = 'Jennifer'
+      scheme_operator.password = 'mypassword'
+      scheme_operator.confirmed_at = DateTime.now
+      scheme_operator.schemes = [Scheme.create(name: 'test scheme', active: true)]
+      scheme_operator.add_role('sc_director')
+      scheme_operator.save
       sign_in scheme_operator
     end
 
     it 'expects the co_director to have access to the index action' do
       company_operator = CompanyOperator.find(3)
       company_operator.approved = true
+      company_operator.business = business
       company_operator.save
       get 'index'
       expect(response.status).to eq 200
       expect(assigns(:company_operators)).to eq [company_operator]
+    end
+
+    context 'when an invitation has NOT been accepted' do
+      it 'expects a collection of scheme operators' do
+        company_operator = CompanyOperator.create(email:              'invited@pwpr.com',
+                                                  password:           'my_password',
+                                                  business_id:        business.id,
+                                                  invitation_sent_at: DateTime.now)
+        get 'invited_not_accepted'
+        object = assigns(:company_operators).first
+        expect(object).to be_a CompanyOperator
+        expect(object.id).to eq company_operator.id
+      end
+    end
+
+    context 'when an invitation HAS been accepted but not approved' do
+      it 'expects a collection of scheme operators' do
+        company_operator = CompanyOperator.create(email:                  'invited@pwpr.com',
+                                                  password:               'my_password',
+                                                  business_id:            business.id,
+                                                  invitation_sent_at:     DateTime.now,
+                                                  invitation_accepted_at: DateTime.now,
+                                                  approved:               false)
+        get 'pending'
+        object = assigns(:company_operators).first
+        expect(object).to be_a CompanyOperator
+        expect(object.id).to eq company_operator.id
+      end
+    end
+
+    it 'expects the admin to have access to the index action' do
+      get 'index'
+      expect(response.status).to eq 200
     end
   end
 

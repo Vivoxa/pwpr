@@ -7,11 +7,15 @@ class CompanyOperatorsController < BaseController
   # GET /company_operators
   # TODO: requires scoping
   def index
-    @company_operators = get_company_operators(true)
+    @company_operators = company_operators_by_approved(true)
   end
 
   def pending
-    @pending_company_operators = get_company_operators(false)
+    @company_operators = pending_company_operators
+  end
+
+  def invited_not_accepted
+    @company_operators = unaccepted_invitations
   end
 
   # GET /company_operators/:id
@@ -49,7 +53,7 @@ class CompanyOperatorsController < BaseController
 
   private
 
-  def get_company_operators(approved = true)
+  def company_operators_by_approved(approved = true)
     if current_company_operator
       current_user.business.company_operators.where(approved: approved)
     else
@@ -61,6 +65,23 @@ class CompanyOperatorsController < BaseController
       end
       company_operators.flatten
     end
+  end
+
+  def pending_company_operators
+    pending = company_operators_by_approved(false)
+    pending_company_operators = []
+    pending.each do |co|
+      pending_company_operators << co if co.invitation_accepted_at.present?
+    end
+    pending_company_operators
+  end
+
+  def unaccepted_invitations
+    company_operators = []
+    company_operators_by_approved(false).each do |company_operator|
+      company_operators << company_operator if company_operator.invitation_sent_at.present? && company_operator.invitation_accepted_at.nil?
+    end
+    company_operators
   end
 
   def secure_params

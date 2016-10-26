@@ -5,12 +5,13 @@ devise_scope :company_operator do
   get '/company_operators/invitation/update_businesses' => 'company_operators/invitations#update_businesses', as: 'update_businesses'
   get '/company_operators/pending' => 'company_operators#pending', as: 'pending_company_operators'
   get '/company_operators/update_businesses' => 'company_operators#update_businesses'
+  get '/company_operators/invitations/', to: 'company_operators#invited_not_accepted', :as => 'company_operator_invitations'
 end
 
 devise_for :admins
 devise_for :scheme_operators, controllers: { registrations: 'scheme_operators/registrations', :invitations => 'scheme_operators/invitations' }
 devise_scope :scheme_operator do
-  get '/scheme_operators/invitations/', to: 'scheme_operators/invitations#index', :as => 'scheme_operator_invitations'
+  get '/scheme_operators/invitations/', to: 'scheme_operators#invited_not_accepted', :as => 'scheme_operator_invitations'
 end
 
 

@@ -25,7 +25,9 @@
       user =SchemeOperator.create({ email: "#{roles[index]}_#{index}@pwpr.com",
                               password: @password,
                               confirmation_token: random_string(20),
-                              confirmation_sent_at: DateTime.now,
+                              invitation_sent_at: DateTime.now - 5.days,
+                              invitation_accepted_at: DateTime.now,
+                              confirmation_sent_at: DateTime.now - 5.days,
                               confirmed_at: DateTime.now,
                               name: names[index],
                               scheme_ids: schemes[index].id})
@@ -36,7 +38,9 @@
       user = SchemeOperator.create({ email: "scheme_operator_owner#{index}@pwpr.com",
                               password: @password,
                               confirmation_token: random_string(20),
-                              confirmation_sent_at: DateTime.now,
+                              invitation_sent_at: DateTime.now - 5.days,
+                              invitation_accepted_at: DateTime.now,
+                              confirmation_sent_at: DateTime.now - 5.days,
                               confirmed_at: DateTime.now,
                               name: names[index],
                               scheme_ids:[ schemes[index].id,schemes[ index + 1].id]})
@@ -47,7 +51,9 @@
       user =CompanyOperator.create({ email: "#{company_roles[index]}_#{index}@pwpr.com",
                               password: @password,
                               confirmation_token: random_string(20),
-                              confirmation_sent_at: DateTime.now,
+                              invitation_sent_at: DateTime.now - 5.days,
+                              invitation_accepted_at: DateTime.now,
+                              confirmation_sent_at: DateTime.now - 5.days,
                               confirmed_at: DateTime.now,
                               name: names[index],
                               business_id: businesses[index].id})

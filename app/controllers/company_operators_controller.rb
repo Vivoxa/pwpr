@@ -71,7 +71,7 @@ class CompanyOperatorsController < BaseController
     pending = company_operators_by_approved(false)
     pending_company_operators = []
     pending.each do |co|
-      pending_company_operators << co if co.invitation_accepted_at.present?
+      pending_company_operators << co if co.confirmed_at.present?
     end
     pending_company_operators
   end

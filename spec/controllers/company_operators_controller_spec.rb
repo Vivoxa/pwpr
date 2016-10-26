@@ -50,8 +50,10 @@ RSpec.describe CompanyOperatorsController, type: :controller do
         company_operator = CompanyOperator.create(email:                  'invited@pwpr.com',
                                                   password:               'my_password',
                                                   business_id:            business.id,
-                                                  invitation_sent_at:     DateTime.now,
+                                                  invitation_sent_at:     DateTime.now - 5.days,
                                                   invitation_accepted_at: DateTime.now,
+                                                  confirmation_sent_at:   DateTime.now - 5.days,
+                                                  confirmed_at:           DateTime.now,
                                                   approved:               false)
         get 'pending'
         object = assigns(:company_operators).first

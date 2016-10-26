@@ -6,6 +6,8 @@ class Ability
 
     user ||= Visitor.new
 
+    can :manage, VisitorsController
+
     configure_scheme_operator(user) if user.is_a?(SchemeOperator)
 
     configure_company_operator(user) if user.is_a?(CompanyOperator)

@@ -72,11 +72,15 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
 
   context 'when Admin Operator' do
     context 'when Admin has full_access role' do
+      let(:admin) { Admin.create(email: 'freddy@kruger.com', password: 'my password') }
       before do
         @request.env['devise.mapping'] = Devise.mappings[:company_operator]
-        admin = Admin.create(email: 'freddy@kruger.com', password: 'my password')
         admin.full_access!
         sign_in admin
+      end
+
+      after do
+        sign_out admin
       end
 
       context '#update_businesses' do
@@ -92,6 +96,45 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
           expect(response.status).to eq 302
 
           user = CompanyOperator.find_by_email('star@star.com')
+          expect(user).to be_a(CompanyOperator)
+        end
+      end
+
+      context 'when calling new' do
+        it 'expects a new invitation to be created' do
+          get :new
+          expect(response.status).to eq 200
+        end
+      end
+    end
+  end
+
+  context 'when Company Operator' do
+    context 'when Company has full_access role' do
+      let(:co) { FactoryGirl.create(:company_operator) }
+      before do
+        @request.env['devise.mapping'] = Devise.mappings[:company_operator]
+        co.co_director!
+        sign_in co
+      end
+
+      after do
+        sign_out co
+      end
+
+      context '#update_businesses' do
+        it 'expects something' do
+          xhr :get, :update_businesses, scheme_id: 1, format: :js
+        end
+      end
+
+      context 'when calling create' do
+        it 'expects a 302 response status' do
+          params = {company_operator: {invitation_sent_at: DateTime.now, password: 'my_password', email: 'star222@star.com', name: 'star', business_id: 1}}
+          post :create, params
+          expect(response.status).to eq 302
+
+          user = CompanyOperator.find_by_email('star222@star.com')
           expect(user).to be_a(CompanyOperator)
         end
       end

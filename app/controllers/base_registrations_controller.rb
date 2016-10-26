@@ -7,7 +7,6 @@ class BaseRegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     build_resource(sign_up_params)
-
     resource.save
     yield resource if block_given?
     if resource.persisted?
@@ -42,7 +41,7 @@ class BaseRegistrationsController < Devise::RegistrationsController
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) do |user_params|
-      user_params.permit({scheme_ids: []}, :scheme_id, :email, :password, :password_confirmation, :name)
+      user_params.permit({scheme_ids: []}, :scheme_id, :email, :password, :password_confirmation, :name, :confirmed_at)
     end
   end
 end

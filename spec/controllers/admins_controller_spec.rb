@@ -126,6 +126,23 @@ RSpec.describe AdminsController, type: :controller do
         put :update_permissions, params
         expect(response.status).to eq 302
       end
+      context 'when an error is raised' do
+        let(:params) { {admin_id: Admin.last.id, role: 'full', permissions: []} }
+        it 'expects permission changes to be rolled back' do
+          allow_any_instance_of(CommonHelpers::PermissionsHelper).to receive(:remove_unselected_permissions!).and_raise(StandardError)
+          put :update_permissions, params
+          expect(response.status).to eq 302
+        end
+      end
+      context 'when an error is raised' do
+        let(:params) { {admin_id: Admin.last.id, role: 'full', permissions: []} }
+        it 'expects flash message to be displyed' do
+          allow_any_instance_of(CommonHelpers::PermissionsHelper).to receive(:remove_unselected_permissions!).and_raise(StandardError)
+          expect_any_instance_of(CommonHelpers::PermissionsHelper).to receive(:roll_back_roles!)
+          put :update_permissions, params
+          expect(flash[:error]).to eq "An error occured! User #{Admin.last.email}'s permissions were not updated."
+        end
+      end
     end
   end
 end

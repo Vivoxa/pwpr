@@ -20,10 +20,6 @@ class CompanyOperator < ActiveRecord::Base
   end
 
   def inactive_message
-    if !approved?
-      :not_approved
-    else
-      super && 'Use whatever other message'
-    end
+    :not_approved unless approved?
   end
 end

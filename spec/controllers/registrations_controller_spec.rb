@@ -1,4 +1,5 @@
-[SchemeOperators::RegistrationsController, CompanyOperators::RegistrationsController].each do |registration_controller|
+# , CompanyOperators::RegistrationsController
+[SchemeOperators::RegistrationsController].each do |registration_controller|
   RSpec.describe registration_controller, type: :controller do
     before do
       @request.env['devise.mapping'] = Devise.mappings[:scheme_operator]
@@ -47,12 +48,29 @@
         end
 
         context 'when calling create' do
-          it 'expects a 200 response status' do
-            post :create, scheme_operator: {email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', scheme_ids: [Scheme.last]}
+          it 'expects a SchemeOperator to be created' do
+            post :create, scheme_operator: {email:      'freddy@pwpr.com',
+                                            name:       'freddy',
+                                            password:   'my_password',
+                                            scheme_ids: [Scheme.last]}
             expect(response.status).to eq 302
             so_user = SchemeOperator.find_by_email('freddy@pwpr.com')
             expect(so_user).to be_a(SchemeOperator)
             expect(so_user.name).to eq 'freddy'
+          end
+        end
+
+        context 'when calling create' do
+          it 'expects a SchemeOperator to be created' do
+            post :create, scheme_operator: {email:        'confirmed@pwpr.com',
+                                            name:         'confirmed',
+                                            password:     'my_password',
+                                            scheme_ids:   [Scheme.last.id],
+                                            confirmed_at: DateTime.now}
+            expect(response.status).to eq 302
+            so_user = SchemeOperator.find_by_email('confirmed@pwpr.com')
+            expect(so_user).to be_a(SchemeOperator)
+            expect(so_user.name).to eq 'confirmed'
           end
         end
       end
@@ -77,9 +95,9 @@
         end
       end
 
-      context 'when calling new' do
+      context 'when calling create' do
         it 'expects a 200 response status' do
-          post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+          post :create, scheme_operator: {email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]}
           expect(response.status).to eq 200
         end
       end

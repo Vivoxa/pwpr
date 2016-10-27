@@ -1,43 +1,45 @@
 <div id="main-container" class="container">
-  <div class="card">
-    <h3 class="card-header"><%= @user.name %>'s Permissions</h3>
-    <div class="card-block">
-          <!--	<h4 class="card-title">Administration</h4>-->
-          <div class="card card-block">
-          <div class='col-md-4'></div>
-          <div class='col-md-4'>
-          <div class="row">
-<div class="roles">
-  <h3>User Roles</h3>
-  <ul>
-    <% @available_roles.each do |role| %>
-      <li>
-        <%= radio_button_tag "role", role, @user.role_list.include?(role) -%>
-        <%= h role.capitalize -%>
-      </li>
-    <% end %>
-  </ul>
+    <div class="card">
+        <h3 class="card-header"><%= @user.name %>'s Permissions</h3>
+        <div class="card-block">
+            <!--	<h4 class="card-title">Administration</h4>-->
+                <div class='col-md-6'>
+                    <div class="row">
+                        <div class="card card-block">
+                            <h4 class="card-title">User Roles</h4>
+                            <div class="roles">
+                                <h3></h3>
+                                <ul>
+                                    <% @available_roles.each do |role| %>
+                                    <li>
+                                        <%= radio_button_tag "role", role, @user.role_list.include?(role) -%>
+                                        <%= h role.capitalize -%>
+                                    </li>
+                                    <% end %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 </div>
-
-<div class="permissions">
-  <h3>User Permissions</h3>
-  <ul>
-    <% @available_permissions.each do |permission| %>
-      <% checked_disabled = @user.role_list.include? permission %>
-      <li>
-        <%= check_box_tag "permissions[]", permission, @user.role_list.include?(permission) -%>
-        <%= h permission.capitalize -%>
-      </li>
-    <% end %>
-  </ul>
-</div>
-</div>
-</div>
-<div class='col-md-4'></div>
-</div>
-</div>
-<div class="card-footer">
-    <%= submit_tag "Save Permissions", class: ['btn btn-sm btn-primary'] -%>
-</div>
+                    <div class='col-md-6'>
+                        <div class="card card-block">
+                            <h4 class="card-title">User Permissions</h4>
+                            <div class="permissions">
+                                <ul>
+                                    <% @available_permissions.each do |permission| %>
+                                    <% checked_disabled = @user.role_list.include? permission %>
+                                    <li>
+                                        <%= check_box_tag "permissions[]", permission, @user.role_list.include?(permission) -%>
+                                        <%= h permission.capitalize -%>
+                                    </li>
+                                    <% end %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+    <div class="card-footer">
+        <%= submit_tag "Save Permissions", class: ['btn btn-sm btn-primary'] -%>
+    </div>
 </div>
 </div>

@@ -16,15 +16,20 @@ class CompanyOperator < ActiveRecord::Base
   # scope :active, -> { where(approved: true) }
   # scope :pending, -> { where(approved: false) }
 
+  after_create :assign_roles
+
   def active_for_authentication?
     super && approved?
   end
 
   def inactive_message
-    if !approved?
-      :not_approved
-    else
-      super && 'Use whatever other message'
-    end
+    :not_approved unless approved?
+  end
+
+  private
+
+  def assign_roles
+    add_role :co_user
+    add_role :co_users_r
   end
 end

@@ -63,7 +63,7 @@ RSpec.describe DeviseOverrides::RegistrationsController, type: :controller do
       admin.name = 'BOSS'
       admin.password = 'mypassword'
       admin.save
-      admin.full_access!
+      admin.super_admin!
     end
     before do
       sign_in admin

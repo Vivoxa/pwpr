@@ -71,7 +71,7 @@ RSpec.describe DeviseOverrides::SchemeOperator::InvitationsController, type: :co
       before do
         @request.env['devise.mapping'] = Devise.mappings[:scheme_operator]
         admin = Admin.create(email: 'freddy@kruger.com', password: 'my password')
-        admin.full_access!
+        admin.super_admin!
         sign_in admin
       end
 

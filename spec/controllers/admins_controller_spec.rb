@@ -73,8 +73,8 @@ RSpec.describe AdminsController, type: :controller do
     end
   end
 
-  context 'when admin has full_access role' do
-    let(:admin_doc) { FactoryGirl.create(:admin_full_access) }
+  context 'when admin has super_admin role' do
+    let(:admin_doc) { FactoryGirl.create(:admin_super_admin) }
     before do
       sign_in admin_doc
     end

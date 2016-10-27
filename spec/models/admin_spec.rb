@@ -21,7 +21,7 @@ RSpec.describe Admin, type: :model do
         end
 
         it 'load the correct values in ROLES' do
-          expect(subject.class::ROLES).to eq %w(full_access).freeze
+          expect(subject.class::ROLES).to eq %w(super_admin normal_admin restricted_admin).freeze
         end
       end
 
@@ -31,17 +31,20 @@ RSpec.describe Admin, type: :model do
         end
 
         it 'load the correct values in PERMISSIONS' do
-          expect(subject.class::PERMISSIONS).to eq %w().freeze
+          expect(subject.class::PERMISSIONS).to eq %w(sc_users_r sc_users_w sc_users_e sc_users_d
+                                                      co_users_r co_users_w co_users_d co_users_e
+                                                      businesses_r businesses_w businesses_d businesses_e
+                                                      schemes_r schemes_w schemes_d schemes_e).freeze
         end
       end
     end
 
     it 'expects the correct roles to be available' do
-      expect(Admin.available_role_names).to eq %w(full_access)
-    end
-
-    it 'expects full_access to be an available role' do
-      expect(subject.allowed_role?(:full_access)).to be true
+      expect(Admin.available_role_names).to eq %w(super_admin normal_admin restricted_admin
+                                                  sc_users_r sc_users_w sc_users_e sc_users_d
+                                                  co_users_r co_users_w co_users_d co_users_e
+                                                  businesses_r businesses_w businesses_d businesses_e
+                                                  schemes_r schemes_w schemes_d schemes_e)
     end
 
     it 'expects name to be an attribute' do
@@ -50,28 +53,28 @@ RSpec.describe Admin, type: :model do
 
     context 'when assigning a role' do
       it 'expects the Admin to have that role' do
-        subject.add_role :full_access
-        expect(subject.has_role?(:full_access)).to be true
-        expect(subject.full_access?).to be true
-        subject.full_access!
-        expect(subject.full_access?).to be true
-        expect(subject.has_role?(:full_access)).to be true
+        subject.add_role :super_admin
+        expect(subject.has_role?(:super_admin)).to be true
+        expect(subject.super_admin?).to be true
+        subject.super_admin!
+        expect(subject.super_admin?).to be true
+        expect(subject.has_role?(:super_admin)).to be true
       end
     end
 
     context 'when removing a role' do
       it 'expects the Admin to NOT have that role' do
-        subject.add_role :full_access
-        expect(subject.has_role?(:full_access)).to be true
-        subject.remove_role :full_access
-        expect(subject.has_role?(:full_access)).to be false
+        subject.add_role :super_admin
+        expect(subject.has_role?(:super_admin)).to be true
+        subject.remove_role :super_admin
+        expect(subject.has_role?(:super_admin)).to be false
       end
     end
   end
   context 'abilities' do
-    context 'with Role full_access' do
-      let(:admin_full_access) { FactoryGirl.create(:admin_full_access) }
-      let(:ability) { Ability.new(admin_full_access) }
+    context 'with Role super_admin' do
+      let(:admin_super_admin) { FactoryGirl.create(:admin_super_admin) }
+      let(:ability) { Ability.new(admin_super_admin) }
 
       it_behaves_like 'an admin manager'
 

@@ -61,37 +61,20 @@ RSpec.describe SchemeOperator, type: :model do
         end
 
         it 'load the correct values in PERMISSIONS' do
-          expect(subject.class::PERMISSIONS).to eq %w(sc_user_r sc_user_rw sc_user_rwe).freeze
+          expect(subject.class::PERMISSIONS).to eq %w(sc_users_r sc_users_w sc_users_e sc_users_d
+                                                      co_users_r co_users_w co_users_d co_users_e
+                                                      businesses_r businesses_w businesses_d businesses_e
+                                                      schemes_r schemes_w schemes_d schemes_e).freeze
         end
       end
     end
 
     it 'expects the correct roles to be available' do
-      expect(SchemeOperator.available_role_names).to eq %w(sc_director sc_super_user sc_user sc_user_r sc_user_rw sc_user_rwe)
-    end
-
-    it 'expects sc_director to be an available role' do
-      expect(subject.allowed_role?(:sc_director)).to be true
-    end
-
-    it 'expects sc_super_user to be an available role' do
-      expect(subject.allowed_role?(:sc_super_user)).to be true
-    end
-
-    it 'expects sc_user to be an available role' do
-      expect(subject.allowed_role?(:sc_user)).to be true
-    end
-
-    it 'expects sc_user_r to be an available role' do
-      expect(subject.allowed_role?(:sc_user_r)).to be true
-    end
-
-    it 'expects sc_user_rw to be an available role' do
-      expect(subject.allowed_role?(:sc_user_rw)).to be true
-    end
-
-    it 'expects sc_user_rwe to be an available role' do
-      expect(subject.allowed_role?(:sc_user_rwe)).to be true
+      expect(SchemeOperator.available_role_names).to eq %w(sc_director sc_super_user sc_user
+                                                          sc_users_r sc_users_w sc_users_e sc_users_d
+                                                          co_users_r co_users_w co_users_d co_users_e
+                                                          businesses_r businesses_w businesses_d businesses_e
+                                                          schemes_r schemes_w schemes_d schemes_e)
     end
 
     it 'expects name to be an attribute' do
@@ -200,13 +183,13 @@ RSpec.describe SchemeOperator, type: :model do
       it_behaves_like 'a registration manager'
     end
 
-    context 'with sc_user_r role' do
+    context 'with sc_users_r role' do
       before do
-        scheme_operator.add_role(:sc_user_r)
+        scheme_operator.add_role(:sc_users_r)
       end
 
       after do
-        scheme_operator.remove_role(:sc_user_r)
+        scheme_operator.remove_role(:sc_users_r)
       end
 
       let(:ability) { Ability.new(scheme_operator) }
@@ -230,13 +213,13 @@ RSpec.describe SchemeOperator, type: :model do
       it_behaves_like 'NOT a registration manager'
     end
 
-    context 'with sc_user_rw role' do
+    context 'with sc_users_w role' do
       before do
-        scheme_operator.add_role(:sc_user_rw)
+        scheme_operator.add_role(:sc_users_w)
       end
 
       after do
-        scheme_operator.remove_role(:sc_user_rw)
+        scheme_operator.remove_role(:sc_users_w)
       end
 
       let(:ability) { Ability.new(scheme_operator) }
@@ -260,13 +243,13 @@ RSpec.describe SchemeOperator, type: :model do
       it_behaves_like 'NOT a registration manager'
     end
 
-    context 'with sc_user_rwe role' do
+    context 'with sc_users_e role' do
       before do
-        scheme_operator.add_role(:sc_user_rwe)
+        scheme_operator.add_role(:sc_users_e)
       end
 
       after do
-        scheme_operator.remove_role(:sc_user_rwe)
+        scheme_operator.remove_role(:sc_users_e)
       end
 
       let(:ability) { Ability.new(scheme_operator) }

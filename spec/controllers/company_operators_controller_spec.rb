@@ -179,7 +179,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
     end
 
     context 'when CompanyOperator has co_contact role' do
-      let(:co_contact) { FactoryGirl.create(:company_operator_with_contact) }
+      let(:co_contact) { FactoryGirl.create(:company_operator_with_co_super_user) }
       before do
         sign_in co_contact
       end

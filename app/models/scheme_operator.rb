@@ -5,8 +5,7 @@ class SchemeOperator < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   include CommonHelpers::PermissionsHelper
 
-  ROLES = %w(sc_director sc_super_user sc_user).freeze
-  royce_roles ROLES + CommonHelpers::PermissionsHelper::SHARED_SO_ADMIN_PERMISSIONS
+  royce_roles PermissionsForRole::SchemeOperator::ROLES + PermissionsForRole::SharedPermissions::SHARED_PERMISSIONS
   has_and_belongs_to_many :schemes
   validates_presence_of :schemes
 

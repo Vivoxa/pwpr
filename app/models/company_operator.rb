@@ -4,10 +4,7 @@ class CompanyOperator < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  ROLES = %w(co_director co_super_user co_user).freeze
-  PERMISSIONS = %w(co_users_r co_users_w co_users_d co_users_e
-                  businesses_r businesses_e).freeze
-  royce_roles ROLES + PERMISSIONS
+  royce_roles PermissionsForRole::CompanyOperator::ROLES + PermissionsForRole::CompanyOperator::PERMISSIONS
 
   belongs_to :business
 

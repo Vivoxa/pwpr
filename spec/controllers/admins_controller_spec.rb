@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AdminsController, type: :controller do
+  subject(:admin_controller) { described_class.new }
+
   context 'when admin operator is NOT signed in' do
     context 'when calling index' do
       it 'expects to be redirected to sign in' do
@@ -90,6 +92,14 @@ RSpec.describe AdminsController, type: :controller do
       expect(response.status).to eq 200
     end
 
+    context 'when calling update' do
+      it 'expects the admin to be updated' do
+        get :update, id: admin_doc.id, admin: {id: admin_doc.id}
+        expect(flash[:notice]).to eq('Admin was successfully updated.')
+        expect(response.status).to eq 302
+      end
+    end
+
     context 'when calling permissions' do
       it 'expects the admin to have access to the permissions action' do
         get :permissions, admin_id: Admin.last.id
@@ -118,6 +128,23 @@ RSpec.describe AdminsController, type: :controller do
       it 'expects the admin to have access to the update_permissions action' do
         put :update_permissions, params
         expect(response.status).to eq 302
+      end
+      context 'when an error is raised' do
+        let(:params) { {admin_id: Admin.last.id, role: 'full', permissions: []} }
+        it 'expects permission changes to be rolled back' do
+          allow_any_instance_of(CommonHelpers::PermissionsHelper).to receive(:remove_unselected_permissions!).and_raise(StandardError)
+          put :update_permissions, params
+          expect(response.status).to eq 302
+        end
+      end
+      context 'when an error is raised' do
+        let(:params) { {admin_id: Admin.last.id, role: 'full', permissions: []} }
+        it 'expects flash message to be displyed' do
+          allow_any_instance_of(CommonHelpers::PermissionsHelper).to receive(:remove_unselected_permissions!).and_raise(StandardError)
+          expect_any_instance_of(CommonHelpers::PermissionsHelper).to receive(:roll_back_roles!)
+          put :update_permissions, params
+          expect(flash[:error]).to eq "An error occured! User #{Admin.last.email}'s permissions were not updated."
+        end
       end
     end
   end

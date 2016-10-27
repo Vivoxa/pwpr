@@ -9,11 +9,12 @@ class CompanyOperator < ActiveRecord::Base
                    businesses_r businesses_e).freeze
   royce_roles ROLES + PERMISSIONS
 
+  belongs_to :business
+
   validates_presence_of :business
 
-  belongs_to :business
-  # this scope is no longer relevant due to the change in relationship to schemes
-  # scope :scheme_operators, -> (scheme) { scheme.scheme_operators }
+  # scope :active, -> { where(approved: true) }
+  # scope :pending, -> { where(approved: false) }
 
   after_create :assign_roles
 
@@ -22,11 +23,7 @@ class CompanyOperator < ActiveRecord::Base
   end
 
   def inactive_message
-    if !approved?
-      :not_approved
-    else
-      super && 'Use whatever other message'
-    end
+    :not_approved unless approved?
   end
 
   private

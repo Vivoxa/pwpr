@@ -132,17 +132,19 @@ RSpec.describe SchemeOperator, type: :model do
     context 'with NO Role' do
       let(:ability) { Ability.new(scheme_operator) }
 
-      it_behaves_like 'NOT an admin manager'
+      it_behaves_like 'NOT a manager', Admin
 
-      it_behaves_like 'NOT a company operator manager'
+      it_behaves_like 'NOT a manager', CompanyOperator
 
-      it_behaves_like 'NOT a scheme operator manager'
+      it_behaves_like 'NOT a manager', SchemeOperator
 
-      it_behaves_like 'NOT a scheme manager'
+      it_behaves_like 'NOT a manager', Scheme
 
-      it_behaves_like 'NOT a registration manager'
+      it_behaves_like 'NOT a manager', SchemeOperators::RegistrationsController
 
-      it_behaves_like 'NOT a business manager'
+      it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
+
+      it_behaves_like 'NOT a manager', Business
     end
 
     context 'with sc_director role' do
@@ -156,7 +158,7 @@ RSpec.describe SchemeOperator, type: :model do
 
       let(:ability) { Ability.new(scheme_operator) }
 
-      it_behaves_like 'NOT an admin manager'
+      it_behaves_like 'NOT a manager', Admin
 
       it_behaves_like 'a writer', CompanyOperator
 
@@ -164,10 +166,13 @@ RSpec.describe SchemeOperator, type: :model do
 
       it_behaves_like 'a writer', Scheme
 
-      it_behaves_like 'a registration manager'
+      it_behaves_like 'a manager', SchemeOperators::RegistrationsController
 
-      it_behaves_like 'a manager', DeviseOverrides::SchemeOperator::InvitationsController
-      it_behaves_like 'a manager', DeviseOverrides::CompanyOperator::InvitationsController
+      it_behaves_like 'a manager', CompanyOperators::RegistrationsController
+
+      it_behaves_like 'a manager', SchemeOperators::InvitationsController
+
+      it_behaves_like 'a manager', CompanyOperators::InvitationsController
     end
 
     context 'with sc_super_user role' do
@@ -189,15 +194,17 @@ RSpec.describe SchemeOperator, type: :model do
 
       it_behaves_like 'a writer', SchemeOperator
 
-      it_behaves_like 'NOT an admin manager'
+      it_behaves_like 'NOT a manager', Admin
 
       it_behaves_like 'NOT a destroyer', CompanyOperator
 
-      it_behaves_like 'NOT a scheme operator manager'
+      it_behaves_like 'NOT a manager', SchemeOperator
 
-      it_behaves_like 'NOT a scheme manager'
+      it_behaves_like 'NOT a manager', Scheme
 
-      it_behaves_like 'a registration manager'
+      it_behaves_like 'a manager', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'a manager', CompanyOperators::RegistrationsController
     end
 
     context 'with sc_user_r role' do
@@ -221,13 +228,15 @@ RSpec.describe SchemeOperator, type: :model do
 
       it_behaves_like 'NOT a destroyer', SchemeOperator
 
-      it_behaves_like 'NOT an admin manager'
+      it_behaves_like 'NOT a manager', Admin
 
-      it_behaves_like 'NOT a scheme operator manager'
+      it_behaves_like 'NOT a manager', SchemeOperator
 
-      it_behaves_like 'NOT a scheme manager'
+      it_behaves_like 'NOT a manager', Scheme
 
-      it_behaves_like 'NOT a registration manager'
+      it_behaves_like 'NOT a manager', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
 
     context 'with sc_user_rw role' do
@@ -251,13 +260,15 @@ RSpec.describe SchemeOperator, type: :model do
 
       it_behaves_like 'NOT a destroyer', SchemeOperator
 
-      it_behaves_like 'NOT an admin manager'
+      it_behaves_like 'NOT a manager', Admin
 
-      it_behaves_like 'NOT a scheme operator manager'
+      it_behaves_like 'NOT a manager', SchemeOperator
 
-      it_behaves_like 'NOT a scheme manager'
+      it_behaves_like 'NOT a manager', Scheme
 
-      it_behaves_like 'NOT a registration manager'
+      it_behaves_like 'NOT a manager', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
 
     context 'with sc_user_rwe role' do
@@ -281,13 +292,15 @@ RSpec.describe SchemeOperator, type: :model do
 
       it_behaves_like 'NOT a destroyer', SchemeOperator
 
-      it_behaves_like 'NOT an admin manager'
+      it_behaves_like 'NOT a manager', Admin
 
-      it_behaves_like 'NOT a scheme operator manager'
+      it_behaves_like 'NOT a manager', SchemeOperator
 
-      it_behaves_like 'NOT a scheme manager'
+      it_behaves_like 'NOT a manager', Scheme
 
-      it_behaves_like 'NOT a registration manager'
+      it_behaves_like 'NOT a manager', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
   end
 end

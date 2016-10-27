@@ -3,9 +3,14 @@ class Ability
 
   def initialize(user)
     user ||= Visitor.new
+
     configure_scheme_operator_and_admin(user) if user.is_a?(SchemeOperator) || user.is_a?(Admin)
+
+    can :manage, VisitorsController
+
     configure_company_operator(user) if user.is_a?(CompanyOperator)
     configure_admin_only(user) if user.is_a?(Admin)
+    configure_visitor if user.is_a?(Visitor)
   end
 
   private
@@ -36,6 +41,10 @@ class Ability
     # permissions for Business
     can :read, Business, id: user.business_id if user.businesses_r?
     can %i(edit update), Business, id: user.business_id if user.businesses_e?
+
+  def configure_visitor
+    can %i(edit update), SchemeOperators::InvitationsController
+    can %i(edit update), CompanyOperators::InvitationsController
   end
 
   def associated_business_ids_for_associated_schemes(user)

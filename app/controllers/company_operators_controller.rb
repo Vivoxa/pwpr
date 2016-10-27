@@ -1,15 +1,21 @@
 class CompanyOperatorsController < BaseController
   before_action :authenticate_company_operator
   load_and_authorize_resource
+  include CommonHelpers::BusinessDropdownHelper
+  respond_to :js
 
   # GET /company_operators
   # TODO: requires scoping
   def index
-    @company_operators = CompanyOperator.where(approved: true)
+    @company_operators = company_operators_by_approved(true)
   end
 
   def pending
-    @approved_company_operators = CompanyOperator.where(approved: false)
+    @company_operators = pending_company_operators
+  end
+
+  def invited_not_accepted
+    @company_operators = unaccepted_invitations
   end
 
   # GET /company_operators/:id
@@ -23,7 +29,7 @@ class CompanyOperatorsController < BaseController
 
   # PATCH/PUT /company_operators/:id
   def update
-    update_operator(@company_operator, secure_params, company_operators_path)
+    update_object(@company_operator, company_operators_path, secure_params)
   end
 
   # DELETE /company_operators/:id
@@ -46,6 +52,37 @@ class CompanyOperatorsController < BaseController
   end
 
   private
+
+  def company_operators_by_approved(approved = true)
+    if current_company_operator
+      current_user.business.company_operators.where(approved: approved)
+    else
+      company_operators = []
+      current_user.schemes.each do |scheme|
+        scheme.businesses.each do |business|
+          company_operators << business.company_operators.where(approved: approved)
+        end
+      end
+      company_operators.flatten
+    end
+  end
+
+  def pending_company_operators
+    pending = company_operators_by_approved(false)
+    pending_company_operators = []
+    pending.each do |co|
+      pending_company_operators << co if co.confirmed_at.present?
+    end
+    pending_company_operators
+  end
+
+  def unaccepted_invitations
+    company_operators = []
+    company_operators_by_approved(false).each do |company_operator|
+      company_operators << company_operator if company_operator.invitation_sent_at.present? && company_operator.invitation_accepted_at.nil?
+    end
+    company_operators
+  end
 
   def secure_params
     # We need to pull the params and handle company_operator as well maybe?

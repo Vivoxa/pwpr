@@ -2,7 +2,6 @@
   <% if @scheme.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@scheme.errors.count, "error") %> prohibited this scheme from being saved:</h2>
-
       <ul>
       <% @scheme.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -10,16 +9,14 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, placeholder: 'Name', class: "devise-lgn form-control" %>
   </div>
   <div class="field">
-    <%= f.label :active %><br>
+    <%= f.label :active %>
     <%= f.check_box :active %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Save', class: ["btn", "btn-success", "devise-btn"] %>
   </div>
 <% end %>

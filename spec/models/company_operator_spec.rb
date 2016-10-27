@@ -104,30 +104,34 @@ RSpec.describe CompanyOperator, type: :model do
       let(:company_operator_no_role) { FactoryGirl.create(:company_operator) }
       let(:ability) { Ability.new(company_operator_no_role) }
 
-      it_behaves_like 'NOT an admin manager'
+      it_behaves_like 'NOT a manager', Admin
 
-      it_behaves_like 'NOT a company operator manager'
+      it_behaves_like 'NOT a manager', CompanyOperator
 
-      it_behaves_like 'NOT a scheme operator manager'
+      it_behaves_like 'NOT a manager', SchemeOperator
 
-      it_behaves_like 'NOT a scheme manager'
+      it_behaves_like 'NOT a manager', Scheme
 
-      it_behaves_like 'NOT a registration manager'
+      it_behaves_like 'NOT a manager', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
 
     context 'with co_director role' do
       let(:company_operator_with_director) { FactoryGirl.create(:company_operator_with_director) }
       let(:ability) { Ability.new(company_operator_with_director) }
 
-      it_behaves_like 'NOT an admin manager'
+      it_behaves_like 'NOT a manager', Admin
 
       it_behaves_like 'a writer', CompanyOperator
 
-      it_behaves_like 'NOT a scheme operator manager'
+      it_behaves_like 'NOT a manager', SchemeOperator
 
-      it_behaves_like 'NOT a scheme manager'
+      it_behaves_like 'NOT a manager', Scheme
 
-      it_behaves_like 'NOT a registration manager'
+      it_behaves_like 'NOT a manager', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
 
     context 'with co_contact role' do
@@ -142,15 +146,17 @@ RSpec.describe CompanyOperator, type: :model do
 
       it_behaves_like 'a writer', CompanyOperator
 
-      it_behaves_like 'NOT an admin manager'
+      it_behaves_like 'NOT a manager', Admin
 
       it_behaves_like 'NOT a destroyer', CompanyOperator
 
-      it_behaves_like 'NOT a scheme operator manager'
+      it_behaves_like 'NOT a manager', SchemeOperator
 
-      it_behaves_like 'NOT a scheme manager'
+      it_behaves_like 'NOT a manager', Scheme
 
-      it_behaves_like 'NOT a registration manager'
+      it_behaves_like 'NOT a manager', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
 
     context 'with co_user_r role' do
@@ -167,13 +173,15 @@ RSpec.describe CompanyOperator, type: :model do
 
       it_behaves_like 'NOT a destroyer', CompanyOperator
 
-      it_behaves_like 'NOT an admin manager'
+      it_behaves_like 'NOT a manager', Admin
 
-      it_behaves_like 'NOT a scheme operator manager'
+      it_behaves_like 'NOT a manager', SchemeOperator
 
-      it_behaves_like 'NOT a scheme manager'
+      it_behaves_like 'NOT a manager', SchemeOperator
 
-      it_behaves_like 'NOT a registration manager'
+      it_behaves_like 'NOT a manager', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
 
     context 'with co_user_rw role' do
@@ -184,7 +192,7 @@ RSpec.describe CompanyOperator, type: :model do
 
       it_behaves_like 'a writer', CompanyOperator
 
-      it_behaves_like 'NOT an admin manager'
+      it_behaves_like 'NOT a manager', Admin
 
       it_behaves_like 'NOT an editor', CompanyOperator
 
@@ -192,11 +200,13 @@ RSpec.describe CompanyOperator, type: :model do
 
       it_behaves_like 'NOT a destroyer', CompanyOperator
 
-      it_behaves_like 'NOT a scheme operator manager'
+      it_behaves_like 'NOT a manager', SchemeOperator
 
-      it_behaves_like 'NOT a scheme manager'
+      it_behaves_like 'NOT a manager', Scheme
 
-      it_behaves_like 'NOT a registration manager'
+      it_behaves_like 'NOT a manager', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
 
     context 'with co_user_rwe role' do
@@ -207,7 +217,7 @@ RSpec.describe CompanyOperator, type: :model do
 
       it_behaves_like 'a writer', CompanyOperator
 
-      it_behaves_like 'NOT an admin manager'
+      it_behaves_like 'NOT a manager', Admin
 
       it_behaves_like 'an editor', CompanyOperator
 
@@ -215,11 +225,13 @@ RSpec.describe CompanyOperator, type: :model do
 
       it_behaves_like 'NOT a destroyer', CompanyOperator
 
-      it_behaves_like 'NOT a scheme operator manager'
+      it_behaves_like 'NOT a manager', SchemeOperator
 
-      it_behaves_like 'NOT a scheme manager'
+      it_behaves_like 'NOT a manager', Scheme
 
-      it_behaves_like 'NOT a registration manager'
+      it_behaves_like 'NOT a manager', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
   end
 end

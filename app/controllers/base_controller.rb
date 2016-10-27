@@ -1,23 +1,15 @@
 class BaseController < ApplicationController
   # PATCH/PUT /object/1
   # PATCH/PUT /objects/1.json
-  def update_business_or_scheme(object, url, params)
+  def update_object(object, url, params)
     respond_to do |format|
       if object.update(params)
-        format.html { redirect_to url, notice: "#{object} was successfully updated." }
+        format.html { redirect_to url, notice: "#{object.class} was successfully updated." }
         format.json { render :show, status: :ok, location: object }
       else
-        format.html { render :edit }
+        format.html { render :edit, alert: "Unable to update #{object.class}." }
         format.json { render json: object.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  def update_operator(operator, params, url)
-    if operator.update(params)
-      redirect_to url, notice: 'User updated.'
-    else
-      redirect_to url, alert: 'Unable to update user.'
     end
   end
 

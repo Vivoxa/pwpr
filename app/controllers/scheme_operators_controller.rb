@@ -8,6 +8,16 @@ class SchemeOperatorsController < BaseController
     @scheme_operators = current_user.schemes.each.map(&:scheme_operators).flatten
   end
 
+  def invited_not_accepted
+    query = 'invitation_sent_at IS NOT NULL AND invitation_accepted_at IS NULL'
+    @scheme_operators = []
+    current_user.schemes.each do |scheme|
+      scheme.scheme_operators.where(query).each do |scheme_operator|
+        @scheme_operators << scheme_operator
+      end
+    end
+  end
+
   # GET /scheme_operators/:id
   def show
     # We need to figure a scope to search for users dynamically based on the category
@@ -21,7 +31,7 @@ class SchemeOperatorsController < BaseController
 
   # PATCH/PUT /scheme_operators/:id
   def update
-    update_operator(@scheme_operator, secure_params, scheme_operators_path)
+    update_object(@scheme_operator, scheme_operators_path, secure_params)
   end
 
   # DELETE /scheme_operators/:id

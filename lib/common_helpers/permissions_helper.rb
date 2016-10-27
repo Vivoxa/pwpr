@@ -17,7 +17,7 @@ module CommonHelpers
         return
       end
 
-      redirect_to resource_path, notice: 'Permissions updated succesfully!'
+      redirect_to resource_path, notice: 'Permissions updated successfully!'
     end
 
     private

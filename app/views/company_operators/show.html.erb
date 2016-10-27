@@ -1,7 +1,6 @@
-<p id="notice"><%= notice %></p>
 <div id="main-container" class="container">
+  <%= render partial: './partials/users/show', locals: { user: @company_operator } %>
   <%= link_to 'Edit', edit_company_operator_path(params[:id]), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
   <%= link_to 'Permissions', company_operator_permissions_path(company_operator_id: params[:id]), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
   <%= link_to 'Back', company_operators_path, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
-  <%= render partial: './partials/users/show', locals: { user: @company_operator } %>
 </div>

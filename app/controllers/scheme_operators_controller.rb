@@ -5,7 +5,7 @@ class SchemeOperatorsController < BaseController
   # GET /scheme_operators
   def index
     # TODO: this needs scoping to a scheme
-    @scheme_operators = SchemeOperator.all
+    @scheme_operators = current_user.schemes.each.map(&:scheme_operators).flatten
   end
 
   # GET /scheme_operators/:id
@@ -21,7 +21,7 @@ class SchemeOperatorsController < BaseController
 
   # PATCH/PUT /scheme_operators/:id
   def update
-    update_operator(@scheme_operator, secure_params, scheme_operators_path)
+    update_object(@scheme_operator, scheme_operators_path, secure_params)
   end
 
   # DELETE /scheme_operators/:id

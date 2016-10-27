@@ -133,7 +133,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
       context 'when calling update' do
         it 'expects the company operator to be updated' do
           get :update, id: co_director.id, company_operator: {id: co_director.id}
-          expect(subject.notice).to eq('User updated.')
+          expect(subject.notice).to eq('CompanyOperator was successfully updated.')
           expect(response.status).to eq 302
         end
       end
@@ -197,7 +197,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
       context 'when calling update' do
         it 'expects the company operator to be updated' do
           get :update, id: co_contact.id, company_operator: {id: co_contact.id}
-          expect(subject.notice).to eq('User updated.')
+          expect(subject.notice).to eq('CompanyOperator was successfully updated.')
           expect(response.status).to eq 302
         end
       end

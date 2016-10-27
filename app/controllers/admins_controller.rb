@@ -1,4 +1,4 @@
-class AdminsController < ApplicationController
+class AdminsController < BaseController
   before_action :authenticate_admin!
   load_and_authorize_resource
 
@@ -21,6 +21,12 @@ class AdminsController < ApplicationController
     # We also need to redirect to the clicked user show action on the relevant controller (scheme or member)
   end
 
+  # PATCH/PUT /admins/1
+  # PATCH/PUT /admins/1.json
+  def update
+    update_object(@admin, admins_url, secure_params)
+  end
+
   # GET /admins/:id/permissions
   def permissions
     @user = Admin.find_by_id(params[:admin_id])
@@ -40,6 +46,6 @@ class AdminsController < ApplicationController
   def secure_params
     # We need to pull the params for the correct "user"
 
-    # params.require(:admin).permit(:role)
+    params.require(:admin).permit(:role, :name, :email)
   end
 end

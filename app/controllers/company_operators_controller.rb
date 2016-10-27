@@ -5,11 +5,11 @@ class CompanyOperatorsController < BaseController
   # GET /company_operators
   # TODO: requires scoping
   def index
-    @company_operators = CompanyOperator.where(approved: true)
+    @company_operators = current_user.business.company_operators.where(approved: true)
   end
 
   def pending
-    @approved_company_operators = CompanyOperator.where(approved: false)
+    @pending_company_operators = current_user.business.company_operators.where(approved: false)
   end
 
   # GET /company_operators/:id
@@ -23,7 +23,7 @@ class CompanyOperatorsController < BaseController
 
   # PATCH/PUT /company_operators/:id
   def update
-    update_operator(@company_operator, secure_params, company_operators_path)
+    update_object(@company_operator, company_operators_path, secure_params)
   end
 
   # DELETE /company_operators/:id

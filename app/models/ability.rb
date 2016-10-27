@@ -22,7 +22,7 @@ class Ability
     can %i(edit update), DeviseOverrides::CompanyOperator::InvitationsController
   end
 
-  def full_access(user)
+  def super_admin(user)
     can :read, CompanyOperator, id: user.business.company_operator_ids
     can :update, CompanyOperator, id: user.business.company_operator_ids
     can :edit, CompanyOperator, id: user.business.company_operator_ids
@@ -34,16 +34,16 @@ class Ability
       can :manage, CompanyOperator, id: user.business.company_operator_ids
       can %i(new create), CompanyOperator
       can %i(new create), DeviseOverrides::CompanyOperator::InvitationsController
-    elsif user.co_contact?
-      full_access(user)
-    elsif user.co_user_r?
+    elsif user.co_super_user?
+      super_admin(user)
+    elsif user.co_users_r?
       can :read, CompanyOperator, id: user.id
-    elsif user.co_user_rw?
+    elsif user.co_users_w?
       can :read, CompanyOperator, id: user.id
       can :new, CompanyOperator
       can :create, CompanyOperator
-    elsif user.co_user_rwe?
-      full_access(user)
+    elsif user.co_users_e?
+      super_admin(user)
     end
   end
 
@@ -62,14 +62,14 @@ class Ability
       configure_sc_director(user, scheme_associated_so_ids, company_operator_associated_ids)
     elsif user.sc_super_user?
       configure_sc_super_user(user, scheme_associated_so_ids, company_operator_associated_ids)
-    elsif user.sc_user_r?
+    elsif user.sc_users_r?
       can :read, Scheme, id:  user.schemes.map(&:id)
       can :read, SchemeOperator
-    elsif user.sc_user_rw?
+    elsif user.sc_users_w?
       can :read, Scheme, id:  user.schemes.map(&:id)
       can :read, SchemeOperator
       can %i(new create), SchemeOperator
-    elsif user.sc_user_rwe?
+    elsif user.sc_users_e?
       can :read, Scheme, id:  user.schemes.map(&:id)
       can :read, SchemeOperator
       can %i(new create update edit), SchemeOperator
@@ -104,7 +104,7 @@ class Ability
   end
 
   def configure_admin(user)
-    if user.full_access?
+    if user.super_admin?
       can :manage, Admin
       can :manage, CompanyOperator
       can :manage, SchemeOperator

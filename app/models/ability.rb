@@ -6,6 +6,8 @@ class Ability
 
     user ||= Visitor.new
 
+    can :manage, VisitorsController
+
     configure_scheme_operator(user) if user.is_a?(SchemeOperator)
 
     configure_company_operator(user) if user.is_a?(CompanyOperator)
@@ -18,8 +20,8 @@ class Ability
   private
 
   def configure_visitor
-    can %i(edit update), DeviseOverrides::SchemeOperator::InvitationsController
-    can %i(edit update), DeviseOverrides::CompanyOperator::InvitationsController
+    can %i(edit update), SchemeOperators::InvitationsController
+    can %i(edit update), CompanyOperators::InvitationsController
   end
 
   def full_access(user)
@@ -33,7 +35,7 @@ class Ability
     if user.co_director?
       can :manage, CompanyOperator, id: user.business.company_operator_ids
       can %i(new create), CompanyOperator
-      can %i(new create), DeviseOverrides::CompanyOperator::InvitationsController
+      can %i(new create), CompanyOperators::InvitationsController
     elsif user.co_contact?
       full_access(user)
     elsif user.co_user_r?
@@ -82,9 +84,9 @@ class Ability
     cannot :destroy, SchemeOperator
     can :manage, Scheme, id:  user.scheme_ids
     can %i(new create), Scheme
-    can :manage, DeviseOverrides::SchemeOperator::InvitationsController
-    can :manage, SchemeOperatorInvitationsController
-    can :manage, DeviseOverrides::RegistrationsController
+    can :manage, SchemeOperators::InvitationsController
+    can :manage, SchemeOperators::RegistrationsController
+    can :manage, CompanyOperators::RegistrationsController
     can :manage, CompanyOperator, id: company_operator_associated_ids
     cannot :destroy, CompanyOperator
     can %i(new create), CompanyOperator
@@ -95,10 +97,11 @@ class Ability
     can %i(new create), SchemeOperator
     can :manage, Scheme, id:  user.scheme_ids
     can %i(new create), Scheme
-    can :manage, DeviseOverrides::RegistrationsController
-    can :manage, DeviseOverrides::SchemeOperator::InvitationsController
-    can :manage, DeviseOverrides::CompanyOperator::InvitationsController
-    can :manage, SchemeOperatorInvitationsController
+    can :manage, SchemeOperators::RegistrationsController
+    can :manage, CompanyOperators::RegistrationsController
+    can :manage, SchemeOperators::InvitationsController
+    can :manage, CompanyOperators::InvitationsController
+    can :manage, SchemeOperators::InvitationsController
     can :manage, CompanyOperator, id: company_operator_associated_ids
     can %i(new create), CompanyOperator
   end
@@ -109,9 +112,10 @@ class Ability
       can :manage, CompanyOperator
       can :manage, SchemeOperator
       can :manage, Scheme
-      can :manage, DeviseOverrides::RegistrationsController
-      can :manage, DeviseOverrides::SchemeOperator::InvitationsController
-      can :manage, DeviseOverrides::CompanyOperator::InvitationsController
+      can :manage, SchemeOperators::RegistrationsController
+      can :manage, CompanyOperators::RegistrationsController
+      can :manage, SchemeOperators::InvitationsController
+      can :manage, CompanyOperators::InvitationsController
     end
   end
 

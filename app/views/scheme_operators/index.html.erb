@@ -1,10 +1,1 @@
-<%= render partial: './partials/users/list',
-           locals: { users: @scheme_operators,
-                     company_operator_link: true,
-                     scheme_operator_link: false,
-                     admin_link: true,
-                     user_type: SchemeOperator,
-                     url: scheme_operators_path,
-                     active: true,
-                     pending: false
-                   } %>
+<%= render 'partials/scheme_operators/index', tab_partial: 'partials/scheme_operators/tab_active' %>

@@ -5,9 +5,6 @@
       <span class="sr-only">Toggle Dropdown</span>
     </button>
     <div class="dropdown-menu">
-      <% if can? :read, Admin %>
-        <a class="dropdown-item" href=<%= admins_path %>>Admins</a>
-      <% end %>
       <% if can? :read, SchemeOperator %>
         <a class="dropdown-item" href=<%= scheme_operators_path %>>Scheme Operators</a>
       <% end %>

@@ -12,12 +12,11 @@ module CommonHelpers
         add_permissions!
       rescue
         roll_back_roles!(current)
-
-        redirect_to resource_path, error: "An error occured! User #{@user.email}'s permissions were not updated."
+        redirect_to resource_path, flash: { error: "An error occured! User #{@user.email}'s permissions were not updated." }
         return
       end
 
-      redirect_to resource_path, notice: 'Permissions updated successfully!'
+      redirect_to resource_path, flash: { notice: 'Permissions updated successfully!' }
     end
 
     private

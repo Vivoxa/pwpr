@@ -9,7 +9,7 @@ RSpec.describe Visitor do
     end
   end
 
-  let(:ability) { Ability.new(visitor) }
+  let(:ability) { Abilities.ability_for(visitor) }
   it_behaves_like 'an editor', SchemeOperators::InvitationsController
 
   it_behaves_like 'an updater', SchemeOperators::InvitationsController

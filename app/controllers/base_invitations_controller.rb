@@ -1,4 +1,5 @@
 class BaseInvitationsController < Devise::InvitationsController
+  authorize_resource class: BaseInvitationsController
   before_action :configure_permitted_parameters, if: :devise_controller?
   include CommonHelpers::MultiUserTypesHelper
 

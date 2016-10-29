@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe CompanyOperator, type: :model do
   let(:scheme) { Scheme.first }
   let(:subject) { FactoryGirl.create(:company_operator) }
+  let(:expected_roles) { %w(co_users_r co_users_w co_users_d co_users_e businesses_r businesses_e).freeze }
 
   context 'Scopes' do
     describe 'scheme_operators' do
@@ -42,41 +43,15 @@ RSpec.describe CompanyOperator, type: :model do
         end
 
         it 'load the correct values in PERMISSIONS' do
-          expect(subject.class::PERMISSIONS).to eq %w(co_user_r co_user_rw co_user_rwe).freeze
+          expect(subject.class::PERMISSIONS).to eq expected_roles
         end
       end
     end
 
     it 'expects the correct roles to be available' do
-      expect(CompanyOperator.available_role_names).to eq %w(co_director co_contact co_user co_user_r co_user_rw co_user_rwe)
-    end
-
-    it 'expects co_director to be an available role' do
-      expect(subject.allowed_role?(:co_director)).to be true
-    end
-
-    it 'expects co_cantact to be an available role' do
-      expect(subject.allowed_role?(:co_contact)).to be true
-    end
-
-    it 'expects co_user to be an available role' do
-      expect(subject.allowed_role?(:co_user)).to be true
-    end
-
-    it 'expects co_user_r to be an available role' do
-      expect(subject.allowed_role?(:co_user_r)).to be true
-    end
-
-    it 'expects company_user_rw to be an available role' do
-      expect(subject.allowed_role?(:co_user_rw)).to be true
-    end
-
-    it 'expects company_user_rwe to be an available role' do
-      expect(subject.allowed_role?(:co_user_rwe)).to be true
-    end
-
-    it 'expects name to be an attribute' do
-      expect(subject.respond_to?(:name)).to be true
+      expected_roles.each do |role|
+        expect(subject.allowed_role?(role)).to be true
+      end
     end
 
     context 'when assigning a role' do
@@ -102,7 +77,7 @@ RSpec.describe CompanyOperator, type: :model do
   context 'Abitlites' do
     context 'with NO Role' do
       let(:company_operator_no_role) { FactoryGirl.create(:company_operator) }
-      let(:ability) { Ability.new(company_operator_no_role) }
+      let(:ability) { Abilities.ability_for(company_operator_no_role) }
 
       it_behaves_like 'NOT a manager', Admin
 
@@ -119,7 +94,7 @@ RSpec.describe CompanyOperator, type: :model do
 
     context 'with co_director role' do
       let(:company_operator_with_director) { FactoryGirl.create(:company_operator_with_director) }
-      let(:ability) { Ability.new(company_operator_with_director) }
+      let(:ability) { Abilities.ability_for(company_operator_with_director) }
 
       it_behaves_like 'NOT a manager', Admin
 
@@ -136,7 +111,7 @@ RSpec.describe CompanyOperator, type: :model do
 
     context 'with co_contact role' do
       let(:company_operator_with_contact) { FactoryGirl.create(:company_operator_with_contact) }
-      let(:ability) { Ability.new(company_operator_with_contact) }
+      let(:ability) { Abilities.ability_for(company_operator_with_contact) }
 
       it_behaves_like 'a reader', CompanyOperator
 
@@ -161,7 +136,7 @@ RSpec.describe CompanyOperator, type: :model do
 
     context 'with co_user_r role' do
       let(:company_operator_with_co_user_r) { FactoryGirl.create(:company_operator_with_co_user_r) }
-      let(:ability) { Ability.new(company_operator_with_co_user_r) }
+      let(:ability) { Abilities.ability_for(company_operator_with_co_user_r) }
 
       it_behaves_like 'a reader', CompanyOperator
 
@@ -186,7 +161,7 @@ RSpec.describe CompanyOperator, type: :model do
 
     context 'with co_user_rw role' do
       let(:company_operator_with_co_user_rw) { FactoryGirl.create(:company_operator_with_co_user_rw) }
-      let(:ability) { Ability.new(company_operator_with_co_user_rw) }
+      let(:ability) { Abilities.ability_for(company_operator_with_co_user_rw) }
 
       it_behaves_like 'a reader', CompanyOperator
 
@@ -211,7 +186,7 @@ RSpec.describe CompanyOperator, type: :model do
 
     context 'with co_user_rwe role' do
       let(:company_operator_with_co_user_rwe) { FactoryGirl.create(:company_operator_with_co_user_rwe) }
-      let(:ability) { Ability.new(company_operator_with_co_user_rwe) }
+      let(:ability) { Abilities.ability_for(company_operator_with_co_user_rwe) }
 
       it_behaves_like 'a reader', CompanyOperator
 

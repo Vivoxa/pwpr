@@ -4,9 +4,9 @@ class SchemeOperator < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   include CommonHelpers::PermissionsHelper
-
+  PERMISSIONS = CommonHelpers::PermissionsHelper::SHARED_SO_ADMIN_PERMISSIONS
   ROLES = %w(sc_director sc_super_user sc_user).freeze
-  royce_roles ROLES + CommonHelpers::PermissionsHelper::SHARED_SO_ADMIN_PERMISSIONS
+  royce_roles ROLES + PERMISSIONS
   has_and_belongs_to_many :schemes
   validates_presence_of :schemes
 
@@ -18,9 +18,9 @@ class SchemeOperator < ActiveRecord::Base
   private
 
   def assign_roles
-    add_role :sc_user
-    add_role :sc_users_r
-    add_role :businesses_r
-    add_role :schemes_r
+    # add_role :sc_user
+    # add_role :sc_users_r
+    # add_role :businesses_r
+    # add_role :schemes_r
   end
 end

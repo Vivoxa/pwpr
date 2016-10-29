@@ -9,7 +9,15 @@ RSpec.describe SchemesController, type: :controller do
       co_marti.confirmed_at = DateTime.now
       co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
       co_marti.save
-      co_marti.add_role('sc_director')
+      co_marti.add_role :sc_director
+      co_marti.add_role :sc_users_r
+      co_marti.add_role :sc_users_w
+      co_marti.add_role :sc_users_e
+      co_marti.add_role :schemes_r
+      co_marti.add_role :schemes_w
+      co_marti.add_role :schemes_e
+      co_marti.add_role :schemes_d
+
       co_marti.save
       sign_in co_marti
     end
@@ -148,7 +156,9 @@ RSpec.describe SchemesController, type: :controller do
     context 'when SchemeOperator does NOT have a role' do
       before do
         sign_out co_marti
-        co_marti.remove_role 'sc_director'
+        co_marti.roles.each do |role|
+          co_marti.remove_role role.name
+        end
         co_marti.save
         sign_in co_marti
       end

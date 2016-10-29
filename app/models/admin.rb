@@ -22,9 +22,9 @@ class Admin < ActiveRecord::Base
   private
 
   def assign_roles
-    add_role :super_admin
-    PERMISSIONS.each do |permission|
-      add_role permission
-    end
+    # add_role :super_admin
+    # PERMISSIONS.each do |permission|
+    #   add_role permission
+    # end
   end
 end

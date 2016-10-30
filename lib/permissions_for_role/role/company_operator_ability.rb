@@ -5,8 +5,8 @@ module PermissionsForRole
 
       def initialize(user)
         super(user)
-        can %i(read edit update update_permissions), CompanyOperator, id: user.business.company_operator_ids if user.co_users_e?
-        can %i(read destroy update_permissions), CompanyOperator, id: user.business.company_operator_ids if user.co_users_d?
+        can %i(read edit update permissions update_permissions), CompanyOperator, id: user.business.company_operator_ids if user.co_users_e?
+        can %i(read destroy), CompanyOperator, id: user.business.company_operator_ids if user.co_users_d?
 
         if user.co_users_r?
           can :pending, CompanyOperator
@@ -30,7 +30,7 @@ module PermissionsForRole
 
           can %i(new create), CompanyOperators::InvitationsController
 
-          can %i(read new create update_permissions), CompanyOperator
+          can %i(read new create permissions update_permissions), CompanyOperator
         end
       end
     end

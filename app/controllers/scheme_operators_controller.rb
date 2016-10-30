@@ -42,8 +42,8 @@ class SchemeOperatorsController < BaseController
   # GET /scheme_operators/:id/permissions
   def permissions
     @user = SchemeOperator.find_by_id(params[:scheme_operator_id])
-    @available_roles = SchemeOperator::ROLES
-    @available_permissions = SchemeOperator::PERMISSIONS
+    @available_roles = PermissionsForRole::SchemeOperator::ROLES
+    @available_permissions = PermissionsForRole::SchemeOperator::permissions_for_role(@user)
   end
 
   # PUT /scheme_operators/:id/update_permissions

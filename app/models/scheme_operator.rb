@@ -5,7 +5,7 @@ class SchemeOperator < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   include CommonHelpers::PermissionsHelper
 
-  royce_roles PermissionsForRole::SchemeOperator::ROLES + PermissionsForRole::SharedPermissions::SHARED_PERMISSIONS
+  royce_roles PermissionsForRole::SchemeOperator::ROLES + PermissionsForRole::SchemeOperator::PERMISSIONS
   has_and_belongs_to_many :schemes
   validates_presence_of :schemes
 

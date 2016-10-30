@@ -23,7 +23,12 @@ module CommonHelpers
     private
 
     def selected_permissions
-      params[:permissions] ? params[:permissions] : []
+      permissions = params[:permissions] ? params[:permissions] : []
+      invalid_permissions = []
+      permissions.each do |p|
+        invalid_permissions << p unless allowed_permission?(p)
+      end
+      permissions - invalid_permissions
     end
 
     def selected_role
@@ -52,6 +57,12 @@ module CommonHelpers
       removed_roles_and_permissions.each do |r|
         @user.remove_role r if r
       end
+    end
+
+    def allowed_permission?(permission)
+      @available_permissions.include?(permission) &&
+      (!@available_permissions[permission.to_sym][:locked] ||
+        @available_permissions[permission.to_sym][:checked])
     end
   end
 end

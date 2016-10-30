@@ -32,6 +32,10 @@ class AdminsController < BaseController
     @user = Admin.find_by_id(params[:admin_id])
     @available_roles = PermissionsForRole::Admin::ROLES
     @available_permissions = PermissionsForRole::Admin::permissions_for_role(@user)
+
+    current_role = @user.role_list & @available_roles
+    @permissions_definitions = PermissionsForRole::Admin.new
+    @allowed_permissions = @permissions_definitions.permissions_for_role(current_role.first)
   end
 
   # GET /admins/:id/permissions

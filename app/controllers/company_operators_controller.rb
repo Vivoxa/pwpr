@@ -41,7 +41,11 @@ class CompanyOperatorsController < BaseController
   def permissions
     @user = CompanyOperator.find_by_id(params[:company_operator_id])
     @available_roles = PermissionsForRole::CompanyOperator::ROLES
-    @available_permissions = PermissionsForRole::CompanyOperator::permissions_for_role(@user)
+    @available_permissions = PermissionsForRole::CompanyOperator::PERMISSIONS
+
+    current_role = @user.role_list & @available_roles
+    @permissions_definitions = PermissionsForRole::CompanyOperator.new
+    @allowed_permissions = @permissions_definitions.permissions_for_role(current_role.first)
   end
 
   # GET /company_operators/:id/permissions

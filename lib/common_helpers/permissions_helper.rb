@@ -27,6 +27,7 @@ module CommonHelpers
       invalid_permissions = []
       return [] if permissions.empty?
 
+      # Remove invalid permissions (server-side validation)
       permissions.each do |p|
         invalid_permissions << p unless allowed_permission?(p)
       end

@@ -30,6 +30,10 @@
           sign_in co_marti
         end
 
+        after do
+          sign_out co_marti
+        end
+
         context 'when calling new' do
           it 'expects a CanCan AccessDenied error to be raised' do
             post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
@@ -46,6 +50,12 @@
           co_marti.sc_users_w!
           co_marti.save
           sign_in co_marti
+        end
+
+        after do
+          co_marti.remove_role :sc_director
+          co_marti.remove_role :sc_users_w
+          sign_out co_marti
         end
 
         context 'when calling create' do
@@ -80,6 +90,10 @@
       let(:admin) { FactoryGirl.create(:super_admin) }
       before do
         sign_in admin
+      end
+
+      after do
+        sign_out admin
       end
 
       context 'when calling new' do

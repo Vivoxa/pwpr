@@ -25,6 +25,10 @@ RSpec.describe SchemeOperators::InvitationsController, type: :controller do
           sign_in co_marti
         end
 
+        after do
+          sign_out co_marti
+        end
+
         context 'when calling new' do
           it 'expects a CanCan AccessDenied error to be raised' do
             get :new
@@ -41,6 +45,12 @@ RSpec.describe SchemeOperators::InvitationsController, type: :controller do
           co_marti.add_role :sc_users_w
           co_marti.save
           sign_in co_marti
+        end
+
+        after do
+          co_marti.remove_role :sc_director
+          co_marti.remove_role :sc_users_w
+          sign_out co_marti
         end
 
         context 'when calling create' do
@@ -70,6 +80,10 @@ RSpec.describe SchemeOperators::InvitationsController, type: :controller do
       before do
         @request.env['devise.mapping'] = Devise.mappings[:scheme_operator]
         sign_in admin_marti
+      end
+
+      after do
+        sign_out admin_marti
       end
 
       context 'when calling create' do

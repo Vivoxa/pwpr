@@ -2,6 +2,7 @@ require 'rails_helper'
 RSpec.describe SchemesController, type: :controller do
   context 'when scheme operator is signed in' do
     let(:co_marti) { SchemeOperator.new }
+    let(:sc_director_roles) { %i(sc_director sc_users_r sc_users_w sc_users_e schemes_r schemes_w schemes_e schemes_d) }
     before do
       co_marti.email = 'jennifer@back_to_the_future.com'
       co_marti.name = 'Jennifer'
@@ -9,18 +10,20 @@ RSpec.describe SchemesController, type: :controller do
       co_marti.confirmed_at = DateTime.now
       co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
       co_marti.save
-      co_marti.add_role :sc_director
-      co_marti.add_role :sc_users_r
-      co_marti.add_role :sc_users_w
-      co_marti.add_role :sc_users_e
-      co_marti.add_role :schemes_r
-      co_marti.add_role :schemes_w
-      co_marti.add_role :schemes_e
-      co_marti.add_role :schemes_d
-
+      sc_director_roles.each do |permission|
+        co_marti.add_role permission
+      end
       co_marti.save
       sign_in co_marti
     end
+
+    after do
+      sc_director_roles.each do |permission|
+        co_marti.remove_role permission
+      end
+      sign_out co_marti
+    end
+
     # This should return the minimal set of attributes required to create a valid
     # Scheme. As you add validations to Scheme, be sure to
     # adjust the attributes here as well.
@@ -162,6 +165,11 @@ RSpec.describe SchemesController, type: :controller do
         co_marti.save
         sign_in co_marti
       end
+
+      after do
+        sign_out co_marti
+      end
+
       context 'when calling index' do
         it 'expects a CanCan AccessDenied error to be raised' do
           get :index
@@ -201,6 +209,11 @@ RSpec.describe SchemesController, type: :controller do
         co_marti.add_role('sc_director')
         co_marti.save
         sign_in co_marti
+      end
+
+      after do
+        co_marti.remove_role :sc_director
+        sign_out co_marti
       end
 
       it 'expects the admin to have access to the index action' do

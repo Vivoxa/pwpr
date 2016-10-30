@@ -1,7 +1,7 @@
 module PermissionsForRole
   class Admin
     ROLES = %w(super_admin normal_admin restricted_admin).freeze
-    PERMISSIONS = PermissionsForRole::SharedPermissions::SHARED_PERMISSIONS
+    PERMISSIONS = %w(admins_r admins_w admins_e admins_d).freeze + PermissionsForRole::SharedPermissions::SHARED_PERMISSIONS
 
     def permissions_for_role(role)
       definitions[role.to_sym]
@@ -15,6 +15,11 @@ module PermissionsForRole
 
     def super_admin
       {
+        admins_r:     {checked: true, locked: true},
+        admins_w:     {checked: true, locked: true},
+        admins_e:     {checked: true, locked: true},
+        admins_d:     {checked: true, locked: true},
+
         schemes_r:    {checked: true, locked: true},
         schemes_w:    {checked: true, locked: true},
         schemes_e:    {checked: true, locked: true},

@@ -7,7 +7,7 @@ module CommonHelpers
       begin
         remove_unselected_permissions!
 
-        @user.add_role selected_role.first
+        @user.add_role selected_role.first if selected_role.first
 
         add_permissions!
       rescue
@@ -25,15 +25,18 @@ module CommonHelpers
     def selected_permissions
       permissions = params[:permissions] ? params[:permissions] : []
       invalid_permissions = []
+      return [] if permissions.empty?
+
       permissions.each do |p|
         invalid_permissions << p unless allowed_permission?(p)
       end
+
       permissions - invalid_permissions
     end
 
     def selected_role
       role = []
-      role << params[:role] if params[:role]
+      role << params[:role] if params[:role] && @available_roles.include?(params[:role])
       role
     end
 
@@ -60,9 +63,13 @@ module CommonHelpers
     end
 
     def allowed_permission?(permission)
-      @available_permissions.include?(permission) &&
-      (!@available_permissions[permission.to_sym][:locked] ||
-        @available_permissions[permission.to_sym][:checked])
+      available_permissions.include?(permission) &&
+      (!available_permissions[permission.to_sym][:locked] ||
+        available_permissions[permission.to_sym][:checked])
+    end
+
+    def available_permissions
+      PermissionsForRole::SchemeOperator::permissions_for_role(selected_role)
     end
   end
 end

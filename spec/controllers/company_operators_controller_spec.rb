@@ -248,7 +248,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
       end
 
       context 'when calling update_permissions' do
-        let(:params) { {company_operator_id: CompanyOperator.last.id, role: 'co_director', permissions: ['co_users_r', 'co_users_d', 'co_users_e']} }
+        let(:params) { {company_operator_id: CompanyOperator.last.id, role: 'co_director', permissions: %w(co_users_r co_users_d co_users_e)} }
 
         it 'expects the company operator permissions to be updated' do
           put :update_permissions, params

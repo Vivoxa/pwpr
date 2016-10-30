@@ -2,7 +2,7 @@ module PermissionsForRole
   class CompanyOperatorDefinitions
     ROLES = %w(co_director co_super_user co_user).freeze
     PERMISSIONS = %w(co_users_r co_users_w co_users_d co_users_e
-                    businesses_r businesses_e).freeze
+                     businesses_r businesses_e).freeze
 
     def permissions_for_role(role)
       definitions[role.to_sym]

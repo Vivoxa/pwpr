@@ -13,7 +13,7 @@ RSpec.describe AdminsController, type: :controller do
     end
 
     context 'when calling show' do
-        it_behaves_like 'a NOT signed in user', 'get', :show, id: Admin.last.id
+      it_behaves_like 'a NOT signed in user', 'get', :show, id: Admin.last.id
     end
 
     context 'when calling permissions' do

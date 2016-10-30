@@ -47,6 +47,12 @@ FactoryGirl.define do
       end
     end
 
+    factory :company_operator_no_role do |co_r|
+      co_r.after :build do |instance|
+        instance.business_id = FactoryGirl.create(:business).id
+      end
+    end
+
     factory :company_operator_with_co_users_r do |co_r|
       co_r.after :build do |instance|
         instance.business_id = FactoryGirl.create(:business).id

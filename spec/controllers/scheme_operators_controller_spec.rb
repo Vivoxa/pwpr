@@ -205,12 +205,12 @@ RSpec.describe SchemeOperatorsController, type: :controller do
 
         it 'sets the correct available_roles' do
           get :permissions, scheme_operator_id: SchemeOperator.last.id
-          expect(assigns(:available_roles)).to eq(SchemeOperator::ROLES)
+          expect(assigns(:available_roles)).to eq(PermissionsForRole::SchemeOperator::ROLES)
         end
 
         it 'sets the correct available_permissions' do
           get :permissions, scheme_operator_id: SchemeOperator.last.id
-          expect(assigns(:available_permissions)).to eq(SchemeOperator::PERMISSIONS)
+          expect(assigns(:available_permissions)).to eq(PermissionsForRole::SchemeOperator::PERMISSIONS)
         end
       end
 

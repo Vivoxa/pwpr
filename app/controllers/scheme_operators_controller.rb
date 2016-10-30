@@ -41,6 +41,7 @@ class SchemeOperatorsController < BaseController
 
   # GET /scheme_operators/:id/permissions
   def permissions
+    binding.pry
     @user = SchemeOperator.find_by_id(params[:scheme_operator_id])
 
     @available_roles = PermissionsForRole::SchemeOperator::ROLES

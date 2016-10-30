@@ -35,7 +35,7 @@ FactoryGirl.define do
       password 'my_password'
       after(:create) do |admin|
         admin.add_role :super_admin
-        Admin::PERMISSIONS.each do |permission|
+        PermissionsForRole::Admin::PERMISSIONS.each do |permission|
           admin.add_role(permission)
         end
       end

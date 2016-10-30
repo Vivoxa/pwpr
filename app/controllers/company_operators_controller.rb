@@ -54,9 +54,7 @@ class CompanyOperatorsController < BaseController
   private
 
   def company_operators_by_approved(approved = true)
-    if current_company_operator
-      current_user.business.company_operators.where(approved: approved)
-    else
+    if current_scheme_operator || current_admin
       company_operators = []
       current_user.schemes.each do |scheme|
         scheme.businesses.each do |business|
@@ -64,6 +62,8 @@ class CompanyOperatorsController < BaseController
         end
       end
       company_operators.flatten
+    else
+      current_user.business.company_operators.where(approved: approved)
     end
   end
 

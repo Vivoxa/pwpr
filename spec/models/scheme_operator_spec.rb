@@ -111,6 +111,15 @@ RSpec.describe SchemeOperator, type: :model do
     end
   end
 
+  context 'when an Scheme Operator is created' do
+    it 'expects the Scheme Operator to have the restricted sc_user role' do
+      scheme_operator = SchemeOperator.create(email: 'sc_operator101@pwpr.com', password: 'my password', name: 'fred', schemes: [Scheme.last])
+      %i(sc_user businesses_r schemes_r sc_users_r).each do |permission|
+        expect(scheme_operator.has_role?(permission)).to eq true
+      end
+    end
+  end
+
   context 'Abitlites' do
     let(:scheme_operator) do
       SchemeOperator.create(name:                 'rspec owner',

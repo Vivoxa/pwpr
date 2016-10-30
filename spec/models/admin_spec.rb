@@ -24,6 +24,15 @@ RSpec.describe Admin, type: :model do
     subject.save
   end
 
+  context 'when an Admin is created' do
+    it 'expects the admin to have the restricted admin role' do
+      admin = Admin.create(email: 'admin101@pwpr.com', password: 'my password', name: 'fred')
+      %i(businesses_r schemes_r sc_users_r co_users_r).each do |permission|
+        expect(admin.has_role?(permission)).to eq true
+      end
+    end
+  end
+
   context 'schemes' do
     it 'expects admins to have access to all schemes' do
       expect(subject.schemes).to eq(Scheme.all)

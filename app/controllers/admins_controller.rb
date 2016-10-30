@@ -35,6 +35,8 @@ class AdminsController < BaseController
 
     current_role = @user.role_list & @available_roles
     @permissions_definitions = PermissionsForRole::Admin.new
+
+    # This needs to somehow dynamically reload when the selected role is changed in the UI
     @allowed_permissions = @permissions_definitions.permissions_for_role(current_role.first)
   end
 

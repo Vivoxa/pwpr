@@ -7,7 +7,7 @@ class SchemeOperator < ActiveRecord::Base
   validates_presence_of :schemes
   include CommonHelpers::PermissionsHelper
 
-  royce_roles PermissionsForRole::SchemeOperator::ROLES + PermissionsForRole::SchemeOperator::PERMISSIONS
+  royce_roles PermissionsForRole::SchemeOperatorDefinitions::ROLES + PermissionsForRole::SchemeOperatorDefinitions::PERMISSIONS
   has_and_belongs_to_many :schemes
   validates_presence_of :schemes
 

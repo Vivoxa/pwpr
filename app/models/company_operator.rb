@@ -4,7 +4,7 @@ class CompanyOperator < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  royce_roles PermissionsForRole::CompanyOperator::ROLES + PermissionsForRole::CompanyOperator::PERMISSIONS
+  royce_roles PermissionsForRole::CompanyOperatorDefinitions::ROLES + PermissionsForRole::CompanyOperatorDefinitions::PERMISSIONS
 
   belongs_to :business
 

@@ -5,7 +5,7 @@ class Admin < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   include DeviseInvitable::Inviter
 
-  royce_roles PermissionsForRole::Admin::ROLES + PermissionsForRole::Admin::PERMISSIONS
+  royce_roles PermissionsForRole::AdminDefinitions::ROLES + PermissionsForRole::AdminDefinitions::PERMISSIONS
 
   after_create :assign_roles
 
@@ -21,9 +21,9 @@ class Admin < ActiveRecord::Base
 
   def assign_roles
     add_role :restricted_admin
-    admin_permisions = PermissionsForRole::Admin.new
+    admin_permisions = PermissionsForRole::AdminDefinitions.new
 
-    admin_permisions.permissions_for_role(:restricted_admin).each do |permission|
+    admin_permisions.permissions_for_role(:restricted_admin).keys.each do |permission|
       add_role permission
     end
   end

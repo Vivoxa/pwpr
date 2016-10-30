@@ -1,7 +1,7 @@
 module PermissionsForRole
-  class SchemeOperator
-    ROLES = %w(sc_director sc_super_user sc_user).freeze
-    PERMISSIONS = PermissionsForRole::SharedPermissions::SHARED_PERMISSIONS
+  class AdminDefinitions
+    ROLES = %w(super_admin normal_admin restricted_admin).freeze
+    PERMISSIONS = %w(admins_r admins_w admins_e admins_d).freeze + PermissionsForRole::SharedDefinitions::SHARED_PERMISSIONS
 
     def permissions_for_role(role)
       definitions[role.to_sym]
@@ -10,11 +10,16 @@ module PermissionsForRole
     private
 
     def definitions
-      {sc_director: sc_director, sc_super_user: sc_super_user, sc_user: sc_user}
+      {super_admin: super_admin, normal_admin: normal_admin, restricted_admin: restricted_admin}
     end
 
-    def sc_director
+    def super_admin
       {
+        admins_r:     {checked: true, locked: true},
+        admins_w:     {checked: true, locked: true},
+        admins_e:     {checked: true, locked: true},
+        admins_d:     {checked: true, locked: true},
+
         schemes_r:    {checked: true, locked: true},
         schemes_w:    {checked: true, locked: true},
         schemes_e:    {checked: true, locked: true},
@@ -37,7 +42,7 @@ module PermissionsForRole
       }
     end
 
-    def sc_super_user
+    def normal_admin
       {
         schemes_r:    {checked: true, locked: true},
         schemes_w:    {checked: false, locked: false},
@@ -50,8 +55,8 @@ module PermissionsForRole
         sc_users_d:   {checked: false, locked: false},
 
         co_users_r:   {checked: true, locked: true},
-        co_users_w:   {checked: false, locked: false},
-        co_users_e:   {checked: false, locked: false},
+        co_users_w:   {checked: true, locked: true},
+        co_users_e:   {checked: true, locked: true},
         co_users_d:   {checked: false, locked: false},
 
         businesses_r: {checked: true, locked: true},
@@ -61,16 +66,16 @@ module PermissionsForRole
       }
     end
 
-    def sc_user
+    def restricted_admin
       {
-        schemes_r:    {checked: false, locked: true},
+        schemes_r:    {checked: true, locked: true},
         schemes_w:    {checked: false, locked: true},
-        schemes_e:    {checked: false, locked: true},
+        schemes_e:    {checked: false, locked: false},
         schemes_d:    {checked: false, locked: true},
 
-        sc_users_r:   {checked: false, locked: true},
-        sc_users_w:   {checked: false, locked: true},
-        sc_users_e:   {checked: false, locked: true},
+        sc_users_r:   {checked: true, locked: true},
+        sc_users_w:   {checked: false, locked: false},
+        sc_users_e:   {checked: false, locked: false},
         sc_users_d:   {checked: false, locked: true},
 
         co_users_r:   {checked: true, locked: true},

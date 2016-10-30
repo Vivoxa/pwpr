@@ -41,14 +41,13 @@ class SchemeOperatorsController < BaseController
 
   # GET /scheme_operators/:id/permissions
   def permissions
-    binding.pry
     @user = SchemeOperator.find_by_id(params[:scheme_operator_id])
 
-    @available_roles = PermissionsForRole::SchemeOperator::ROLES
-    @available_permissions = PermissionsForRole::SchemeOperator::PERMISSIONS
+    @available_roles = PermissionsForRole::SchemeOperatorDefinitions::ROLES
+    @available_permissions = PermissionsForRole::SchemeOperatorDefinitions::PERMISSIONS
 
     current_role = @user.role_list & @available_roles
-    @permissions_definitions = PermissionsForRole::SchemeOperator.new
+    @permissions_definitions = PermissionsForRole::SchemeOperatorDefinitions.new
 
     # This needs to somehow dynamically reload when the selected role is changed in the UI
     @allowed_permissions = @permissions_definitions.permissions_for_role(current_role.first)

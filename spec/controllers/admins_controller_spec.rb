@@ -100,12 +100,12 @@ RSpec.describe AdminsController, type: :controller do
 
       it 'sets the correct available_roles' do
         get :permissions, admin_id: Admin.last.id
-        expect(assigns(:available_roles)).to eq(PermissionsForRole::Admin::ROLES)
+        expect(assigns(:available_roles)).to eq(PermissionsForRole::AdminDefinitions::ROLES)
       end
 
       it 'sets the correct available_permissions' do
         get :permissions, admin_id: Admin.last.id
-        expect(assigns(:available_permissions)).to eq(PermissionsForRole::Admin::PERMISSIONS)
+        expect(assigns(:available_permissions)).to eq(PermissionsForRole::AdminDefinitions::PERMISSIONS)
       end
     end
 

@@ -87,7 +87,7 @@ RSpec.describe CompanyOperator, type: :model do
       it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
 
-    context 'with co_user_r role' do
+    context 'with co_users_r role' do
       let(:company_operator_with_co_users_r) { FactoryGirl.create(:company_operator_with_co_users_r) }
       let(:ability) { Abilities.ability_for(company_operator_with_co_users_r) }
 
@@ -112,7 +112,7 @@ RSpec.describe CompanyOperator, type: :model do
       it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
 
-    context 'with co_user_rw role' do
+    context 'with co_users_w role' do
       let(:company_operator_with_co_users_w) { FactoryGirl.create(:company_operator_with_co_users_w) }
       let(:ability) { Abilities.ability_for(company_operator_with_co_users_w) }
 
@@ -137,7 +137,7 @@ RSpec.describe CompanyOperator, type: :model do
       it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
 
-    context 'with co_user_rwe role' do
+    context 'with co_users_e role' do
       let(:company_operator_with_co_users_e) { FactoryGirl.create(:company_operator_with_co_users_e) }
       let(:ability) { Abilities.ability_for(company_operator_with_co_users_e) }
 

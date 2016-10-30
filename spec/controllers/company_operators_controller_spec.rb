@@ -192,7 +192,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
     context 'when CompanyOperator has co_director role' do
       let(:co_director) { FactoryGirl.create(:company_operator_with_director) }
       before do
-        PermissionsForRole::CompanyOperator::PERMISSIONS.each do |role|
+        PermissionsForRole::CompanyOperatorDefinitions::PERMISSIONS.each do |role|
           co_director.add_role role
         end
         sign_in co_director
@@ -238,12 +238,12 @@ RSpec.describe CompanyOperatorsController, type: :controller do
 
         it 'sets the correct available_roles' do
           get :permissions, company_operator_id: CompanyOperator.last.id
-          expect(assigns(:available_roles)).to eq(PermissionsForRole::CompanyOperator::ROLES)
+          expect(assigns(:available_roles)).to eq(PermissionsForRole::CompanyOperatorDefinitions::ROLES)
         end
 
         it 'sets the correct available_permissions' do
           get :permissions, company_operator_id: CompanyOperator.last.id
-          expect(assigns(:available_permissions)).to eq(PermissionsForRole::CompanyOperator::PERMISSIONS)
+          expect(assigns(:available_permissions)).to eq(PermissionsForRole::CompanyOperatorDefinitions::PERMISSIONS)
         end
       end
 

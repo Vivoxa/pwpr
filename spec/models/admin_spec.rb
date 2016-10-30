@@ -91,8 +91,14 @@ RSpec.describe Admin, type: :model do
     end
 
     context 'with no Role' do
-      subject(:normal_admin) { FactoryGirl.create(:normal_admin) }
-      let(:ability) { Abilities.ability_for(normal_admin) }
+      subject(:no_role) { FactoryGirl.create(:no_role) }
+      let(:ability) { Abilities.ability_for(no_role) }
+
+      before do
+        subject.role_list.each do |r|
+          subject.remove_role r
+        end
+      end
 
       it_behaves_like 'NOT a manager', Admin
 

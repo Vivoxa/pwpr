@@ -1,7 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'CompanyOperators', :js => true do
-
+RSpec.describe 'CompanyOperators', js: true do
   describe 'GET /CompanyOperators' do
     it 'expects to be signed in with correct credentials' do
       sign_in('company_operator_0@pwpr.com', 'min700si')

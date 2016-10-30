@@ -26,6 +26,9 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
       end
       context 'when SchemeOperator does NOT have the director role' do
         before do
+          co_marti.role_list.each do |role|
+            co_marti.remove_role role
+          end
           sign_in co_marti
         end
 
@@ -41,7 +44,12 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
       context 'when SchemeOperator has co_director role' do
         before do
           sign_out co_marti
-          co_marti.add_role('sc_director')
+          co_marti.role_list.each do |role|
+            co_marti.remove_role role
+          end
+          co_marti.add_role :sc_director
+          co_marti.add_role :sc_users_w
+
           co_marti.save
           sign_in co_marti
         end
@@ -71,17 +79,16 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
   end
 
   context 'when Admin Operator' do
-    context 'when Admin has full_access role' do
-      let(:admin) { Admin.create(email: 'freddy@kruger.com', password: 'my password') }
+    context 'when Admin has super_admin role' do
+      let(:super_admin) { FactoryGirl.create(:super_admin) }
       before do
         @request.env['devise.mapping'] = Devise.mappings[:company_operator]
-        admin = Admin.create(email: 'freddy@kruger.com', password: 'my password')
-        admin.super_admin!
-        sign_in admin
+        super_admin
+        sign_in super_admin
       end
 
       after do
-        sign_out admin
+        sign_out super_admin
       end
 
       context '#update_businesses' do
@@ -111,11 +118,13 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
   end
 
   context 'when Company Operator' do
-    context 'when Company has full_access role' do
+    context 'when Company has super_admin role' do
       let(:co) { FactoryGirl.create(:company_operator) }
       before do
         @request.env['devise.mapping'] = Devise.mappings[:company_operator]
         co.co_director!
+        # TODO: these will have to be tweaked when role are finished
+        co.co_users_w!
         sign_in co
       end
 

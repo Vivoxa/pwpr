@@ -42,7 +42,8 @@
       context 'when SchemeOperator has co_director role' do
         before do
           sign_out co_marti
-          co_marti.add_role('sc_director')
+          co_marti.add_role :sc_director
+          co_marti.sc_users_w!
           co_marti.save
           sign_in co_marti
         end
@@ -76,14 +77,7 @@
       end
     end
     context 'when an Admin is signed in' do
-      let(:admin) { Admin.new }
-      before do
-        admin.email = 'the_boss@back_to_the_future.com'
-        admin.name = 'BOSS'
-        admin.password = 'mypassword'
-        admin.save
-        admin.full_access!
-      end
+      let(:admin) { FactoryGirl.create(:super_admin) }
       before do
         sign_in admin
       end

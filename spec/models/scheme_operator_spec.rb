@@ -2,6 +2,20 @@ require 'rails_helper'
 
 RSpec.describe SchemeOperator, type: :model do
   let(:scheme) { Scheme.first }
+  let(:expected_roles) do
+    %w(sc_director sc_super_user sc_user
+       sc_users_r sc_users_w sc_users_e sc_users_d
+       co_users_r co_users_w co_users_d co_users_e
+       businesses_r businesses_w businesses_d businesses_e
+       schemes_r schemes_w schemes_d schemes_e).freeze
+  end
+
+  let(:expected_permissions) do
+    %w(sc_users_r sc_users_w sc_users_e sc_users_d
+       co_users_r co_users_w co_users_d co_users_e
+       businesses_r businesses_w businesses_d businesses_e
+       schemes_r schemes_w schemes_d schemes_e).freeze
+  end
   before do
     subject.email = 'nigelsurtees@wvivoxa.com'
     subject.password = 'khgsdfgaskgfdkag'
@@ -61,24 +75,19 @@ RSpec.describe SchemeOperator, type: :model do
         end
 
         it 'load the correct values in PERMISSIONS' do
-          expect(subject.class::PERMISSIONS).to eq %w(sc_users_r sc_users_w sc_users_e sc_users_d
-                                                      co_users_r co_users_w co_users_d co_users_e
-                                                      businesses_r businesses_w businesses_d businesses_e
-                                                      schemes_r schemes_w schemes_d schemes_e).freeze
+          expect(subject.class::PERMISSIONS).to eq expected_permissions
         end
       end
     end
 
-    it 'expects the correct roles to be available' do
-      expect(SchemeOperator.available_role_names).to eq %w(sc_director sc_super_user sc_user
-                                                          sc_users_r sc_users_w sc_users_e sc_users_d
-                                                          co_users_r co_users_w co_users_d co_users_e
-                                                          businesses_r businesses_w businesses_d businesses_e
-                                                          schemes_r schemes_w schemes_d schemes_e)
+    it 'expects the correct role to be available' do
+      expect(SchemeOperator.available_role_names).to eq expected_roles
     end
 
-    it 'expects name to be an attribute' do
-      expect(subject.respond_to?(:name)).to be true
+    it 'expects the correct roles to be available' do
+      expected_roles.each do |role|
+        expect(subject.allowed_role?(role)).to be true
+      end
     end
 
     context 'when assigning a role' do
@@ -102,6 +111,15 @@ RSpec.describe SchemeOperator, type: :model do
     end
   end
 
+  context 'when an Scheme Operator is created' do
+    it 'expects the Scheme Operator to have the restricted sc_user role' do
+      scheme_operator = SchemeOperator.create(email: 'sc_operator101@pwpr.com', password: 'my password', name: 'fred', schemes: [Scheme.last])
+      %i(sc_user businesses_r schemes_r sc_users_r).each do |permission|
+        expect(scheme_operator.has_role?(permission)).to eq true
+      end
+    end
+  end
+
   context 'Abitlites' do
     let(:scheme_operator) do
       SchemeOperator.create(name:                 'rspec owner',
@@ -113,7 +131,7 @@ RSpec.describe SchemeOperator, type: :model do
                             scheme_ids:           Scheme.last.id)
     end
     context 'with NO Role' do
-      let(:ability) { Ability.new(scheme_operator) }
+      let(:ability) { Abilities.ability_for(scheme_operator) }
 
       it_behaves_like 'NOT a manager', Admin
 
@@ -132,14 +150,26 @@ RSpec.describe SchemeOperator, type: :model do
 
     context 'with sc_director role' do
       before do
-        scheme_operator.add_role(:sc_director)
+        scheme_operator.add_role :sc_director
+        scheme_operator.add_role :sc_users_w
+        scheme_operator.add_role :schemes_r
+        scheme_operator.add_role :schemes_e
+        scheme_operator.add_role :co_users_r
+        scheme_operator.add_role :co_users_e
+        scheme_operator.add_role :co_users_w
       end
 
       after do
-        scheme_operator.remove_role(:sc_director)
+        scheme_operator.remove_role :sc_director
+        scheme_operator.remove_role :sc_users_w
+        scheme_operator.remove_role :schemes_r
+        scheme_operator.remove_role :schemes_e
+        scheme_operator.add_role :co_users_r
+        scheme_operator.add_role :co_users_e
+        scheme_operator.add_role :co_users_w
       end
 
-      let(:ability) { Ability.new(scheme_operator) }
+      let(:ability) { Abilities.ability_for(scheme_operator) }
 
       it_behaves_like 'NOT a manager', Admin
 
@@ -147,27 +177,43 @@ RSpec.describe SchemeOperator, type: :model do
 
       it_behaves_like 'a writer', SchemeOperator
 
-      it_behaves_like 'a writer', Scheme
+      it_behaves_like 'a reader', Scheme.last
 
-      it_behaves_like 'a manager', SchemeOperators::RegistrationsController
+      it_behaves_like 'an updater', Scheme.last
 
-      it_behaves_like 'a manager', CompanyOperators::RegistrationsController
+      it_behaves_like 'a reader', SchemeOperators::RegistrationsController
 
-      it_behaves_like 'a manager', SchemeOperators::InvitationsController
+      it_behaves_like 'a reader', CompanyOperators::RegistrationsController
 
-      it_behaves_like 'a manager', CompanyOperators::InvitationsController
+      it_behaves_like 'a reader', SchemeOperators::InvitationsController
+
+      it_behaves_like 'a reader', CompanyOperators::InvitationsController
+
+      it_behaves_like 'an editor', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'an editor', CompanyOperators::RegistrationsController
+
+      it_behaves_like 'an updater', SchemeOperators::InvitationsController
+
+      it_behaves_like 'an updater', CompanyOperators::InvitationsController
     end
 
     context 'with sc_super_user role' do
       before do
-        scheme_operator.add_role(:sc_super_user)
+        scheme_operator.add_role :sc_super_user
+        scheme_operator.add_role :sc_users_r
+        scheme_operator.add_role :sc_users_w
+        scheme_operator.add_role :sc_users_e
       end
 
       after do
-        scheme_operator.remove_role(:sc_super_user)
+        scheme_operator.remove_role :sc_super_user
+        scheme_operator.remove_role :sc_users_r
+        scheme_operator.remove_role :sc_users_w
+        scheme_operator.remove_role :sc_users_e
       end
 
-      let(:ability) { Ability.new(scheme_operator) }
+      let(:ability) { Abilities.ability_for(scheme_operator) }
 
       it_behaves_like 'a reader', SchemeOperator
 
@@ -185,21 +231,35 @@ RSpec.describe SchemeOperator, type: :model do
 
       it_behaves_like 'NOT a manager', Scheme
 
-      it_behaves_like 'a manager', SchemeOperators::RegistrationsController
+      it_behaves_like 'a reader', SchemeOperators::RegistrationsController
 
-      it_behaves_like 'a manager', CompanyOperators::RegistrationsController
+      it_behaves_like 'a reader', CompanyOperators::RegistrationsController
+
+      it_behaves_like 'a writer', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'a writer', CompanyOperators::RegistrationsController
+
+      it_behaves_like 'an editor', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'an editor', CompanyOperators::RegistrationsController
+
+      it_behaves_like 'an updater', SchemeOperators::RegistrationsController
+
+      it_behaves_like 'an updater', CompanyOperators::RegistrationsController
     end
 
     context 'with sc_users_r role' do
       before do
-        scheme_operator.add_role(:sc_users_r)
+        scheme_operator.add_role :sc_user
+        scheme_operator.add_role :sc_users_r
       end
 
       after do
-        scheme_operator.remove_role(:sc_users_r)
+        scheme_operator.remove_role :sc_user_r
+        scheme_operator.add_role :sc_users_r
       end
 
-      let(:ability) { Ability.new(scheme_operator) }
+      let(:ability) { Abilities.ability_for(scheme_operator) }
 
       it_behaves_like 'a reader', SchemeOperator
 
@@ -224,14 +284,18 @@ RSpec.describe SchemeOperator, type: :model do
 
     context 'with sc_users_w role' do
       before do
-        scheme_operator.add_role(:sc_users_w)
+        scheme_operator.add_role :sc_user
+        scheme_operator.add_role :sc_users_r
+        scheme_operator.add_role :sc_users_w
       end
 
       after do
-        scheme_operator.remove_role(:sc_users_w)
+        scheme_operator.remove_role :sc_user_rw
+        scheme_operator.add_role :sc_users_r
+        scheme_operator.add_role :sc_users_w
       end
 
-      let(:ability) { Ability.new(scheme_operator) }
+      let(:ability) { Abilities.ability_for(scheme_operator) }
 
       it_behaves_like 'a reader', SchemeOperator
 
@@ -256,14 +320,20 @@ RSpec.describe SchemeOperator, type: :model do
 
     context 'with sc_users_e role' do
       before do
-        scheme_operator.add_role(:sc_users_e)
+        scheme_operator.add_role :sc_user_rwe
+        scheme_operator.add_role :sc_users_r
+        scheme_operator.add_role :sc_users_w
+        scheme_operator.add_role :sc_users_e
       end
 
       after do
-        scheme_operator.remove_role(:sc_users_e)
+        scheme_operator.add_role :sc_user_rwe
+        scheme_operator.add_role :sc_users_r
+        scheme_operator.add_role :sc_users_w
+        scheme_operator.add_role :sc_users_e
       end
 
-      let(:ability) { Ability.new(scheme_operator) }
+      let(:ability) { Abilities.ability_for(scheme_operator) }
 
       it_behaves_like 'a reader', SchemeOperator
 

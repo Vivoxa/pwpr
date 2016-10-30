@@ -5,12 +5,8 @@ RSpec.describe SchemeOperators::InvitationsController, type: :controller do
     end
 
     context 'when scheme operator is NOT signed in' do
-      context 'when calling create' do
-        it 'expects to be redirected to sign in' do
-          get :new
-          expect(response.status).to eq 302
-          expect(response.body).to include('scheme_operators/sign_in')
-        end
+      context 'when calling new' do
+        it_behaves_like 'a NOT signed in user', 'get', :new, {}
       end
     end
 
@@ -41,7 +37,8 @@ RSpec.describe SchemeOperators::InvitationsController, type: :controller do
       context 'when SchemeOperator has co_director role' do
         before do
           sign_out co_marti
-          co_marti.add_role('sc_director')
+          co_marti.add_role :sc_director
+          co_marti.add_role :sc_users_w
           co_marti.save
           sign_in co_marti
         end
@@ -66,13 +63,13 @@ RSpec.describe SchemeOperators::InvitationsController, type: :controller do
     end
   end
 
-  context 'when Admin Operator' do
-    context 'when Admin has full_access role' do
+  context 'when Admin' do
+    context 'when Admin has super_admin role' do
+      let(:admin_marti) { FactoryGirl.create(:super_admin) }
+
       before do
         @request.env['devise.mapping'] = Devise.mappings[:scheme_operator]
-        admin = Admin.create(email: 'freddy@kruger.com', password: 'my password')
-        admin.super_admin!
-        sign_in admin
+        sign_in admin_marti
       end
 
       context 'when calling create' do

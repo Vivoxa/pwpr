@@ -54,9 +54,7 @@ class CompanyOperatorsController < BaseController
   private
 
   def company_operators_by_approved(approved = true)
-    if current_company_operator
-      current_user.business.company_operators.where(approved: approved)
-    else
+    if current_scheme_operator || current_admin
       company_operators = []
       current_user.schemes.each do |scheme|
         scheme.businesses.each do |business|
@@ -64,6 +62,8 @@ class CompanyOperatorsController < BaseController
         end
       end
       company_operators.flatten
+    else
+      current_user.business.company_operators.where(approved: approved)
     end
   end
 
@@ -79,9 +79,13 @@ class CompanyOperatorsController < BaseController
   def unaccepted_invitations
     company_operators = []
     company_operators_by_approved(false).each do |company_operator|
-      company_operators << company_operator if company_operator.invitation_sent_at.present? && company_operator.invitation_accepted_at.nil?
+      company_operators << company_operator if invitation_sent_not_accepted?(company_operator)
     end
     company_operators
+  end
+
+  def invitation_sent_not_accepted?(company_operator)
+    company_operator.invitation_sent_at.present? && company_operator.invitation_accepted_at.nil?
   end
 
   def secure_params

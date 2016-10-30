@@ -9,7 +9,7 @@ module SchemeOperators
 
     def authenticate_inviter!
       return true if current_admin || current_scheme_operator
-      authenticate_scheme_operator!
+      authenticate_scheme_operator
     end
 
     def configure_permitted_parameters

@@ -20,8 +20,8 @@ class Admin < ActiveRecord::Base
   private
 
   def assign_roles
-    add_role :super_admin
-    PermissionsForRole::Admin::PERMISSIONS.each do |permission|
+    add_role :restricted_admin
+    PermissionsForRole::Admin::permissions_for_role(:restricted_admin).each do |permission|
       add_role permission
     end
   end

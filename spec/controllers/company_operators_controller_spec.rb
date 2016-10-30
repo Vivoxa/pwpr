@@ -17,7 +17,12 @@ RSpec.describe CompanyOperatorsController, type: :controller do
       scheme_operator.password = 'mypassword'
       scheme_operator.confirmed_at = DateTime.now
       scheme_operator.schemes = [Scheme.create(name: 'test scheme', active: true)]
-      scheme_operator.add_role('sc_director')
+      scheme_operator.add_role :sc_director
+      # TODO: these will have to be tweaked when roles are finished
+      scheme_operator.add_role :co_users_r
+      scheme_operator.add_role :co_users_e
+      scheme_operator.add_role :co_users_w
+      scheme_operator.add_role :co_users_d
       scheme_operator.save
       sign_in scheme_operator
     end
@@ -215,7 +220,8 @@ RSpec.describe CompanyOperatorsController, type: :controller do
         it 'expects the company operator to be destroyed' do
           get :destroy, id: co_director.id
           expect(response.status).to eq 302
-          expect(subject.notice).to eq('Jennifer with email: jennifer@back_to_the_future.com has been deleted.')
+          expect(subject.notice).to include('has been deleted.')
+          expect(CompanyOperator.where(id: co_director.id)).to be_empty
         end
       end
 
@@ -285,7 +291,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
         end
       end
 
-      context 'without edit and write roles' do
+      context 'without edit and write role' do
         before do
           co_contact.remove_role :co_users_w
           co_contact.remove_role :co_users_e

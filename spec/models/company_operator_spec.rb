@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe CompanyOperator, type: :model do
   let(:scheme) { Scheme.first }
   let(:subject) { FactoryGirl.create(:company_operator) }
+  let(:expected_roles) { %w(co_users_r co_users_w co_users_d co_users_e businesses_r businesses_e).freeze }
 
   context 'Scopes' do
     describe 'scheme_operators' do
@@ -42,20 +43,15 @@ RSpec.describe CompanyOperator, type: :model do
         end
 
         it 'load the correct values in PERMISSIONS' do
-          expect(subject.class::PERMISSIONS).to eq %w(co_users_r co_users_w co_users_d co_users_e
-                                                      businesses_r businesses_e).freeze
+          expect(subject.class::PERMISSIONS).to eq expected_roles
         end
       end
     end
 
     it 'expects the correct roles to be available' do
-      expect(CompanyOperator.available_role_names).to eq %w(co_director co_super_user co_user
-                                                            co_users_r co_users_w co_users_d co_users_e
-                                                            businesses_r businesses_e)
-    end
-
-    it 'expects name to be an attribute' do
-      expect(subject.respond_to?(:name)).to be true
+      expected_roles.each do |role|
+        expect(subject.allowed_role?(role)).to be true
+      end
     end
 
     context 'when assigning a role' do
@@ -81,7 +77,7 @@ RSpec.describe CompanyOperator, type: :model do
   context 'Abitlites' do
     context 'with NO Role' do
       let(:company_operator_no_role) { FactoryGirl.create(:company_operator) }
-      let(:ability) { Ability.new(company_operator_no_role) }
+      let(:ability) { Abilities.ability_for(company_operator_no_role) }
 
       it_behaves_like 'NOT a manager', Admin
 
@@ -98,7 +94,7 @@ RSpec.describe CompanyOperator, type: :model do
 
     context 'with co_director role' do
       let(:company_operator_with_director) { FactoryGirl.create(:company_operator_with_director) }
-      let(:ability) { Ability.new(company_operator_with_director) }
+      let(:ability) { Abilities.ability_for(company_operator_with_director) }
 
       it_behaves_like 'NOT a manager', Admin
 
@@ -113,9 +109,9 @@ RSpec.describe CompanyOperator, type: :model do
       it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
 
-    context 'with co_super_user role' do
-      let(:company_operator_with_co_super_user) { FactoryGirl.create(:company_operator_with_co_super_user) }
-      let(:ability) { Ability.new(company_operator_with_co_super_user) }
+    context 'with co_contact role' do
+      let(:company_operator_with_contact) { FactoryGirl.create(:company_operator_with_contact) }
+      let(:ability) { Abilities.ability_for(company_operator_with_contact) }
 
       it_behaves_like 'a reader', CompanyOperator
 
@@ -138,9 +134,9 @@ RSpec.describe CompanyOperator, type: :model do
       it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
 
-    context 'with co_users_r role' do
-      let(:company_operator_with_co_users_r) { FactoryGirl.create(:company_operator_with_co_users_r) }
-      let(:ability) { Ability.new(company_operator_with_co_users_r) }
+    context 'with co_user_r role' do
+      let(:company_operator_with_co_user_r) { FactoryGirl.create(:company_operator_with_co_user_r) }
+      let(:ability) { Abilities.ability_for(company_operator_with_co_user_r) }
 
       it_behaves_like 'a reader', CompanyOperator
 
@@ -163,9 +159,9 @@ RSpec.describe CompanyOperator, type: :model do
       it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
 
-    context 'with co_users_w role' do
-      let(:company_operator_with_co_users_w) { FactoryGirl.create(:company_operator_with_co_users_w) }
-      let(:ability) { Ability.new(company_operator_with_co_users_w) }
+    context 'with co_user_rw role' do
+      let(:company_operator_with_co_user_rw) { FactoryGirl.create(:company_operator_with_co_user_rw) }
+      let(:ability) { Abilities.ability_for(company_operator_with_co_user_rw) }
 
       it_behaves_like 'a reader', CompanyOperator
 
@@ -188,9 +184,9 @@ RSpec.describe CompanyOperator, type: :model do
       it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
     end
 
-    context 'with co_users_e role' do
-      let(:company_operator_with_co_users_e) { FactoryGirl.create(:company_operator_with_co_users_e) }
-      let(:ability) { Ability.new(company_operator_with_co_users_e) }
+    context 'with co_user_rwe role' do
+      let(:company_operator_with_co_user_rwe) { FactoryGirl.create(:company_operator_with_co_user_rwe) }
+      let(:ability) { Abilities.ability_for(company_operator_with_co_user_rwe) }
 
       it_behaves_like 'a reader', CompanyOperator
 

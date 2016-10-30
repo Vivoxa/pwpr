@@ -4,28 +4,20 @@ RSpec.describe AdminsController, type: :controller do
   subject(:admin_controller) { described_class.new }
 
   context 'when admin operator is NOT signed in' do
+    before do
+      allow(subject).to receive(:current_user).and_return(Visitor.new)
+    end
+
     context 'when calling index' do
-      it 'expects to be redirected to sign in' do
-        get :index
-        expect(response.status).to eq 302
-        expect(response.body).to include('admins/sign_in')
-      end
+      it_behaves_like 'a NOT signed in user', 'get', :index
     end
 
     context 'when calling show' do
-      it 'expects to be redirected to sign in' do
-        get :show, id: Admin.last.id
-        expect(response.status).to eq 302
-        expect(response.body).to include('admins/sign_in')
-      end
+        it_behaves_like 'a NOT signed in user', 'get', :show, id: Admin.last.id
     end
 
     context 'when calling permissions' do
-      it 'expects to be redirected to sign in' do
-        get :permissions, admin_id: Admin.last.id
-        expect(response.status).to eq 302
-        expect(response.body).to include('admins/sign_in')
-      end
+      it_behaves_like 'a NOT signed in user', 'get', :permissions, admin_id: Admin.last.id
     end
 
     context 'when calling update_permissions' do
@@ -37,7 +29,7 @@ RSpec.describe AdminsController, type: :controller do
     end
   end
 
-  context 'when admin does NOT have full_access role' do
+  context 'when admin does NOT have super_admin role' do
     let(:admin_marti) { FactoryGirl.create(:admin) }
 
     before do
@@ -47,41 +39,36 @@ RSpec.describe AdminsController, type: :controller do
       sign_in admin_marti
     end
 
-    it 'expects a CanCan AccessDenied error to be raised' do
-      get :index
-      expect(flash[:alert]).to be_present
-      expect(flash[:alert]).to eq 'You are not authorized to access this page.'
+    after do
+      sign_out admin_marti
     end
 
-    it 'expects a CanCan AccessDenied error to be raised' do
-      get :show, id: admin_marti.id
-      expect(flash[:alert]).to be_present
-      expect(flash[:alert]).to eq 'You are not authorized to access this page.'
+    context 'viewing the index page' do
+      it_behaves_like 'a NOT authorised user', 'get', :index
+    end
+
+    context 'when viewing the show page' do
+      it_behaves_like 'a NOT authorised user', 'get', :show, id: Admin.last.id
     end
 
     context 'when calling permissions' do
-      it 'expects a CanCan AccessDenied error to be raised' do
-        get :permissions, admin_id: Admin.last.id
-        expect(flash[:alert]).to be_present
-        expect(flash[:alert]).to eq 'You are not authorized to access this page.'
-      end
+      it_behaves_like 'a NOT authorised user', 'get', :permissions, admin_id: Admin.last.id
     end
 
     context 'when calling update_permissions' do
-      it 'expects a CanCan AccessDenied error to be raised' do
-        put :update_permissions, admin_id: Admin.last.id
-        expect(flash[:alert]).to be_present
-        expect(flash[:alert]).to eq 'You are not authorized to access this page.'
-      end
+      it_behaves_like 'a NOT authorised user', 'put', :update_permissions, admin_id: Admin.last.id
     end
   end
 
   context 'when admin has super_admin role' do
-    let(:admin_doc) { FactoryGirl.create(:admin_super_admin) }
+    let(:admin_doc) { FactoryGirl.create(:super_admin) }
     before do
       sign_in admin_doc
     end
 
+    after do
+      sign_out admin_doc
+    end
     it 'expects the admin to have access to the index action' do
       get 'index'
       expect(response.status).to eq 200

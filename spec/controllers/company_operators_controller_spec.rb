@@ -140,6 +140,10 @@ RSpec.describe CompanyOperatorsController, type: :controller do
         end
         sign_in co_marti
       end
+      after do
+        sign_out co_marti
+      end
+
       context 'when calling index' do
         it 'expects a CanCan AccessDenied error to be raised' do
           get :index
@@ -196,6 +200,10 @@ RSpec.describe CompanyOperatorsController, type: :controller do
           co_director.add_role role
         end
         sign_in co_director
+      end
+
+      after do
+        sign_out co_director
       end
 
       it 'expects the co_director to have access to the index action' do
@@ -265,6 +273,12 @@ RSpec.describe CompanyOperatorsController, type: :controller do
         sign_in co_contact
       end
 
+      after do
+        co_contact.remove_role :co_users_w
+        co_contact.remove_role :co_users_e
+        sign_out co_contact
+      end
+
       it 'expects the admin to have access to the index action' do
         get 'index'
         expect(response.status).to eq 200
@@ -296,7 +310,13 @@ RSpec.describe CompanyOperatorsController, type: :controller do
           co_contact.remove_role :co_users_w
           co_contact.remove_role :co_users_e
           co_contact.remove_role :co_users_r
+          sign_in co_contact
         end
+
+        after do
+          sign_out co_contact
+        end
+
         context 'when calling permissions' do
           it 'expects the co_contact to not have access to the permissions action' do
             get :permissions, company_operator_id: CompanyOperator.last.id

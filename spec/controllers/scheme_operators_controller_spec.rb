@@ -15,6 +15,12 @@ RSpec.describe SchemeOperatorsController, type: :controller do
       sign_in sc_marti
     end
 
+    after do
+      sc_marti.remove_role :sc_users_r
+      sc_marti.remove_role :sc_director
+      sign_out sc_marti
+    end
+
     context 'when an invitation has not been accepted' do
       it 'expects a collection of scheme operators' do
         scheme_operator = SchemeOperator.create(email: 'invited@pwpr.com', password: 'my_password', schemes: sc_marti.schemes, invitation_sent_at: DateTime.now)
@@ -90,13 +96,25 @@ RSpec.describe SchemeOperatorsController, type: :controller do
       sc_marti.confirmed_at = DateTime.now
       sc_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
       sc_marti.save
-      sc_marti.remove_role :sc_users_r
       sc_marti.save
     end
-    context 'when SchemeOperator does NOT have the director role' do
+
+    after do
+      sign_out sc_marti
+    end
+
+    context 'when SchemeOperator does NOT have a role' do
       before do
+        sc_marti.roles.each do |role|
+          sc_marti.remove_role role
+        end
         sign_in sc_marti
       end
+
+      after do
+        sign_out sc_marti
+      end
+
       context 'when calling index' do
         it 'expects a CanCan AccessDenied error to be raised' do
           get :index
@@ -156,6 +174,10 @@ RSpec.describe SchemeOperatorsController, type: :controller do
         sc_marti.add_role :sc_users_d
         sc_marti.save
         sign_in sc_marti
+      end
+
+      after do
+        sign_out sc_marti
       end
 
       context 'when calling update_permissions' do

@@ -12,21 +12,11 @@ FactoryGirl.define do
       name 'Jennifer'
       password 'my_password'
       after(:create) do |admin1|
-        admin1.add_role :normal_admin
-        admin1.add_role :businesses_r
-        admin1.add_role :businesses_w
-        admin1.add_role :businesses_e
-
-        admin1.add_role :schemes_r
-        admin1.add_role :schemes_e
-
-        admin1.add_role :sc_users_r
-        admin1.add_role :sc_users_e
-        admin1.add_role :sc_users_w
-
-        admin1.add_role :co_users_r
-        admin1.add_role :co_users_e
-        admin1.add_role :co_users_w
+        %i(normal_admin businesses_r businesses_w businesses_e
+           schemes_r schemes_e sc_users_r sc_users_e sc_users_w
+           co_users_r co_users_e co_users_w).each do |_permission|
+          admin1.add_role :normal_admin
+        end
       end
     end
     factory :super_admin do

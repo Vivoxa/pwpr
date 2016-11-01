@@ -1,4 +1,6 @@
 FactoryGirl.define do
+  rwe_permissions = %i(co_users_r co_users_w co_users_e)
+
   factory :company_operator do |co|
     email
     name 'Jennifer'
@@ -15,10 +17,10 @@ FactoryGirl.define do
         instance.business_id = FactoryGirl.create(:business).id
       end
       after(:create) do |co|
-        co.add_role :co_director
-        co.add_role :co_users_r
-        co.add_role :co_users_w
-        co.add_role :co_users_e
+        co.add_role :sc_director
+        rwe_permissions.each do |permission|
+          co.add_role permission
+        end
       end
     end
 
@@ -28,10 +30,10 @@ FactoryGirl.define do
         instance.approved = false
       end
       after(:create) do |co|
-        co.add_role :co_director
-        co.add_role :co_users_r
-        co.add_role :co_users_w
-        co.add_role :co_users_e
+        co.add_role :sc_director
+        rwe_permissions.each do |permission|
+          co.add_role permission
+        end
       end
     end
 
@@ -40,10 +42,10 @@ FactoryGirl.define do
         instance.business_id = FactoryGirl.create(:business).id
       end
       after(:create) do |co|
-        co.add_role :co_contact
-        co.add_role :co_users_r
-        co.add_role :co_users_w
-        co.add_role :co_users_e
+        co.add_role :sc_contact
+        rwe_permissions.each do |permission|
+          co.add_role permission
+        end
       end
     end
 
@@ -77,9 +79,10 @@ FactoryGirl.define do
         instance.business_id = FactoryGirl.create(:business).id
       end
       after(:create) do |co|
-        co.add_role :co_users_r
-        co.add_role :co_users_w
-        co.add_role :co_users_e
+        co.add_role :sc_contact
+        rwe_permissions.each do |permission|
+          co.add_role permission
+        end
       end
     end
   end

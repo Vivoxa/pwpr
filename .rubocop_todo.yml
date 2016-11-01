@@ -15,10 +15,11 @@ RSpec/AnyInstance:
   Exclude:
     - 'spec/controllers/admins_controller_spec.rb'
 
-# Offense count: 1
+# Offense count: 2
 RSpec/DescribeClass:
   Exclude:
     - 'spec/controllers/registrations_controller_spec.rb'
+    - 'spec/features/company_operators_spec.rb'
 
 # Offense count: 12
 # Configuration parameters: Max.

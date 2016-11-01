@@ -3,7 +3,7 @@ module PermissionsForRole
     class BaseAbility
       include CanCan::Ability
 
-      def initialize(_user)
+      def initialize(user)
         can :manage, VisitorsController
       end
 

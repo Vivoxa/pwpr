@@ -4,6 +4,7 @@ module PermissionsForRole
       include CanCan::Ability
 
       def initialize(user)
+        super(user)
         sc_users_r(user)
         sc_users_w(user)
         sc_users_e(user)

@@ -2,3 +2,4 @@
 ./config/
 ./lib/tasks/
 ./db/
+./lib/permissions_for_role/role/

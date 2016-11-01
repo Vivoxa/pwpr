@@ -8,6 +8,16 @@ class SchemeOperatorsController < BaseController
     @scheme_operators = current_user.schemes.each.map(&:scheme_operators).flatten
   end
 
+  def invited_not_accepted
+    query = 'invitation_sent_at IS NOT NULL AND invitation_accepted_at IS NULL'
+    @scheme_operators = []
+    current_user.schemes.each do |scheme|
+      scheme.scheme_operators.where(query).each do |scheme_operator|
+        @scheme_operators << scheme_operator
+      end
+    end
+  end
+
   # GET /scheme_operators/:id
   def show
     # We need to figure a scope to search for users dynamically based on the category
@@ -32,8 +42,15 @@ class SchemeOperatorsController < BaseController
   # GET /scheme_operators/:id/permissions
   def permissions
     @user = SchemeOperator.find_by_id(params[:scheme_operator_id])
-    @available_roles = SchemeOperator::ROLES
-    @available_permissions = SchemeOperator::PERMISSIONS
+
+    @available_roles = PermissionsForRole::SchemeOperatorDefinitions::ROLES
+    @available_permissions = PermissionsForRole::SchemeOperatorDefinitions::PERMISSIONS
+
+    current_role = @user.role_list & @available_roles
+    @permissions_definitions = PermissionsForRole::SchemeOperatorDefinitions.new
+
+    # This needs to somehow dynamically reload when the selected role is changed in the UI
+    @allowed_permissions = @permissions_definitions.permissions_for_role(current_role.first)
   end
 
   # PUT /scheme_operators/:id/update_permissions

@@ -8,4 +8,9 @@ RSpec.describe Visitor do
       expect(visitor.name).to eq 'temp_user'
     end
   end
+
+  let(:ability) { Abilities.ability_for(visitor) }
+  it_behaves_like 'an editor', SchemeOperators::InvitationsController
+
+  it_behaves_like 'an updater', SchemeOperators::InvitationsController
 end

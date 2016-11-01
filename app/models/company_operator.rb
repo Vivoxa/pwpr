@@ -4,9 +4,7 @@ class CompanyOperator < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  ROLES = %w(co_director co_contact co_user).freeze
-  PERMISSIONS = %w(co_user_r co_user_rw co_user_rwe).freeze
-  royce_roles ROLES + PERMISSIONS
+  royce_roles PermissionsForRole::CompanyOperatorDefinitions::ROLES + PermissionsForRole::CompanyOperatorDefinitions::PERMISSIONS
 
   belongs_to :business
 
@@ -15,15 +13,20 @@ class CompanyOperator < ActiveRecord::Base
   # scope :active, -> { where(approved: true) }
   # scope :pending, -> { where(approved: false) }
 
+  after_create :assign_roles
+
   def active_for_authentication?
     super && approved?
   end
 
   def inactive_message
-    if !approved?
-      :not_approved
-    else
-      super && 'Use whatever other message'
-    end
+    :not_approved unless approved?
+  end
+
+  private
+
+  def assign_roles
+    add_role :co_user
+    add_role :co_users_r
   end
 end

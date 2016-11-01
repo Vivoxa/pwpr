@@ -14,15 +14,17 @@ RSpec.describe PermissionsForRole::CompanyOperatorDefinitions do
 
   context 'When role is co_director' do
     let(:role) { :co_director }
-    let(:definitions) {{
-                        co_users_r:   {checked: true, locked: true},
-                        co_users_w:   {checked: true, locked: true},
-                        co_users_e:   {checked: true, locked: true},
-                        co_users_d:   {checked: true, locked: true},
+    let(:definitions) do
+      {
+        co_users_r:   {checked: true, locked: true},
+        co_users_w:   {checked: true, locked: true},
+        co_users_e:   {checked: true, locked: true},
+        co_users_d:   {checked: true, locked: true},
 
-                        businesses_r: {checked: true, locked: true},
-                        businesses_e: {checked: true, locked: true}
-                      }}
+        businesses_r: {checked: true, locked: true},
+        businesses_e: {checked: true, locked: true}
+      }
+    end
 
     it 'return the correct permissions definitions' do
       expect(subject.permissions_for_role(role)).to eq(definitions)
@@ -31,15 +33,17 @@ RSpec.describe PermissionsForRole::CompanyOperatorDefinitions do
 
   context 'When role is co_super_user' do
     let(:role) { :co_super_user }
-    let(:definitions) {{
-                        co_users_r:   {checked: true, locked: true},
-                        co_users_w:   {checked: true, locked: true},
-                        co_users_e:   {checked: true, locked: true},
-                        co_users_d:   {checked: false, locked: false},
+    let(:definitions) do
+      {
+        co_users_r:   {checked: true, locked: true},
+        co_users_w:   {checked: true, locked: true},
+        co_users_e:   {checked: true, locked: true},
+        co_users_d:   {checked: false, locked: false},
 
-                        businesses_r: {checked: false, locked: false},
-                        businesses_e: {checked: false, locked: false}
-                      }}
+        businesses_r: {checked: false, locked: false},
+        businesses_e: {checked: false, locked: false}
+      }
+    end
 
     it 'return the correct permissions definitions' do
       expect(subject.permissions_for_role(role)).to eq(definitions)
@@ -48,15 +52,17 @@ RSpec.describe PermissionsForRole::CompanyOperatorDefinitions do
 
   context 'When role is co_user' do
     let(:role) { :co_user }
-    let(:definitions) {{
-                        co_users_r:   {checked: true, locked: true},
-                        co_users_w:   {checked: false, locked: false},
-                        co_users_e:   {checked: false, locked: false},
-                        co_users_d:   {checked: false, locked: false},
+    let(:definitions) do
+      {
+        co_users_r:   {checked: true, locked: true},
+        co_users_w:   {checked: false, locked: false},
+        co_users_e:   {checked: false, locked: false},
+        co_users_d:   {checked: false, locked: false},
 
-                        businesses_r: {checked: false, locked: false},
-                        businesses_e: {checked: false, locked: true}
-                      }}
+        businesses_r: {checked: false, locked: false},
+        businesses_e: {checked: false, locked: true}
+      }
+    end
 
     it 'return the correct permissions definitions' do
       expect(subject.permissions_for_role(role)).to eq(definitions)

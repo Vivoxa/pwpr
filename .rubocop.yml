@@ -43,6 +43,10 @@ Metrics/MethodLength:
 Metrics/ClassLength:
   Max: 1500
 
+# Turn of subject naming for specs
+RSpec/NamedSubject:
+  Enabled: false
+
 # We do not need to support Ruby 1.9, so this is good to use.
 Style/SymbolArray:
   Enabled: true

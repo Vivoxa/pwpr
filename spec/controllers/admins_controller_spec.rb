@@ -146,27 +146,29 @@ RSpec.describe AdminsController, type: :controller do
 
       context 'when assinging allowed role/permissions' do
         let(:no_role) { FactoryGirl.create(:no_role) }
-        let(:definitions) {{
-                            schemes_r:    {checked: true, locked: true},
-                            schemes_w:    {checked: false, locked: true},
-                            schemes_e:    {checked: false, locked: false},
-                            schemes_d:    {checked: false, locked: true},
+        let(:definitions) do
+          {
+            schemes_r:    {checked: true, locked: true},
+            schemes_w:    {checked: false, locked: true},
+            schemes_e:    {checked: false, locked: false},
+            schemes_d:    {checked: false, locked: true},
 
-                            sc_users_r:   {checked: true, locked: true},
-                            sc_users_w:   {checked: false, locked: false},
-                            sc_users_e:   {checked: false, locked: false},
-                            sc_users_d:   {checked: false, locked: true},
+            sc_users_r:   {checked: true, locked: true},
+            sc_users_w:   {checked: false, locked: false},
+            sc_users_e:   {checked: false, locked: false},
+            sc_users_d:   {checked: false, locked: true},
 
-                            co_users_r:   {checked: true, locked: true},
-                            co_users_w:   {checked: false, locked: false},
-                            co_users_e:   {checked: false, locked: false},
-                            co_users_d:   {checked: false, locked: false},
+            co_users_r:   {checked: true, locked: true},
+            co_users_w:   {checked: false, locked: false},
+            co_users_e:   {checked: false, locked: false},
+            co_users_d:   {checked: false, locked: false},
 
-                            businesses_r: {checked: true, locked: true},
-                            businesses_e: {checked: false, locked: false},
-                            businesses_w: {checked: false, locked: true},
-                            businesses_d: {checked: false, locked: true}
-                          }}
+            businesses_r: {checked: true, locked: true},
+            businesses_e: {checked: false, locked: false},
+            businesses_w: {checked: false, locked: true},
+            businesses_d: {checked: false, locked: true}
+          }
+        end
 
         before do
           controller.instance_variable_set(:@available_roles, PermissionsForRole::AdminDefinitions::ROLES)
@@ -178,7 +180,7 @@ RSpec.describe AdminsController, type: :controller do
         end
 
         describe 'all permissions are allowed' do
-          let(:params) { {admin_id: no_role.id, role: 'restricted_admin', permissions: ['co_users_r', 'sc_users_r']} }
+          let(:params) { {admin_id: no_role.id, role: 'restricted_admin', permissions: %w(co_users_r sc_users_r)} }
 
           it 'sets all the passed in permissions' do
             put :update_permissions, params
@@ -187,7 +189,7 @@ RSpec.describe AdminsController, type: :controller do
         end
 
         describe 'NOT all permissions are allowed' do
-          let(:params) { {admin_id: no_role.id, role: 'restricted_admin', permissions: ['co_users_r', 'sc_users_r', 'co_users_d', 'sc_users_d']} }
+          let(:params) { {admin_id: no_role.id, role: 'restricted_admin', permissions: %w(co_users_r sc_users_r co_users_d sc_users_d)} }
 
           it 'sets ONLY the correct permissions' do
             get :permissions, admin_id: no_role.id

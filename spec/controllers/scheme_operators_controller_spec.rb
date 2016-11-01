@@ -234,6 +234,16 @@ RSpec.describe SchemeOperatorsController, type: :controller do
           get :permissions, scheme_operator_id: sc_marti.id
           expect(assigns(:available_permissions)).to eq(PermissionsForRole::SchemeOperatorDefinitions::PERMISSIONS)
         end
+
+        it 'sets the correct permissions_definitions' do
+          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          expect(assigns(:permissions_definitions)).to be_a(PermissionsForRole::SchemeOperatorDefinitions)
+        end
+
+        it 'sets the allowed_permissions' do
+          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          expect(assigns(:allowed_permissions)).not_to be_nil
+        end
       end
 
       context 'when calling update_permissions' do

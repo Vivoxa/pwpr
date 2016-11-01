@@ -253,6 +253,16 @@ RSpec.describe CompanyOperatorsController, type: :controller do
           get :permissions, company_operator_id: CompanyOperator.last.id
           expect(assigns(:available_permissions)).to eq(PermissionsForRole::CompanyOperatorDefinitions::PERMISSIONS)
         end
+
+        it 'sets the correct permissions_definitions' do
+          get :permissions, company_operator_id: CompanyOperator.last.id
+          expect(assigns(:permissions_definitions)).to be_a(PermissionsForRole::CompanyOperatorDefinitions)
+        end
+
+        it 'sets the allowed_permissions' do
+          get :permissions, company_operator_id: CompanyOperator.last.id
+          expect(assigns(:allowed_permissions)).not_to be_nil
+        end
       end
 
       context 'when calling update_permissions' do

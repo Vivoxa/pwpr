@@ -107,6 +107,16 @@ RSpec.describe AdminsController, type: :controller do
         get :permissions, admin_id: Admin.last.id
         expect(assigns(:available_permissions)).to eq(PermissionsForRole::AdminDefinitions::PERMISSIONS)
       end
+
+      it 'sets the correct permissions_definitions' do
+        get :permissions, admin_id: Admin.last.id
+        expect(assigns(:permissions_definitions)).to be_a(PermissionsForRole::AdminDefinitions)
+      end
+
+      it 'sets the allowed_permissions' do
+        get :permissions, admin_id: Admin.last.id
+        expect(assigns(:allowed_permissions)).not_to be_nil
+      end
     end
 
     context 'when calling update_permissions' do

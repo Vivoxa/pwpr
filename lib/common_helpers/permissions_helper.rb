@@ -66,7 +66,7 @@ module CommonHelpers
     def allowed_permission?(permission)
       allowed = @permissions_definitions.permissions_for_role(selected_role.first)
 
-      allowed.keys.include?(permission) &&
+      allowed.keys.include?(permission.to_sym) &&
       (!allowed[permission.to_sym][:locked] ||
         allowed[permission.to_sym][:checked])
     end

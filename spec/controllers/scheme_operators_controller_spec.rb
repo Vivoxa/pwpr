@@ -253,6 +253,64 @@ RSpec.describe SchemeOperatorsController, type: :controller do
           put :update_permissions, params
           expect(response.status).to eq 302
         end
+
+        context 'when assinging allowed role/permissions' do
+          let(:no_role) { sc_marti }
+          let(:definitions) do
+            {
+              schemes_r:    {checked: false, locked: true},
+              schemes_w:    {checked: false, locked: true},
+              schemes_e:    {checked: false, locked: true},
+              schemes_d:    {checked: false, locked: true},
+
+              sc_users_r:   {checked: false, locked: true},
+              sc_users_w:   {checked: false, locked: true},
+              sc_users_e:   {checked: false, locked: true},
+              sc_users_d:   {checked: false, locked: true},
+
+              co_users_r:   {checked: true, locked: true},
+              co_users_w:   {checked: false, locked: false},
+              co_users_e:   {checked: false, locked: false},
+              co_users_d:   {checked: false, locked: false},
+
+              businesses_r: {checked: true, locked: true},
+              businesses_e: {checked: false, locked: false},
+              businesses_w: {checked: false, locked: true},
+              businesses_d: {checked: false, locked: true}
+            }
+          end
+
+          before do
+            controller.instance_variable_set(:@available_roles, PermissionsForRole::SchemeOperatorDefinitions::ROLES)
+            controller.instance_variable_set(:@available_permissions, PermissionsForRole::SchemeOperatorDefinitions::PERMISSIONS)
+            controller.instance_variable_set(:@permissions_definitions, PermissionsForRole::SchemeOperatorDefinitions.new)
+            allow_any_instance_of(PermissionsForRole::SchemeOperatorDefinitions).to receive(:permissions_for_role).and_return(definitions)
+
+            no_role.role_list.each { |r| no_role.remove_role r }
+            no_role.add_role :sc_director
+            no_role.add_role :sc_users_e
+            no_role.add_role :sc_users_w
+          end
+
+          describe 'all permissions are allowed' do
+            let(:params) { {scheme_operator_id: no_role.id, role: 'sc_user', permissions: %w(co_users_r businesses_e)} }
+
+            it 'sets all the passed in permissions' do
+              put :update_permissions, params
+              expect(no_role.role_list).to eq %w(sc_user co_users_r businesses_e)
+            end
+          end
+
+          describe 'NOT all permissions are allowed' do
+            let(:params) { {scheme_operator_id: no_role.id, role: 'sc_user', permissions: %w(co_users_r businesses_e businesses_d)} }
+
+            it 'sets ONLY the correct permissions' do
+              get :permissions, scheme_operator_id: no_role.id
+              put :update_permissions, params
+              expect(no_role.role_list).to eq %w(sc_user co_users_r businesses_e)
+            end
+          end
+        end
       end
     end
   end

@@ -272,6 +272,49 @@ RSpec.describe CompanyOperatorsController, type: :controller do
           put :update_permissions, params
           expect(response.status).to eq 302
         end
+
+        context 'when assinging allowed role/permissions' do
+          let(:no_role) { FactoryGirl.create(:company_operator_no_role) }
+          let(:definitions) do
+            {
+              co_users_r:   {checked: true, locked: true},
+              co_users_w:   {checked: false, locked: false},
+              co_users_e:   {checked: false, locked: false},
+              co_users_d:   {checked: false, locked: false},
+
+              businesses_r: {checked: false, locked: false},
+              businesses_e: {checked: false, locked: true}
+            }
+          end
+
+          before do
+            controller.instance_variable_set(:@available_roles, PermissionsForRole::CompanyOperatorDefinitions::ROLES)
+            controller.instance_variable_set(:@available_permissions, PermissionsForRole::CompanyOperatorDefinitions::PERMISSIONS)
+            controller.instance_variable_set(:@permissions_definitions, PermissionsForRole::CompanyOperatorDefinitions.new)
+            allow_any_instance_of(PermissionsForRole::CompanyOperatorDefinitions).to receive(:permissions_for_role).and_return(definitions)
+
+            no_role.role_list.each { |r| no_role.remove_role r }
+          end
+
+          describe 'all permissions are allowed' do
+            let(:params) { {company_operator_id: no_role.id, role: 'co_user', permissions: %w(co_users_r)} }
+
+            it 'sets all the passed in permissions' do
+              put :update_permissions, params
+              expect(no_role.role_list).to eq %w(co_user co_users_r)
+            end
+          end
+
+          describe 'NOT all permissions are allowed' do
+            let(:params) { {company_operator_id: no_role.id, role: 'co_user', permissions: %w(co_users_r businesses_e businesses_d)} }
+
+            it 'sets ONLY the correct permissions' do
+              get :permissions, company_operator_id: no_role.id
+              put :update_permissions, params
+              expect(no_role.role_list).to eq %w(co_user co_users_r)
+            end
+          end
+        end
       end
     end
 

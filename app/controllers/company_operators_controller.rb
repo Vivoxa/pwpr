@@ -54,7 +54,10 @@ class CompanyOperatorsController < BaseController
   def update_permissions
     @user = CompanyOperator.find_by_id(params[:company_operator_id])
 
-    modify_roles_and_permissions(company_operator_path(@user.id))
+    roles = PermissionsForRole::CompanyOperatorDefinitions::ROLES
+    definitions = PermissionsForRole::CompanyOperatorDefinitions.new
+
+    modify_roles_and_permissions(scheme_operator_path(@user.id), roles, definitions)
   end
 
   private

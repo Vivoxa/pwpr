@@ -2,8 +2,11 @@ module CommonHelpers
   module PermissionsHelper
     protected
 
-    def modify_roles_and_permissions(resource_path)
+    def modify_roles_and_permissions(resource_path, available_roles, definitions)
+      @available_roles = available_roles
+      @definitions = definitions
       current = @user.role_list
+
       begin
         remove_unselected_permissions!
 
@@ -64,7 +67,7 @@ module CommonHelpers
     end
 
     def allowed_permission?(permission)
-      allowed = @permissions_definitions.permissions_for_role(selected_role.first)
+      allowed = @definitions.permissions_for_role(selected_role.first)
 
       allowed.keys.include?(permission.to_sym) &&
       (!allowed[permission.to_sym][:locked] ||

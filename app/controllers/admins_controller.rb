@@ -43,8 +43,10 @@ class AdminsController < BaseController
   # GET /admins/:id/permissions
   def update_permissions
     @user = Admin.find_by_id(params[:admin_id])
+    roles = PermissionsForRole::AdminDefinitions::ROLES
+    definitions = PermissionsForRole::AdminDefinitions.new
 
-    modify_roles_and_permissions(admin_path(@user.id))
+    modify_roles_and_permissions(scheme_operator_path(@user.id), roles, definitions)
   end
 
   private

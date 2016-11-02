@@ -206,9 +206,16 @@ RSpec.describe CompanyOperatorsController, type: :controller do
         sign_out co_director
       end
 
-      it 'expects the co_director to have access to the index action' do
-        get 'index'
-        expect(response.status).to eq 200
+      describe '#index' do
+        it 'expects the co_director to have access to the index action' do
+          get 'index'
+          expect(response.status).to eq 200
+        end
+
+        it 'sets @company_operators to correct value' do
+          get 'index'
+          expect(assigns(:company_operators)).not_to include(co_director)
+        end
       end
 
       it 'expects the co_director to have access to the show action' do

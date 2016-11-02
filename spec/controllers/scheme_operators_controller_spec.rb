@@ -188,9 +188,16 @@ RSpec.describe SchemeOperatorsController, type: :controller do
         end
       end
 
-      it 'expects the sc_director to have access to the index action' do
-        get 'index'
-        expect(response.status).to eq 200
+      describe '#index' do
+        it 'expects the sc_director to have access to the index action' do
+          get 'index'
+          expect(response.status).to eq 200
+        end
+
+        it 'sets @scheme_operators to correct value' do
+          get 'index'
+          expect(assigns(:scheme_operators)).not_to include(sc_marti)
+        end
       end
 
       it 'expects the sc_director to have access to the show action' do

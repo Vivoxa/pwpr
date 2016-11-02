@@ -69,9 +69,27 @@ RSpec.describe AdminsController, type: :controller do
     after do
       sign_out admin_doc
     end
-    it 'expects the admin to have access to the index action' do
-      get 'index'
-      expect(response.status).to eq 200
+
+    describe '#index' do
+      it 'expects the admin to have access to the index action' do
+        get 'index'
+        expect(response.status).to eq 200
+      end
+
+      it 'sets @admins to correct value' do
+        get 'index'
+        expect(assigns(:admins)).to eq(Admin.all - [admin_doc])
+      end
+
+      it 'sets @scheme_operators to correct value' do
+        get 'index'
+        expect(assigns(:scheme_operators)).to eq(SchemeOperator.all)
+      end
+
+      it 'sets @company_operators to correct value' do
+        get 'index'
+        expect(assigns(:company_operators)).to eq(CompanyOperator.all)
+      end
     end
 
     it 'expects the admin to have access to the show action' do

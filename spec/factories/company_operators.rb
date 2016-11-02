@@ -37,8 +37,8 @@ FactoryGirl.define do
       end
     end
 
-    factory :company_operator_with_contact do |co_c|
-      co_c.after :build do |instance|
+    factory :company_operator_with_co_super_user do |co_s|
+      co_s.after :build do |instance|
         instance.business_id = FactoryGirl.create(:business).id
       end
       after(:create) do |co|
@@ -49,7 +49,13 @@ FactoryGirl.define do
       end
     end
 
-    factory :company_operator_with_co_user_r do |co_r|
+    factory :company_operator_no_role do |co_r|
+      co_r.after :build do |instance|
+        instance.business_id = FactoryGirl.create(:business).id
+      end
+    end
+
+    factory :company_operator_with_co_users_r do |co_r|
       co_r.after :build do |instance|
         instance.business_id = FactoryGirl.create(:business).id
       end
@@ -58,8 +64,8 @@ FactoryGirl.define do
       end
     end
 
-    factory :company_operator_with_co_user_rw do |co_rw|
-      co_rw.after :build do |instance|
+    factory :company_operator_with_co_users_w do |co_w|
+      co_w.after :build do |instance|
         instance.business_id = FactoryGirl.create(:business).id
       end
       after(:create) do |co|
@@ -68,8 +74,8 @@ FactoryGirl.define do
       end
     end
 
-    factory :company_operator_with_co_user_rwe do |co_rwe|
-      co_rwe.after :build do |instance|
+    factory :company_operator_with_co_users_e do |co_e|
+      co_e.after :build do |instance|
         instance.business_id = FactoryGirl.create(:business).id
       end
       after(:create) do |co|

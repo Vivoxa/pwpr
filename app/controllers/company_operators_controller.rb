@@ -40,8 +40,14 @@ class CompanyOperatorsController < BaseController
   # GET /company_operators/:id/permissions
   def permissions
     @user = CompanyOperator.find_by_id(params[:company_operator_id])
-    @available_roles = CompanyOperator::ROLES
-    @available_permissions = CompanyOperator::PERMISSIONS
+    @available_roles = PermissionsForRole::CompanyOperatorDefinitions::ROLES
+    @available_permissions = PermissionsForRole::CompanyOperatorDefinitions::PERMISSIONS
+
+    current_role = @user.role_list & @available_roles
+    @permissions_definitions = PermissionsForRole::CompanyOperatorDefinitions.new
+
+    # This needs to somehow dynamically reload when the selected role is changed in the UI
+    @allowed_permissions = @permissions_definitions.permissions_for_role(current_role.first)
   end
 
   # GET /company_operators/:id/permissions

@@ -216,28 +216,38 @@ RSpec.describe SchemeOperatorsController, type: :controller do
 
       context 'when calling permissions' do
         it 'expects the sc_director to have access to the permissions action' do
-          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          get :permissions, scheme_operator_id: sc_marti.id
           expect(response.status).to eq 200
         end
 
         it 'sets the correct user instance' do
-          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          get :permissions, scheme_operator_id: sc_marti.id
           expect(assigns(:user)).to eq(SchemeOperator.last)
         end
 
         it 'sets the correct available_roles' do
-          get :permissions, scheme_operator_id: SchemeOperator.last.id
-          expect(assigns(:available_roles)).to eq(SchemeOperator::ROLES)
+          get :permissions, scheme_operator_id: sc_marti.id
+          expect(assigns(:available_roles)).to eq(PermissionsForRole::SchemeOperatorDefinitions::ROLES)
         end
 
         it 'sets the correct available_permissions' do
+          get :permissions, scheme_operator_id: sc_marti.id
+          expect(assigns(:available_permissions)).to eq(PermissionsForRole::SchemeOperatorDefinitions::PERMISSIONS)
+        end
+
+        it 'sets the correct permissions_definitions' do
           get :permissions, scheme_operator_id: SchemeOperator.last.id
-          expect(assigns(:available_permissions)).to eq(SchemeOperator::PERMISSIONS)
+          expect(assigns(:permissions_definitions)).to be_a(PermissionsForRole::SchemeOperatorDefinitions)
+        end
+
+        it 'sets the allowed_permissions' do
+          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          expect(assigns(:allowed_permissions)).not_to be_nil
         end
       end
 
       context 'when calling update_permissions' do
-        let(:params) { {scheme_operator_id: SchemeOperator.last.id, role: 'sc_director', permissions: ['sc_user_rwe']} }
+        let(:params) { {scheme_operator_id: sc_marti.id, role: 'sc_director', permissions: ['sc_user_e']} }
 
         it 'expects the scheme operator permissions to be updated' do
           put :update_permissions, params

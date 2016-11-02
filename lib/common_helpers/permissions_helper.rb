@@ -2,9 +2,7 @@ module CommonHelpers
   module PermissionsHelper
     protected
 
-    def modify_roles_and_permissions(resource_path, available_roles, definitions)
-      @available_roles = available_roles
-      @definitions = definitions
+    def modify_roles_and_permissions(resource_path)
       current = @user.role_list
 
       begin

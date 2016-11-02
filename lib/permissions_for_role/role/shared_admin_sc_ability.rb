@@ -49,8 +49,7 @@ module PermissionsForRole
         can %i(edit update), BaseInvitationsController
 
         can :read, BaseRegistrationsController
-        can %i(new create), BaseRegistrationsController
-        can %i(edit update), BaseRegistrationsController
+        can %i(new create edit update), BaseRegistrationsController
 
         can %i(new create), CompanyOperators::InvitationsController
 
@@ -72,8 +71,7 @@ module PermissionsForRole
           can %i(edit update), BaseInvitationsController
 
           can :read, BaseRegistrationsController
-          can %i(new create), BaseRegistrationsController
-          can %i(edit update), BaseRegistrationsController
+          can %i(new create edit update), BaseRegistrationsController
 
           can %i(new create), SchemeOperators::InvitationsController
 

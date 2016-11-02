@@ -8,7 +8,8 @@ devise_scope :company_operator do
   get '/company_operators/invitations/', to: 'company_operators#invited_not_accepted', :as => 'company_operator_invitations'
 end
 
-devise_for :admins
+devise_for :admins, controllers: { registrations: 'admins/registrations' }
+
 devise_for :scheme_operators, controllers: { registrations: 'scheme_operators/registrations', :invitations => 'scheme_operators/invitations' }
 devise_scope :scheme_operator do
   get '/scheme_operators/invitations/', to: 'scheme_operators#invited_not_accepted', :as => 'scheme_operator_invitations'

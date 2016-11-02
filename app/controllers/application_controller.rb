@@ -14,7 +14,8 @@ class ApplicationController < ActionController::Base
   protected
 
   def current_ability
-    @current_ability ||= Abilities.ability_for(current_user)
+    user = @current_user || Visitor.new
+    @current_ability ||= Abilities.ability_for(user)
   end
 
   def authenticate_scheme_operator

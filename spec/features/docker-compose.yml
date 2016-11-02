@@ -13,34 +13,34 @@ services:
     cpuset: "0"
     cpu_shares: 512
 
-  firefox_node:
-    image: selenium/node-firefox
-    environment:
-      - HUB_PORT_4444_TCP_ADDR=hub
-      - HUB_PORT_4444_TCP_PORT=4444
-    depends_on:
-      - hub
-
-#  chrome_node:
-#    image: selenium/node-chrome
+#  firefox_node:
+#    image: selenium/node-firefox
 #    environment:
 #      - HUB_PORT_4444_TCP_ADDR=hub
 #      - HUB_PORT_4444_TCP_PORT=4444
 #    depends_on:
 #      - hub
-#    cpuset: "0"
-#    cpu_shares: 512
+
+  chrome_node:
+    image: selenium/node-chrome
+    environment:
+      - HUB_PORT_4444_TCP_ADDR=hub
+      - HUB_PORT_4444_TCP_PORT=4444
+    depends_on:
+      - hub
+    cpuset: "0"
+    cpu_shares: 512
 
   feature_tests:
     build: .
     environment:
       - SELENIUM_HUB_URL=http://hub:4444/wd/hub
-      - BROWSER=firefox
+      - BROWSER=chrome
       - APP_HOST=http://192.168.99.100:3000
     depends_on:
       - hub
-      #- chrome_node
-      - firefox_node
+      - chrome_node
+      #- firefox_node
     volumes:
       - ~/Desktop/capybara:/desktop/
     cpuset: "0"

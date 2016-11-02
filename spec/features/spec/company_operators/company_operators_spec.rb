@@ -1,5 +1,4 @@
-require 'rails_helper'
-
+# require 'rails_helper'
 RSpec.describe 'CompanyOperators', js: true do
   describe 'GET /CompanyOperators' do
     it 'expects to be signed in with correct credentials' do
@@ -14,7 +13,7 @@ RSpec.describe 'CompanyOperators', js: true do
   end
 
   def sign_in(email, password)
-    visit '/company_operators/sign_in'
+    visit 'company_operators/sign_in'
     fill_in 'Email', with: email
     fill_in 'Password', with: password
     click_on 'Log in' # this be an Ajax button -- requires Selenium

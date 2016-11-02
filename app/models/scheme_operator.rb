@@ -7,9 +7,9 @@ class SchemeOperator < ActiveRecord::Base
   validates_presence_of :schemes
   include CommonHelpers::PermissionsHelper
 
-  PERMISSIONS = CommonHelpers::PermissionsHelper::SHARED_SO_ADMIN_PERMISSIONS
-  ROLES = %w(sc_director sc_super_user sc_user).freeze
-  royce_roles ROLES + PERMISSIONS
+  royce_roles PermissionsForRole::SchemeOperatorDefinitions::ROLES + PermissionsForRole::SchemeOperatorDefinitions::PERMISSIONS
+  has_and_belongs_to_many :schemes
+  validates_presence_of :schemes
 
   scope :company_operators, -> (scheme) { scheme.company_operators }
   scope :pending_scheme_operators, -> { where('confirmed_at <= NOW()') }

@@ -13,7 +13,7 @@ RSpec.describe AdminsController, type: :controller do
     end
 
     context 'when calling show' do
-        it_behaves_like 'a NOT signed in user', 'get', :show, id: Admin.last.id
+      it_behaves_like 'a NOT signed in user', 'get', :show, id: Admin.last.id
     end
 
     context 'when calling permissions' do
@@ -100,12 +100,22 @@ RSpec.describe AdminsController, type: :controller do
 
       it 'sets the correct available_roles' do
         get :permissions, admin_id: Admin.last.id
-        expect(assigns(:available_roles)).to eq(Admin::ROLES)
+        expect(assigns(:available_roles)).to eq(PermissionsForRole::AdminDefinitions::ROLES)
       end
 
       it 'sets the correct available_permissions' do
         get :permissions, admin_id: Admin.last.id
-        expect(assigns(:available_permissions)).to eq(Admin::PERMISSIONS)
+        expect(assigns(:available_permissions)).to eq(PermissionsForRole::AdminDefinitions::PERMISSIONS)
+      end
+
+      it 'sets the correct permissions_definitions' do
+        get :permissions, admin_id: Admin.last.id
+        expect(assigns(:permissions_definitions)).to be_a(PermissionsForRole::AdminDefinitions)
+      end
+
+      it 'sets the allowed_permissions' do
+        get :permissions, admin_id: Admin.last.id
+        expect(assigns(:allowed_permissions)).not_to be_nil
       end
     end
 
@@ -116,21 +126,76 @@ RSpec.describe AdminsController, type: :controller do
         put :update_permissions, params
         expect(response.status).to eq 302
       end
+
       context 'when an error is raised' do
         let(:params) { {admin_id: Admin.last.id, role: 'full', permissions: []} }
+
         it 'expects permission changes to be rolled back' do
           allow_any_instance_of(CommonHelpers::PermissionsHelper).to receive(:remove_unselected_permissions!).and_raise(StandardError)
           put :update_permissions, params
           expect(response.status).to eq 302
         end
-      end
-      context 'when an error is raised' do
-        let(:params) { {admin_id: Admin.last.id, role: 'full', permissions: []} }
+
         it 'expects flash message to be displyed' do
           allow_any_instance_of(CommonHelpers::PermissionsHelper).to receive(:remove_unselected_permissions!).and_raise(StandardError)
           expect_any_instance_of(CommonHelpers::PermissionsHelper).to receive(:roll_back_roles!)
           put :update_permissions, params
           expect(flash[:error]).to eq "An error occured! User #{Admin.last.email}'s permissions were not updated."
+        end
+      end
+
+      context 'when assinging allowed role/permissions' do
+        let(:no_role) { FactoryGirl.create(:no_role) }
+        let(:definitions) do
+          {
+            schemes_r:    {checked: true, locked: true},
+            schemes_w:    {checked: false, locked: true},
+            schemes_e:    {checked: false, locked: false},
+            schemes_d:    {checked: false, locked: true},
+
+            sc_users_r:   {checked: true, locked: true},
+            sc_users_w:   {checked: false, locked: false},
+            sc_users_e:   {checked: false, locked: false},
+            sc_users_d:   {checked: false, locked: true},
+
+            co_users_r:   {checked: true, locked: true},
+            co_users_w:   {checked: false, locked: false},
+            co_users_e:   {checked: false, locked: false},
+            co_users_d:   {checked: false, locked: false},
+
+            businesses_r: {checked: true, locked: true},
+            businesses_e: {checked: false, locked: false},
+            businesses_w: {checked: false, locked: true},
+            businesses_d: {checked: false, locked: true}
+          }
+        end
+
+        before do
+          controller.instance_variable_set(:@available_roles, PermissionsForRole::AdminDefinitions::ROLES)
+          controller.instance_variable_set(:@available_permissions, PermissionsForRole::AdminDefinitions::PERMISSIONS)
+          controller.instance_variable_set(:@permissions_definitions, PermissionsForRole::AdminDefinitions.new)
+          allow_any_instance_of(PermissionsForRole::AdminDefinitions).to receive(:permissions_for_role).and_return(definitions)
+
+          no_role.role_list.each { |r| no_role.remove_role r }
+        end
+
+        describe 'all permissions are allowed' do
+          let(:params) { {admin_id: no_role.id, role: 'restricted_admin', permissions: %w(co_users_r sc_users_r)} }
+
+          it 'sets all the passed in permissions' do
+            put :update_permissions, params
+            expect(no_role.role_list).to eq %w(restricted_admin co_users_r sc_users_r)
+          end
+        end
+
+        describe 'NOT all permissions are allowed' do
+          let(:params) { {admin_id: no_role.id, role: 'restricted_admin', permissions: %w(co_users_r sc_users_r co_users_d sc_users_d)} }
+
+          it 'sets ONLY the correct permissions' do
+            get :permissions, admin_id: no_role.id
+            put :update_permissions, params
+            expect(no_role.role_list).to eq %w(restricted_admin co_users_r sc_users_r co_users_d)
+          end
         end
       end
     end

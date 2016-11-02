@@ -196,7 +196,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
     context 'when CompanyOperator has co_director role' do
       let(:co_director) { FactoryGirl.create(:company_operator_with_director) }
       before do
-        CompanyOperator::PERMISSIONS.each do |role|
+        PermissionsForRole::CompanyOperatorDefinitions::PERMISSIONS.each do |role|
           co_director.add_role role
         end
         sign_in co_director
@@ -246,17 +246,27 @@ RSpec.describe CompanyOperatorsController, type: :controller do
 
         it 'sets the correct available_roles' do
           get :permissions, company_operator_id: CompanyOperator.last.id
-          expect(assigns(:available_roles)).to eq(CompanyOperator::ROLES)
+          expect(assigns(:available_roles)).to eq(PermissionsForRole::CompanyOperatorDefinitions::ROLES)
         end
 
         it 'sets the correct available_permissions' do
           get :permissions, company_operator_id: CompanyOperator.last.id
-          expect(assigns(:available_permissions)).to eq(CompanyOperator::PERMISSIONS)
+          expect(assigns(:available_permissions)).to eq(PermissionsForRole::CompanyOperatorDefinitions::PERMISSIONS)
+        end
+
+        it 'sets the correct permissions_definitions' do
+          get :permissions, company_operator_id: CompanyOperator.last.id
+          expect(assigns(:permissions_definitions)).to be_a(PermissionsForRole::CompanyOperatorDefinitions)
+        end
+
+        it 'sets the allowed_permissions' do
+          get :permissions, company_operator_id: CompanyOperator.last.id
+          expect(assigns(:allowed_permissions)).not_to be_nil
         end
       end
 
       context 'when calling update_permissions' do
-        let(:params) { {company_operator_id: CompanyOperator.last.id, role: 'co_director', permissions: ['co_user_rwe']} }
+        let(:params) { {company_operator_id: CompanyOperator.last.id, role: 'co_director', permissions: %w(co_users_r co_users_d co_users_e)} }
 
         it 'expects the company operator permissions to be updated' do
           put :update_permissions, params
@@ -266,7 +276,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
     end
 
     context 'when CompanyOperator has co_contact role' do
-      let(:co_contact) { FactoryGirl.create(:company_operator_with_contact) }
+      let(:co_contact) { FactoryGirl.create(:company_operator_with_co_super_user) }
       before do
         co_contact.add_role :co_users_w
         co_contact.add_role :co_users_e

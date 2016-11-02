@@ -1,4 +1,4 @@
-<% if @current_user && !@current_user.is_a?(Visitor) %>
+<% if @current_user %>
   <% @login_path = '/scheme_operators/sign_out' %>
   <% @login_btn_text = 'Sign Out' %>
   <% @login_btn_style = 'btn-outline-secondary' %>
@@ -21,7 +21,7 @@
     <li class="nav-item">
       <div class="btn-group">
         <a class="btn <%= @login_btn_style %> btn-sm" href=<%= @login_path %>><%= @login_btn_text %></a>
-        <% unless @current_user && !@current_user.is_a?(Visitor) %>
+        <% unless @current_user%>
           <button type="button" class="btn <%= @login_btn_style %> btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="sr-only">Toggle Dropdown</span>
           </button>
@@ -33,13 +33,13 @@
         <% end %>
       </div>
     </li>
-    <% if @current_user && !@current_user.is_a?(Visitor) %>
+    <% if @current_user  %>
       <%= render partial: "partials/users/users_dropdown" %>
     <% end %>
     <%= render partial: "partials/schemes_dropdown" %>
   </ul>
 
   <div class="form-inline pull-xs-right">
-    <button class="btn btn-sm btn-outline-info" style="margin-top:5px" type="submit"><%= @current_user.email if @current_user && !@current_user.is_a?(Visitor) %></button>
+    <button class="btn btn-sm btn-outline-info" style="margin-top:5px" type="submit"><%= @current_user.email if @current_user %></button>
   </div>
 </nav>

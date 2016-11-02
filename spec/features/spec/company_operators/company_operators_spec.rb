@@ -1,4 +1,3 @@
-# require 'rails_helper'
 RSpec.describe 'CompanyOperators', js: true do
   describe 'GET /CompanyOperators' do
     it 'expects to be signed in with correct credentials' do

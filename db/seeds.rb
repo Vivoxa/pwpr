@@ -61,3 +61,10 @@
                               name: names[index],
                               password: @password })
     end
+
+    admin = Admin.create(email: 'super_admin@pwpr.com', password: 'min700si', name: 'Nigel')
+    admin.add_role :super_admin
+    admin.remove_role :restricted_admin
+    PermissionsForRole::AdminDefinitions::PERMISSIONS.each do |perm|
+      admin.add_role perm
+    end

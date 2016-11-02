@@ -21,6 +21,10 @@ services:
     depends_on:
       - db
       - mail_server
+    networks:
+      default:
+        aliases:
+          - dev.pwpr.com
   db:
     image: library/mysql:5.6.22
     container_name: pwpr_db_1

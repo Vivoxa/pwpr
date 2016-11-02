@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def current_ability
+    @current_ability ||= Abilities.ability_for(current_user)
+  end
+
   def authenticate_scheme_operator
     return true if current_admin
     authenticate_scheme_operator!(force: true)

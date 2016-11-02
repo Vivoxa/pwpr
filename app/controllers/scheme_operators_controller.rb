@@ -5,7 +5,7 @@ class SchemeOperatorsController < BaseController
   # GET /scheme_operators
   def index
     # TODO: this needs scoping to a scheme
-    @scheme_operators = current_user.schemes.each.map(&:scheme_operators).flatten
+    @scheme_operators = current_user.schemes.each.map(&:scheme_operators).flatten - [current_user]
   end
 
   def invited_not_accepted

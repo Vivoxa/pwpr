@@ -7,7 +7,7 @@ class CompanyOperatorsController < BaseController
   # GET /company_operators
   # TODO: requires scoping
   def index
-    @company_operators = company_operators_by_approved(true)
+    @company_operators = company_operators_by_approved(true) - [current_user]
   end
 
   def pending

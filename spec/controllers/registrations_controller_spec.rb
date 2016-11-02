@@ -1,6 +1,6 @@
-# , CompanyOperators::RegistrationsController
-[SchemeOperators::RegistrationsController].each do |registration_controller|
-  RSpec.describe registration_controller, type: :controller do
+#
+[SchemeOperators::RegistrationsController, CompanyOperators::RegistrationsController].each do |registrations_controller|
+  RSpec.describe registrations_controller, type: :controller do
     before do
       @request.env['devise.mapping'] = Devise.mappings[:scheme_operator]
     end

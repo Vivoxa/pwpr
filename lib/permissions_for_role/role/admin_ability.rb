@@ -9,6 +9,7 @@ module PermissionsForRole
         can %i(read new create update_permissions), Admin if user.admins_w?
         can %i(read edit update update_permissions), Admin if user.admins_e?
         can %i(read destroy update_permissions), Admin if user.admins_d?
+        can %i(read new create update destroy), Admins::RegistrationsController if user.super_admin?
       end
     end
   end

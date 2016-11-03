@@ -5,7 +5,17 @@ class SchemeOperatorsController < BaseController
   # GET /scheme_operators
   def index
     # TODO: this needs scoping to a scheme
-    @scheme_operators = current_user.schemes.each.map(&:scheme_operators).flatten
+    @scheme_operators = current_user.schemes.each.map(&:scheme_operators).flatten - [current_user]
+  end
+
+  def invited_not_accepted
+    query = 'invitation_sent_at IS NOT NULL AND invitation_accepted_at IS NULL'
+    @scheme_operators = []
+    current_user.schemes.each do |scheme|
+      scheme.scheme_operators.where(query).each do |scheme_operator|
+        @scheme_operators << scheme_operator
+      end
+    end
   end
 
   # GET /scheme_operators/:id
@@ -32,13 +42,22 @@ class SchemeOperatorsController < BaseController
   # GET /scheme_operators/:id/permissions
   def permissions
     @user = SchemeOperator.find_by_id(params[:scheme_operator_id])
-    @available_roles = SchemeOperator::ROLES
-    @available_permissions = SchemeOperator::PERMISSIONS
+
+    @available_roles = PermissionsForRole::SchemeOperatorDefinitions::ROLES
+    @available_permissions = PermissionsForRole::SchemeOperatorDefinitions::PERMISSIONS
+
+    current_role = @user.role_list & @available_roles
+    @permissions_definitions = PermissionsForRole::SchemeOperatorDefinitions.new
+
+    # This needs to somehow dynamically reload when the selected role is changed in the UI
+    @allowed_permissions = @permissions_definitions.permissions_for_role(current_role.first)
   end
 
   # PUT /scheme_operators/:id/update_permissions
   def update_permissions
     @user = SchemeOperator.find_by_id(params[:scheme_operator_id])
+    @available_roles = PermissionsForRole::SchemeOperatorDefinitions::ROLES
+    @definitions = PermissionsForRole::SchemeOperatorDefinitions.new
 
     modify_roles_and_permissions(scheme_operator_path(@user.id))
   end

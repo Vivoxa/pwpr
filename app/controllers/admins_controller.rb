@@ -5,7 +5,7 @@ class AdminsController < BaseController
   # GET /admins
   def index
     # Show a categorized list of users based on type (scheme and member)
-    @admins = Admin.all
+    @admins = Admin.all - [current_user]
     @scheme_operators = SchemeOperator.all
     @company_operators = CompanyOperator.all
   end
@@ -30,15 +30,23 @@ class AdminsController < BaseController
   # GET /admins/:id/permissions
   def permissions
     @user = Admin.find_by_id(params[:admin_id])
-    @available_roles = Admin::ROLES
-    @available_permissions = Admin::PERMISSIONS
+    @available_roles = PermissionsForRole::AdminDefinitions::ROLES
+    @available_permissions = PermissionsForRole::AdminDefinitions::PERMISSIONS
+
+    current_role = @user.role_list & @available_roles
+    @permissions_definitions = PermissionsForRole::AdminDefinitions.new
+
+    # This needs to somehow dynamically reload when the selected role is changed in the UI
+    @allowed_permissions = @permissions_definitions.permissions_for_role(current_role.first)
   end
 
   # GET /admins/:id/permissions
   def update_permissions
     @user = Admin.find_by_id(params[:admin_id])
+    @available_roles = PermissionsForRole::AdminDefinitions::ROLES
+    @definitions = PermissionsForRole::AdminDefinitions.new
 
-    modify_roles_and_permissions(admin_path(@user.id))
+    modify_roles_and_permissions(scheme_operator_path(@user.id))
   end
 
   private

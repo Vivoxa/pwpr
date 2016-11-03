@@ -1,5 +1,6 @@
 shared_examples 'NOT a manager' do |object|
   it "expects NOT to be able to manage #{object}" do
-    expect(ability).not_to be_able_to(:manager, object)
+    expect(ability).not_to be_able_to(:manage, object)
+    expect(ability).not_to be_able_to(:destroy, object)
   end
 end

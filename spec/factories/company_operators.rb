@@ -1,6 +1,8 @@
 FactoryGirl.define do
+  rwe_permissions = %i(co_users_r co_users_w co_users_e)
+
   factory :company_operator do |co|
-    email 'jennifer@back_to_the_future.com'
+    email
     name 'Jennifer'
     password 'mypassword'
     confirmed_at DateTime.now
@@ -15,7 +17,10 @@ FactoryGirl.define do
         instance.business_id = FactoryGirl.create(:business).id
       end
       after(:create) do |co|
-        co.add_role 'co_director'
+        co.add_role :sc_director
+        rwe_permissions.each do |permission|
+          co.add_role permission
+        end
       end
     end
 
@@ -25,43 +30,59 @@ FactoryGirl.define do
         instance.approved = false
       end
       after(:create) do |co|
-        co.add_role 'co_director'
+        co.add_role :sc_director
+        rwe_permissions.each do |permission|
+          co.add_role permission
+        end
       end
     end
 
-    factory :company_operator_with_contact do |co_c|
-      co_c.after :build do |instance|
+    factory :company_operator_with_co_super_user do |co_s|
+      co_s.after :build do |instance|
         instance.business_id = FactoryGirl.create(:business).id
       end
       after(:create) do |co|
-        co.add_role 'co_contact'
+        co.add_role :sc_contact
+        rwe_permissions.each do |permission|
+          co.add_role permission
+        end
       end
     end
 
-    factory :company_operator_with_co_user_r do |co_r|
+    factory :company_operator_no_role do |co_r|
+      co_r.after :build do |instance|
+        instance.business_id = FactoryGirl.create(:business).id
+      end
+    end
+
+    factory :company_operator_with_co_users_r do |co_r|
       co_r.after :build do |instance|
         instance.business_id = FactoryGirl.create(:business).id
       end
       after(:create) do |co|
-        co.add_role 'co_user_r'
+        co.add_role :co_users_r
       end
     end
 
-    factory :company_operator_with_co_user_rw do |co_rw|
-      co_rw.after :build do |instance|
+    factory :company_operator_with_co_users_w do |co_w|
+      co_w.after :build do |instance|
         instance.business_id = FactoryGirl.create(:business).id
       end
       after(:create) do |co|
-        co.add_role 'co_user_rw'
+        co.add_role :co_users_r
+        co.add_role :co_users_w
       end
     end
 
-    factory :company_operator_with_co_user_rwe do |co_rwe|
-      co_rwe.after :build do |instance|
+    factory :company_operator_with_co_users_e do |co_e|
+      co_e.after :build do |instance|
         instance.business_id = FactoryGirl.create(:business).id
       end
       after(:create) do |co|
-        co.add_role 'co_user_rwe'
+        co.add_role :sc_contact
+        rwe_permissions.each do |permission|
+          co.add_role permission
+        end
       end
     end
   end

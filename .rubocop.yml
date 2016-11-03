@@ -17,6 +17,7 @@ AllCops:
     - 'bin/**'
     - 'config/**/*'
     - 'app/models/ability.rb'
+    - 'lib/permissions_for_role/role/*'
 
 Documentation:
   Enabled: false
@@ -41,6 +42,10 @@ Metrics/MethodLength:
 # The guiding principle of classes is SRP, SRP can't be accurately measured by LoC
 Metrics/ClassLength:
   Max: 1500
+
+# Turn of subject naming for specs
+RSpec/NamedSubject:
+  Enabled: false
 
 # We do not need to support Ruby 1.9, so this is good to use.
 Style/SymbolArray:

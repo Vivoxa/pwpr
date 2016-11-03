@@ -5,11 +5,26 @@ class Admin < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   include DeviseInvitable::Inviter
 
-  ROLES = %w(full_access).freeze
-  PERMISSIONS = %w().freeze
-  royce_roles ROLES + PERMISSIONS
+  royce_roles PermissionsForRole::AdminDefinitions::ROLES + PermissionsForRole::AdminDefinitions::PERMISSIONS
+
+  after_create :assign_roles
 
   def schemes
     Scheme.all
+  end
+
+  def scheme_ids
+    schemes.map(&:id)
+  end
+
+  private
+
+  def assign_roles
+    add_role :restricted_admin
+    admin_permisions = PermissionsForRole::AdminDefinitions.new
+
+    admin_permisions.permissions_for_role(:restricted_admin).keys.each do |permission|
+      add_role permission
+    end
   end
 end

@@ -37,7 +37,7 @@ group :development, :test do
   gem 'pry'
 
   # Build gems
-  gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-rspec'
   gem 'fudge'
@@ -46,6 +46,9 @@ group :development, :test do
   gem 'brakeman'
   gem 'simplecov'
   gem 'ruby2ruby'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem "chromedriver-helper"
 end
 
 # Use SCSS for stylesheets

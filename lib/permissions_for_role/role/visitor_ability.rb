@@ -7,6 +7,7 @@ module PermissionsForRole
         can :manage, VisitorsController
         can %i(edit update), SchemeOperators::InvitationsController
         can %i(edit update), CompanyOperators::InvitationsController
+        can %i(edit update), BaseInvitationsController
       end
     end
   end

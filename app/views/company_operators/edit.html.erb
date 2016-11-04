@@ -1,15 +1,19 @@
 <div id="main-container" class="container">
-<h1>Editing Company Operator</h1>
+  <h1>Editing Company Operator</h1>
+
   <div class="card">
     <h3 class="card-header"><%= @company_operator.name %></h3>
+
     <div class="card-block">
       <!--	<h4 class="card-title">Administration</h4>-->
       <p class="card-text">
-      <%= render 'form' %>
+        <%= render 'form' %>
       </p>
     </div>
     <div class="card-footer">
-      <%= link_to 'Show', @company_operator, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+      <% if can? :read, @company_operator %>
+          <%= link_to 'Show', @company_operator, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+      <% end %>
       <%= link_to 'Back', :back, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
     </div>
   </div>

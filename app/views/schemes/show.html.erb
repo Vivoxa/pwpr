@@ -1,30 +1,31 @@
 <div id="main-container" class="container">
   <div class="card">
     <h3 class="card-header"><%= @scheme.name %></h3>
+
     <div class="card-block">
-        <div class="card card-block" style='height:150px'>
-          <!--	<h4 class="card-title">Administration</h4>-->
-          <div class='col-md-4'></div>
-          <div class='col-md-4'>
+      <div class="card card-block" style='height:150px'>
+        <!--	<h4 class="card-title">Administration</h4>-->
+        <div class='col-md-4'></div>
+        <div class='col-md-4'>
           <div class="row">
             <p>
-            <strong>Name:</strong>
-            <%= @scheme.name %>
+              <strong>Name:</strong>
+              <%= @scheme.name %>
             </p>
           </div>
-          <p>
           <div class="row">
             <strong>Active:</strong>
             <%= @scheme.active %>
-          </p>
-          </div>
-          </div>
-          <div class='col-md-4'></div>
         </div>
       </div>
-    <div class="card-footer">
-      <%= link_to 'Edit', edit_scheme_path(@scheme), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
-      <%= link_to 'Back', schemes_path, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
+      <div class='col-md-4'></div>
     </div>
   </div>
+  <div class="card-footer">
+    <% if can? :edit, @scheme %>
+        <%= link_to 'Edit', edit_scheme_path(@scheme), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+    <% end %>
+    <%= link_to 'Back', schemes_path, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
+  </div>
+</div>
 </div>

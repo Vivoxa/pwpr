@@ -43,7 +43,9 @@
       </div>
     </div>
     <div class="card-footer">
-      <%= link_to 'Edit', edit_business_path(@business), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+      <% if can? :edit, @business %>
+          <%= link_to 'Edit', edit_business_path(@business), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+      <% end %>
       <%= link_to 'Back', businesses_path, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
     </div>
   </div>

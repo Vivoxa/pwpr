@@ -1,19 +1,22 @@
 <div id="main-container" class="container">
   <div class="card">
     <h3 class="card-header"><strong>Editing:</strong> <%= @scheme.name %></h3>
+
     <div class="card-block">
       <div class='col-md-4'></div>
       <!--	<h4 class="card-title">Administration</h4>-->
       <div class='col-md-4'>
-      <p class="card-text">
-      <%= render 'form' %>
-      </p>
+        <p class="card-text">
+          <%= render 'form' %>
+        </p>
       </div>
       <div class='col-md-4'></div>
     </div>
 
     <div class="card-footer">
-      <%= link_to 'Show', @scheme, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+      <% if can? :read, @scheme %>
+          <%= link_to 'Show', @scheme, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+      <% end %>
       <%= link_to 'Back', :back, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
     </div>
   </div>

@@ -1,15 +1,19 @@
 <div id="main-container" class="container">
-<h1>Editing Scheme Operator</h1>
+  <h1>Editing Scheme Operator</h1>
+
   <div class="card">
     <h3 class="card-header"><%= @scheme_operator.name %></h3>
+
     <div class="card-block">
       <!--	<h4 class="card-title">Administration</h4>-->
       <p class="card-text">
-      <%= render 'form' %>
+        <%= render 'form' %>
       </p>
     </div>
     <div class="card-footer">
-      <%= link_to 'Show', @scheme_operator, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+      <% if can? :read, @scheme_operator %>
+          <%= link_to 'Show', @scheme_operator, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+      <% end %>
       <%= link_to 'Back', :back, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
     </div>
   </div>

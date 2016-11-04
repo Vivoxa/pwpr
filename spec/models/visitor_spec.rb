@@ -13,4 +13,8 @@ RSpec.describe Visitor do
   it_behaves_like 'an editor', SchemeOperators::InvitationsController
 
   it_behaves_like 'an updater', SchemeOperators::InvitationsController
+
+  it_behaves_like 'an editor', BaseInvitationsController
+
+  it_behaves_like 'an updater', BaseInvitationsController
 end

@@ -11,6 +11,7 @@ end
 devise_for :admins, controllers: { registrations: 'admins/registrations' }
 devise_for :scheme_operators, controllers: { registrations: 'scheme_operators/registrations', :invitations => 'scheme_operators/invitations' }
 devise_scope :scheme_operator do
+  get '/scheme_operators/pending' => 'scheme_operators#pending', as: 'pending_scheme_operators'
   get '/scheme_operators/invitations/', to: 'scheme_operators#invited_not_accepted', :as => 'scheme_operator_invitations'
 end
 

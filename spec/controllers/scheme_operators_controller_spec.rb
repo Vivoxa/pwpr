@@ -11,6 +11,7 @@ RSpec.describe SchemeOperatorsController, type: :controller do
       sc_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
       sc_marti.add_role :sc_director
       sc_marti.add_role :sc_users_r
+      sc_marti.approved = true
       sc_marti.save
       sign_in sc_marti
     end
@@ -23,7 +24,7 @@ RSpec.describe SchemeOperatorsController, type: :controller do
 
     context 'when an invitation has not been accepted' do
       it 'expects a collection of scheme operators' do
-        scheme_operator = SchemeOperator.create(email: 'invited@pwpr.com', password: 'my_password', schemes: sc_marti.schemes, invitation_sent_at: DateTime.now)
+        scheme_operator = SchemeOperator.create(approved: true, email: 'invited@pwpr.com', password: 'my_password', schemes: sc_marti.schemes, invitation_sent_at: DateTime.now)
         get 'invited_not_accepted'
         object = assigns(:scheme_operators).first
         expect(object).to be_a SchemeOperator
@@ -96,6 +97,7 @@ RSpec.describe SchemeOperatorsController, type: :controller do
       sc_marti.confirmed_at = DateTime.now
       sc_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
       sc_marti.save
+      sc_marti.approved = true
       sc_marti.save
     end
 
@@ -180,6 +182,23 @@ RSpec.describe SchemeOperatorsController, type: :controller do
         sign_out sc_marti
       end
 
+      context 'when an invitation HAS been accepted but not approved' do
+        it 'expects a collection of scheme operators' do
+          scheme_operator = SchemeOperator.create(email:                  'invited@pwpr.com',
+                                                  password:               'my_password',
+                                                  scheme_ids:             [Scheme.last.id],
+                                                  invitation_sent_at:     DateTime.now - 5.days,
+                                                  invitation_accepted_at: DateTime.now,
+                                                  confirmation_sent_at:   DateTime.now - 5.days,
+                                                  confirmed_at:           DateTime.now,
+                                                  approved:               false)
+          get 'pending'
+          object = assigns(:scheme_operators).first
+          expect(object).to be_a SchemeOperator
+          expect(object.id).to eq scheme_operator.id
+        end
+      end
+
       context 'when calling update_permissions' do
         it 'expects a CanCan AccessDenied error to be raised' do
           put :update_permissions, scheme_operator_id: SchemeOperator.last.id
@@ -216,8 +235,8 @@ RSpec.describe SchemeOperatorsController, type: :controller do
         it 'expects the scheme operator to be destroyed' do
           get :destroy, id: sc_marti.id
           expect(response.status).to eq 302
-          co = SchemeOperator.where(id: sc_marti.id)
-          expect(co).to be_empty
+          sc = SchemeOperator.where(id: sc_marti.id)
+          expect(sc).to be_empty
         end
       end
 

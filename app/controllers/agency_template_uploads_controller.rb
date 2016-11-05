@@ -9,7 +9,7 @@ class AgencyTemplateUploadsController < ApplicationController
   def show
   end
 
-  # PUT /agency_template_uploads/new
+  # GET /agency_template_uploads/new
   def new
   end
 end

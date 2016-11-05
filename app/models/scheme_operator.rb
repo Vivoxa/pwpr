@@ -16,6 +16,14 @@ class SchemeOperator < ActiveRecord::Base
 
   after_create :assign_roles
 
+  def active_for_authentication?
+    super && approved?
+  end
+
+  def inactive_message
+    :not_approved unless approved?
+  end
+
   private
 
   def assign_roles

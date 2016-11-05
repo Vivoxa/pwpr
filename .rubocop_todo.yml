@@ -24,12 +24,13 @@ RSpec/DescribeClass:
     - 'spec/controllers/registrations_controller_spec.rb'
     - 'spec/features/spec/company_operators/company_operators_spec.rb'
 
-# Offense count: 12
+# Offense count: 13
 # Configuration parameters: Max.
 RSpec/ExampleLength:
   Exclude:
     - 'spec/controllers/company_operators_controller_spec.rb'
     - 'spec/controllers/registrations_controller_spec.rb'
+    - 'spec/controllers/scheme_operators_controller_spec.rb'
     - 'spec/controllers/schemes_controller_spec.rb'
     - 'spec/models/admin_spec.rb'
     - 'spec/models/company_operator_spec.rb'
@@ -51,7 +52,7 @@ RSpec/InstanceVariable:
     - 'spec/controllers/registrations_controller_spec.rb'
     - 'spec/controllers/scheme_operators/invitations_controller_spec.rb'
 
-# Offense count: 75
+# Offense count: 77
 RSpec/MultipleExpectations:
   Max: 4
 
@@ -61,6 +62,12 @@ RSpec/MultipleExpectations:
 Style/ClassAndModuleChildren:
   Exclude:
     - 'test/test_helper.rb'
+
+# Offense count: 1
+# Configuration parameters: MinBodyLength.
+Style/GuardClause:
+  Exclude:
+    - 'app/controllers/scheme_operators_controller.rb'
 
 # Offense count: 4
 Style/MethodCalledOnDoEndBlock:

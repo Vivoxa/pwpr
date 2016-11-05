@@ -28,6 +28,7 @@
                               confirmation_sent_at: DateTime.now - 5.days,
                               confirmed_at: DateTime.now,
                               name: names[index],
+                              approved: true,
                               scheme_ids: schemes[index].id})
     end
 
@@ -40,6 +41,7 @@
                               confirmation_sent_at: DateTime.now - 5.days,
                               confirmed_at: DateTime.now,
                               name: names[index],
+                              approved: true,
                               scheme_ids:[ schemes[index].id,schemes[ index + 1].id]})
     end
 

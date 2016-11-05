@@ -32,6 +32,7 @@ RSpec.describe BusinessesController, type: :controller do
       co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
       co_marti.save
       co_marti.add_role('sc_director')
+      co_marti.approved = true
       co_marti.save
       sign_in co_marti
     end

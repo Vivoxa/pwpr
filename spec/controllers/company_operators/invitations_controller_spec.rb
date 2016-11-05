@@ -22,6 +22,7 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
         co_marti.password = 'mypassword'
         co_marti.confirmed_at = DateTime.now
         co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
+        co_marti.approved = true
         co_marti.save
       end
       context 'when SchemeOperator does NOT have the director role' do

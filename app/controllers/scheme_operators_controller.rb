@@ -5,7 +5,11 @@ class SchemeOperatorsController < BaseController
   # GET /scheme_operators
   def index
     # TODO: this needs scoping to a scheme
-    @scheme_operators = current_user.schemes.each.map(&:scheme_operators).flatten - [current_user]
+    @scheme_operators = scheme_operators_by_approved(true) - [current_user]
+  end
+
+  def pending
+    @scheme_operators = pending_operators(scheme_operators_by_approved(false))
   end
 
   def invited_not_accepted
@@ -64,8 +68,18 @@ class SchemeOperatorsController < BaseController
 
   private
 
+  def scheme_operators_by_approved(approved = true)
+    if current_scheme_operator || current_admin
+      scheme_operators = []
+      current_user.schemes.each do |scheme|
+        scheme_operators << scheme.scheme_operators.where(approved: approved)
+      end
+      scheme_operators.flatten
+    end
+  end
+
   def secure_params
     # We need to pull the params and handle company_operator as well maybe?
-    params.require(:scheme_operator).permit(:role, :name, :email)
+    params.require(:scheme_operator).permit(:role, :name, :email, :approved)
   end
 end

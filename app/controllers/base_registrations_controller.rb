@@ -41,7 +41,7 @@ class BaseRegistrationsController < Devise::RegistrationsController
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) do |user_params|
-      user_params.permit({scheme_ids: []}, :scheme_id, :email, :password, :password_confirmation, :name, :confirmed_at)
+      user_params.permit({scheme_ids: []}, :scheme_id, :email, :password, :password_confirmation, :name, :confirmed_at, :approved, :invitation_accepted_at, :invitation_sent_at)
     end
   end
 end

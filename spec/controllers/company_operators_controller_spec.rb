@@ -23,6 +23,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
       scheme_operator.add_role :co_users_e
       scheme_operator.add_role :co_users_w
       scheme_operator.add_role :co_users_d
+      scheme_operator.approved = true
       scheme_operator.save
       sign_in scheme_operator
     end

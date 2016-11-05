@@ -11,7 +11,7 @@ class CompanyOperatorsController < BaseController
   end
 
   def pending
-    @company_operators = pending_company_operators
+    @company_operators = pending_operators(company_operators_by_approved(false))
   end
 
   def invited_not_accepted
@@ -74,15 +74,6 @@ class CompanyOperatorsController < BaseController
     else
       current_user.business.company_operators.where(approved: approved)
     end
-  end
-
-  def pending_company_operators
-    pending = company_operators_by_approved(false)
-    pending_company_operators = []
-    pending.each do |co|
-      pending_company_operators << co if co.confirmed_at.present?
-    end
-    pending_company_operators
   end
 
   def unaccepted_invitations

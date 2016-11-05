@@ -10,6 +10,7 @@ RSpec.describe SchemesController, type: :controller do
       co_marti.confirmed_at = DateTime.now
       co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
       co_marti.save
+      co_marti.approved = true
       sc_director_roles.each do |permission|
         co_marti.add_role permission
       end

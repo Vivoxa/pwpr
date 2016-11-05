@@ -51,6 +51,10 @@ group :development, :test do
   gem "chromedriver-helper"
 end
 
+group :test do
+  gem 'shoulda-matchers', require: false
+end
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets

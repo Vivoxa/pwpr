@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161022085104) do
+ActiveRecord::Schema.define(version: 20161105080056) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -31,6 +31,19 @@ ActiveRecord::Schema.define(version: 20161022085104) do
 
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
+
+  create_table "agency_template_uploads", force: :cascade do |t|
+    t.datetime "uploaded_at"
+    t.integer  "scheme_id",        limit: 4
+    t.integer  "uploaded_by_id",   limit: 4
+    t.string   "uploaded_by_type", limit: 255
+    t.integer  "year",             limit: 4
+    t.string   "status",           limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "agency_template_uploads", ["scheme_id"], name: "index_agency_template_uploads_on_scheme_id", using: :btree
 
   create_table "businesses", force: :cascade do |t|
     t.string   "name",          limit: 255
@@ -106,12 +119,12 @@ ActiveRecord::Schema.define(version: 20161022085104) do
   add_index "royce_role", ["name"], name: "index_royce_role_on_name", using: :btree
 
   create_table "scheme_operators", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "email",                  limit: 255, default: "",    null: false
+    t.string   "encrypted_password",     limit: 255, default: "",    null: false
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
@@ -120,8 +133,8 @@ ActiveRecord::Schema.define(version: 20161022085104) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email",      limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
     t.string   "name",                   limit: 255
     t.string   "invitation_token",       limit: 255
     t.datetime "invitation_created_at"
@@ -131,8 +144,10 @@ ActiveRecord::Schema.define(version: 20161022085104) do
     t.integer  "invited_by_id",          limit: 4
     t.string   "invited_by_type",        limit: 255
     t.integer  "invitations_count",      limit: 4,   default: 0
+    t.boolean  "approved",                           default: false, null: false
   end
 
+  add_index "scheme_operators", ["approved"], name: "index_scheme_operators_on_approved", using: :btree
   add_index "scheme_operators", ["email"], name: "index_scheme_operators_on_email", unique: true, using: :btree
   add_index "scheme_operators", ["invitation_token"], name: "index_scheme_operators_on_invitation_token", unique: true, using: :btree
   add_index "scheme_operators", ["invitations_count"], name: "index_scheme_operators_on_invitations_count", using: :btree
@@ -154,6 +169,7 @@ ActiveRecord::Schema.define(version: 20161022085104) do
     t.datetime "updated_at",             null: false
   end
 
+  add_foreign_key "agency_template_uploads", "schemes"
   add_foreign_key "businesses", "schemes"
   add_foreign_key "company_operators", "businesses"
 end

@@ -6,6 +6,11 @@ class SchemesController < BaseController
   # GET /schemes
   # GET /schemes.json
   def index
+      binding.pry
+    require_relative '../../lib/s3/agency_template_uploader'
+
+    uploader = S3::AgencyTemplateUploader.new
+    uploader.test_connection
     @schemes = current_user.schemes
   end
 

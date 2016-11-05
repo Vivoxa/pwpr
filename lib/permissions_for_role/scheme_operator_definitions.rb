@@ -34,8 +34,8 @@ module PermissionsForRole
         businesses_e: {checked: true, locked: true},
         businesses_w: {checked: true, locked: true},
         businesses_d: {checked: true, locked: true},
-        uploads_r: {checked: true, locked: true},
-        uploads_w: {checked: true, locked: true}
+        uploads_r:    {checked: true, locked: true},
+        uploads_w:    {checked: true, locked: true}
       }
     end
 

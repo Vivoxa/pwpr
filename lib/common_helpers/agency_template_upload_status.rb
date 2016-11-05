@@ -1,7 +1,7 @@
 module CommonHelpers
   class AgencyTemplateUploadStatus
-    ACTIVE = 'Active'
-    PENDING = 'Pending'
-    FAILED = 'Failed'
+    ACTIVE = 'Active'.freeze
+    PENDING = 'Pending'.freeze
+    FAILED = 'Failed'.freeze
   end
 end

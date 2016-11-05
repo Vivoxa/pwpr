@@ -7,4 +7,10 @@ class AgencyTemplateUpload < ActiveRecord::Base
   validates_presence_of :uploaded_by_id
   validates_presence_of :uploaded_by_type
   validates_presence_of :filename
+
+  def initialize(attributes = {})
+    super
+    self.uploaded_at = DateTime.now
+    self.status = CommonHelpers::AgencyTemplateUploadStatus::PENDING
+  end
 end

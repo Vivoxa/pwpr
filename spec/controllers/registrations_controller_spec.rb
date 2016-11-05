@@ -23,7 +23,29 @@
         co_marti.password = 'mypassword'
         co_marti.confirmed_at = DateTime.now
         co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
+        co_marti.approved = true
         co_marti.save
+      end
+      context 'when SchemeOperator has not been approved' do
+        before do
+          co_marti.approved = false
+          co_marti.save
+          sign_in co_marti
+        end
+
+        after do
+          co_marti.approved = true
+          co_marti.save
+          sign_out co_marti
+        end
+
+        context 'when calling new' do
+          it 'expects an error to be raised' do
+            post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+            expect(flash[:alert]).to be_present
+            expect(flash[:alert]).to eq 'Your account has not been approved by your administrator yet.'
+          end
+        end
       end
       context 'when SchemeOperator does NOT have the director role' do
         before do
@@ -60,10 +82,14 @@
 
         context 'when calling create' do
           it 'expects a SchemeOperator to be created' do
-            post :create, scheme_operator: {email:      'freddy@pwpr.com',
-                                            name:       'freddy',
-                                            password:   'my_password',
-                                            scheme_ids: [Scheme.last]}
+            post :create, scheme_operator: {email:                  'freddy@pwpr.com',
+                                            name:                   'freddy',
+                                            password:               'my_password',
+                                            invitation_sent_at:     DateTime.now,
+                                            confirmed_at:           DateTime.now,
+                                            invitation_accepted_at: DateTime.now,
+                                            approved:               true,
+                                            scheme_ids:             [Scheme.last]}
             expect(response.status).to eq 302
             so_user = SchemeOperator.find_by_email('freddy@pwpr.com')
             expect(so_user).to be_a(SchemeOperator)

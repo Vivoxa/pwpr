@@ -18,6 +18,7 @@ RSpec.describe SchemeOperators::InvitationsController, type: :controller do
         co_marti.password = 'mypassword'
         co_marti.confirmed_at = DateTime.now
         co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
+        co_marti.approved = true
         co_marti.save
       end
       context 'when SchemeOperator does NOT have the director role' do
@@ -55,7 +56,7 @@ RSpec.describe SchemeOperators::InvitationsController, type: :controller do
 
         context 'when calling create' do
           it 'expects a 200 response status' do
-            params = {scheme_operator: {password: 'my_password', email: 'star@star.com', name: 'star', scheme_ids: [1]}}
+            params = {scheme_operator: {approved: true, password: 'my_password', email: 'star@star.com', name: 'star', scheme_ids: [1]}}
             post :create, params
             expect(response.status).to eq 302
             user = SchemeOperator.find_by_email('star@star.com')

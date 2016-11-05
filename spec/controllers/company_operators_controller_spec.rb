@@ -322,6 +322,11 @@ RSpec.describe CompanyOperatorsController, type: :controller do
               expect(no_role.role_list).to eq %w(co_user co_users_r)
             end
           end
+
+          it 'redirects to correct page after save' do
+            put :update_permissions, params
+            expect(response.body).to include('company_operators/')
+          end
         end
       end
     end

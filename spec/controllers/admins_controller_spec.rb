@@ -162,7 +162,7 @@ RSpec.describe AdminsController, type: :controller do
         end
       end
 
-      context 'when assinging allowed role/permissions' do
+      context 'when assinging role/permissions' do
         let(:no_role) { FactoryGirl.create(:no_role) }
         let(:definitions) do
           {
@@ -214,6 +214,11 @@ RSpec.describe AdminsController, type: :controller do
             put :update_permissions, params
             expect(no_role.role_list).to eq %w(restricted_admin co_users_r sc_users_r co_users_d)
           end
+        end
+
+        it 'redirects to correct page after save' do
+          put :update_permissions, params
+          expect(response.body).to include('admins/')
         end
       end
     end

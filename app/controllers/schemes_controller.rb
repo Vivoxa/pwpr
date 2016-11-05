@@ -10,7 +10,6 @@ class SchemesController < BaseController
   # GET /schemes
   # GET /schemes.json
   def index
-      binding.pry
     require_relative '../../lib/s3/agency_template_uploader'
     agt = AgencyTemplateUpload.new
     agt.filename = 'test.csv'

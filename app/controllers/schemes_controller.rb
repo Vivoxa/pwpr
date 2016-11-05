@@ -1,7 +1,3 @@
-class AgencyTemplateUpload
-  attr_accessor :filename, :scheme_id, :year
-end
-
 class SchemesController < BaseController
   before_filter :authenticate_scheme_operator
   before_action :set_scheme, only: %i(show edit update destroy)
@@ -10,14 +6,6 @@ class SchemesController < BaseController
   # GET /schemes
   # GET /schemes.json
   def index
-    require_relative '../../lib/s3/agency_template_uploader'
-    agt = AgencyTemplateUpload.new
-    agt.filename = 'test.csv'
-    agt.scheme_id = Scheme.last.id
-    agt.year = '2010'
-
-    uploader = S3::AgencyTemplateUploader.new
-    uploader.put(agt)
     @schemes = current_user.schemes
   end
 

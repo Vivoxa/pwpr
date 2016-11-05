@@ -57,7 +57,7 @@ class CompanyOperatorsController < BaseController
     @available_roles = PermissionsForRole::CompanyOperatorDefinitions::ROLES
     @definitions = PermissionsForRole::CompanyOperatorDefinitions.new
 
-    modify_roles_and_permissions(scheme_operator_path(@user.id))
+    modify_roles_and_permissions(company_operator_path(@user.id))
   end
 
   private

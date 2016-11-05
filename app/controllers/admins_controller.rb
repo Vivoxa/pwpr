@@ -46,7 +46,7 @@ class AdminsController < BaseController
     @available_roles = PermissionsForRole::AdminDefinitions::ROLES
     @definitions = PermissionsForRole::AdminDefinitions.new
 
-    modify_roles_and_permissions(scheme_operator_path(@user.id))
+    modify_roles_and_permissions(admin_path(@user.id))
   end
 
   private

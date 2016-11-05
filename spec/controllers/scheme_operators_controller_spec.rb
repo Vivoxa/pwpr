@@ -336,6 +336,11 @@ RSpec.describe SchemeOperatorsController, type: :controller do
               expect(no_role.role_list).to eq %w(sc_user co_users_r businesses_e)
             end
           end
+
+          it 'redirects to correct page after save' do
+            put :update_permissions, params
+            expect(response.body).to include('scheme_operators/')
+          end
         end
       end
     end

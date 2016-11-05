@@ -1,7 +1,7 @@
 require 'aws-sdk'
 
 module S3
-  class AgencyTemplateUploader
+  class AgencyTemplateAwsHandler
     SERVER_TMP_FILE_DIR = 'public'.freeze
     S3_FILE_AGENCY_TEMPLATE_IDENTIFIER = 'AT'.freeze
 
@@ -19,11 +19,11 @@ module S3
     private
 
     def server_file_path(agency_template_upload)
-      "#{AgencyTemplateUploader::SERVER_TMP_FILE_DIR}/#{agency_template_upload.filename}"
+      "#{AgencyTemplateAwsHandler::SERVER_TMP_FILE_DIR}/#{agency_template_upload.filename}"
     end
 
     def s3_build_filename(agency_template_upload)
-      "#{AgencyTemplateUploader::S3_FILE_AGENCY_TEMPLATE_IDENTIFIER}-#{agency_template_upload.year}-#{agency_template_upload.scheme_id}-#{agency_template_upload.filename}"
+      "#{AgencyTemplateAwsHandler::S3_FILE_AGENCY_TEMPLATE_IDENTIFIER}-#{agency_template_upload.year}-#{agency_template_upload.scheme_id}-#{agency_template_upload.filename}"
     end
 
     def bucket_name

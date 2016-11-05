@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20161105080056) do
     t.string   "uploaded_by_type", limit: 255
     t.integer  "year",             limit: 4
     t.string   "status",           limit: 255
+    t.string   "filename",         limit: 255
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
   end

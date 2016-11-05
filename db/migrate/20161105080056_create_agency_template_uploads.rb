@@ -7,6 +7,7 @@ class CreateAgencyTemplateUploads < ActiveRecord::Migration
       t.string :uploaded_by_type
       t.integer :year
       t.string :status
+      t.string :filename
 
       t.timestamps null: false
     end

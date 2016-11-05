@@ -1,0 +1,22 @@
+<%= form_for(@upload) do |f| %>
+  <% if @upload.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@upload.errors.count, "error") %> prohibited this file from uploading:</h2>
+      <ul>
+      <% @upload.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.text_field :year, placeholder: 'Year', class: "devise-lgn form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :file %>
+    <%= f.file_field :upload, :template %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Upload', class: ["btn", "btn-success", "devise-btn"] %>
+  </div>
+<% end %>

@@ -1,0 +1,40 @@
+<div id="main-container" class="container">
+  <div class="card">
+    <h3 class="card-header"><%= @uploads.filename %></h3>
+
+    <div class="card-block">
+      <div class="card card-block" style='height:150px'>
+        <!--  <h4 class="card-title">Administration</h4>-->
+        <div class='col-md-4'></div>
+        <div class='col-md-4'>
+          <div class="row">
+            <p>
+              <strong>File:</strong>
+              <%= @uploads.name %>
+            </p>
+          </div>
+          <div class="row">
+            <strong>Year:</strong>
+            <%= @uploads.year %>
+          </div>
+          <div class="row">
+            <strong>Uploaded at:</strong>
+            <%= @uploads.uploaded_at %>
+          </div>
+          <div class="row">
+            <strong>Uploaded by:</strong>
+            <%= SchemeOperator.find_by_id(@uploads.uploaded_by).email %>
+          </div>
+          <div class="row">
+            <strong>Scheme:</strong>
+            <%= Scheme.find_by_id(@uploads.scheme_id).name %>
+          </div>
+        </div>
+        <div class='col-md-4'></div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <%= link_to 'Back', scheme_agency_template_uploads_path, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
+    </div>
+  </div>
+</div>

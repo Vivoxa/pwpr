@@ -47,7 +47,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
 
   describe 'GET #show' do
     before do
-      get :index, scheme_id: 1, id: 1
+      get :show, scheme_id: 1, id: 1
     end
 
     it 'responds with 200' do
@@ -55,7 +55,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
     end
 
     it 'assigns the upload as @upload' do
-      expect(assigns(:upload)).to eq(AgencyTemplateUpload.first)
+      expect(assigns(:upload)).to eq AgencyTemplateUpload.first
     end
   end
 
@@ -72,40 +72,50 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
       expect(assigns(:upload)).to be_a(AgencyTemplateUpload)
     end
 
-    it 'initializes the scheme_id' do
-      expect(assigns(:upload).scheme_id).to be_a(Scheme.first.id)
-    end
-
-    it 'initializes the uploaded_by_id' do
-      expect(assigns(:upload).uploaded_by_id).to be_a(subject.current_user.id)
-    end
-
     it 'initializes the uploaded_at' do
-      expect(assigns(:upload).uploaded_at).to be_a(DateTime.now)
+      expect(assigns(:upload).uploaded_at).not_to be_nil
     end
 
     it 'initializes the status' do
-      expect(assigns(:upload).status).to be_a(DateTime.now)
+      expect(assigns(:upload).status).to eq CommonHelpers::AgencyTemplateUploadStatus::PENDING
     end
 
     it 'assigns the scheme as @scheme' do
-      expect(assigns(:upload)).to eq(Scheme.first)
+      expect(assigns(:scheme)).to eq Scheme.first
     end
   end
 
   describe 'POST #create' do
-    it 'creates and uploads the file' do
-      before do
-        post :create, scheme_id: 1
-      end
+    before do
+      post :create, scheme_id: 1, upload: {year: '2016', filename: 'file_name.xls'}
+    end
 
-      it 'responds with 200' do
-        expect(response.status).to eq 200
-      end
+    it 'responds with 302' do
+      expect(response.status).to eq 302
+    end
 
-      it 'assigns the upload as @upload' do
-        expect(assigns(:upload)).to be_a(AgencyTemplateUpload)
-      end
+    it 'responds to be redirect' do
+      expect(response.redirect?).to be true
+    end
+
+    it 'assigns the upload as @upload' do
+      expect(assigns(:upload)).to be_a(AgencyTemplateUpload)
+    end
+
+    it 'initializes the uploaded_at' do
+      expect(assigns(:upload).uploaded_at).not_to be_nil
+    end
+
+    it 'initializes the status' do
+      expect(assigns(:upload).status).to eq CommonHelpers::AgencyTemplateUploadStatus::PENDING
+    end
+
+    it 'sets the year' do
+      expect(assigns(:upload).year).to eq 2016
+    end
+
+    it 'sets the filename' do
+      expect(assigns(:upload).filename).to eq 'file_name.xls'
     end
   end
 end

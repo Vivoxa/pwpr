@@ -10,6 +10,11 @@ class AgencyTemplateUpload < ActiveRecord::Base
 
   def initialize(attributes = {})
     super
+    # self.year = attributes[:year].to_s
+    # self.filename = attributes[:filename]
+    # self.scheme_id = attributes[:scheme_id]
+    # self.uploaded_by_type = attributes[:uploaded_by_type]
+    # self.uploaded_by_id = attributes[:uploaded_by_id]
     self.uploaded_at = DateTime.now
     self.status = CommonHelpers::AgencyTemplateUploadStatus::PENDING
   end

@@ -22,14 +22,15 @@ class AgencyTemplateUploadsController < ApplicationController
   def create
     @upload = AgencyTemplateUpload.new(upload_params)
 
-    # tmp = upload_params[:filename].tempfile
-    # file = File.join("public", upload_params[:filename].original_filename)
-    # FileUtils.cp tmp.path, file
+    tmp = upload_params[:filename].tempfile
+    file = File.join("public", upload_params[:filename].original_filename)
+    FileUtils.cp tmp.path, file
+
     redirect_to action: :index
   end
 
     # Never trust parameters from the scary internet, only allow the white list through.
   def upload_params
-    params.require(:upload).permit(:year, :filename)
+    params.require(:agency_template_upload).permit(:year, :filename)
   end
 end

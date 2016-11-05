@@ -87,7 +87,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
 
   describe 'POST #create' do
     before do
-      post :create, scheme_id: 1, upload: {year: '2016', filename: 'file_name.xls'}
+      post :create, scheme_id: 1, agency_template_upload: {year: '2016', filename: 'file_name.xls'}
     end
 
     it 'responds with 302' do

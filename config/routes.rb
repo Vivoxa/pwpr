@@ -32,7 +32,7 @@ end
   end
 
   resources :schemes do
-    resources :agency_template_uploads, only: [:index, :show, :new]
+    resources :agency_template_uploads, only: [:index, :show, :new, :create]
   end
 
   # Example of regular route:

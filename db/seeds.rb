@@ -14,9 +14,18 @@
     schemes = Scheme.create([{ name: 'dans pack scheme' }, { name: 'mypack scheme' }, { name: 'pack one' }, { name: 'Test scheme' }, { name: 'Synergy' }, { name: 'Packaging for you' }])
     names = ["Nigel","Dave","Lorand","Vicki","Andrew","Andi"]
     businesses = Business.create([{name: 'dans pack business', membership_id: 'mem-01', NPWD: 'NPWD-1', SIC: 'SIC-1'}, { name: 'my pack business', membership_id: 'mem-02', NPWD: 'NPWD-1', SIC: 'SIC-1' }, {name: 'pack one business', membership_id: 'mem-03', NPWD: 'NPWD-1', SIC: 'SIC-1' }, {name: 'test business', membership_id: 'mem-04', NPWD: 'NPWD-1', SIC: 'SIC-1' }, {name: 'synergy business', membership_id: 'mem-05', NPWD: 'NPWD-1', SIC: 'SIC-1' }, { name: 'pack for you business', membership_id: 'mem-06', NPWD: 'NPWD-1', SIC: 'SIC-1' }])
+    agency_templates = AgencyTemplateUpload.create([{year: '2015', filename: 'some_file_name.xls', uploaded_at: DateTime.parse('2001-03-30T04:05:06+07:00'), uploaded_by_type: 'SchemeOperator', uploaded_by_id: 1},
+                                                    {year: '2015', filename: 'some_file_name.xls', uploaded_at: DateTime.parse('2015-11-23T04:05:06+07:00'), uploaded_by_type: 'SchemeOperator', uploaded_by_id: 1},
+                                                    {year: '2015', filename: 'some_file_name.xls', uploaded_at: DateTime.parse('2002-06-22T04:05:06+07:00'), uploaded_by_type: 'SchemeOperator', uploaded_by_id: 1},
+                                                    {year: '2015', filename: 'some_file_name.xls', uploaded_at: DateTime.parse('2004-04-14T04:05:06+07:00'), uploaded_by_type: 'Admin', uploaded_by_id: 1},
+                                                    {year: '2015', filename: 'some_file_name.xls', uploaded_at: DateTime.parse('2010-02-11T04:05:06+07:00'), uploaded_by_type: 'Admin', uploaded_by_id: 1},
+                                                    {year: '2015', filename: 'some_file_name.xls', uploaded_at: DateTime.parse('2010-02-11T04:05:06+07:00'), uploaded_by_type: 'Admin', uploaded_by_id: 1},
+                                                  ])
     schemes.each_with_index do |scheme, index|
       businesses[index].scheme = scheme
       businesses[index].save!
+      agency_templates[index].scheme_id = scheme.id
+      agency_templates[index].save!
     end
 
                                  5.times do |index|

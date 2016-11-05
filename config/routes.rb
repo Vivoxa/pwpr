@@ -31,6 +31,10 @@ end
     put 'update_permissions', action: :update_permissions
   end
 
+  resources :schemes do
+    resources :agency_template_uploads, only: [:index, :show, :new, :create]
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe CompanyOperator, type: :model do
   let(:scheme) { Scheme.first }
   let(:subject) { FactoryGirl.create(:company_operator) }
-  let(:expected_roles) { %w(co_users_r co_users_w co_users_d co_users_e businesses_r businesses_e).freeze }
+  let(:expected_roles) { PermissionsForRole::CompanyOperatorDefinitions::ROLES }
+  let(:expected_permissions) { PermissionsForRole::CompanyOperatorDefinitions::PERMISSIONS }
 
   context 'Scopes' do
     describe 'scheme_operators' do

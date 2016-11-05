@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161104190814) do
+ActiveRecord::Schema.define(version: 20161105080056) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -31,6 +31,20 @@ ActiveRecord::Schema.define(version: 20161104190814) do
 
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
+
+  create_table "agency_template_uploads", force: :cascade do |t|
+    t.datetime "uploaded_at"
+    t.integer  "scheme_id",        limit: 4
+    t.integer  "uploaded_by_id",   limit: 4
+    t.string   "uploaded_by_type", limit: 255
+    t.integer  "year",             limit: 4
+    t.string   "status",           limit: 255
+    t.string   "filename",         limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "agency_template_uploads", ["scheme_id"], name: "index_agency_template_uploads_on_scheme_id", using: :btree
 
   create_table "businesses", force: :cascade do |t|
     t.string   "name",          limit: 255
@@ -156,6 +170,7 @@ ActiveRecord::Schema.define(version: 20161104190814) do
     t.datetime "updated_at",             null: false
   end
 
+  add_foreign_key "agency_template_uploads", "schemes"
   add_foreign_key "businesses", "schemes"
   add_foreign_key "company_operators", "businesses"
 end

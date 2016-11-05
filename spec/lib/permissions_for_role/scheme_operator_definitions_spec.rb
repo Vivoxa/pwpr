@@ -10,7 +10,8 @@ RSpec.describe PermissionsForRole::SchemeOperatorDefinitions do
       expect(subject.class::PERMISSIONS).to eq %w(sc_users_r sc_users_w sc_users_e sc_users_d
                                                   co_users_r co_users_w co_users_d co_users_e
                                                   businesses_r businesses_w businesses_d businesses_e
-                                                  schemes_r schemes_w schemes_d schemes_e).freeze
+                                                  schemes_r schemes_w schemes_d schemes_e
+                                                  uploads_r uploads_w).freeze
     end
   end
 
@@ -36,7 +37,9 @@ RSpec.describe PermissionsForRole::SchemeOperatorDefinitions do
         businesses_r: {checked: true, locked: true},
         businesses_e: {checked: true, locked: true},
         businesses_w: {checked: true, locked: true},
-        businesses_d: {checked: true, locked: true}
+        businesses_d: {checked: true, locked: true},
+        uploads_r:    {checked: true, locked: true},
+        uploads_w:    {checked: true, locked: true}
       }
     end
 
@@ -67,7 +70,9 @@ RSpec.describe PermissionsForRole::SchemeOperatorDefinitions do
         businesses_r: {checked: true, locked: true},
         businesses_e: {checked: true, locked: true},
         businesses_w: {checked: true, locked: true},
-        businesses_d: {checked: false, locked: false}
+        businesses_d: {checked: false, locked: false},
+        uploads_r:    {checked: true, locked: true},
+        uploads_w:    {checked: false, locked: false}
       }
     end
 
@@ -98,7 +103,9 @@ RSpec.describe PermissionsForRole::SchemeOperatorDefinitions do
         businesses_r: {checked: true, locked: true},
         businesses_e: {checked: false, locked: false},
         businesses_w: {checked: false, locked: true},
-        businesses_d: {checked: false, locked: true}
+        businesses_d: {checked: false, locked: true},
+        uploads_r:    {checked: false, locked: false},
+        uploads_w:    {checked: false, locked: false}
       }
     end
 

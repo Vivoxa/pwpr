@@ -12,29 +12,26 @@
 
             <div class="col-xs-12 col-md-4 col-lg-1"></div>
             <div class="col-xs-12 col-md-4 col-lg-5">
+              <% if can? :new, SchemeOperators::InvitationsController %>
+                  <%= link_to 'Invite new Scheme Operator', new_scheme_operator_invitation_path, class: ['btn btn-sm btn-primary', 'devise-btn'] %>
+              <% end %>
+              <% if can? :new, CompanyOperators::InvitationsController %>
+                  <%= link_to 'Invite new Company Operator', new_company_operator_invitation_path, class: ['btn btn-sm btn-primary', 'devise-btn'] %>
+              <% end %>
+              <div class="row">
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-4 col-lg-5">
               <div class="row">
                 <% if can? :read, scheme %>
-                    <%= link_to 'Scheme details', scheme, class: ['btn btn-sm btn-secondary', 'devise-btn'] %>
+                    <%= link_to 'Scheme details', scheme, class: ['btn btn-sm btn-info', 'devise-btn'] %>
                 <% end %>
-                <% if can? :edit, scheme %>
-                    <%= link_to 'Edit', edit_scheme_path(scheme), class: ['btn btn-sm btn-secondary', 'devise-btn'] %>
+                <% if can? :new, Business %>
+                  <%= link_to 'Businesses', businesses_path, class: ['btn btn-sm btn-secondary', 'devise-btn'] %>
                 <% end %>
                 <% if can? :destroy, scheme %>
                     <%= link_to 'Destroy', scheme, {method: :delete, class: ['btn btn-sm btn-danger', 'devise-btn'], data: {confirm: 'Are you sure?'}} %>
                 <% end %>
-              </div>
-            </div>
-            <div class="col-xs-12 col-md-4 col-lg-5">
-              <% if can? :new, SchemeOperators::InvitationsController %>
-                  <%= link_to 'Invite new Scheme Operator', new_scheme_operator_invitation_path, class: ['btn btn-sm btn-secondary', 'devise-btn'] %>
-              <% end %>
-              <% if can? :new, CompanyOperators::InvitationsController %>
-                  <%= link_to 'Invite new Company Operator', new_company_operator_invitation_path, class: ['btn btn-sm btn-secondary', 'devise-btn'] %>
-              <% end %>
-              <% if can? :new, Business %>
-                  <%= link_to 'Businesses', businesses_path, class: ['btn btn-sm btn-secondary', 'devise-btn'] %>
-              <% end %>
-              <div class="row">
               </div>
             </div>
             <div class="col-xs-12 col-md-4 col-lg-1"></div>

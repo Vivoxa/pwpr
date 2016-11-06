@@ -55,12 +55,23 @@ RSpec.describe SchemeOperators::InvitationsController, type: :controller do
         end
 
         context 'when calling create' do
-          it 'expects a 200 response status' do
-            params = {scheme_operator: {approved: true, password: 'my_password', email: 'star@star.com', name: 'star', scheme_ids: [1]}}
-            post :create, params
-            expect(response.status).to eq 302
-            user = SchemeOperator.find_by_email('star@star.com')
-            expect(user).to be_a(SchemeOperator)
+          context 'with correct params' do
+            it 'expects a 200 response status' do
+              params = {scheme_operator: {approved: true, password: 'my_password', email: 'star@star.com', name: 'star', scheme_ids: [1]}}
+              post :create, params
+              expect(response.status).to eq 302
+              user = SchemeOperator.find_by_email('star@star.com')
+              expect(user).to be_a(SchemeOperator)
+            end
+          end
+
+          context 'with scheme_id missing' do
+            it 'expects validation to fail' do
+              expect(subject).to receive(:populate_schemes_and_businesses)
+              params = {scheme_operator: {approved: true, password: 'my password', email: 'myemail@pwpr.com', name: 'star', scheme_ids: []}}
+              post :create, params
+              expect(assigns(:scheme_operator).errors.messages[:schemes].first).to include("can't be blank")
+            end
           end
         end
 

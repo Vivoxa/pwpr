@@ -1,22 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Admin, type: :model do
-  let(:expected_roles) { %w(super_admin normal_admin restricted_admin).freeze }
-  let(:expected_available_roles) do
-    %w(super_admin normal_admin restricted_admin admins_r
-       admins_w admins_e admins_d sc_users_r sc_users_w
-       sc_users_e sc_users_d co_users_r co_users_w co_users_d
-       co_users_e businesses_r businesses_w businesses_d businesses_e
-       schemes_r schemes_w schemes_d schemes_e).freeze
-  end
-
-  let(:expected_permissions) do
-    %w(admins_r admins_w admins_e admins_d
-       sc_users_r sc_users_w sc_users_e sc_users_d
-       co_users_r co_users_w co_users_d co_users_e
-       businesses_r businesses_w businesses_d businesses_e
-       schemes_r schemes_w schemes_d schemes_e).freeze
-  end
+  let(:expected_roles) { PermissionsForRole::AdminDefinitions::ROLES }
+  let(:expected_permissions) { PermissionsForRole::AdminDefinitions::PERMISSIONS }
 
   before do
     subject.email = 'nigelsurtees@wvivoxa.com'
@@ -41,7 +27,7 @@ RSpec.describe Admin, type: :model do
 
   context 'Roles' do
     it 'expects the correct role to be available' do
-      expect(Admin.available_role_names).to eq expected_available_roles
+      expect(Admin.available_role_names).to eq expected_roles + expected_permissions
     end
 
     it 'expects super_admin to be an available role' do

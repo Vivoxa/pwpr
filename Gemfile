@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.7'
 
+gem 'aws-sdk', '~> 2'
+
 # UI gems
 gem 'bootstrap', '~> 4.0.0.alpha4'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
@@ -49,6 +51,10 @@ group :development, :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem "chromedriver-helper"
+end
+
+group :test do
+  gem 'shoulda-matchers', require: false
 end
 
 # Use SCSS for stylesheets

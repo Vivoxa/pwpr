@@ -157,6 +157,7 @@ RSpec.describe SchemesController, type: :controller do
         expect(response).to redirect_to(schemes_url)
       end
     end
+
     context 'when SchemeOperator does NOT have a role' do
       before do
         sign_out co_marti

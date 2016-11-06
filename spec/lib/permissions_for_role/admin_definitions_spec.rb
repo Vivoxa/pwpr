@@ -2,16 +2,17 @@ require 'rails_helper'
 
 RSpec.describe PermissionsForRole::AdminDefinitions do
   context 'Constants' do
-    it 'sets ROLES' do
+    it 'assigns ROLES' do
       expect(subject.class::ROLES).to eq %w(super_admin normal_admin restricted_admin).freeze
     end
 
-    it 'sets PERMISSIONS' do
+    it 'assigns PERMISSIONS' do
       expect(subject.class::PERMISSIONS).to eq %w(admins_r admins_w admins_e admins_d
                                                   sc_users_r sc_users_w sc_users_e sc_users_d
                                                   co_users_r co_users_w co_users_d co_users_e
                                                   businesses_r businesses_w businesses_d businesses_e
-                                                  schemes_r schemes_w schemes_d schemes_e).freeze
+                                                  schemes_r schemes_w schemes_d schemes_e
+                                                  uploads_r uploads_w).freeze
     end
   end
 
@@ -42,7 +43,9 @@ RSpec.describe PermissionsForRole::AdminDefinitions do
         businesses_r: {checked: true, locked: true},
         businesses_e: {checked: true, locked: true},
         businesses_w: {checked: true, locked: true},
-        businesses_d: {checked: true, locked: true}
+        businesses_d: {checked: true, locked: true},
+        uploads_r:    {checked: true, locked: true},
+        uploads_w:    {checked: true, locked: true}
       }
     end
 
@@ -73,7 +76,9 @@ RSpec.describe PermissionsForRole::AdminDefinitions do
         businesses_r: {checked: true, locked: true},
         businesses_e: {checked: true, locked: true},
         businesses_w: {checked: true, locked: true},
-        businesses_d: {checked: false, locked: false}
+        businesses_d: {checked: false, locked: false},
+        uploads_r:    {checked: true, locked: true},
+        uploads_w:    {checked: false, locked: false}
       }
     end
 
@@ -104,7 +109,9 @@ RSpec.describe PermissionsForRole::AdminDefinitions do
         businesses_r: {checked: true, locked: true},
         businesses_e: {checked: false, locked: false},
         businesses_w: {checked: false, locked: true},
-        businesses_d: {checked: false, locked: true}
+        businesses_d: {checked: false, locked: true},
+        uploads_r:    {checked: false, locked: false},
+        uploads_w:    {checked: false, locked: true}
       }
     end
 

@@ -1,0 +1,29 @@
+<div id="main-container" class="container">
+  <div class="card">
+    <h3 class="card-header"><%= @upload.filename %></h3>
+
+    <div class="card-block">
+      <div class="card card-block">
+        <p class="card-text">
+          <div class="col-xs-3 col-md-3"><strong>Year:</strong> <%= @upload.year %></div>
+          <div class="col-xs-5 col-md-5"><strong>Uploader:</strong> <%= SchemeOperator.find_by_id(@upload.uploaded_by_id).email %></div>
+          <div class="col-xs-4 col-md-4"><strong>Uploaded at:</strong> <%= @upload.uploaded_at.to_date %></div>
+        </p>
+
+        <p class="card-text">
+          <div class="col-xs-3 col-md-3"><strong>Scheme:</strong> <%= Scheme.find_by_id(@upload.scheme_id).name %></div>
+          <div class="col-xs-5 col-md-5"><strong>Uploader Type:</strong> <%= @upload.uploaded_by_type %></div>
+          <div class="col-xs-4 col-md-4"><strong>Status:</strong> <%= @upload.status %></div>
+        </p>
+      </div>
+
+      <div class="card card-block">
+        <div class="col-xs-3 col-md-3"><strong>Errors: </strong></div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <%= link_to 'Back', scheme_agency_template_uploads_path, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
+    </div>
+  </div>
+</div>

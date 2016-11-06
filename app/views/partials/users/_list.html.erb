@@ -62,24 +62,7 @@
             <div class="col-md-1">
               <div class="row">
                 <% if can? :read, user %>
-                  <%= link_to 'Details', user, class: ['btn btn-sm btn-success', 'show-btn'] %>
-                <% end %>
-              </div>
-              <div class="row">
-                <% if can? :edit, user %>
-
-                  <% if  user.is_a? SchemeOperator %>
-                    <%= link_to 'Edit', edit_scheme_operator_path(user), class: ['btn btn-sm btn-success', 'show-btn']  %>
-                  <% end %>
-
-                  <% if  user.is_a? CompanyOperator %>
-                    <%= link_to 'Edit', edit_company_operator_path(user), class: ['btn btn-sm btn-success', 'show-btn']  %>
-                  <% end %>
-
-                  <% if  user.is_a? Admin %>
-                    <%= link_to 'Edit', edit_admin_path(user), class: ['btn btn-sm btn-success', 'show-btn']  %>
-                  <% end %>
-
+                  <%= link_to 'Details', user, class: ['btn btn-sm btn-info', 'show-btn'] %>
                 <% end %>
               </div>
               <div class="row">

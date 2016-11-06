@@ -15,7 +15,7 @@
           </div>
           <div class="row">
             <strong>Active:</strong>
-            <%= @scheme.active %>
+            <%= @scheme.active ? @scheme.active : 'False' %>
           </div>
         </div>
         <div class='col-md-4'></div>
@@ -27,6 +27,9 @@
       <% end %>
       <% if can? :edit, @scheme %>
           <%= link_to 'Edit', edit_scheme_path(@scheme), class: ['btn btn-sm btn-warning', 'show-btn-md'] %>
+      <% end %>
+      <% if can? :destroy, @scheme %>
+        <%= link_to 'Destroy', @scheme, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
       <% end %>
       <%= link_to 'Back', schemes_path, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
     </div>

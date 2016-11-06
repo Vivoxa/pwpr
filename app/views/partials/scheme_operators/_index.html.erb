@@ -35,22 +35,21 @@
                             <% end %>
                         </div>
                         <div class="col-md-2"></div>
-                        <div class="col-md-2"></div>
-                        <div class="col-md-1">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
                             <div class="row">
-                                <% if can? :read, user %>
-                                <%= link_to 'Details', user, class: ['btn btn-sm btn-success', 'show-btn'] %>
+                                <% if can? :permissions, user %>
+                                    <%= link_to 'Permissions', scheme_operator_permissions_path(scheme_operator_id: user.id), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
                                 <% end %>
                             </div>
                             <div class="row">
-                                <% if can? :edit, user %>
-
-                                <%= link_to 'Edit', edit_scheme_operator_path(user), class: ['btn btn-sm btn-success', 'show-btn']  %>
+                                <% if can? :read, user %>
+                                <%= link_to 'Details', user, class: ['btn btn-sm btn-info', 'show-btn-md'] %>
                                 <% end %>
                             </div>
                             <div class="row">
                                 <% if can? :destroy, user %>
-                                <%= link_to 'Destroy', user,{ method: :delete, class: ['btn btn-sm btn-danger', 'show-btn'], data: { confirm: 'Are you sure?' }} %>
+                                    <%= link_to 'Destroy', user,{ method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: { confirm: 'Are you sure?' }} %>
                                 <% end %>
                             </div>
                         </div>

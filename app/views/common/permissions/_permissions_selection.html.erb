@@ -39,7 +39,10 @@
                     </div>
     </div>
     <div class="card-footer">
-        <%= submit_tag "Save Permissions", class: ['btn btn-sm btn-primary'] -%>
+        <div class="row">
+            <%= submit_tag "Save Permissions", class: ['btn btn-sm btn-primary'] -%>
+            <%= link_to 'Back', :back, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
+        </div>
     </div>
 </div>
 </div>

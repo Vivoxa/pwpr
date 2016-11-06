@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe PermissionsForRole::AdminDefinitions do
   context 'Constants' do
-    it 'sets ROLES' do
+    it 'assigns ROLES' do
       expect(subject.class::ROLES).to eq %w(super_admin normal_admin restricted_admin).freeze
     end
 
-    it 'sets PERMISSIONS' do
+    it 'assigns PERMISSIONS' do
       expect(subject.class::PERMISSIONS).to eq %w(admins_r admins_w admins_e admins_d
                                                   sc_users_r sc_users_w sc_users_e sc_users_d
                                                   co_users_r co_users_w co_users_d co_users_e

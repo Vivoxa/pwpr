@@ -20,16 +20,47 @@ class AgencyTemplateUploadsController < ApplicationController
 
   # POST schemes/:scheme_id/agency_template_uploads
   def create
-    @upload = AgencyTemplateUpload.new(upload_params)
+    attributes = {uploaded_by_id:   current_user.id,
+                  uploaded_by_type: current_user.class.name,
+                  scheme_id:        params['scheme_id']}
 
-    # tmp = upload_params[:filename].tempfile
-    # file = File.join("public", upload_params[:filename].original_filename)
-    # FileUtils.cp tmp.path, file
+    params_to_sym = Hash[upload_params.map { |k, v| [k.to_sym, v] }]
+    attributes = attributes.merge(params_to_sym)
+    upload = AgencyTemplateUpload.new(attributes)
+    transfer_file_to_server
+    if File.exist?(path_to_save_file)
+      assign_upload_filename!(upload)
+      upload_to_s3(upload)
+      upload.save!
+    end
     redirect_to action: :index
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+  private
+
+  def upload_to_s3(upload)
+    agency_template_handler = S3::AgencyTemplateAwsHandler.new
+    agency_template_handler.put(upload)
+  end
+
+  def transfer_file_to_server
+    tmp = upload_params[:filename].tempfile
+    FileUtils.cp tmp.path, path_to_save_file
+  end
+
+  def path_to_save_file
+    File.join('public', upload_params[:filename].original_filename)
+  end
+
+  def assign_upload_filename!(upload)
+    upload.filename = upload_params[:filename].original_filename
+  end
+
+  def file_exists?(file)
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
   def upload_params
-    params.require(:upload).permit(:year, :filename)
+    params.require(:agency_template_upload).permit(:year, :filename)
   end
 end

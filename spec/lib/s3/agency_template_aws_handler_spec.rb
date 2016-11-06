@@ -1,9 +1,5 @@
 require 'rails_helper'
 
-class AgencyTemplateUpload
-  attr_accessor :filename, :scheme_id, :year
-end
-
 RSpec.describe S3::AgencyTemplateAwsHandler do
   subject(:uploader) { described_class.new }
   let(:agt) { AgencyTemplateUpload.new }

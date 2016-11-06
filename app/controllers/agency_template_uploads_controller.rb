@@ -1,5 +1,6 @@
 class AgencyTemplateUploadsController < ApplicationController
-  # load_and_authorize_resource
+  authorize_resource
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   # GET schemes/:scheme_id/agency_template_uploads
   def index
@@ -57,6 +58,12 @@ class AgencyTemplateUploadsController < ApplicationController
   end
 
   def file_exists?(file)
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:agency_template_upload) do |user_params|
+      user_params.permit(:year, :filename, :scheme_id)
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

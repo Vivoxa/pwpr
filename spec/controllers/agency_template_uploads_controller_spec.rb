@@ -13,6 +13,8 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
     co_marti.password = 'mypassword'
     co_marti.confirmed_at = DateTime.now
     co_marti.schemes = [Scheme.first]
+    co_marti.add_role :uploads_w
+    co_marti.add_role :uploads_r
     co_marti.save
     co_marti.approved = true
 

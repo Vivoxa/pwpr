@@ -22,8 +22,11 @@
       </div>
     </div>
     <div class="card-footer">
+      <% if can? :read, AgencyTemplateUpload %>
+        <%= link_to 'Template Upload', scheme_agency_template_uploads_path(@scheme), class: ['btn btn-sm btn-primary', 'show-btn-lg'] %>
+      <% end %>
       <% if can? :edit, @scheme %>
-          <%= link_to 'Edit', edit_scheme_path(@scheme), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+          <%= link_to 'Edit', edit_scheme_path(@scheme), class: ['btn btn-sm btn-warning', 'show-btn-md'] %>
       <% end %>
       <%= link_to 'Back', schemes_path, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
     </div>

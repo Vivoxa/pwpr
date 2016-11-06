@@ -41,7 +41,8 @@
         </div>
 
         <div class="card-footer">
-          <%= f.submit 'Upload', class: ["btn", "btn-success", "devise-btn"] %>
+          <%= f.submit 'Upload', class: ["btn btn-primary btn-sm", "devise-btn"] %>
+          <%= link_to 'Back', scheme_agency_template_uploads_path(@scheme), class: ['btn btn-sm btn-success', 'show-btn-md'] %>
         </div>
       </div>
     <% end %>

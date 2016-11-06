@@ -10,6 +10,11 @@ class BaseInvitationsController < Devise::InvitationsController
     render :new
   end
 
+  def create
+    populate_schemes_and_businesses
+    super
+  end
+
   def current_inviter
     current_admin || current_scheme_operator || current_company_operator
   end

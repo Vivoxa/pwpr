@@ -60,12 +60,23 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
         end
 
         context 'when calling create' do
-          it 'expects a 200 response status' do
-            params = {company_operator: {password: 'my_password', email: 'star@star.com', name: 'star', business_id: 1}}
-            post :create, params
-            expect(response.status).to eq 302
-            user = CompanyOperator.find_by_email('star@star.com')
-            expect(user).to be_a(CompanyOperator)
+          context 'with correct params' do
+            it 'expects a 200 response status' do
+              params = {company_operator: {password: 'my_password', email: 'star@star.com', name: 'star', business_id: 1}}
+              post :create, params
+              expect(response.status).to eq 302
+              user = CompanyOperator.find_by_email('star@star.com')
+              expect(user).to be_a(CompanyOperator)
+            end
+          end
+
+          context 'with scheme_id missing' do
+            it 'expects validation to fail' do
+              expect(subject).to receive(:populate_schemes_and_businesses)
+              params = {company_operator: {password: 'my_password', email: 'star@star.com', name: 'star', business_id: nil}}
+              post :create, params
+              expect(assigns(:company_operator).errors.messages[:business]).to include("can't be blank")
+            end
           end
         end
 

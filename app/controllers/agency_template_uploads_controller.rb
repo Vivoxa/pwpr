@@ -29,10 +29,12 @@ class AgencyTemplateUploadsController < ApplicationController
     attributes = attributes.merge(params_to_sym)
     upload = AgencyTemplateUpload.new(attributes)
     transfer_file_to_server
+
     if File.exist?(path_to_save_file)
       assign_upload_filename!(upload)
       upload_to_s3(upload)
       upload.save!
+      delete_file_from_server
     end
     redirect_to action: :index
   end
@@ -49,15 +51,16 @@ class AgencyTemplateUploadsController < ApplicationController
     FileUtils.cp tmp.path, path_to_save_file
   end
 
+  def delete_file_from_server
+    FileUtils.rm [path_to_save_file], force: true
+  end
+
   def path_to_save_file
     File.join('public', upload_params[:filename].original_filename)
   end
 
   def assign_upload_filename!(upload)
     upload.filename = upload_params[:filename].original_filename
-  end
-
-  def file_exists?(file)
   end
 
   def configure_permitted_parameters

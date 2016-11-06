@@ -12,9 +12,10 @@
             <div class="col-xs-12 col-md-4 col-lg-1"></div>
             <div class="col-xs-12 col-md-4 col-lg-5">
               <div class="row">
-                <%= link_to 'Business details', business, class: ['btn btn-sm btn-secondary', 'devise-btn'] %>
-                <%= link_to 'Edit', edit_business_path(business), class: ['btn btn-sm btn-secondary', 'devise-btn'] %>
-                <%= link_to 'Destroy', business, {method: :delete, class: ['btn btn-sm btn-danger', 'devise-btn'], data: {confirm: 'Are you sure?'}} %>
+                <%= link_to 'Details', business, class: ['btn btn-sm btn-info', 'show-btn-md'] %>
+                <% if can? :destroy, business %>
+                  <%= link_to 'Destroy', business, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
+                <% end %>
               </div>
             </div>
             <div class="col-xs-12 col-md-4 col-lg-5">

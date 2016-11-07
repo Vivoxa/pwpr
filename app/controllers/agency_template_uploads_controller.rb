@@ -28,15 +28,22 @@ class AgencyTemplateUploadsController < ApplicationController
     params_to_sym = Hash[upload_params.map { |k, v| [k.to_sym, v] }]
     attributes = attributes.merge(params_to_sym)
     upload = AgencyTemplateUpload.new(attributes)
-    transfer_file_to_server
 
-    if File.exist?(path_to_save_file)
-      assign_upload_filename!(upload)
-      upload_to_s3(upload)
-      upload.save!
-      delete_file_from_server
+    if upload.save
+      transfer_file_to_server
+
+      if File.exist?(path_to_save_file)
+        assign_upload_filename!(upload)
+        upload_to_s3(upload)
+        upload.save!
+        delete_file_from_server
+      end
+      redirect_to action: :index, notice: "#{upload.class} was successfully created."
+    else
+      @scheme = Scheme.find_by_id(params[:scheme_id])
+      @upload = upload
+      render 'agency_template_uploads/new'
     end
-    redirect_to action: :index
   end
 
   private

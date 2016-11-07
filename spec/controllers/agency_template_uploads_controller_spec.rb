@@ -88,47 +88,61 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
   end
 
   describe 'POST #create' do
+    let(:filename) { double('file', original_filename: 'my original filename', tempfile: double('tempfile', path: 'my temp file')) }
+
     before do
-      filename = double('file', original_filename: 'my original filename', tempfile: double('tempfile', path: 'my temp file'))
-      allow(subject).to receive(:upload_params).and_return(year: '2016', filename: filename)
       allow(FileUtils).to receive(:cp).with('my temp file', 'public/my original filename')
       allow(File).to receive(:exist?).and_return true
       ENV['AWS_REGION'] = 'eu-west-1'
       allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename')
-
-      expect { post :create, agency_template_upload:  {year: '2016', filename: 'feef'}, scheme_id: 1 }.to change { AgencyTemplateUpload.count }.by(1)
     end
 
-    it 'responds with 302' do
-      expect(response.status).to eq 302
-    end
+    context 'when correct values are present' do
+      before do
+        allow(subject).to receive(:upload_params).and_return(year: 2015, filename: filename)
+        expect { post :create, agency_template_upload:  {year: 2015, filename: 'feef'}, scheme_id: 1 }.to change { AgencyTemplateUpload.count }.by(1)
+      end
+      it 'responds with 302' do
+        expect(response.status).to eq 302
+      end
 
-    it 'responds to be redirect' do
-      expect(response.redirect?).to be true
-    end
+      it 'responds to be redirect' do
+        expect(response.redirect?).to be true
+      end
 
-    it 'expects the year to be assigned correctly' do
-      expect(AgencyTemplateUpload.last.year).to eq 2016
-    end
+      it 'expects the year to be assigned correctly' do
+        expect(AgencyTemplateUpload.last.year).to eq 2015
+      end
 
-    it 'expects the filename to be assigned correctly' do
-      expect(AgencyTemplateUpload.last.filename).to eq 'my original filename'
-    end
+      it 'expects the filename to be assigned correctly' do
+        expect(AgencyTemplateUpload.last.filename).to eq 'my original filename'
+      end
 
-    it 'expects the uploaded_by_id to be correct' do
-      expect(AgencyTemplateUpload.last.uploaded_by_id).to eq co_marti.id
-    end
+      it 'expects the uploaded_by_id to be correct' do
+        expect(AgencyTemplateUpload.last.uploaded_by_id).to eq co_marti.id
+      end
 
-    it 'expects the uploaded_by_type to be correct' do
-      expect(AgencyTemplateUpload.last.uploaded_by_type).to eq 'SchemeOperator'
-    end
+      it 'expects the uploaded_by_type to be correct' do
+        expect(AgencyTemplateUpload.last.uploaded_by_type).to eq 'SchemeOperator'
+      end
 
-    it 'expects the scheme_id to be correct' do
-      expect(AgencyTemplateUpload.last.scheme_id).to eq 1
-    end
+      it 'expects the scheme_id to be correct' do
+        expect(AgencyTemplateUpload.last.scheme_id).to eq 1
+      end
 
-    it 'expects the status to be correct' do
-      expect(AgencyTemplateUpload.last.status).to eq CommonHelpers::AgencyTemplateUploadStatus::PENDING
+      it 'expects the status to be correct' do
+        expect(AgencyTemplateUpload.last.status).to eq CommonHelpers::AgencyTemplateUploadStatus::PENDING
+      end
+    end
+    context 'when a value is missing' do
+      before do
+        allow(subject).to receive(:upload_params).and_return(year: nil, filename: filename)
+        expect { post :create, agency_template_upload:  {year: 2015, filename: 'feef'}, scheme_id: 1 }.not_to change { AgencyTemplateUpload.count }
+      end
+      it 'responds to be redirect' do
+        expect(assigns(:upload).errors[:year].first).to eq "can't be blank"
+        expect(assigns(:upload).errors[:year].second).to eq 'is not included in the list'
+      end
     end
   end
 end

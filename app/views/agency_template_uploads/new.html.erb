@@ -26,7 +26,7 @@
           <p class="card-text">
             <div class="col-xs-4 col-md-4"></div>
             <div class="col-xs-4 col-md-4">
-              <%= f.text_field :year, placeholder: 'Year', class: "devise-lgn form-control" %>
+              <%=  f.select :year, options_for_select(AgencyTemplateUpload::VALID_YEARS_FOR_UPLOAD),{prompt: true, prompt: 'Select a year'}, { class: "devise-lgn form-control" } %>
             </div>
             <div class="col-xs-4 col-md-4"></div>
           </p>

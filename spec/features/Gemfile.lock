@@ -60,7 +60,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  capybara (~> 2.8.1)
+  capybara
   capybara-screenshot
   launchy
   pry
@@ -68,4 +68,4 @@ DEPENDENCIES
   selenium-webdriver
 
 BUNDLED WITH
-   1.11.2
+   1.13.6

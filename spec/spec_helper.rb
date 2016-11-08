@@ -2,6 +2,12 @@ require 'pry'
 require 'simplecov'
 require 'cancan/matchers'
 
+require_relative './features/spec/helper_methods'
+require_relative './features/spec/support/shared_examples/valid_sign_in'
+require_relative './features/spec/support/shared_examples/invalid_sign_in'
+require_relative './features/spec/support/shared_examples/field_placeholder'
+require_relative './features/spec/support/shared_examples/button_present'
+
 SimpleCov.start 'rails' do
   add_filter '/spec/'
   add_group 'Models', 'app/models'

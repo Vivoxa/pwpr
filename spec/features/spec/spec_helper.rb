@@ -2,6 +2,11 @@ require 'capybara'
 require 'capybara/rspec'
 require 'capybara/dsl'
 require_relative './support/capybara_helper.rb'
+require_relative 'helper_methods'
+require_relative 'support/shared_examples/valid_sign_in'
+require_relative 'support/shared_examples/invalid_sign_in'
+require_relative 'support/shared_examples/field_placeholder'
+require_relative 'support/shared_examples/button_present'
 
 APPLICATIONS = ['pwpr'].freeze
 

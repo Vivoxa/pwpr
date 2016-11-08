@@ -6,4 +6,3 @@ shared_examples 'a button' do |url, button_text|
     end
   end
 end
-

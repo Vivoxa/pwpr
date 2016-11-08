@@ -6,4 +6,3 @@ shared_examples 'a user with invalid credentials' do |url, email, password|
     end
   end
 end
-

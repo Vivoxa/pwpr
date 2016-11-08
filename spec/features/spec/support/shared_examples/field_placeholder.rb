@@ -6,4 +6,3 @@ shared_examples 'a field with placeholder text' do |url, field, text|
     end
   end
 end
-

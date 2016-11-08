@@ -6,4 +6,3 @@ shared_examples 'a user with valid credentials' do |url, email, password|
     end
   end
 end
-

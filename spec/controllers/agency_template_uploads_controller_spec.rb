@@ -94,11 +94,11 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
       allow(FileUtils).to receive(:cp).with('my temp file', 'public/my original filename')
       allow(File).to receive(:exist?).and_return true
       ENV['AWS_REGION'] = 'eu-west-1'
-      allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename')
     end
 
     context 'when correct values are present' do
       before do
+        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename').and_return(true)
         allow(subject).to receive(:upload_params).and_return(year: 2015, filename: filename)
         expect { post :create, agency_template_upload:  {year: 2015, filename: 'feef'}, scheme_id: 1 }.to change { AgencyTemplateUpload.count }.by(1)
       end
@@ -126,6 +126,10 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
         expect(AgencyTemplateUpload.last.uploaded_by_type).to eq 'SchemeOperator'
       end
 
+      it 'expects the user to see a flash message' do
+        expect(flash[:notice]).to eq 'my original filename uploaded successfully'
+      end
+
       it 'expects the scheme_id to be correct' do
         expect(AgencyTemplateUpload.last.scheme_id).to eq 1
       end
@@ -134,6 +138,18 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
         expect(AgencyTemplateUpload.last.status).to eq CommonHelpers::AgencyTemplateUploadStatus::PENDING
       end
     end
+
+    context 'when the upload is NOT successful' do
+      before do
+        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename').and_return(false)
+        allow(subject).to receive(:upload_params).and_return(year: 2015, filename: filename)
+      end
+      it 'expects the user to see a flash message' do
+        post :create, agency_template_upload:  {year: 2015, filename: 'feef'}, scheme_id: 1
+        expect(flash[:alert]).to eq 'my original filename did not upload'
+      end
+    end
+
     context 'when a value is missing' do
       before do
         allow(subject).to receive(:upload_params).and_return(year: nil, filename: filename)

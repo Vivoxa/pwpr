@@ -50,7 +50,11 @@ class AgencyTemplateUploadsController < ApplicationController
 
   def upload_to_s3(upload)
     agency_template_handler = S3::AgencyTemplateAwsHandler.new
-    agency_template_handler.put(upload)
+    if agency_template_handler.put(upload)
+      flash.notice = "#{upload.filename} uploaded successfully"
+    else
+      flash.alert = "#{upload.filename} did not upload"
+    end
   end
 
   def transfer_file_to_server

@@ -15,6 +15,7 @@ GEM
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.1)
+    database_cleaner (1.5.3)
     diff-lcs (1.2.5)
     ffi (1.9.14)
     launchy (2.4.3)
@@ -62,6 +63,7 @@ PLATFORMS
 DEPENDENCIES
   capybara
   capybara-screenshot
+  database_cleaner
   launchy
   pry
   rspec

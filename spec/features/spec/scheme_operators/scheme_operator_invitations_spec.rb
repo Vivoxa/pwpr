@@ -83,10 +83,12 @@ RSpec.describe 'Scheme Operator Invitations', js: true do
     end
   end
   context 'when user is a SchemeOperator with user role' do
-    it 'expects an error' do
+    it 'expects the invite button NOT to be there' do
       sign_in('SchemeOperator', 'sc_user_0@pwpr.com', 'min700si')
       click_link('Schemes')
       expect(page).not_to have_content('4-invite_scheme_operator')
+      visit '/scheme_operators/invitation/new'
+      expect(page).to have_content('You are not authorized to access this page.')
       click_link('Sign Out')
       expect(page).to have_content('Signed out successfully.')
     end

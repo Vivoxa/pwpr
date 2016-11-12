@@ -2,12 +2,12 @@ RSpec.describe 'Scheme Operator Invitations', js: true do
 
   {'restricted_admin@pwpr.com' => 'restricted_admin',
    'normal_admin@pwpr.com' => 'normal_admin',
-   'super_admin@pwpr.com' => 'super_admin'}.each_with_index do |user, index|
+   'super_admin@pwpr.com' => 'super_admin'}.each do |email, user|
     context 'when inviting a scheme operator' do
-      context "when #{user[1]}" do
+      context "when #{user}" do
         context 'when form is completed with correct values' do
           it 'expects an invitation to be sent' do
-            sign_in('Admin', user[0], 'min700si')
+            sign_in('Admin', email, 'min700si')
             click_link('Schemes')
             find_by_id('1-invite_scheme_operator').click
             expect(page).to have_content('Send invitation')
@@ -27,7 +27,7 @@ RSpec.describe 'Scheme Operator Invitations', js: true do
 
         context 'when email is not filled in' do
           it 'expects an error message' do
-            sign_in('Admin', user[0], 'min700si')
+            sign_in('Admin', email, 'min700si')
             click_link('Schemes')
             find_by_id('1-invite_scheme_operator').click
             expect(page).to have_content('Send invitation')
@@ -46,7 +46,7 @@ RSpec.describe 'Scheme Operator Invitations', js: true do
 
         context 'when name is not filled in' do
           it 'expects an invitation to be sent' do
-            sign_in('Admin', user[0], 'min700si')
+            sign_in('Admin', email, 'min700si')
             click_link('Schemes')
             find_by_id('1-invite_scheme_operator').click
             expect(page).to have_content('Send invitation')
@@ -64,7 +64,7 @@ RSpec.describe 'Scheme Operator Invitations', js: true do
 
         context 'when scheme is not selected' do
           it 'expects an error message' do
-            sign_in('Admin', user[0], 'min700si')
+            sign_in('Admin', email, 'min700si')
             click_link('Schemes')
             find_by_id('1-invite_scheme_operator').click
             expect(page).to have_content('Send invitation')

@@ -6,4 +6,3 @@ gem 'selenium-webdriver', require: false
 gem 'pry', require: false
 gem 'launchy'
 gem 'capybara-screenshot', require: false
-gem 'database_cleaner'

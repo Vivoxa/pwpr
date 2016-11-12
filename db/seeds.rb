@@ -14,9 +14,9 @@ end
 schemes = Scheme.create([{name: 'dans pack scheme'},
                          {name: 'mypack scheme'},
                          {name: 'pack one'},
-                         {name: 'Test scheme'},
+                         {name: 'Test scheme', active: true},
                          {name: 'Synergy'},
-                         {name: 'Packaging for you'}
+                         {name: 'Packaging for you', active: true}
                         ])
 
 businesses = Business.create([{name: 'dans pack business', membership_id: 'mem-01', NPWD: 'NPWD-1', SIC: 'SIC-1'},

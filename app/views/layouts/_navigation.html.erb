@@ -22,7 +22,7 @@
     </li>
     <li class="nav-item">
       <div class="btn-group">
-        <a class="btn <%= @login_btn_style %> btn-sm" href=<%= @login_path %>><%= @login_btn_text %></a>
+        <a class="btn <%= @login_btn_style %> btn-sm" id='signing_btn' href=<%= @login_path %>><%= @login_btn_text %></a>
         <% unless @current_user %>
             <button type="button" class="btn <%= @login_btn_style %> btn-sm dropdown-toggle" id="sign_in_out" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="sr-only">Toggle Dropdown</span>

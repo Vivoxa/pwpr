@@ -11,18 +11,17 @@ RSpec.describe 'Admin', js: true do
     it_behaves_like 'a button', '/admins/sign_in', 'Log in'
 
     context 'signing out' do
-      let(:sign_out_btn) { nil }
+      let(:sign_out_btn) { find_by_id('signing_btn') }
       before do
         sign_in('Admin', 'super_admin@pwpr.com', 'min700si')
-        @sign_out_btn = find_by_id('signing_btn')
       end
 
       it 'expects to find a button for sign out' do
-        expect(@sign_out_btn).not_to be_nil
+        expect(sign_out_btn).not_to be_nil
       end
 
       it 'expects the sign out link to be correct' do
-        expect(@sign_out_btn['href']).to include('/admins/sign_out')
+        expect(sign_out_btn['href']).to include('/admins/sign_out')
       end
     end
 

@@ -18,6 +18,7 @@ AllCops:
     - 'config/**/*'
     - 'app/models/ability.rb'
     - 'lib/permissions_for_role/role/*'
+    - 'spec/features/**/*'
 
 Documentation:
   Enabled: false

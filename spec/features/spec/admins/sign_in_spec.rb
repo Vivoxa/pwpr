@@ -10,9 +10,20 @@ RSpec.describe 'Admin', js: true do
 
     it_behaves_like 'a button', '/admins/sign_in', 'Log in'
 
-    it 'expects to find a button for sign out' do
-      sign_in('Admin', 'super_admin@pwpr.com', 'min700si')
-      expect(find('a', text: "Sign Out")).to be_present
+    context 'signing out' do
+      let(:sign_out_btn) { nil }
+      before do
+        sign_in('Admin', 'super_admin@pwpr.com', 'min700si')
+        @sign_out_btn = find('a', text: "Sign Out")
+      end
+
+      it 'expects to find a button for sign out' do
+        expect(@sign_out_btn).to be_present
+      end
+
+      it 'expects the sign out link to be correct' do
+        expect(@sign_out_btn['href']).to include('/admins/sign_out')
+      end
     end
 
     xit 'expects to find a button for viewing scheme operators' do

@@ -14,11 +14,11 @@ RSpec.describe 'Admin', js: true do
       let(:sign_out_btn) { nil }
       before do
         sign_in('Admin', 'super_admin@pwpr.com', 'min700si')
-        @sign_out_btn = find('a', text: "Sign Out")
+        @sign_out_btn = find_by_id('signing_btn')
       end
 
       it 'expects to find a button for sign out' do
-        expect(@sign_out_btn).to be_present
+        expect(@sign_out_btn).not_to be_nil
       end
 
       it 'expects the sign out link to be correct' do

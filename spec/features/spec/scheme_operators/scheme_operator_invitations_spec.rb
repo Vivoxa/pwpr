@@ -5,7 +5,7 @@ RSpec.describe 'Scheme Operator Invitations', js: true do
       'sc_super_user_0@pwpr.com' => { type: 'SchemeOperator with super_user role', scheme_id: 3 }
   }.each do |email, user|
     context 'when inviting a scheme operator' do
-      context "when #{user[:type]}" do
+      context "when user is a #{user[:type]}" do
         context 'when form is completed with correct values' do
           it 'expects an invitation to be sent' do
             sign_in('SchemeOperator', email, 'min700si')
@@ -80,6 +80,15 @@ RSpec.describe 'Scheme Operator Invitations', js: true do
           end
         end
       end
+    end
+  end
+  context 'when user is a SchemeOperator with user role' do
+    it 'expects an error' do
+      sign_in('SchemeOperator', 'sc_user_0@pwpr.com', 'min700si')
+      click_link('Schemes')
+      expect(page).not_to have_content('4-invite_scheme_operator')
+      click_link('Sign Out')
+      expect(page).to have_content('Signed out successfully.')
     end
   end
 end

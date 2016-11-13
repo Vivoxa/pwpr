@@ -47,8 +47,6 @@ module PermissionsForRole
 
       def co_users_w(user)
         return unless user.co_users_w?
-        #can %i(read new create update_permissions edit update update_businesses), BaseInvitationsController
-
         can %i(read new create update_permissions edit update update_businesses), CompanyOperators::InvitationsController
         can %i(read new create update_permissions edit update update_businesses), CompanyOperators::RegistrationsController
 

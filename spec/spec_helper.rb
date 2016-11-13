@@ -1,6 +1,7 @@
 require 'pry'
 require 'simplecov'
 require 'cancan/matchers'
+require 'securerandom'
 
 require_relative './features/spec/helper_methods'
 require_relative './features/spec/support/shared_examples/valid_sign_in'
@@ -16,7 +17,7 @@ SimpleCov.start 'rails' do
   add_group 'Library', 'app/lib'
 end
 
-SimpleCov.minimum_coverage 99.58
+SimpleCov.minimum_coverage 99.57
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)

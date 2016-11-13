@@ -51,17 +51,15 @@ module PermissionsForRole
 
       def co_users_w(user)
         return unless user.co_users_w?
-        can :read, BaseInvitationsController
-        can %i(new create), BaseInvitationsController
-        can %i(edit update), BaseInvitationsController
+        can %i(read new create update_permissions edit update update_businesses), BaseInvitationsController
 
         can :read, BaseRegistrationsController
-        can %i(new create), BaseRegistrationsController
-        can %i(edit update), BaseRegistrationsController
+        can %i(new create edit update), BaseRegistrationsController
 
         can %i(new create), CompanyOperators::InvitationsController
 
         can %i(new create permissions update_permissions), CompanyOperator
+
       end
 
       def co_users_r(user)
@@ -74,13 +72,9 @@ module PermissionsForRole
 
       def sc_users_w(user)
         if user.sc_users_w?
-          can :read, BaseInvitationsController
-          can %i(new create), BaseInvitationsController
-          can %i(edit update), BaseInvitationsController
+          can %i(new create edit update read), BaseInvitationsController
 
-          can :read, BaseRegistrationsController
-          can %i(new create), BaseRegistrationsController
-          can %i(edit update), BaseRegistrationsController
+          can %i(new create edit update read), BaseRegistrationsController
 
           can %i(new create), SchemeOperators::InvitationsController
 

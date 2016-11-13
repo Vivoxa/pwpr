@@ -74,6 +74,10 @@ RSpec.describe Admin, type: :model do
       it_behaves_like 'a manager', SchemeOperators::RegistrationsController
 
       it_behaves_like 'a manager', CompanyOperators::RegistrationsController
+
+      it 'expects to be able to update_businesses on company operator invitations' do
+        expect(ability).to be_able_to(:update_businesses, CompanyOperators::InvitationsController)
+      end
     end
 
     context 'with no Role' do
@@ -97,6 +101,10 @@ RSpec.describe Admin, type: :model do
       it_behaves_like 'NOT a manager', SchemeOperators::RegistrationsController
 
       it_behaves_like 'NOT a manager', CompanyOperators::RegistrationsController
+
+      it 'expects NOT to be able to update_businesses on company operator invitations' do
+        expect(ability).not_to be_able_to(:update_businesses, CompanyOperators::InvitationsController)
+      end
     end
   end
 end

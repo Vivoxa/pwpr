@@ -5,9 +5,13 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
 
   context 'when scheme operator is NOT signed in' do
     context 'when calling create' do
-      it 'expects to be redirected to sign in' do
+      it 'expects status to be 302' do
         post :create, params: {}
         expect(response.status).to eq 302
+      end
+
+      it 'expects to be redirected to sign in' do
+        post :create, params: {}
         expect(response.body).to include('scheme_operators/sign_in')
       end
     end
@@ -27,20 +31,28 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
     context 'when SchemeOperator has not been approved' do
       before do
         co_marti.approved = false
+        co_marti.sc_users_w!
+        co_marti.co_users_w!
         co_marti.save
         sign_in co_marti
       end
 
       after do
         co_marti.approved = true
+        co_marti.remove_role :sc_users_w
+        co_marti.remove_role :co_users_w
         co_marti.save
         sign_out co_marti
       end
 
       context 'when calling new' do
-        it 'expects an error to be raised' do
+        it 'expects an alert message to be flashed to the user' do
           post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
           expect(flash[:alert]).to be_present
+        end
+
+        it 'expects the message to tell the user they are not approved yet' do
+          post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
           expect(flash[:alert]).to eq 'Your account has not been approved by your administrator yet.'
         end
       end
@@ -55,9 +67,13 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
       end
 
       context 'when calling new' do
-        it 'expects a CanCan AccessDenied error to be raised' do
+        it 'expects an alert message to be flashed to the user' do
           post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
           expect(flash[:alert]).to be_present
+        end
+
+        it 'expects the message to alert that not authorised' do
+          post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
           expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
@@ -80,7 +96,8 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
       end
 
       context 'when calling create' do
-        it 'expects a SchemeOperator to be created' do
+        let(:so_user) { SchemeOperator.find_by_email('freddy@pwpr.com') }
+        before do
           post :create, scheme_operator: {email:                  'freddy@pwpr.com',
                                           name:                   'freddy',
                                           password:               'my_password',
@@ -89,24 +106,39 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
                                           invitation_accepted_at: DateTime.now,
                                           approved:               true,
                                           scheme_ids:             [Scheme.last]}
+        end
+
+        it 'expects to be redirected with A 302' do
           expect(response.status).to eq 302
-          so_user = SchemeOperator.find_by_email('freddy@pwpr.com')
+        end
+
+        it 'expects a SchemeOperator to be created' do
           expect(so_user).to be_a(SchemeOperator)
+        end
+
+        it 'expects the newly created user to have the correct name' do
           expect(so_user.name).to eq 'freddy'
         end
       end
-
-      context 'when calling create' do
-        it 'expects a SchemeOperator to be created' do
-          post :create, scheme_operator: {email:        'confirmed@pwpr.com',
-                                          name:         'confirmed',
-                                          password:     'my_password',
-                                          scheme_ids:   [Scheme.last.id],
-                                          confirmed_at: DateTime.now}
-          expect(response.status).to eq 302
-          so_user = SchemeOperator.find_by_email('confirmed@pwpr.com')
-          expect(so_user).to be_a(SchemeOperator)
-          expect(so_user.name).to eq 'confirmed'
+      context 'when creating a confirmed user' do
+        let(:so_user) { SchemeOperator.find_by_email('confirmed@pwpr.com') }
+        context 'when calling create' do
+          before do
+            post :create, scheme_operator: {email:        'confirmed@pwpr.com',
+                                            name:         'confirmed',
+                                            password:     'my_password',
+                                            scheme_ids:   [Scheme.last.id],
+                                            confirmed_at: DateTime.now}
+          end
+          it 'expects a SchemeOperator to be created' do
+            expect(so_user).to be_a(SchemeOperator)
+          end
+          it 'expects to be redirected with  302' do
+            expect(response.status).to eq 302
+          end
+          it 'expects the newly created user to have the correct name' do
+            expect(so_user.name).to eq 'confirmed'
+          end
         end
       end
     end

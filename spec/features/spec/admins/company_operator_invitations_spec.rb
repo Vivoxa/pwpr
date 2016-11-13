@@ -1,4 +1,4 @@
-RSpec.describe 'Company Operator Invitations', js: true do
+RSpec.describe '[Admin] Company Operator Invitations', js: true do
 
   {'restricted_admin@pwpr.com' => 'restricted_admin',
    'normal_admin@pwpr.com' => 'normal_admin',
@@ -9,17 +9,21 @@ RSpec.describe 'Company Operator Invitations', js: true do
           it 'expects an invitation to be sent' do
             sign_in('Admin', email, 'min700si')
             click_link('Schemes')
-            find_by_id('1-invite_company_operator').click
+            find_by_id('2-invite_company_operator').click
             expect(page).to have_content('Send invitation')
-            id = rand(1000)
-            fill_in 'Email', with: "new_company_operator#{id}@pwpr_test.com"
+            id = SecureRandom.uuid
+            fill_in 'Email', with: "#{id}@pwpr_test.com"
             fill_in 'Name', with: 'Doc Brown'
 
-            within '#scheme_operator_scheme_ids' do
-              find("option[value='1']").click
+            within '#schemes_select' do
+              find("option[value='2']").click
+            end
+
+            within '#business_select' do
+              find("option[value='2']").click
             end
             click_on 'Send an invitation'
-            expect(page).to have_content("An invitation email has been sent to new_scheme_operator#{id}@pwpr_test.com.")
+            expect(page).to have_content("An invitation email has been sent to #{id}@pwpr_test.com.")
             click_link('Sign Out')
             expect(page).to have_content('Signed out successfully.')
           end
@@ -29,16 +33,20 @@ RSpec.describe 'Company Operator Invitations', js: true do
           it 'expects an error message' do
             sign_in('Admin', email, 'min700si')
             click_link('Schemes')
-            find_by_id('1-invite_scheme_operator').click
+            find_by_id('2-invite_company_operator').click
             expect(page).to have_content('Send invitation')
 
             fill_in 'Name', with: 'Doc Brown'
 
-            within '#scheme_operator_scheme_ids' do
-              find("option[value='1']").click
+            within '#schemes_select' do
+              find("option[value='2']").click
+            end
+
+            within '#business_select' do
+              find("option[value='2']").click
             end
             click_on 'Send an invitation'
-            expect(page).to have_content('1 error prohibited this scheme operator from being saved:')
+            expect(page).to have_content('1 error prohibited this company operator from being saved:')
             expect(page).to have_content("Email can't be blank")
             click_link('Sign Out')
           end
@@ -48,33 +56,16 @@ RSpec.describe 'Company Operator Invitations', js: true do
           it 'expects an invitation to be sent' do
             sign_in('Admin', email, 'min700si')
             click_link('Schemes')
-            find_by_id('1-invite_scheme_operator').click
+            find_by_id('2-invite_company_operator').click
             expect(page).to have_content('Send invitation')
-            id = rand(1000)
-            fill_in 'Email', with: "new_scheme_operator#{id}@pwpr_test.com"
+            id = SecureRandom.uuid
+            fill_in 'Email', with: "#{id}@pwpr_test.com"
 
-            within '#scheme_operator_scheme_ids' do
-              find("option[value='1']").click
+            within '#schemes_select' do
+              find("option[value='2']").click
             end
             click_on 'Send an invitation'
-            expect(page).to have_content("An invitation email has been sent to new_scheme_operator#{id}@pwpr_test.com.")
-            click_link('Sign Out')
-          end
-        end
-
-        context 'when scheme is not selected' do
-          it 'expects an error message' do
-            sign_in('Admin', email, 'min700si')
-            click_link('Schemes')
-            find_by_id('1-invite_scheme_operator').click
-            expect(page).to have_content('Send invitation')
-            id = rand(1000)
-            fill_in 'Email', with: "new_scheme_operator#{id}@pwpr_test.com"
-            fill_in 'Name', with: 'Doc Brown'
-
-            click_on 'Send an invitation'
-            expect(page).to have_content('1 error prohibited this scheme operator from being saved:')
-            expect(page).to have_content("Schemes can't be blank")
+            expect(page).to have_content("An invitation email has been sent to #{id}@pwpr_test.com.")
             click_link('Sign Out')
           end
         end

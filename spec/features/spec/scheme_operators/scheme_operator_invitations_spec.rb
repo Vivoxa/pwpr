@@ -1,4 +1,4 @@
-RSpec.describe 'Scheme Operator Invitations', js: true do
+RSpec.describe '[Scheme Operator] Scheme Operator Invitations', js: true do
 
   {
       'sc_director_0@pwpr.com' => { type: 'SchemeOperator with director role', scheme_id: 1 },
@@ -12,15 +12,15 @@ RSpec.describe 'Scheme Operator Invitations', js: true do
             click_link('Schemes')
             find_by_id("#{user[:scheme_id]}-invite_scheme_operator").click
             expect(page).to have_content('Send invitation')
-            id = rand(1000)
-            fill_in 'Email', with: "new_scheme_operator#{id}@pwpr_test.com"
+            id = SecureRandom.uuid
+            fill_in 'Email', with: "#{id}@pwpr_test.com"
             fill_in 'Name', with: 'Doc Brown'
 
             within '#scheme_operator_scheme_ids' do
               find("option[value='#{user[:scheme_id]}']").click
             end
             click_on 'Send an invitation'
-            expect(page).to have_content("An invitation email has been sent to new_scheme_operator#{id}@pwpr_test.com.")
+            expect(page).to have_content("An invitation email has been sent to #{id}@pwpr_test.com.")
             click_link('Sign Out')
             expect(page).to have_content('Signed out successfully.')
           end
@@ -51,14 +51,14 @@ RSpec.describe 'Scheme Operator Invitations', js: true do
             click_link('Schemes')
             find_by_id("#{user[:scheme_id]}-invite_scheme_operator").click
             expect(page).to have_content('Send invitation')
-            id = rand(1000)
-            fill_in 'Email', with: "new_scheme_operator#{id}@pwpr_test.com"
+            id = SecureRandom.uuid
+            fill_in 'Email', with: "#{id}@pwpr_test.com"
 
             within '#scheme_operator_scheme_ids' do
               find("option[value='#{user[:scheme_id]}']").click
             end
             click_on 'Send an invitation'
-            expect(page).to have_content("An invitation email has been sent to new_scheme_operator#{id}@pwpr_test.com.")
+            expect(page).to have_content("An invitation email has been sent to #{id}@pwpr_test.com.")
             click_link('Sign Out')
           end
         end
@@ -69,8 +69,8 @@ RSpec.describe 'Scheme Operator Invitations', js: true do
             click_link('Schemes')
             find_by_id("#{user[:scheme_id]}-invite_scheme_operator").click
             expect(page).to have_content('Send invitation')
-            id = rand(1000)
-            fill_in 'Email', with: "new_scheme_operator#{id}@pwpr_test.com"
+            id = SecureRandom.uuid
+            fill_in 'Email', with: "#{id}@pwpr_test.com"
             fill_in 'Name', with: 'Doc Brown'
 
             click_on 'Send an invitation'

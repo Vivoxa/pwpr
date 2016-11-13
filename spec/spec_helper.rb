@@ -1,6 +1,7 @@
 require 'pry'
 require 'simplecov'
 require 'cancan/matchers'
+require 'securerandom'
 
 require_relative './features/spec/helper_methods'
 require_relative './features/spec/support/shared_examples/valid_sign_in'

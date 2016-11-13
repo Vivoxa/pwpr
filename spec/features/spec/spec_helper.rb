@@ -1,6 +1,7 @@
 require 'capybara'
 require 'capybara/rspec'
 require 'capybara/dsl'
+require 'securerandom'
 require_relative './support/capybara_helper.rb'
 require_relative 'helper_methods'
 require_relative 'support/shared_examples/valid_sign_in'

@@ -164,6 +164,10 @@ RSpec.describe SchemeOperator, type: :model do
       it_behaves_like 'an updater', SchemeOperators::InvitationsController
 
       it_behaves_like 'an updater', CompanyOperators::InvitationsController
+
+      it 'expects to be able to update_businesses on company operator invitations' do
+        expect(ability).to be_able_to(:update_businesses, CompanyOperators::InvitationsController)
+      end
     end
 
     context 'with sc_super_user role' do
@@ -214,6 +218,10 @@ RSpec.describe SchemeOperator, type: :model do
       it_behaves_like 'an updater', SchemeOperators::RegistrationsController
 
       it_behaves_like 'an updater', CompanyOperators::RegistrationsController
+
+      it 'expects NOT to be able to update_businesses on company operator invitations' do
+        expect(ability).not_to be_able_to(:update_businesses, CompanyOperators::InvitationsController)
+      end
     end
 
     context 'with sc_users_r role' do

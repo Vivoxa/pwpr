@@ -53,7 +53,7 @@ module PermissionsForRole
 
         can %i(new create), CompanyOperators::InvitationsController
 
-        can %i(new create permissions), CompanyOperator
+        can %i(new create permissions update_permissions), CompanyOperator
 
       end
 

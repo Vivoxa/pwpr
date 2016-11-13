@@ -3,8 +3,6 @@ class SchemeOperator < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
-  has_and_belongs_to_many :schemes
-  validates_presence_of :schemes
   include CommonHelpers::PermissionsHelper
 
   royce_roles PermissionsForRole::SchemeOperatorDefinitions::ROLES + PermissionsForRole::SchemeOperatorDefinitions::PERMISSIONS

@@ -205,19 +205,11 @@ RSpec.describe SchemeOperator, type: :model do
 
       it_behaves_like 'a reader', SchemeOperators::RegistrationsController
 
-      it_behaves_like 'a reader', CompanyOperators::RegistrationsController
-
       it_behaves_like 'a writer', SchemeOperators::RegistrationsController
-
-      it_behaves_like 'a writer', CompanyOperators::RegistrationsController
 
       it_behaves_like 'an editor', SchemeOperators::RegistrationsController
 
-      it_behaves_like 'an editor', CompanyOperators::RegistrationsController
-
       it_behaves_like 'an updater', SchemeOperators::RegistrationsController
-
-      it_behaves_like 'an updater', CompanyOperators::RegistrationsController
 
       it 'expects NOT to be able to update_businesses on company operator invitations' do
         expect(ability).not_to be_able_to(:update_businesses, CompanyOperators::InvitationsController)

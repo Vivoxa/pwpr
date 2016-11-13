@@ -49,7 +49,7 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
             co_marti.remove_role role
           end
           co_marti.add_role :sc_director
-          co_marti.add_role :sc_users_w
+          co_marti.add_role :co_users_w
 
           co_marti.save
           sign_in co_marti

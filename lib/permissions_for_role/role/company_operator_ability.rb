@@ -20,15 +20,8 @@ module PermissionsForRole
 
         # Invitations and creating new Company Operators
         if user.co_users_w?
-          can :read, BaseInvitationsController
-          can %i(new create), BaseInvitationsController
-          can %i(edit update), BaseInvitationsController
 
-          can :read, BaseRegistrationsController
-          can %i(new create), BaseRegistrationsController
-          can %i(edit update), BaseRegistrationsController
-
-          can %i(new create), CompanyOperators::InvitationsController
+          can %i(read new create edit update update_businesses), CompanyOperators::InvitationsController
 
           can %i(read new create permissions update_permissions), CompanyOperator
         end

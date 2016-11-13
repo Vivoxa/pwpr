@@ -18,6 +18,7 @@ module PermissionsForRole
         if user.co_users_d?
           can :destroy, CompanyOperator, id: company_operator_ids_for_associated_schemes(user)
           can :destroy, CompanyOperators::RegistrationsController
+          can :destroy, CompanyOperators::InvitationsController
         end
 
         co_users_r(user)
@@ -46,12 +47,8 @@ module PermissionsForRole
 
       def co_users_w(user)
         return unless user.co_users_w?
-        can %i(read new create update_permissions edit update update_businesses), BaseInvitationsController
-
-        can :read, BaseRegistrationsController
-        can %i(new create edit update), BaseRegistrationsController
-
-        can %i(new create), CompanyOperators::InvitationsController
+        can %i(read new create update_permissions edit update update_businesses), CompanyOperators::InvitationsController
+        can %i(read new create update_permissions edit update update_businesses), CompanyOperators::RegistrationsController
 
         can %i(new create permissions update_permissions), CompanyOperator
 
@@ -67,11 +64,8 @@ module PermissionsForRole
 
       def sc_users_w(user)
         if user.sc_users_w?
-          can %i(new create edit update read), BaseInvitationsController
-
-          can %i(new create edit update read), BaseRegistrationsController
-
-          can %i(new create), SchemeOperators::InvitationsController
+          can %i(new create edit update read), SchemeOperators::InvitationsController
+          can %i(new create edit update read), SchemeOperators::RegistrationsController
 
           can %i(new create), SchemeOperator
           can %i(read permissions update_permissions), SchemeOperator, id: scheme_operator_ids_for_associated_schemes(user)
@@ -93,9 +87,8 @@ module PermissionsForRole
       def sc_users_d(user)
         if user.sc_users_d?
           can :destroy, SchemeOperator, id: scheme_operator_ids_for_associated_schemes(user)
-          can :destroy, BaseRegistrationsController
-          can :destroy, CompanyOperators::RegistrationsController
-          can :destroy, BaseInvitationsController
+          can :destroy, SchemeOperators::RegistrationsController
+          can :destroy, SchemeOperators::InvitationsController
         end
       end
     end

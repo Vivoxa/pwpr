@@ -70,4 +70,18 @@ RSpec.describe '[Scheme Operator] Company Operator Invitations', js: true do
       end
     end
   end
+  {'sc_super_user_0@pwpr.com' => 'super_user',
+   'sc_user_0@pwpr.com' => 'user'}.each do |email, user|
+    context "when user is a SchemeOperator with #{user} role" do
+      it 'expects the invite button NOT to be there' do
+        sign_in('SchemeOperator', email, 'min700si')
+        click_link('Schemes')
+        expect(page).not_to have_content('1-invite_scheme_operator')
+        visit '/company_operators/invitation/new'
+        expect(page).to have_content('You are not authorized to access this page.')
+        click_link('Sign Out')
+        expect(page).to have_content('Signed out successfully.')
+      end
+    end
+  end
 end

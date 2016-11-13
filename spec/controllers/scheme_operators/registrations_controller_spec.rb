@@ -134,5 +134,18 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
         expect(response.status).to eq 302
       end
     end
+
+    context 'when the scheme operator creation fails' do
+      context 'when calling create' do
+        it 'expects cleanup to be performed' do
+          expect_any_instance_of(DeviseController).to receive(:clean_up_passwords)
+          expect_any_instance_of(DeviseController).to receive(:set_minimum_password_length)
+          post :create, scheme_operator: {email:        'confirmed@pwpr.com',
+                                          name:         'confirmed',
+                                          password:     'my_password',
+                                          confirmed_at: DateTime.now}
+        end
+      end
+    end
   end
 end

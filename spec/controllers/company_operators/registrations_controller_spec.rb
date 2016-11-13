@@ -5,9 +5,14 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
 
   context 'when scheme operator is NOT signed in' do
     context 'when calling create' do
-      it 'expects to be redirected to sign in' do
+      before do
         post :create, params: {}
+      end
+      it 'expects to be redirected via 302' do
         expect(response.status).to eq 302
+      end
+
+      it 'expects to be redirected to sign in' do
         expect(response.body).to include('scheme_operators/sign_in')
       end
     end
@@ -38,9 +43,14 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
       end
 
       context 'when calling new' do
-        it 'expects an error to be raised' do
+        before do
           post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', business: Business.last
+        end
+        it 'expects an error to be raised' do
           expect(flash[:alert]).to be_present
+        end
+
+        it 'expects an error to be displyed to the user' do
           expect(flash[:alert]).to eq 'Your account has not been approved by your administrator yet.'
         end
       end
@@ -55,9 +65,14 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
       end
 
       context 'when calling new' do
-        it 'expects a CanCan AccessDenied error to be raised' do
+        before do
           post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', business: Business.last
+        end
+        it 'expects a CanCan AccessDenied error to be raised' do
           expect(flash[:alert]).to be_present
+        end
+
+        it 'expects a CanCan AccessDenied error to be displayed' do
           expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
@@ -96,18 +111,27 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
           expect(so_user.name).to eq 'freddy'
         end
       end
-
-      context 'when calling create' do
-        it 'expects a SchemeOperator to be created' do
+      context 'when creating a confirmed user' do
+        let(:so_user) { CompanyOperator.find_by_email('confirmed@pwpr.com') }
+        before do
           post :create, company_operator: {email:        'confirmed@pwpr.com',
                                            name:         'confirmed',
                                            password:     'my_password',
                                            business_id:  Business.last.id,
                                            confirmed_at: DateTime.now}
-          expect(response.status).to eq 302
-          so_user = CompanyOperator.find_by_email('confirmed@pwpr.com')
-          expect(so_user).to be_a(CompanyOperator)
-          expect(so_user.name).to eq 'confirmed'
+        end
+        context 'when calling create' do
+          it 'expects to be redirected with a 302' do
+            expect(response.status).to eq 302
+          end
+
+          it 'expects a SchemeOperator to be ccreated' do
+            expect(so_user).to be_a(CompanyOperator)
+          end
+
+          it 'expects a SchemeOperator to be confirmed' do
+            expect(so_user.name).to eq 'confirmed'
+          end
         end
       end
     end

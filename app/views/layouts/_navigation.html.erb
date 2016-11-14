@@ -35,9 +35,11 @@
       </div>
     </li>
     <% if @current_user %>
-        <%= render partial: "partials/users/users_dropdown" %>
+        <%= render partial: 'partials/users/users_dropdown' %>
     <% end %>
-    <%= render partial: "partials/schemes_dropdown" %>
+    <%= render partial: 'partials/schemes_dropdown' %>
+
+    <%= render partial: 'partials/businesses_link' %>
   </ul>
 
   <div class="form-inline pull-xs-right">

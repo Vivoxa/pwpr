@@ -3,6 +3,7 @@
 <% @pending_is_active = pending ? 'active' : '' %>
 <div id="main-container" class="container">
   <h3><%= user_type.to_s %></h3>
+
   <div class="row">
     <div class="card">
       <div class="card-header">
@@ -12,12 +13,12 @@
           </li>
           <li class="nav-item">
             <% if user_type == CompanyOperator %>
-            <% @enabled = '' %>
-            <% @pending_tab_href = 'href=' + pending_company_operators_path %>
-          <% else %>
-            <% @enabled = 'disabled' %>
-            <% @pending_tab_href = '' %>
-          <% end %>
+                <% @enabled = '' %>
+                <% @pending_tab_href = 'href=' + pending_company_operators_path %>
+            <% else %>
+                <% @enabled = 'disabled' %>
+                <% @pending_tab_href = '' %>
+            <% end %>
             <a class="nav-link" <%= @enabled %> <%= @pending_is_active && @pending_tab_href %>>Pending</a>
           </li>
         </ul>
@@ -26,58 +27,56 @@
         <h4 class="card-title"></h4>
 
         <%- users.each do |user| %>
-<div class="card card-block card-outline-success" style='height:150px'>
-           <div class="row">
-             <div class="col-md-1"><strong>Name</strong></div>
-             <div class="col-md-4"><strong>Email</strong></div>
-             <div class="col-md-2"><strong>Scheme</strong></div>
-             <div class="col-md-2"><strong><%= 'Business' if user.is_a? CompanyOperator %></strong></div>
-             <div class="col-md-3"></div>
-           </div>
+            <div class="card card-block card-outline-success" style='height:150px'>
+              <div class="row">
+                <div class="col-md-1"><strong>Name</strong></div>
+                <div class="col-md-4"><strong>Email</strong></div>
+                <div class="col-md-2"><strong>Scheme</strong></div>
+                <div class="col-md-2"><strong><%= 'Business' if user.is_a? CompanyOperator %></strong></div>
+                <div class="col-md-3"></div>
+              </div>
+              <div class="row">
 
+                <div class="col-md-1"><%= user.name.to_s if user.name %></div>
+                <div class="col-md-4"><%= user.email.to_s %></div>
+                <% if user.is_a? SchemeOperator %>
 
-          <div class="row">
+                    <div class="col-md-2">
+                      <% user.schemes.each do |s| %>
+                          <div class='row'>
+                            <%= s.name %>
+                          </div>
+                      <% end %>
+                    </div>
+                <% elsif user.is_a? CompanyOperator %>
+                    <div class="col-md-2">
+                      <% user.business.scheme.name %>
+                    </div>
+                <% else %>
+                    <div class="col-md-2">'N/A'</div>
+                <% end %>
 
-            <div class="col-md-1"><%= user.name.to_s if user.name %></div>
-            <div class="col-md-4"><%= user.email.to_s %></div>
-            <% if user.is_a? SchemeOperator %>
-
-              <div class="col-md-2">
-                <% user.schemes.each do |s| %>
-                <div class='row'>
-                  <%= s.name %>
+                <div class="col-md-2"><%= user.business.name if user.is_a? CompanyOperator %></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-1">
+                  <div class="row">
+                    <% if can? :read, user %>
+                        <%= link_to 'Details', user, class: ['btn btn-sm btn-info', 'show-btn'] %>
+                    <% end %>
+                  </div>
+                  <div class="row">
+                    <% if can? :destroy, user %>
+                        <%= link_to 'Destroy', user, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn'], data: {confirm: 'Are you sure?'}} %>
+                    <% end %>
+                  </div>
                 </div>
-                <% end %>
               </div>
-            <% elsif user.is_a? CompanyOperator %>
-              <div class="col-md-2">
-                <% user.business.scheme.name %>
-              </div>
-            <% else %>
-              <div class="col-md-2">'N/A'</div>
-            <% end %>
-
-            <div class="col-md-2"><%= user.business.name if user.is_a? CompanyOperator %></div>
-              <div class="col-md-2"></div>
-            <div class="col-md-1">
-              <div class="row">
-                <% if can? :read, user %>
-                  <%= link_to 'Details', user, class: ['btn btn-sm btn-info', 'show-btn'] %>
-                <% end %>
-              </div>
-              <div class="row">
-              <% if can? :destroy, user %>
-                <%= link_to 'Destroy', user,{ method: :delete, class: ['btn btn-sm btn-danger', 'show-btn'], data: { confirm: 'Are you sure?' }} %>
-              <% end %>
             </div>
-            </div>
-            </div>
-          </div>
         <%- end %>
 
       </div>
       <div class="card-footer">
-        <%= render partial: './partials/users/user_links', locals: { company_operator_link: company_operator_link, scheme_operator_link: scheme_operator_link, admin_link: admin_link } %>
+        <%= render partial: './partials/users/user_links', locals: {company_operator_link: company_operator_link, scheme_operator_link: scheme_operator_link, admin_link: admin_link} %>
       </div>
     </div>
   </div>

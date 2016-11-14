@@ -1,6 +1,7 @@
 <div id="main-container" class="container">
   <div class="card">
     <h3 class="card-header"><%= @business.name %></h3>
+
     <div class="card-block">
       <div class='col-md-4'>
         <div class="card card-block" style='height:150px'>
@@ -39,6 +40,12 @@
       <div class='col-md-4'>
         <div class="card card-block" style='height:150px'>
           <!--	<h4 class="card-title">Administration</h4>-->
+          <% if can? :new, CompanyOperators::InvitationsController %>
+              <%= link_to 'Invite new Company Operator',
+                          new_company_operator_invitation_path,
+                          class: ['btn btn-sm btn-primary', 'devise-btn'],
+                          id: "#{@business.id}-invite_company_operator" %>
+          <% end %>
         </div>
       </div>
     </div>
@@ -47,7 +54,7 @@
           <%= link_to 'Edit', edit_business_path(@business), class: ['btn btn-sm btn-warning', 'show-btn-md'] %>
       <% end %>
       <% if can? :destroy, @business %>
-        <%= link_to 'Destroy', @business, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
+          <%= link_to 'Destroy', @business, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
       <% end %>
       <%= link_to 'Back', businesses_path, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
     </div>

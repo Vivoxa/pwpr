@@ -29,7 +29,7 @@
                                     <% @available_permissions.each do |permission| %>
                                     <% checked_disabled = @user.role_list.include? permission %>
                                     <li>
-                                        <%= check_box_tag "permissions[]", permission, @user.role_list.include?(permission) -%>
+                                        <%= check_box_tag "permissions[]", permission, @user.role_list.include?(permission), id: permission -%>
                                         <%= h permission.capitalize -%>
                                     </li>
                                     <% end %>

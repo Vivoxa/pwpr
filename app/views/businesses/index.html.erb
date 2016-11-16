@@ -2,33 +2,43 @@
 <div class="container" style='margin-top:30px'>
   <% @businesses.each do |business| %>
       <div class="row">
-        <div class="card">
-          <h3 class="card-header"><%= business.name %></h3>
+        <% if can? :read, business %>
+            <div class="card">
+              <h3 class="card-header"><%= business.name %></h3>
 
-          <div class="card-block">
-            <!--	<h4 class="card-title">Administration</h4>-->
-            <p class="card-text">
+              <div class="card-block">
+                <!--	<h4 class="card-title">Administration</h4>-->
+                <p class="card-text">
 
-            <div class="col-xs-12 col-md-4 col-lg-1"></div>
-            <div class="col-xs-12 col-md-4 col-lg-5">
-              <div class="row">
-                <%= link_to 'Details', business, class: ['btn btn-sm btn-info', 'show-btn-md'] %>
-                <% if can? :destroy, business %>
-                  <%= link_to 'Destroy', business, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
-                <% end %>
+                <div class="col-xs-12 col-md-4 col-lg-1"></div>
+                <div class="col-xs-12 col-md-4 col-lg-5">
+                  <div class="row">
+                    <%= link_to 'Details', business, class: ['btn btn-sm btn-info', 'show-btn-md'] %>
+                    <% if can? :destroy, business %>
+                        <%= link_to 'Destroy', business, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-4 col-lg-5">
+                  <div class="row">
+                    <% if can? :new, CompanyOperators::InvitationsController %>
+                        <%= link_to 'Invite new Company Operator',
+                                    new_company_operator_invitation_path,
+                                    class: ['btn btn-sm btn-primary', 'devise-btn'],
+                                    id: "#{business.id}-invite_company_operator"%>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-4 col-lg-1"></div>
+              </div>
+              </p>
+              <div class="card-footer">
               </div>
             </div>
-            <div class="col-xs-12 col-md-4 col-lg-5">
-              <div class="row">
-              </div>
-            </div>
-            <div class="col-xs-12 col-md-4 col-lg-1"></div>
-          </div>
-          </p>
-          <div class="card-footer">
-          </div>
-        </div>
+        <% end %>
       </div>
   <% end %>
 </div>
-<% link_to 'New Scheme', new_scheme_path, class: ['btn btn-sm btn-primary', 'devise-btn'] %>
+<% if can? :new, Scheme %>
+    <% link_to 'New Scheme', new_scheme_path, class: ['btn btn-sm btn-primary', 'devise-btn'] %>
+<% end %>

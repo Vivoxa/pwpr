@@ -3,7 +3,6 @@
   <head>
     <%= render 'layouts/layout_header' %>
   </head>
-
   <body>
     <div class="container-fluid">
       <header>
@@ -11,9 +10,9 @@
         <%= render 'layouts/navigation' %>
         <%= render 'layouts/auth_nav_links' %>
       </header>
-
       <main role="main">
-       <%= yield %>
+      <%= yield %>
       </main>
+    </div>
   </body>
 </html>

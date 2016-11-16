@@ -22,7 +22,11 @@ module PermissionsForRole
       end
 
       def associated_business_ids_for_associated_schemes(user)
-        user.schemes.map(&:business_ids).flatten
+        business_ids = []
+        user.schemes.each do |scheme|
+          business_ids << scheme.business_ids if scheme.active
+        end
+        business_ids.flatten
       end
     end
   end

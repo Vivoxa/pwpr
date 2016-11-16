@@ -32,7 +32,7 @@
                     <%= link_to 'Scheme details', scheme, class: ['btn btn-sm btn-info', 'devise-btn'] %>
                 <% end %>
                 <% if can? :new, Business %>
-                  <%= link_to 'Businesses', businesses_path, class: ['btn btn-sm btn-secondary', 'devise-btn'] %>
+                    <%= link_to 'Businesses', businesses_path, class: ['btn btn-sm btn-secondary', 'devise-btn'] %>
                 <% end %>
                 <% if can? :destroy, scheme %>
                     <%= link_to 'Destroy', scheme, {method: :delete, class: ['btn btn-sm btn-danger', 'devise-btn'], data: {confirm: 'Are you sure?'}} %>

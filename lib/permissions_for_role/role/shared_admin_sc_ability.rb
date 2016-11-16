@@ -32,11 +32,16 @@ module PermissionsForRole
       end
 
       def scheme_permissions(user)
-        can :read, Scheme, id: user.scheme_ids if user.schemes_r?
+        active_schemes = []
+        user.schemes.each do |scheme|
+          active_schemes << scheme.id if scheme.active
+        end
+        can :read, Scheme, id: active_schemes if user.schemes_r?
         can %i(new create), Scheme if user.schemes_w?
-        can %i(edit update), Scheme, id: user.scheme_ids if user.schemes_e?
-        can :destroy, Scheme, id: user.scheme_ids if user.schemes_d?
+        can %i(edit update), Scheme, id: active_schemes if user.schemes_e?
+        can :destroy, Scheme, id: active_schemes if user.schemes_d?
       end
+
 
       def business_permissions(user)
         can :read, Business, id: associated_business_ids_for_associated_schemes(user) if user.businesses_r?

@@ -39,7 +39,7 @@ module CommonHelpers
       invalid_permissions = []
 
       definitions.keys.each do |p|
-        invalid_permissions << p.to_s unless allowed?(definitions, p.to_s)
+        invalid_permissions << p.to_s unless allowed?(definitions, p.to_s) && permissions.include?(p.to_s)
       end
 
       invalid_permissions

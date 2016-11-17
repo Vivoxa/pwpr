@@ -7,6 +7,15 @@ RSpec.describe 'Admin', js: true do
     page.driver.browser.manage.window.resize_to(1000,800)
   end
 
+  after :each do
+    visit '/admins/3/permissions'
+    choose('role_restricted_admin')
+    all_permissions.each do |key, permission|
+      uncheck(key.to_s)
+    end
+    click_on 'Save Permissions'
+  end
+
   context 'for super_admin role' do
     context 'when setting allowed permissions' do
       before :each do

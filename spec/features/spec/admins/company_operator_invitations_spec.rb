@@ -72,4 +72,33 @@ RSpec.describe '[Admin] Company Operator Invitations', js: true do
       end
     end
   end
+  context 'when form is completed with correct values' do
+    it 'expects an invitation to be sent' do
+      sign_in('Admin', 'super_admin@pwpr.com', 'min700si')
+      click_link('Schemes')
+      find_by_id('2-invite_company_operator').click
+      expect(page).to have_content('Send invitation')
+      id = SecureRandom.uuid
+      fill_in 'Email', with: "#{id}@pwpr_test.com"
+      fill_in 'Name', with: 'Doc Brown'
+
+      within '#schemes_select' do
+        find("option[value='5']").click
+      end
+
+      wait_for_ajax
+      expect(page).not_to have_select('business_select', :options => ['dans pack business'])
+      expect(page).not_to have_select('business_select', :options => ['my pack business'])
+      expect(page).not_to have_select('business_select', :options => ['pack one business'])
+      expect(page).not_to have_select('business_select', :options => ['pack for you'])
+
+      expect(page).to have_select('business_select', :options => ['Synergy Business'])
+
+      click_on 'Send an invitation'
+      expect(page).to have_content("An invitation email has been sent to #{id}@pwpr_test.com.")
+      click_link('Sign Out')
+      expect(page).to have_content('Signed out successfully.')
+    end
+  end
+
 end

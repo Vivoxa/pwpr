@@ -25,15 +25,35 @@ module CommonHelpers
 
     def selected_permissions
       permissions = params[:permissions] ? params[:permissions] : []
-      invalid_permissions = []
-      return [] if permissions.empty?
 
-      # Remove invalid permissions (server-side validation)
-      permissions.each do |p|
-        invalid_permissions << p unless allowed_permission?(p)
+      # Server side validation
+      definitions = @definitions.permissions_for_role(selected_role.first)
+      permissions -= invalid_permissions(definitions, permissions)
+      permissions += mandatory_permissions(definitions, permissions)
+
+      permissions
+    end
+
+    # Remove invalid permissions
+    def invalid_permissions(definitions, permissions)
+      invalid_permissions = []
+
+      definitions.keys.each do |p|
+        invalid_permissions << p.to_s unless allowed?(definitions, p.to_s)
       end
 
-      permissions - invalid_permissions
+      invalid_permissions
+    end
+
+    # Ensure mandatory permissions for role are included
+    def mandatory_permissions(definitions, permissions)
+      mandatory = []
+
+      definitions.keys.each do |p|
+        mandatory << p.to_s if !permissions.include?(p.to_s) && mandatory?(definitions, p.to_s)
+      end
+
+      mandatory
     end
 
     def selected_role
@@ -64,12 +84,15 @@ module CommonHelpers
       end
     end
 
-    def allowed_permission?(permission)
-      allowed = @definitions.permissions_for_role(selected_role.first)
+    def allowed?(definitions, permission)
+      definitions.keys.include?(permission.to_sym) &&
+      !definitions[permission.to_sym][:locked]
+    end
 
-      allowed.keys.include?(permission.to_sym) &&
-      (!allowed[permission.to_sym][:locked] ||
-        allowed[permission.to_sym][:checked])
+    def mandatory?(definitions, permission)
+      definitions.keys.include?(permission.to_sym) &&
+      definitions[permission.to_sym][:checked] &&
+      definitions[permission.to_sym][:locked]
     end
   end
 end

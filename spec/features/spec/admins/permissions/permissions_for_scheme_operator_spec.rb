@@ -1,6 +1,6 @@
 RSpec.describe 'Admin', js: true do
   let(:definitions) {PermissionsForRole::SchemeOperatorDefinitions.new}
-  let(:all_permissions) {definitions.permissions_for_role('sc_director')}
+  let(:all_permissions) {sc_director_definitions}
 
   before do
     sign_in('Admin', 'super_admin@pwpr.com', 'min700si')
@@ -37,7 +37,7 @@ RSpec.describe 'Admin', js: true do
   end
 
   context 'for sc_super_user role' do
-    let(:permissions) {definitions.permissions_for_role('sc_super_user')}
+    let(:permissions) {sc_super_user_definitions}
 
     context 'when setting permissions that are allowed' do
       before :each do
@@ -89,7 +89,7 @@ RSpec.describe 'Admin', js: true do
   end
 
   context 'for sc_user role' do
-    let(:permissions) {definitions.permissions_for_role('sc_user')}
+    let(:permissions) {sc_user_definitions}
 
     context 'when setting permissions that are allowed' do
       before :each do

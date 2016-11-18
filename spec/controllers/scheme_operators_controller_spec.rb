@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SchemeOperatorsController, type: :controller do
-  context 'when SchemeOperator has co_director role' do
+  context 'when SchemeOperator has sc_director role' do
     let(:sc_marti) { SchemeOperator.new }
     before do
       sc_marti.email = 'jennifer@back_to_the_future.com'
@@ -319,21 +319,30 @@ RSpec.describe SchemeOperatorsController, type: :controller do
           end
 
           describe 'all permissions are allowed' do
-            let(:params) { {scheme_operator_id: no_role.id, role: 'sc_user', permissions: %w(co_users_r businesses_e)} }
+            let(:params) { {scheme_operator_id: no_role.id, role: 'sc_user', permissions: %w(co_users_r businesses_e businesses_r)} }
 
             it 'sets all the passed in permissions' do
               put :update_permissions, params
-              expect(no_role.role_list).to eq %w(sc_user co_users_r businesses_e)
+              expect(no_role.role_list).to eq %w(sc_user businesses_e co_users_r businesses_r)
+            end
+          end
+
+          describe 'no permissions selected' do
+            let(:params) { {scheme_operator_id: no_role.id, role: 'sc_user', permissions: %w()} }
+
+            it 'sets mandatory permissions' do
+              put :update_permissions, params
+              expect(no_role.role_list).to eq %w(sc_user co_users_r businesses_r)
             end
           end
 
           describe 'NOT all permissions are allowed' do
-            let(:params) { {scheme_operator_id: no_role.id, role: 'sc_user', permissions: %w(co_users_r businesses_e businesses_d)} }
+            let(:params) { {scheme_operator_id: no_role.id, role: 'sc_user', permissions: %w(co_users_r businesses_e businesses_d businesses_r)} }
 
             it 'sets ONLY the correct permissions' do
               get :permissions, scheme_operator_id: no_role.id
               put :update_permissions, params
-              expect(no_role.role_list).to eq %w(sc_user co_users_r businesses_e)
+              expect(no_role.role_list).to eq %w(sc_user businesses_e co_users_r businesses_r)
             end
           end
 

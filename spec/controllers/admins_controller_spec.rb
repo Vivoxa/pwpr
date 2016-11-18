@@ -198,11 +198,20 @@ RSpec.describe AdminsController, type: :controller do
         end
 
         describe 'all permissions are allowed' do
-          let(:params) { {admin_id: no_role.id, role: 'restricted_admin', permissions: %w(co_users_r sc_users_r)} }
+          let(:params) { {admin_id: no_role.id, role: 'restricted_admin', permissions: %w(co_users_r sc_users_r restricted_admin co_users_r sc_users_r schemes_r businesses_r)} }
 
           it 'sets all the passed in permissions' do
             put :update_permissions, params
-            expect(no_role.role_list).to eq %w(restricted_admin co_users_r sc_users_r)
+            expect(no_role.role_list).to eq %w(restricted_admin schemes_r sc_users_r co_users_r businesses_r)
+          end
+        end
+
+        describe 'no permissions selected' do
+          let(:params) { {admin_id: no_role.id, role: 'restricted_admin', permissions: %w()} }
+
+          it 'sets mandatory permissions' do
+            put :update_permissions, params
+            expect(no_role.role_list).to eq %w(restricted_admin schemes_r sc_users_r co_users_r businesses_r)
           end
         end
 
@@ -212,7 +221,7 @@ RSpec.describe AdminsController, type: :controller do
           it 'sets ONLY the correct permissions' do
             get :permissions, admin_id: no_role.id
             put :update_permissions, params
-            expect(no_role.role_list).to eq %w(restricted_admin co_users_r sc_users_r co_users_d)
+            expect(no_role.role_list).to eq %w(restricted_admin co_users_d schemes_r sc_users_r co_users_r businesses_r)
           end
         end
 

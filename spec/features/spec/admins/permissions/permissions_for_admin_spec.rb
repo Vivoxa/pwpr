@@ -1,6 +1,6 @@
 RSpec.describe 'Admin', js: true do
   let(:definitions) {PermissionsForRole::AdminDefinitions.new}
-  let(:all_permissions) {definitions.permissions_for_role('super_admin')}
+  let(:all_permissions) {super_admin_definitions}
 
   before do
     sign_in('Admin', 'super_admin@pwpr.com', 'min700si')
@@ -37,7 +37,7 @@ RSpec.describe 'Admin', js: true do
   end
 
   context 'for normal_admin role' do
-    let(:permissions) {definitions.permissions_for_role('normal_admin')}
+    let(:permissions) {normal_admin_definitions}
 
     context 'when setting permissions that are allowed' do
       before :each do
@@ -89,7 +89,7 @@ RSpec.describe 'Admin', js: true do
   end
 
   context 'for restricted_admin role' do
-    let(:permissions) {definitions.permissions_for_role('restricted_admin')}
+    let(:permissions) {restricted_admin_definitions}
 
     context 'when setting permissions that are allowed' do
       before :each do

@@ -22,6 +22,6 @@ class Admin < ActiveRecord::Base
   def assign_roles
     add_role :restricted_admin
     permission_helper = PermissionsForRole::AdminDefinitions.new
-    permission_helper.assign_default_permissions_for_role!(self, :restricted_admin)
+    permission_helper.assign_mandatory_permissions_for_role!(self, :restricted_admin)
   end
 end

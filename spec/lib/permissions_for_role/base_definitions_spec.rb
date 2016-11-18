@@ -15,7 +15,7 @@ RSpec.describe PermissionsForRole::BaseDefinitions do
 
         permissions_helper = PermissionsForRole::AdminDefinitions.new
 
-        permissions_helper.assign_default_permissions_for_role!(admin, :restricted_admin)
+        permissions_helper.assign_mandatory_permissions_for_role!(admin, :restricted_admin)
         permissions_helper.permissions_for_role(:restricted_admin).each do |permission, can_have|
           expect(admin.has_role?(permission)).to be true if can_have[:checked]
         end
@@ -34,7 +34,7 @@ RSpec.describe PermissionsForRole::BaseDefinitions do
 
         permissions_helper = PermissionsForRole::SchemeOperatorDefinitions.new
 
-        permissions_helper.assign_default_permissions_for_role!(sc_operator, :sc_user)
+        permissions_helper.assign_mandatory_permissions_for_role!(sc_operator, :sc_user)
         permissions_helper.permissions_for_role(:sc_user).each do |permission, can_have|
           expect(sc_operator.has_role?(permission)).to be true if can_have[:checked]
         end
@@ -53,7 +53,7 @@ RSpec.describe PermissionsForRole::BaseDefinitions do
 
         permissions_helper = PermissionsForRole::CompanyOperatorDefinitions.new
 
-        permissions_helper.assign_default_permissions_for_role!(co_operator, :co_user)
+        permissions_helper.assign_mandatory_permissions_for_role!(co_operator, :co_user)
         permissions_helper.permissions_for_role(:co_user).each do |permission, can_have|
           expect(co_operator.has_role?(permission)).to be true if can_have[:checked]
         end

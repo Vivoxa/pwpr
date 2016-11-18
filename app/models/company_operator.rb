@@ -28,6 +28,6 @@ class CompanyOperator < ActiveRecord::Base
   def assign_roles
     add_role :co_user
     permission_helper = PermissionsForRole::CompanyOperatorDefinitions.new
-    permission_helper.assign_default_permissions_for_role!(self, :co_user)
+    permission_helper.assign_mandatory_permissions_for_role!(self, :co_user)
   end
 end

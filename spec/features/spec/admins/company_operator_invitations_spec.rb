@@ -1,7 +1,6 @@
 RSpec.describe '[Admin] Company Operator Invitations', js: true do
 
-  {'restricted_admin@pwpr.com' => 'restricted_admin',
-   'normal_admin@pwpr.com' => 'normal_admin',
+  {'normal_admin@pwpr.com' => 'normal_admin',
    'super_admin@pwpr.com' => 'super_admin'}.each do |email, user|
     context 'when inviting a company operator' do
       context "when #{user}" do
@@ -69,6 +68,20 @@ RSpec.describe '[Admin] Company Operator Invitations', js: true do
             click_link('Sign Out')
           end
         end
+      end
+    end
+  end
+
+  {'restricted_admin@pwpr.com' => 'restricted_admin'}.each do |email, user|
+    context "when user is an Admin with #{user} role" do
+      it 'expects the invite button NOT to be there' do
+        sign_in('Admin', email, 'min700si')
+        click_link('Schemes')
+        expect(page).not_to have_content('1-invite_company_operator')
+        visit '/company_operators/invitation/new'
+        expect(page).to have_content('You are not authorized to access this page.')
+        click_link('Sign Out')
+        expect(page).to have_content('Signed out successfully.')
       end
     end
   end

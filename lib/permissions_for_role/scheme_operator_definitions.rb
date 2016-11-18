@@ -1,5 +1,5 @@
 module PermissionsForRole
-  class SchemeOperatorDefinitions
+  class SchemeOperatorDefinitions < BaseDefinitions
     ROLES = %w(sc_director sc_super_user sc_user).freeze
     PERMISSIONS = PermissionsForRole::SharedDefinitions::SHARED_PERMISSIONS
 

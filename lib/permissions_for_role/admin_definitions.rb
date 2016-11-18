@@ -1,5 +1,5 @@
 module PermissionsForRole
-  class AdminDefinitions
+  class AdminDefinitions < BaseDefinitions
     ROLES = %w(super_admin normal_admin restricted_admin).freeze
     PERMISSIONS = %w(admins_r admins_w admins_e admins_d).freeze + PermissionsForRole::SharedDefinitions::SHARED_PERMISSIONS
 

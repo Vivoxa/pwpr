@@ -26,8 +26,7 @@ class SchemeOperator < ActiveRecord::Base
 
   def assign_roles
     add_role :sc_user
-    add_role :sc_users_r
-    add_role :businesses_r
-    add_role :schemes_r
+    permission_helper = PermissionsForRole::SchemeOperatorDefinitions.new
+    permission_helper.assign_mandatory_permissions_for_role!(self, :sc_user)
   end
 end

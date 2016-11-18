@@ -21,10 +21,7 @@ class Admin < ActiveRecord::Base
 
   def assign_roles
     add_role :restricted_admin
-    admin_permisions = PermissionsForRole::AdminDefinitions.new
-
-    admin_permisions.permissions_for_role(:restricted_admin).keys.each do |permission|
-      add_role permission
-    end
+    permission_helper = PermissionsForRole::AdminDefinitions.new
+    permission_helper.assign_mandatory_permissions_for_role!(self, :restricted_admin)
   end
 end

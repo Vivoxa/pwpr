@@ -53,7 +53,7 @@ RSpec.describe CompanyOperator, type: :model do
       end
     end
   end
-  context 'Abitlites' do
+  context 'Abilites' do
     context 'with NO Role' do
       let(:company_operator_no_role) { FactoryGirl.create(:company_operator) }
       let(:ability) { Abilities.ability_for(company_operator_no_role) }

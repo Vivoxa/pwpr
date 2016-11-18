@@ -55,7 +55,7 @@ module PermissionsForRole
         can %i(read new create update_permissions edit update update_businesses), CompanyOperators::InvitationsController
         can %i(read new create update_permissions edit update update_businesses), CompanyOperators::RegistrationsController
 
-        can %i(new create permissions update_permissions), CompanyOperator
+        can %i(new create permissions update_permissions update_businesses), CompanyOperator
 
       end
 

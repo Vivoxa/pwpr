@@ -168,6 +168,10 @@ RSpec.describe SchemeOperator, type: :model do
       it 'expects to be able to update_businesses on company operator invitations' do
         expect(ability).to be_able_to(:update_businesses, CompanyOperators::InvitationsController)
       end
+
+      it 'expects to be able to update_businesses on company operators' do
+        expect(ability).to be_able_to(:update_businesses, CompanyOperator)
+      end
     end
 
     context 'with sc_super_user role' do
@@ -213,6 +217,10 @@ RSpec.describe SchemeOperator, type: :model do
 
       it 'expects NOT to be able to update_businesses on company operator invitations' do
         expect(ability).not_to be_able_to(:update_businesses, CompanyOperators::InvitationsController)
+      end
+
+      it 'expects NOT to be able to update_businesses on company operator invitations' do
+        expect(ability).not_to be_able_to(:update_businesses, CompanyOperator)
       end
     end
 

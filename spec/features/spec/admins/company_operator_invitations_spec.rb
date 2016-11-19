@@ -74,30 +74,35 @@ RSpec.describe '[Admin] Company Operator Invitations', js: true do
 
   context 'when filling in the invitation form' do
     context 'when the scheme has been selected from the schemes dropdown' do
-      it 'expects the business dropdown to re-populate with the businesses associated with the chosen scheme' do
-        sign_in('Admin', 'super_admin@pwpr.com', 'min700si')
-        click_link('Schemes')
-        find_by_id('2-invite_company_operator').click
-        expect(page).to have_content('Send invitation')
-        id = SecureRandom.uuid
-        fill_in 'Email', with: "#{id}@pwpr_test.com"
-        fill_in 'Name', with: 'Doc Brown'
-
-        within '#schemes_select' do
-          find("option[value='5']").click
+      if ENV['APP_HOST']
+        xit 'expects the business dropdown to re-populate with the businesses associated with the chosen scheme' do
         end
+      else
+        it 'expects the business dropdown to re-populate with the businesses associated with the chosen scheme' do
+          sign_in('Admin', 'super_admin@pwpr.com', 'min700si')
+          click_link('Schemes')
+          find_by_id('2-invite_company_operator').click
+          expect(page).to have_content('Send invitation')
+          id = SecureRandom.uuid
+          fill_in 'Email', with: "#{id}@pwpr_test.com"
+          fill_in 'Name', with: 'Doc Brown'
 
-        wait_for_ajax
+          within '#schemes_select' do
+            find("option[value='5']").click
+          end
 
-        expect(page).not_to have_select('business_select', :options => ['dans pack business'])
-        expect(page).not_to have_select('business_select', :options => ['my pack business'])
-        expect(page).not_to have_select('business_select', :options => ['pack one business'])
-        expect(page).not_to have_select('business_select', :options => ['pack for you'])
+          wait_for_ajax
 
-        expect(page).to have_select('business_select', :options => ['Synergy Business'])
+          expect(page).not_to have_select('business_select', :options => ['dans pack business'])
+          expect(page).not_to have_select('business_select', :options => ['my pack business'])
+          expect(page).not_to have_select('business_select', :options => ['pack one business'])
+          expect(page).not_to have_select('business_select', :options => ['pack for you'])
 
-        click_on 'Send an invitation'
-        expect(page).to have_content("An invitation email has been sent to #{id}@pwpr_test.com.")
+          expect(page).to have_select('business_select', :options => ['Synergy Business'])
+
+          click_on 'Send an invitation'
+          expect(page).to have_content("An invitation email has been sent to #{id}@pwpr_test.com.")
+        end
       end
     end
   end

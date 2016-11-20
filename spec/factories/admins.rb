@@ -23,9 +23,9 @@ FactoryGirl.define do
       name 'Jennifer'
       password 'my_password'
       after(:create) do |admin1|
-          admin1.add_role :normal_admin
-          permission_helper = PermissionsForRole::AdminDefinitions.new
-          permission_helper.assign_mandatory_permissions_for_role!(admin1, :normal_admin)
+        admin1.add_role :normal_admin
+        permission_helper = PermissionsForRole::AdminDefinitions.new
+        permission_helper.assign_mandatory_permissions_for_role!(admin1, :normal_admin)
       end
     end
     factory :super_admin do

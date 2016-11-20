@@ -1,6 +1,9 @@
 class BaseInvitationsController < Devise::InvitationsController
-  before_action :configure_permitted_parameters, if: :devise_controller?
   include CommonHelpers::MultiUserTypesHelper
+  include CommonHelpers::LogHelper
+
+  before_action :configure_permitted_parameters, if: :devise_controller?
+  around_action :tag_logs
 
   # GET /resource/invitation/new
   def new

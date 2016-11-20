@@ -1,23 +1,33 @@
 module CommonHelpers
   module PermissionsHelper
+    include Logging
+
     protected
 
     def modify_roles_and_permissions(resource_path)
       current = @user.role_list
 
       begin
-        remove_unselected_permissions!
+        logger.tagged('PermissionsHelper(M)') do
+          remove_unselected_permissions!
+          logger.info "modify_roles_and_permissions(#{resource_path}) - removing unselected permissions"
 
-        @user.add_role selected_role.first if selected_role.first
+          if selected_role.first
+            @user.add_role selected_role.first
+            logger.info "modify_roles_and_permissions(#{resource_path}) - add selected role: #{selected_role.first}"
+          end
 
-        add_permissions!
+          add_permissions!
+          logger.info "modify_roles_and_permissions(#{resource_path}) - removing unselected permissions"
+        end
       rescue
         roll_back_roles!(current)
-
+        logger.tagged('PermissionsHelper(M)') do
+          logger.info "[RESCUE] modify_roles_and_permissions(#{resource_path}) - rolling back permissions"
+        end
         redirect_to resource_path, flash: {error: "An error occured! User #{@user.email}'s permissions were not updated."}
         return
       end
-
       redirect_to resource_path, flash: {notice: 'Permissions updated successfully!'}
     end
 
@@ -86,13 +96,13 @@ module CommonHelpers
 
     def allowed?(definitions, permission)
       definitions.keys.include?(permission.to_sym) &&
-      !definitions[permission.to_sym][:locked]
+          !definitions[permission.to_sym][:locked]
     end
 
     def mandatory?(definitions, permission)
       definitions.keys.include?(permission.to_sym) &&
-      definitions[permission.to_sym][:checked] &&
-      definitions[permission.to_sym][:locked]
+          definitions[permission.to_sym][:checked] &&
+          definitions[permission.to_sym][:locked]
     end
   end
 end

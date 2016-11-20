@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 class BaseRegistrationsController < Devise::RegistrationsController
+  include CommonHelpers::LogHelper
+
   skip_before_action :require_no_authentication
   before_filter :authenticate_scheme_operator
   before_action :configure_permitted_parameters, if: :devise_controller?
+  around_action :tag_logs
 
   # POST /resource
   def create

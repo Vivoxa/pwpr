@@ -26,8 +26,11 @@ class CompanyOperator < ActiveRecord::Base
   private
 
   def assign_roles
-    add_role :co_user
-    permission_helper = PermissionsForRole::CompanyOperatorDefinitions.new
-    permission_helper.assign_mandatory_permissions_for_role!(self, :co_user)
+    logger.tagged('CompanyOperator(M)') do
+      logger.info "assign_roles() - adding co_user permissions to new CompanyOperator with email: #{email}"
+      add_role :co_user
+      permission_helper = PermissionsForRole::CompanyOperatorDefinitions.new
+      permission_helper.assign_mandatory_permissions_for_role!(self, :co_user)
+    end
   end
 end

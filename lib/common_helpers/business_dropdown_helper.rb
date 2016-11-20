@@ -1,12 +1,16 @@
 module CommonHelpers
   module BusinessDropdownHelper
-    def update_businesses
-      schemes = Scheme.where('id = ?', params[:scheme_id])
-      @businesses = []
-      @businesses = schemes.first.businesses if schemes.any?
+    include Logging
 
-      respond_to do |format|
-        format.js
+    def update_businesses
+      logger.tagged('BusinessDropdownHelper(Mod)') do
+        schemes = Scheme.where('id = ?', params[:scheme_id])
+        @businesses = []
+        @businesses = schemes.first.businesses if schemes.any?
+        logger.info "update_businesses() - returning businesses for dropdown for scheme_id: #{params[:scheme_id]} in js format"
+        respond_to do |format|
+          format.js
+        end
       end
     end
   end

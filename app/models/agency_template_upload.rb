@@ -1,4 +1,6 @@
 class AgencyTemplateUpload < ActiveRecord::Base
+  include CommonHelpers::LogHelper
+
   belongs_to :scheme
 
   VALID_YEARS_FOR_UPLOAD = [2010, 2011, 2012, 2013, 2014, 2015].freeze
@@ -13,9 +15,12 @@ class AgencyTemplateUpload < ActiveRecord::Base
   validates_inclusion_of :year, in: VALID_YEARS_FOR_UPLOAD
 
   def initialize(attributes = {})
-    super
-    self.filename = attributes[:filename].original_filename if attributes[:filename]
-    self.uploaded_at = DateTime.now
-    self.status = CommonHelpers::AgencyTemplateUploadStatus::PENDING
+    logger.tagged('AgencyTemplateUpload(M)') do
+      super
+      self.filename = attributes[:filename].original_filename if attributes[:filename]
+      self.uploaded_at = DateTime.now
+      self.status = CommonHelpers::AgencyTemplateUploadStatus::PENDING
+      logger.info "initialize() setting attribute values. Filename #{filename}"
+    end
   end
 end

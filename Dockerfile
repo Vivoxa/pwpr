@@ -1,10 +1,20 @@
 FROM ruby:2.3.0
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs ruby-mysql2
-RUN mkdir /pp_pwpr
-WORKDIR /pp_pwpr
-ADD Gemfile /pp_pwpr/Gemfile
-ADD Gemfile.lock /pp_pwpr/Gemfile.lock
+
+ARG COMMAND
+ENV COMMAND ${COMMAND}
+
+ARG APP_DIR
+ENV APP_DIR $APP_DIR
+
+RUN mkdir /$APP_DIR
+WORKDIR /$APP_DIR
+
+ADD rails_command.sh /$APP_DIR/rails_command.sh
+
+ADD Gemfile /$APP_DIR/Gemfile
+ADD Gemfile.lock /$APP_DIR/Gemfile.lock
 RUN bundle install
-ADD . /pp_pwpr
+ADD . /$APP_DIR
 EXPOSE 3000
-CMD bash -c "bundle && RAILS_ENV=preprod bundle exec rake db:reset && RAILS_ENV=preprod bundle exec rails s -p 3000 -b '0.0.0.0'"
+CMD bash -c "${COMMAND}"

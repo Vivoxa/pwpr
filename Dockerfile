@@ -17,4 +17,4 @@ ADD Gemfile.lock /${APP_DIR}/Gemfile.lock
 RUN bundle install
 ADD . /${APP_DIR}
 EXPOSE 3000
-CMD bash -c "RAILS_ENV=production bundle exec rake assets:precompile && RAILS_ENV=production bundle && RAILS_ENV=production bundle exec rake db:migrate && RAILS_ENV=production bundle exec rails s -p 3000 -b '0.0.0.0'"
+CMD ["/${APP_DIR}/rails_command.sh", ${APP_ENV}]

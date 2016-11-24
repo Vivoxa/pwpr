@@ -3,11 +3,11 @@ require 'bunny'
 module SpreadsheetWorker
   class Worker
     def initialize
-      @connection = Bunny.new(hostname: 'queue_rabbitmq:5672', :automatically_recover => true)
+      @connection ||= Bunny.new(hostname: 'queue_rabbitmq:5672', :automatically_recover => true)
       @connection.start
 
-      @channel   = @connection.create_channel
-      @queue    = @channel.queue("spreadsheet_processing_queue", :durable => true)
+      @channel    ||= @connection.create_channel
+      @queue      ||= @channel.queue("spreadsheet_processing_queue", :durable => true)
     end
 
     def start

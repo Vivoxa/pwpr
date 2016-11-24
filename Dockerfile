@@ -17,4 +17,4 @@ ADD Gemfile.lock /${APP_DIR}/Gemfile.lock
 RUN bundle install
 ADD . /${APP_DIR}
 EXPOSE 3000
-CMD ["${APP_DIR}/rails_command.sh", ${APP_ENV}]
+CMD ["/${APP_DIR}/rails_command.sh", ${APP_ENV}]

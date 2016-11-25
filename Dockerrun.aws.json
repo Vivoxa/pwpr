@@ -1,0 +1,18 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "054960824384.dkr.ecr.eu-west-1.amazonaws.com/pre-pwpr:v0.1.8",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": "3000"
+    }
+  ],
+  "Volumes": [
+    {
+      "HostDirectory": "/app",
+      "ContainerDirectory": "/app"
+    }
+  ]
+}

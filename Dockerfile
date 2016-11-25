@@ -17,4 +17,4 @@ ADD Gemfile.lock /$APP_DIR/Gemfile.lock
 RUN bundle install
 ADD . /$APP_DIR
 EXPOSE 3000
-CMD bash -c $COMMAND
+CMD bash -c "${COMMAND}"

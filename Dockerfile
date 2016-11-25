@@ -1,11 +1,9 @@
 FROM ruby:2.3.0
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs ruby-mysql2
 
-ARG COMMAND=local
-ENV COMMAND ${COMMAND}
+ARG COMMAND
 
-ARG APP_DIR=local
-ENV APP_DIR $APP_DIR
+ARG APP_DIR
 
 RUN mkdir /$APP_DIR
 WORKDIR /$APP_DIR

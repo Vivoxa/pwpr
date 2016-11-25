@@ -27,7 +27,7 @@ set -e
     if [[ $@ == *"--preprod"* ]] ;then
       echo ''
       echo '***********************************************************************'
-      echo '####      Logging in to AWS with pwpr-preprod credentials      #####'
+      echo '####      Logging in to AWS with pwpr-preprod credentials         #####'
       echo '***********************************************************************'
       echo ''
       eval "$(aws ecr get-login --profile pwpr-preprod --region eu-west-1)"

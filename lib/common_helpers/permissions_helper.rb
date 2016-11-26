@@ -6,7 +6,6 @@ module CommonHelpers
 
     def modify_roles_and_permissions(resource_path)
       current = @user.role_list
-
       begin
         logger.tagged('PermissionsHelper(M)') do
           remove_unselected_permissions!
@@ -20,10 +19,10 @@ module CommonHelpers
           add_permissions!
           logger.info "modify_roles_and_permissions(#{resource_path}) - removing unselected permissions"
         end
-      rescue
+      rescue => e
         roll_back_roles!(current)
         logger.tagged('PermissionsHelper(M)') do
-          logger.info "[RESCUE] modify_roles_and_permissions(#{resource_path}) - rolling back permissions"
+          logger.error "modify_roles_and_permissions(resource_path)[RESCUE] modify_roles_and_permissions(#{resource_path}) - rolling back permissions. Error: #{e.message}"
         end
         redirect_to resource_path, flash: {error: "An error occured! User #{@user.email}'s permissions were not updated."}
         return
@@ -34,6 +33,8 @@ module CommonHelpers
     private
 
     def selected_permissions
+      return [] if selected_role.empty?
+
       permissions = params[:permissions] ? params[:permissions] : []
 
       # Server side validation

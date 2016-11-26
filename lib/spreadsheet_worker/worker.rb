@@ -2,34 +2,47 @@ require 'bunny'
 
 module SpreadsheetWorker
   class Worker
-    def initialize
-      @connection ||= Bunny.new(hostname: 'queue_rabbitmq:5672', :automatically_recover => true)
-      @connection.start
+    def self.start
+      prefecth
 
-      @channel    ||= @connection.create_channel
-      @queue      ||= @channel.queue("spreadsheet_processing_queue", :durable => true)
-    end
-
-    def start
-      @channel.prefetch(1)
-      puts " [*] Waiting for messages. To exit press CTRL+C"
-
-      @queue.subscribe(:manual_ack => true, :block => true) do |delivery_info, properties, body|
-        puts " [x] Received '#{body}'"
-        # imitate some work
-        process(body)
-        sleep 1
-        puts " [x] Done"
-        @channel.ack(delivery_info.delivery_tag)
+      queue.subscribe(:manual_ack => true, :block => true) do |delivery_info, properties, body|
+        handle_event(body, delivery_info.delivery_tag)
       end
+
     rescue Interrupt => _
-      @connection.close
+      close_connection
     end
 
     private
 
-    def process(event)
+    def self.handle_event(event, delivery_tag)
+      puts " [x] Received '#{event}'"
+      # imitate some work
+      process(event)
+      sleep 1
+      puts " [x] Done"
+      acknowledge(delivery_tag)
+    end
+
+    def self.queue
+      Helper::QUEUE
+    end
+
+    def self.prefecth
+      Helper::CHANNEL.prefetch(1)
+      puts " [*] Waiting for messages. To exit press CTRL+C"
+    end
+
+    def self.process(event)
       puts " [x] Event #{event} has been processed!"
+    end
+
+    def self.acknowledge(tag)
+      Helper::CHANNEL.ack(tag)
+    end
+
+    def self.close_connection
+      Helper::CONNECTION.close
     end
   end
 end

@@ -1,8 +1,11 @@
 require 'bunny'
+require_relative 'connection_helper'
 
 module SpreadsheetWorker
   class Worker
-    def self.start
+    include ConnectionHelper
+
+    def start
       prefecth
 
       queue.subscribe(:manual_ack => true, :block => true) do |delivery_info, properties, body|
@@ -10,39 +13,37 @@ module SpreadsheetWorker
       end
 
     rescue Interrupt => _
-      close_connection
+      connection.close
     end
 
     private
 
-    def self.handle_event(event, delivery_tag)
-      puts " [x] Received '#{event}'"
+    def handle_event(event, delivery_tag)
+      log_info(" [x] Received #{event}")
       # imitate some work
       process(event)
       sleep 1
-      puts " [x] Done"
+
+      log_info(" [x] Done")
       acknowledge(delivery_tag)
+      log_info(" [*] Waiting for events...")
+
+    rescue => e
+      log_error(e)
     end
 
-    def self.queue
-      Helper::QUEUE
+    def prefecth
+      puts " [x] Worker started!"
+      channel.prefetch(1)
+      puts " [*] Waiting for events... Press CTRL+C to stop worker"
     end
 
-    def self.prefecth
-      Helper::CHANNEL.prefetch(1)
-      puts " [*] Waiting for messages. To exit press CTRL+C"
+    def process(event)
+      log_info(" [x] Event #{event} has been processed!")
     end
 
-    def self.process(event)
-      puts " [x] Event #{event} has been processed!"
-    end
-
-    def self.acknowledge(tag)
-      Helper::CHANNEL.ack(tag)
-    end
-
-    def self.close_connection
-      Helper::CONNECTION.close
+    def acknowledge(tag)
+      channel.ack(tag)
     end
   end
 end

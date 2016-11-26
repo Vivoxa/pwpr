@@ -1,26 +1,17 @@
 require 'bunny'
+require_relative 'connection_helper'
 
 module SpreadsheetWorker
   class Publisher
-    def self.publish(event)
+    include ConnectionHelper
+
+    def publish(event)
       channel.default_exchange.publish(event, :routing_key => queue.name)
-      puts " [x] Sent #{event}"
+      log_info(" [x] Sent #{event}")
 
-      close_connection
-    end
-
-    private
-
-    def self.queue
-      Helper::QUEUE
-    end
-
-    def self.channel
-      Helper::CHANNEL
-    end
-
-    def self.close_connection
-      Helper::CONNECTION.close
+      connection.close
+    rescue => e
+      log_error(e)
     end
   end
 end

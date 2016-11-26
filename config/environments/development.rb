@@ -8,6 +8,10 @@ Rails.application.configure do
   config.cache_classes = false
   config.web_console.whiny_requests = false
 
+  tl = Logger.new("log/#{Rails.env}.log")
+  tl.formatter = Logger::Formatter.new
+  config.logger = ActiveSupport::TaggedLogging.new(tl)
+
   # Do not eager load code on boot.
   config.eager_load = false
 

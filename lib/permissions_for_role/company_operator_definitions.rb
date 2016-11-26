@@ -5,6 +5,9 @@ module PermissionsForRole
                      businesses_r businesses_e).freeze
 
     def permissions_for_role(role)
+      logger.tagged('CompanyOperatorDefinitions') do
+        logger.info "permissions_for_role() Fetching permissions for role: #{role}"
+      end
       definitions[role.to_sym]
     end
 

@@ -4,6 +4,9 @@ module PermissionsForRole
     PERMISSIONS = PermissionsForRole::SharedDefinitions::SHARED_PERMISSIONS
 
     def permissions_for_role(role)
+      logger.tagged('SchemeOperatorDefinitions') do
+        logger.info "permissions_for_role() Fetching permissions for role: #{role}"
+      end
       definitions[role.to_sym]
     end
 

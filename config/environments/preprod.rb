@@ -10,6 +10,10 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
+  tl = Logger.new("log/#{Rails.env}.log")
+  tl.formatter = Logger::Formatter.new
+  config.logger = ActiveSupport::TaggedLogging.new(tl)
+
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false

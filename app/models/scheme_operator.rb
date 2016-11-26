@@ -25,8 +25,11 @@ class SchemeOperator < ActiveRecord::Base
   private
 
   def assign_roles
-    add_role :sc_user
-    permission_helper = PermissionsForRole::SchemeOperatorDefinitions.new
-    permission_helper.assign_mandatory_permissions_for_role!(self, :sc_user)
+    logger.tagged('SchemeOperator(M)') do
+      logger.info "assign_roles() - adding sc_user permissions to new SchemeOperator with email: #{email}"
+      add_role :sc_user
+      permission_helper = PermissionsForRole::SchemeOperatorDefinitions.new
+      permission_helper.assign_mandatory_permissions_for_role!(self, :sc_user)
+    end
   end
 end

@@ -1,6 +1,6 @@
 module SpreadsheetWorker
   module Exceptions
-    class InvalidMessageError < StandardError
+    class InvalidEventError < StandardError
       def initialize(message = 'Invalid Event.'.freeze)
         super(message)
       end

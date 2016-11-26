@@ -7,7 +7,7 @@ module SpreadsheetWorker
     private
 
     def queue
-      @queue ||= channel.queue(QUEUE_NAME, :durable => true)
+      @queue ||= channel.queue(QUEUE_NAME, durable: true)
     end
 
     def channel
@@ -16,7 +16,7 @@ module SpreadsheetWorker
     end
 
     def connection
-      @connection ||= Bunny.new(hostname: 'queue_rabbitmq:5672', automatically_recover: false, log_file: 'log/spreadsheet_worker.rb', log_level: :info)
+      @connection ||= Bunny.new(hostname: 'queue_rabbitmq:5672', automatically_recover: false, log_file: 'log/spreadsheet_worker.log', log_level: :info)
     end
 
     def log_error(error)

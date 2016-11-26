@@ -8,7 +8,7 @@ module SpreadsheetWorker
     def start
       prefecth
 
-      queue.subscribe(:manual_ack => true, :block => true) do |delivery_info, properties, body|
+      queue.subscribe(manual_ack: true, block: true) do |delivery_info, _properties, body|
         handle_event(body, delivery_info.delivery_tag)
       end
 
@@ -24,18 +24,18 @@ module SpreadsheetWorker
       process(event)
       sleep 1
 
-      log_info(" [x] Done")
+      log_info(' [x] Done')
       acknowledge(delivery_tag)
-      log_info(" [*] Waiting for events...")
+      log_info(' [*] Waiting for events...')
 
     rescue => e
       log_error(e)
     end
 
     def prefecth
-      puts " [x] Worker started!"
+      puts ' [x] Worker started!'
       channel.prefetch(1)
-      puts " [*] Waiting for events... Press CTRL+C to stop worker"
+      puts ' [*] Waiting for events... Press CTRL+C to stop worker'
     end
 
     def process(event)

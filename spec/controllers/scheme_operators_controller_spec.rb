@@ -200,7 +200,7 @@ RSpec.describe SchemeOperatorsController, type: :controller do
       end
 
       context 'when calling update_permissions' do
-        it 'expects a CanCan AccessDenied error to be raised' do
+        it 'expects the permissions to be updated' do
           put :update_permissions, scheme_operator_id: SchemeOperator.last.id
           expect(flash[:notice]).to eq 'Permissions updated successfully!'
           expect(response.status).to eq 302

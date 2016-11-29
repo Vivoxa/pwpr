@@ -37,7 +37,7 @@ RSpec.describe BusinessesController, type: :controller do
       sign_in co_marti
     end
     let(:valid_attributes) do
-      {scheme_id: 1, NPWD: 'kgkgk', SIC: 'khgifk', name: 'business 1', membership_id: 'mem-1', company_no: '123456789'}
+      {scheme_id: co_marti.schemes.last.id, NPWD: 'kgkgk', SIC: 'khgifk', name: 'business 1', membership_id: 'mem-1', company_no: '123456789'}
     end
 
     let(:invalid_attributes) do
@@ -52,7 +52,7 @@ RSpec.describe BusinessesController, type: :controller do
     describe 'GET #index' do
       it 'assigns all businesses as @businesses' do
         business = Business.create! valid_attributes
-        get :index, params: {}, session: valid_session
+        get :index, scheme_id: co_marti.schemes.last.id, session: valid_session
         business_ids = assigns(:businesses).map(&:id)
         expect(business_ids).to include(business.id)
       end

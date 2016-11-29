@@ -2,12 +2,10 @@ require 'bunny'
 
 module SpreadsheetWorker
   module ConnectionHelper
-    QUEUE_NAME = 'spreadsheet_processing_queue'.freeze
-
     private
 
     def queue
-      @queue ||= channel.queue(QUEUE_NAME, durable: true)
+      @queue ||= channel.queue(queue_params)
     end
 
     def channel
@@ -18,7 +16,7 @@ module SpreadsheetWorker
     end
 
     def connection
-      @connection ||= Bunny.new(hostname: 'queue_rabbitmq:5672', automatically_recover: false, log_file: 'log/spreadsheet_worker.log', log_level: :info)
+      @connection ||= Bunny.new(connection_params)
     end
 
     def log(level, msg)
@@ -27,6 +25,22 @@ module SpreadsheetWorker
 
     def logger_levels
       { error: Logger::ERROR, warning: Logger::WARN, info: Logger::INFO }
+    end
+
+    def connection_params
+      {
+        hostname: ENV['SPREADSHEET_QUEUE_HOST'],
+        automatically_recover: false,
+        log_file: ENV['SPREADSHEET_WORKER_LOG_PATH'],
+        log_level: :info
+      }
+    end
+
+    def queue_params
+      {
+        ENV['SPREADSHEET_QUEUE_NAME'],
+        durable: true
+      }
     end
   end
 end

@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe SpreadsheetWorker::Worker do
-  let(:bunny) { Bunny.new(hostname: 'queue_rabbitmq:5672', automatically_recover: false, log_file: 'log/spreadsheet_worker.log', log_level: :info) }
+  let(:bunny) { Bunny.new(hostname: 'queue_rabbitmq:5672',
+                          automatically_recover: false,
+                          log_file: 'log/spreadsheet_worker.log',
+                          log_level: :info) }
   let(:channel) { double(Bunny::Channel) }
   let(:queue) { double(Bunny::Queue) }
   let(:event) { 'event message' }

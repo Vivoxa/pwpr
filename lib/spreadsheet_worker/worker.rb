@@ -6,7 +6,7 @@ module SpreadsheetWorker
     include ConnectionHelper
 
     def start
-      prefecth
+      prefetch
 
       queue.subscribe(manual_ack: true, block: true) do |delivery_info, _properties, body|
         handle_event(body, delivery_info.delivery_tag)
@@ -14,32 +14,33 @@ module SpreadsheetWorker
 
     rescue Interrupt => _
       connection.close
+      puts " [x] Connection closed!"
     end
 
     private
 
     def handle_event(event, delivery_tag)
-      log_info(" [x] Received #{event}")
+      log(:info, " [x] Received '#{event}'")
       # imitate some work
       process(event)
       sleep 1
 
       log_info(' [x] Done')
       acknowledge(delivery_tag)
-      log_info(' [*] Waiting for events...')
+      log(:info, ' [*] Waiting for events...')
 
     rescue => e
-      log_error(e)
+      log(:error, e)
     end
 
-    def prefecth
+    def prefetch
       puts ' [x] Worker started!'
       channel.prefetch(1)
       puts ' [*] Waiting for events... Press CTRL+C to stop worker'
     end
 
     def process(event)
-      log_info(" [x] Event #{event} has been processed!")
+      log(:info, " [x] Event '#{event}' has been processed!")
     end
 
     def acknowledge(tag)

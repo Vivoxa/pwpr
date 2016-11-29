@@ -6,12 +6,14 @@ module SpreadsheetWorker
     include ConnectionHelper
 
     def publish(event)
+      # binding.pry
       channel.default_exchange.publish(event, routing_key: queue.name)
-      log_info(" [x] Sent #{event}")
+      log(:info, " [x] Sent event: '#{event}'")
 
       connection.close
+      log(:info, " [x] Connection closed!")
     rescue => e
-      log_error(e)
+      log(:error, e)
     end
   end
 end

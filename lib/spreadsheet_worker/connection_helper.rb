@@ -12,6 +12,8 @@ module SpreadsheetWorker
 
     def channel
       connection.start
+      log(:info, " [x] Connection started!")
+
       connection.create_channel
     end
 
@@ -19,12 +21,12 @@ module SpreadsheetWorker
       @connection ||= Bunny.new(hostname: 'queue_rabbitmq:5672', automatically_recover: false, log_file: 'log/spreadsheet_worker.log', log_level: :info)
     end
 
-    def log_error(error)
-      connection.logger.log(3, error)
+    def log(level, msg)
+      connection.logger.log(logger_levels[level], msg)
     end
 
-    def log_info(msg)
-      connection.logger.log(1, msg)
+    def logger_levels
+      { error: Logger::ERROR, warning: Logger::WARN, info: Logger::INFO }
     end
   end
 end

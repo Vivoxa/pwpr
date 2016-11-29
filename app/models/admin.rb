@@ -20,8 +20,11 @@ class Admin < ActiveRecord::Base
   private
 
   def assign_roles
-    add_role :restricted_admin
-    permission_helper = PermissionsForRole::AdminDefinitions.new
-    permission_helper.assign_mandatory_permissions_for_role!(self, :restricted_admin)
+    logger.tagged('Admin(M)') do
+      logger.info "assign_roles() - adding restricted_admin permissions to new Admin with email: #{email}"
+      add_role :restricted_admin
+      permission_helper = PermissionsForRole::AdminDefinitions.new
+      permission_helper.assign_mandatory_permissions_for_role!(self, :restricted_admin)
+    end
   end
 end

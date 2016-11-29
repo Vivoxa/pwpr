@@ -4,6 +4,9 @@ module PermissionsForRole
     PERMISSIONS = %w(admins_r admins_w admins_e admins_d).freeze + PermissionsForRole::SharedDefinitions::SHARED_PERMISSIONS
 
     def permissions_for_role(role)
+      logger.tagged('AdminDefinitions') do
+        logger.info "permissions_for_role() Fetching permissions for role: #{role}"
+      end
       definitions[role.to_sym]
     end
 

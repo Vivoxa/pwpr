@@ -36,4 +36,4 @@ production:
   database: prod_pwpr_db
   username: adm1n_pwpr
   password: <%= ENV['PROD_PWPR_DATABASE_PASSWORD'] %>
-  host:
+  host: prod-pwpr.cxqoahvcv0qv.eu-west-1.rds.amazonaws.com

@@ -37,9 +37,6 @@ class AgencyTemplateUploadsController < ApplicationController
         upload_to_s3(upload)
         upload.save!
         delete_file_from_server
-        event = 'file uploaded'
-        publisher = SpreadsheetWorker::Publisher.new
-        publisher.publish(event)
       end
 
       redirect_to action: :index, notice: "#{upload.class} was successfully created."

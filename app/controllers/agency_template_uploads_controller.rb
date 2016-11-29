@@ -29,7 +29,7 @@ class AgencyTemplateUploadsController < ApplicationController
     attributes = attributes.merge(params_to_sym)
     upload = AgencyTemplateUpload.new(attributes)
 
-    if upload.save
+    if accepted_format?(upload_params[:filename]) && upload.save
       transfer_file_to_server
 
       if File.exist?(path_to_save_file)
@@ -53,6 +53,7 @@ class AgencyTemplateUploadsController < ApplicationController
     agency_template_handler = S3::AgencyTemplateAwsHandler.new
     if agency_template_handler.put(upload)
       flash.notice = "#{upload.filename} uploaded successfully"
+      binding.pry
     else
       flash.alert = "#{upload.filename} did not upload"
     end
@@ -79,6 +80,14 @@ class AgencyTemplateUploadsController < ApplicationController
     devise_parameter_sanitizer.permit(:agency_template_upload) do |user_params|
       user_params.permit(:year, :filename, :scheme_id)
     end
+  end
+
+  def accepted_format?(file)
+    accepted_file_types.include? File.extname(file.original_filename)
+  end
+
+  def accepted_file_types
+    ['.xls', '.xlsx']
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

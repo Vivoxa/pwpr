@@ -5,7 +5,7 @@ module SpreadsheetWorker
     private
 
     def queue
-      @queue ||= channel.queue(queue_params)
+      @queue ||= channel.queue(ENV['SPREADSHEET_QUEUE_NAME'], durable: true)
     end
 
     def channel
@@ -33,13 +33,6 @@ module SpreadsheetWorker
         automatically_recover: false,
         log_file: ENV['SPREADSHEET_WORKER_LOG_PATH'],
         log_level: :info
-      }
-    end
-
-    def queue_params
-      {
-        ENV['SPREADSHEET_QUEUE_NAME'],
-        durable: true
       }
     end
   end

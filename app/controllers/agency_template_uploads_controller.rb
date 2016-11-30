@@ -29,7 +29,13 @@ class AgencyTemplateUploadsController < ApplicationController
     attributes = attributes.merge(params_to_sym)
     upload = AgencyTemplateUpload.new(attributes)
 
-    if accepted_format?(upload_params[:filename]) && upload.save
+    unless accepted_format?(upload_params[:filename])
+      flash.alert = "ERROR: Unsupported file type!'#{upload.filename}'' was not uploaded!"
+      redirect_to action: :index
+      return
+    end
+
+    if upload.save
       transfer_file_to_server
 
       if File.exist?(path_to_save_file)
@@ -39,7 +45,7 @@ class AgencyTemplateUploadsController < ApplicationController
         delete_file_from_server
       end
 
-      redirect_to action: :index, notice: "#{upload.class} was successfully created."
+      redirect_to action: :index, notice: "#{upload.class} was successfully uploaded!"
     else
       @scheme = Scheme.find_by_id(params[:scheme_id])
       @upload = upload
@@ -52,10 +58,9 @@ class AgencyTemplateUploadsController < ApplicationController
   def upload_to_s3(upload)
     agency_template_handler = S3::AgencyTemplateAwsHandler.new
     if agency_template_handler.put(upload)
-      flash.notice = "#{upload.filename} uploaded successfully"
-      binding.pry
+      flash.notice = "'#{upload.filename}' uploaded successfully!"
     else
-      flash.alert = "#{upload.filename} did not upload"
+      flash.alert = "'#{upload.filename}' was not uploaded!"
     end
   end
 
@@ -87,7 +92,7 @@ class AgencyTemplateUploadsController < ApplicationController
   end
 
   def accepted_file_types
-    ['.xls', '.xlsx']
+    ['.xls']
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

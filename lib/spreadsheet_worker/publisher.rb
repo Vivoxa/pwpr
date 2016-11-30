@@ -6,7 +6,6 @@ module SpreadsheetWorker
     include ConnectionHelper
 
     def publish(event)
-      # binding.pry
       channel.default_exchange.publish(event, routing_key: queue.name)
       log(:info, " [x] Sent event: '#{event}'")
 

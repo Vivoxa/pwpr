@@ -13,10 +13,10 @@ module S3
       obj = s3.bucket(bucket_name).object(s3_desired_filename)
 
       # Upload it
-      obj.upload_file(server_file_path(agency_template_upload))
+      success = obj.upload_file(server_file_path(agency_template_upload))
 
       # Publish event to spreadsheet_queue for later processing
-      publish_uploaded_notification(s3_build_filename(agency_template_upload))
+      publish_uploaded_notification(s3_build_filename(agency_template_upload)) if success
     end
 
     private

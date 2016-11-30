@@ -24,6 +24,9 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
 
     co_marti.save
     sign_in co_marti
+
+    # This will need to better be included in the spec once we have a process
+    allow_any_instance_of(SpreadsheetWorker::Publisher).to receive(:publish).and_return true
   end
 
   after do
@@ -88,19 +91,19 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
   end
 
   describe 'POST #create' do
-    let(:filename) { double('file', original_filename: 'my original filename', tempfile: double('tempfile', path: 'my temp file')) }
+    let(:filename) { double('file', original_filename: 'my original filename.xls', tempfile: double('tempfile', path: 'my temp file.xls')) }
 
     before do
-      allow(FileUtils).to receive(:cp).with('my temp file', 'public/my original filename')
+      allow(FileUtils).to receive(:cp).with('my temp file.xls', 'public/my original filename.xls')
       allow(File).to receive(:exist?).and_return true
       ENV['AWS_REGION'] = 'eu-west-1'
     end
 
     context 'when correct values are present' do
       before do
-        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename').and_return(true)
+        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename.xls').and_return(true)
         allow(subject).to receive(:upload_params).and_return(year: 2015, filename: filename)
-        expect { post :create, agency_template_upload:  {year: 2015, filename: 'feef'}, scheme_id: 1 }.to change { AgencyTemplateUpload.count }.by(1)
+        expect { post :create, agency_template_upload:  {year: 2015, filename: 'feef.xls'}, scheme_id: 1 }.to change { AgencyTemplateUpload.count }.by(1)
       end
       it 'responds with 302' do
         expect(response.status).to eq 302
@@ -115,7 +118,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
       end
 
       it 'expects the filename to be assigned correctly' do
-        expect(AgencyTemplateUpload.last.filename).to eq 'my original filename'
+        expect(AgencyTemplateUpload.last.filename).to eq 'my original filename.xls'
       end
 
       it 'expects the uploaded_by_id to be correct' do
@@ -127,7 +130,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
       end
 
       it 'expects the user to see a flash message' do
-        expect(flash[:notice]).to eq 'my original filename uploaded successfully'
+        expect(flash[:notice]).to eq "'my original filename.xls' uploaded successfully!"
       end
 
       it 'expects the scheme_id to be correct' do
@@ -141,23 +144,36 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
 
     context 'when the upload is NOT successful' do
       before do
-        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename').and_return(false)
+        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename.xls').and_return(false)
         allow(subject).to receive(:upload_params).and_return(year: 2015, filename: filename)
       end
       it 'expects the user to see a flash message' do
-        post :create, agency_template_upload:  {year: 2015, filename: 'feef'}, scheme_id: 1
-        expect(flash[:alert]).to eq 'my original filename did not upload'
+        post :create, agency_template_upload:  {year: 2015, filename: 'feef.xls'}, scheme_id: 1
+        expect(flash[:alert]).to eq "'my original filename.xls' was not uploaded!"
       end
     end
 
     context 'when a value is missing' do
       before do
         allow(subject).to receive(:upload_params).and_return(year: nil, filename: filename)
-        expect { post :create, agency_template_upload:  {year: 2015, filename: 'feef'}, scheme_id: 1 }.not_to change { AgencyTemplateUpload.count }
+        expect { post :create, agency_template_upload:  {year: 2015, filename: 'feef.xsl'}, scheme_id: 1 }.not_to change { AgencyTemplateUpload.count }
       end
       it 'responds to be redirect' do
         expect(assigns(:upload).errors[:year].first).to eq "can't be blank"
         expect(assigns(:upload).errors[:year].second).to eq 'is not included in the list'
+      end
+    end
+
+    context 'when the file extention is invalid' do
+      let(:invalid_filename) { double('file', original_filename: 'my original filename.abc', tempfile: double('tempfile', path: 'my temp file.abc')) }
+
+      before do
+        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename.abc').and_return(false)
+        allow(subject).to receive(:upload_params).and_return(year: 2015, filename: invalid_filename)
+      end
+      it 'expects the user to see a flash message' do
+        post :create, agency_template_upload:  {year: 2015, filename: 'feef.abc'}, scheme_id: 1
+        expect(flash[:alert]).to eq "ERROR: Unsupported file type!'my original filename.abc'' was not uploaded!"
       end
     end
   end

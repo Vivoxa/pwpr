@@ -8,7 +8,7 @@ RSpec.describe SpreadsheetWorker::Publisher do
   let(:queue_name) { 'test_queue_name' }
 
   context 'when publishing an event' do
-    before :each do
+    before do
       allow(Bunny).to receive(:new).and_return bunny
       allow(bunny).to receive(:start).and_return true
       allow(bunny).to receive(:create_channel).and_return channel
@@ -16,7 +16,7 @@ RSpec.describe SpreadsheetWorker::Publisher do
       allow(queue).to receive(:name).and_return queue_name
     end
 
-    after :each do
+    after do
       subject.publish(event)
     end
 

@@ -14,7 +14,7 @@ module SpreadsheetWorker
 
     rescue Interrupt => _
       connection.close
-      puts " [x] Connection closed!"
+      puts ' [x] Connection closed!'
     end
 
     private

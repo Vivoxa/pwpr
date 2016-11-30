@@ -10,7 +10,7 @@ module SpreadsheetWorker
 
     def channel
       connection.start
-      log(:info, " [x] Connection started!")
+      log(:info, ' [x] Connection started!')
 
       connection.create_channel
     end
@@ -24,15 +24,15 @@ module SpreadsheetWorker
     end
 
     def logger_levels
-      { error: Logger::ERROR, warning: Logger::WARN, info: Logger::INFO }
+      {error: Logger::ERROR, warning: Logger::WARN, info: Logger::INFO}
     end
 
     def connection_params
       {
-        hostname: ENV['SPREADSHEET_QUEUE_HOST'],
+        hostname:              ENV['SPREADSHEET_QUEUE_HOST'],
         automatically_recover: false,
-        log_file: ENV['SPREADSHEET_WORKER_LOG_PATH'],
-        log_level: :info
+        log_file:              ENV['SPREADSHEET_WORKER_LOG_PATH'],
+        log_level:             :info
       }
     end
   end

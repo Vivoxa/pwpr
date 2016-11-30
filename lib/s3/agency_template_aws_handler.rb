@@ -22,8 +22,8 @@ module S3
     private
 
     def publish_uploaded_notification(file_path)
-        publisher = SpreadsheetWorker::Publisher.new
-        publisher.publish(file_path)
+      publisher = SpreadsheetWorker::Publisher.new
+      publisher.publish(file_path)
     end
 
     def server_file_path(agency_template_upload)

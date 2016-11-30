@@ -10,7 +10,7 @@ module SpreadsheetWorker
       log(:info, " [x] Sent event: '#{event}'")
 
       connection.close
-      log(:info, " [x] Connection closed!")
+      log(:info, ' [x] Connection closed!')
     rescue => e
       log(:error, e)
     end

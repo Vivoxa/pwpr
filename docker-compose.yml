@@ -1,5 +1,10 @@
 version: '2'
 services:
+  queue_rabbit:
+    image: library/rabbitmq:3-management
+    container_name: queue_rabbitmq
+    ports:
+     - "15672:15672"
   app:
     build: .
     command: bash -c "bundle && RAILS_ENV=development bundle exec rake db:reset && RAILS_ENV=development bundle exec rails s -p 3000 -b '0.0.0.0'"
@@ -13,6 +18,10 @@ services:
       - AWS_ACCESS_KEY_ID=AKIAIEYHGYE3AVY27YHQ
       - AWS_SECRET_ACCESS_KEY=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
       - AWS_REGION=eu-west-1
+      - SPREADSHEET_QUEUE_NAME=spreadsheet_processing_queue
+      - SPREADSHEET_QUEUE_HOST=queue_rabbitmq:5672
+      - SPREADSHEET_WORKER_LOG_PATH=log/spreadsheet_worker.log
+      -
     volumes:
       - .:/pp_pwpr
     ports:
@@ -20,6 +29,7 @@ services:
     links:
       - db
       - mail_server
+      - queue_rabbit
     depends_on:
       - db
       - mail_server

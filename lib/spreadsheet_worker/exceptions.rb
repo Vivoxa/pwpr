@@ -1,0 +1,1 @@
+require_relative 'exceptions/invalid_event_error'

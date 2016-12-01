@@ -1,0 +1,73 @@
+registrations:
+  change_to_member_application_or_obligation:
+  resubmission_reason:
+  scheme_ref:
+  npwd:
+  company_name:
+  company_type:
+  company_subtype:
+  company_house_no:
+
+  registered:
+    address_1:
+    address_2:
+    address_3:
+    address_4:
+    town:
+    postal_code:
+    country:
+    phone:
+    fax:
+    email:
+
+  correspondence:
+    address_1:
+    address_2:
+    address_3:
+    address_4:
+    town:
+    postal_code:
+    phone:
+    fax:
+    email:
+
+  sic_code:
+  packaging_sector_main_activity:
+  turnover:
+  licensor:
+
+  allocation:
+    method_used:
+    method_obligation:
+    method_material:
+    predominant_material:
+
+  calculation_or_other_method:
+  other_method_details:
+
+  calculation_method:
+    suplier_data:
+    sample_weighing:
+    sales_records:
+
+  trade_assoc_method:
+  consultant_or_data_system_used:
+  name_of_consultant_or_data_system:
+
+  contact:
+    title:
+    first_name:
+    last_name:
+    email:
+    phone:
+    fax:
+    audit:
+      address_1:
+      address_2:
+      address_3:
+      address_4:
+      town:
+      postal_code:
+      country:
+      phone:
+

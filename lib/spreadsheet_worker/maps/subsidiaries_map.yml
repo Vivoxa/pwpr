@@ -1,0 +1,51 @@
+subsidiaries:
+  change_to_subsidiary_data:
+  registration_company_scheme_ref:
+  scheme_ref:
+  registration_company_npwd:
+  subsidiary_npwd:
+  registration_company_name:
+  subsidiary_company_name:
+  company_house_no:
+
+  registered:
+    address_1:
+    address_2:
+    address_3:
+    address_4:
+    town:
+    postal_code:
+    country:
+    phone:
+    fax:
+    email:
+
+  correspondence:
+    address_1:
+    address_2:
+    address_3:
+    address_4:
+    town:
+    postal_code:
+    phone:
+    fax:
+    email:
+
+  sic_code:
+  packaging_sector_main_activity:
+  turnover:
+  licensor:
+
+  allocation:
+    method_used:
+    method_obligation:
+    method_material:
+    predominant_material:
+
+  contact:
+    title:
+    first_name:
+    last_name:
+    email:
+    phone:
+

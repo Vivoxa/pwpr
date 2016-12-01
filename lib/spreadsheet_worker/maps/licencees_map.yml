@@ -1,0 +1,29 @@
+licencees:
+  scheme_ref:
+  registration_company_npwd:
+  registration_company_name:
+  company_house_no:
+  licencee_scheme_ref_number:
+
+  registered:
+    address_1:
+    address_2:
+    address_3:
+    address_4:
+    town:
+    postal_code:
+    country:
+    phone:
+    fax:
+    email:
+
+  contact:
+    first_name:
+    last_name:
+    email:
+    phone:
+    address_1:
+    address_2:
+    address_3:
+    town:
+    postal_code:

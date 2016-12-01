@@ -1,6 +1,6 @@
 joiners:
-  scheme_ref: abcd
-  npwd: abcd
+  scheme_ref:
+  npwd:
   company_name:
   company_house_no:
   allocation_method_used:

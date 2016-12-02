@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161105080056) do
+ActiveRecord::Schema.define(version: 20161202214315) do
+
+  create_table "address_types", force: :cascade do |t|
+    t.string   "title",       limit: 255, null: false
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -45,6 +52,20 @@ ActiveRecord::Schema.define(version: 20161105080056) do
   end
 
   add_index "agency_template_uploads", ["scheme_id"], name: "index_agency_template_uploads_on_scheme_id", using: :btree
+
+  create_table "business_subtype_codes", force: :cascade do |t|
+    t.string   "name",        limit: 255, null: false
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "business_type_codes", force: :cascade do |t|
+    t.string   "name",        limit: 255, null: false
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "businesses", force: :cascade do |t|
     t.string   "name",          limit: 255
@@ -100,6 +121,27 @@ ActiveRecord::Schema.define(version: 20161105080056) do
   add_index "company_operators", ["invited_by_id"], name: "index_company_operators_on_invited_by_id", using: :btree
   add_index "company_operators", ["reset_password_token"], name: "index_company_operators_on_reset_password_token", unique: true, using: :btree
 
+  create_table "leaving_codes", force: :cascade do |t|
+    t.string   "code",       limit: 255, null: false
+    t.string   "reason",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "packaging_sector_activities", force: :cascade do |t|
+    t.string   "type",        limit: 255, null: false
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "registration_status_codes", force: :cascade do |t|
+    t.string   "status",      limit: 255, null: false
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
   create_table "royce_connector", force: :cascade do |t|
     t.integer  "roleable_id",   limit: 4,   null: false
     t.string   "roleable_type", limit: 255, null: false
@@ -118,6 +160,12 @@ ActiveRecord::Schema.define(version: 20161105080056) do
   end
 
   add_index "royce_role", ["name"], name: "index_royce_role_on_name", using: :btree
+
+  create_table "scheme_country_codes", force: :cascade do |t|
+    t.string   "country",    limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "scheme_operators", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "",    null: false
@@ -162,6 +210,13 @@ ActiveRecord::Schema.define(version: 20161105080056) do
 
   add_index "scheme_operators_schemes", ["scheme_id"], name: "index_scheme_operators_schemes_on_scheme_id", using: :btree
   add_index "scheme_operators_schemes", ["scheme_operator_id"], name: "index_scheme_operators_schemes_on_scheme_operator_id", using: :btree
+
+  create_table "scheme_status_codes", force: :cascade do |t|
+    t.string   "status",      limit: 255, null: false
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "schemes", force: :cascade do |t|
     t.string   "name",       limit: 255

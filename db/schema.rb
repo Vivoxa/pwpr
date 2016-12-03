@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161202214315) do
+ActiveRecord::Schema.define(version: 20161203165342) do
 
   create_table "address_types", force: :cascade do |t|
     t.string   "title",       limit: 255, null: false
@@ -19,6 +19,26 @@ ActiveRecord::Schema.define(version: 20161202214315) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
+
+  create_table "addresses", force: :cascade do |t|
+    t.integer  "business_id",     limit: 4
+    t.integer  "address_type_id", limit: 4
+    t.string   "address_line_1",  limit: 255
+    t.string   "address_line_2",  limit: 255
+    t.string   "address_line_3",  limit: 255
+    t.string   "address_line_4",  limit: 255
+    t.string   "post_code",       limit: 255
+    t.string   "county",          limit: 255
+    t.string   "site_country",    limit: 255
+    t.string   "telephone",       limit: 255
+    t.string   "fax",             limit: 255
+    t.string   "email",           limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "addresses", ["address_type_id"], name: "fk_rails_ba54156fb6", using: :btree
+  add_index "addresses", ["business_id"], name: "fk_rails_493c8e25df", using: :btree
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -53,14 +73,14 @@ ActiveRecord::Schema.define(version: 20161202214315) do
 
   add_index "agency_template_uploads", ["scheme_id"], name: "index_agency_template_uploads_on_scheme_id", using: :btree
 
-  create_table "business_subtype_codes", force: :cascade do |t|
+  create_table "business_subtypes", force: :cascade do |t|
     t.string   "name",        limit: 255, null: false
     t.string   "description", limit: 255
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
 
-  create_table "business_type_codes", force: :cascade do |t|
+  create_table "business_types", force: :cascade do |t|
     t.string   "name",        limit: 255, null: false
     t.string   "description", limit: 255
     t.datetime "created_at",              null: false
@@ -68,14 +88,25 @@ ActiveRecord::Schema.define(version: 20161202214315) do
   end
 
   create_table "businesses", force: :cascade do |t|
-    t.string   "name",          limit: 255
-    t.string   "membership_id", limit: 255
-    t.string   "company_no",    limit: 255
-    t.string   "NPWD",          limit: 255
-    t.string   "SIC",           limit: 255
-    t.integer  "scheme_id",     limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "name",                        limit: 255
+    t.string   "membership_id",               limit: 255
+    t.string   "company_no",                  limit: 255
+    t.string   "NPWD",                        limit: 255
+    t.string   "SIC",                         limit: 255
+    t.integer  "scheme_id",                   limit: 4
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.string   "membership_number",           limit: 255
+    t.string   "trading_name",                limit: 255
+    t.string   "company_number",              limit: 255
+    t.integer  "business_type_id",            limit: 4
+    t.integer  "business_subtype_id",         limit: 4
+    t.integer  "sic_code_id",                 limit: 4
+    t.string   "country_of_regitration",      limit: 255
+    t.string   "year_first_reg",              limit: 255
+    t.string   "year_last_reg",               limit: 255
+    t.integer  "scheme_status_code_id",       limit: 4
+    t.integer  "registration_status_code_id", limit: 4
   end
 
   add_index "businesses", ["scheme_id"], name: "index_businesses_on_scheme_id", using: :btree
@@ -219,12 +250,16 @@ ActiveRecord::Schema.define(version: 20161202214315) do
   end
 
   create_table "schemes", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name",                   limit: 255
     t.boolean  "active"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "scheme_ref",             limit: 255
+    t.integer  "scheme_country_code_id", limit: 4
   end
 
+  add_foreign_key "addresses", "address_types"
+  add_foreign_key "addresses", "businesses"
   add_foreign_key "agency_template_uploads", "schemes"
   add_foreign_key "businesses", "schemes"
   add_foreign_key "company_operators", "businesses"

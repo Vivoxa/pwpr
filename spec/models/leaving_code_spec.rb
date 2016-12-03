@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe LeavingCode, type: :model do
-  it {should have_many(:leavers)}
+  context 'Associations' do
+    describe '#has_many' do
+      it {should have_many(:leavers)}
+    end
+  end
 end

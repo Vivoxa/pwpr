@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe RegistrationStatusCode, type: :model do
-  it {should have_many(:registrations)}
+  context 'Associations' do
+    describe '#has_many' do
+      it {should have_many(:registrations)}
+    end
+  end
 end

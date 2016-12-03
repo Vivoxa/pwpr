@@ -5,4 +5,6 @@ class Scheme < ActiveRecord::Base
   has_many :agency_template_uploads, dependent: :destroy
 
   has_and_belongs_to_many :scheme_operators
+
+  # validates_presence_of :scheme_country_code_id
 end

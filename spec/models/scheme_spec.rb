@@ -16,4 +16,10 @@ RSpec.describe Scheme, type: :model do
       it {should have_and_belong_to_many(:scheme_operators)}
     end
   end
+
+  context 'Validations' do
+    # describe '#validates_presence_of' do
+    #   it {should validate_presence_of(:scheme_country_code_id)}
+    # end
+  end
 end

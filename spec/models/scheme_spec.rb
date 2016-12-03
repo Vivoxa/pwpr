@@ -2,5 +2,18 @@
 require 'rails_helper'
 
 RSpec.describe Scheme, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'Associtations' do
+    describe '#belongs_to' do
+      it {should belong_to(:scheme_country_code)}
+    end
+
+    describe '#has_many' do
+      it {should have_many(:businesses)}
+      it {should have_many(:agency_template_uploads)}
+    end
+
+    describe '#has_and_belongs_to_many' do
+      it {should have_and_belong_to_many(:scheme_operators)}
+    end
+  end
 end

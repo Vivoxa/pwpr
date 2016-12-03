@@ -1,4 +1,4 @@
 class Address < ActiveRecord::Base
-  has_many :businesses
-  has_many :addresses
+  belongs_to :business
+  belongs_to :address_type
 end

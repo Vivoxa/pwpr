@@ -1,6 +1,6 @@
 class CreateBusinessTypes < ActiveRecord::Migration
   def change
-    create_table :business_type_codes do |t|
+    create_table :business_types do |t|
       t.string :name, null: false
       t.string :description
 

@@ -1,3 +1,3 @@
-class BusinessTypes < ActiveRecord::Base
+class BusinessType < ActiveRecord::Base
   has_many :businesses
 end

@@ -21,7 +21,6 @@ services:
       - SPREADSHEET_QUEUE_NAME=spreadsheet_processing_queue
       - SPREADSHEET_QUEUE_HOST=queue_rabbitmq:5672
       - SPREADSHEET_WORKER_LOG_PATH=log/spreadsheet_worker.log
-      -
     volumes:
       - .:/pp_pwpr
     ports:

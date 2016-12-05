@@ -9,6 +9,6 @@ class Business < ActiveRecord::Base
   has_many :company_operators, dependent: :destroy
   has_many :addresses
 
-  validates_presence_of :NPWD, :scheme_id#, :business_type_id, :business_subtype_id,
-                        #:scheme_status_code_id, :registration_status_code_id, :sic_code_id
+  validates_presence_of :NPWD, :scheme_id # , :business_type_id, :business_subtype_id,
+  #:scheme_status_code_id, :registration_status_code_id, :sic_code_id
 end

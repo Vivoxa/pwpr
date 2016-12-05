@@ -90,7 +90,7 @@ RSpec.describe SchemeOperator, type: :model do
 
   context 'Abitlites' do
     let(:scheme_operator) do
-      SchemeOperator.create(first_name:                 'rspec owner',
+      SchemeOperator.create(first_name:           'rspec owner',
                             email:                'rspec@test.com',
                             password:             'my_password',
                             confirmation_token:   '12345678912345678912',

@@ -310,7 +310,7 @@ DEPENDENCIES
   pry-byebug
   rails (= 4.2.7)
   rails-assets-tether (>= 1.1.0)!
-  renogen
+  renogen (= 1.2.0)
   royce
   rspec-rails
   rubocop

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161204211956) do
+ActiveRecord::Schema.define(version: 20161205190001) do
 
   create_table "address_types", force: :cascade do |t|
     t.string   "title",       limit: 255, null: false
@@ -407,6 +407,16 @@ ActiveRecord::Schema.define(version: 20161204211956) do
     t.datetime "updated_at",                  null: false
   end
 
+  create_table "small_producer_details", force: :cascade do |t|
+    t.integer  "registration_id",                        limit: 4
+    t.string   "allocation_method_predominant_material", limit: 255
+    t.string   "allocation_method_obligation",           limit: 255
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+  end
+
+  add_index "small_producer_details", ["registration_id"], name: "fk_rails_dbdafa2a38", using: :btree
+
   create_table "subsidiaries", force: :cascade do |t|
     t.integer  "business_id",               limit: 4
     t.integer  "agency_template_upload_id", limit: 4
@@ -475,6 +485,7 @@ ActiveRecord::Schema.define(version: 20161204211956) do
   add_foreign_key "registrations", "packaging_sector_main_activities"
   add_foreign_key "registrations", "sic_codes"
   add_foreign_key "regular_producer_details", "registrations"
+  add_foreign_key "small_producer_details", "registrations"
   add_foreign_key "subsidiaries", "agency_template_uploads"
   add_foreign_key "subsidiaries", "businesses"
   add_foreign_key "target_totals", "regular_producer_details"

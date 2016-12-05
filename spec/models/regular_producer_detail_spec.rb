@@ -8,7 +8,7 @@ RSpec.describe RegularProducerDetail, type: :model do
 
     describe '#has_many' do
       it {is_expected.to have_many(:material_totals)}
-      it {is_expected.to have_many(:material_data)}
+      it {is_expected.to have_many(:material_details)}
       it {is_expected.to have_many(:target_totals)}
     end
   end

@@ -4,7 +4,6 @@ FactoryGirl.define do
     membership_id 'MyString'
     company_no 'MyString'
     NPWD 'MyString'
-    SIC 'MyString'
     scheme_id 1
   end
 end

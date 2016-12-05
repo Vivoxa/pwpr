@@ -1,4 +1,5 @@
 changelog_path: './change_log/'
+default_headings:
   - Improvements
   - Minor Improvements
   - Bugs

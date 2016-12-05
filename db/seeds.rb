@@ -108,7 +108,7 @@ end
                                        invitation_accepted_at: DateTime.now,
                                        confirmation_sent_at: DateTime.now - 5.days,
                                        confirmed_at: DateTime.now,
-                                       name: "sc_director_#{index}",
+                                       first_name: "sc_director_#{index}",
                                        approved: true,
                                        scheme_ids: schemes[0].id})
 
@@ -126,7 +126,7 @@ end
                                          invitation_accepted_at: DateTime.now,
                                          confirmation_sent_at: DateTime.now - 5.days,
                                          confirmed_at: DateTime.now,
-                                         name: "sc_super_user_#{index}",
+                                         first_name: "sc_super_user_#{index}",
                                          approved: true,
                                          scheme_ids: [schemes[1].id, schemes[2].id]})
 
@@ -144,7 +144,7 @@ end
                                    invitation_accepted_at: DateTime.now,
                                    confirmation_sent_at: DateTime.now - 5.days,
                                    confirmed_at: DateTime.now,
-                                   name: "sc_user_#{index}",
+                                   first_name: "sc_user_#{index}",
                                    approved: true,
                                    scheme_ids: [schemes[3].id, schemes[4].id]})
 
@@ -162,7 +162,7 @@ end
                                         invitation_accepted_at: DateTime.now,
                                         confirmation_sent_at: DateTime.now - 5.days,
                                         confirmed_at: DateTime.now,
-                                        name: "co_director_#{index}",
+                                        first_name: "co_director_#{index}",
                                         approved: true,
                                         business_id: businesses[0].id})
 
@@ -179,7 +179,7 @@ end
                                           invitation_accepted_at: DateTime.now,
                                           confirmation_sent_at: DateTime.now - 5.days,
                                           confirmed_at: DateTime.now,
-                                          name: "co_super_user_#{index}",
+                                          first_name: "co_super_user_#{index}",
                                           approved: true,
                                           business_id: businesses[1].id})
 
@@ -198,7 +198,7 @@ end
                                     invitation_accepted_at: DateTime.now,
                                     confirmation_sent_at: DateTime.now - 5.days,
                                     confirmed_at: DateTime.now,
-                                    name: "co_user_#{index}",
+                                    first_name: "co_user_#{index}",
                                     approved: true,
                                     business_id: businesses[2].id})
 

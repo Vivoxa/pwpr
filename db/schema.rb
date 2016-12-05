@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161205190001) do
+ActiveRecord::Schema.define(version: 20161205201037) do
 
   create_table "address_types", force: :cascade do |t|
     t.string   "title",       limit: 255, null: false
@@ -141,7 +141,6 @@ ActiveRecord::Schema.define(version: 20161205190001) do
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
     t.integer  "business_id",            limit: 4
-    t.string   "name",                   limit: 255
     t.string   "invitation_token",       limit: 255
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"
@@ -151,6 +150,11 @@ ActiveRecord::Schema.define(version: 20161205190001) do
     t.string   "invited_by_type",        limit: 255
     t.integer  "invitations_count",      limit: 4,   default: 0
     t.boolean  "approved",                           default: false, null: false
+    t.string   "first_name",             limit: 255
+    t.string   "last_name",              limit: 255
+    t.string   "telephone",              limit: 255
+    t.string   "fax",                    limit: 255
+    t.boolean  "active"
   end
 
   add_index "company_operators", ["approved"], name: "index_company_operators_on_approved", using: :btree
@@ -160,6 +164,32 @@ ActiveRecord::Schema.define(version: 20161205190001) do
   add_index "company_operators", ["invitations_count"], name: "index_company_operators_on_invitations_count", using: :btree
   add_index "company_operators", ["invited_by_id"], name: "index_company_operators_on_invited_by_id", using: :btree
   add_index "company_operators", ["reset_password_token"], name: "index_company_operators_on_reset_password_token", unique: true, using: :btree
+
+  create_table "contacts", force: :cascade do |t|
+    t.integer  "business_id", limit: 4
+    t.string   "title",       limit: 255
+    t.string   "first_name",  limit: 255
+    t.string   "last_name",   limit: 255
+    t.string   "email",       limit: 255
+    t.string   "telephone_1", limit: 255
+    t.string   "telephone_2", limit: 255
+    t.string   "fax",         limit: 255
+    t.boolean  "active"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "contacts", ["business_id"], name: "fk_rails_5d1918d88d", using: :btree
+
+  create_table "contacts_addresses", force: :cascade do |t|
+    t.integer  "address_id", limit: 4
+    t.integer  "contact_id", limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "contacts_addresses", ["address_id"], name: "fk_rails_baca6520ab", using: :btree
+  add_index "contacts_addresses", ["contact_id"], name: "fk_rails_862a942894", using: :btree
 
   create_table "joiners", force: :cascade do |t|
     t.integer  "agency_template_upload_id", limit: 4
@@ -357,7 +387,6 @@ ActiveRecord::Schema.define(version: 20161205190001) do
     t.string   "unconfirmed_email",      limit: 255
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
-    t.string   "name",                   limit: 255
     t.string   "invitation_token",       limit: 255
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"
@@ -367,6 +396,11 @@ ActiveRecord::Schema.define(version: 20161205190001) do
     t.string   "invited_by_type",        limit: 255
     t.integer  "invitations_count",      limit: 4,   default: 0
     t.boolean  "approved",                           default: false, null: false
+    t.string   "first_name",             limit: 255
+    t.string   "last_name",              limit: 255
+    t.string   "telephone",              limit: 255
+    t.string   "fax",                    limit: 255
+    t.boolean  "active"
   end
 
   add_index "scheme_operators", ["approved"], name: "index_scheme_operators_on_approved", using: :btree
@@ -468,6 +502,9 @@ ActiveRecord::Schema.define(version: 20161205190001) do
   add_foreign_key "annual_target_sets", "scheme_country_codes"
   add_foreign_key "businesses", "schemes"
   add_foreign_key "company_operators", "businesses"
+  add_foreign_key "contacts", "businesses"
+  add_foreign_key "contacts_addresses", "addresses"
+  add_foreign_key "contacts_addresses", "contacts"
   add_foreign_key "joiners", "agency_template_uploads"
   add_foreign_key "joiners", "businesses"
   add_foreign_key "leavers", "agency_template_uploads"

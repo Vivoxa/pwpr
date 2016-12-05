@@ -18,15 +18,15 @@ RSpec.describe Business, type: :model do
   end
 
   # context 'Validations' do
-    # describe '#validates_presence_of' do
-    #   it {is_expected.to validate_presence_of(:NPWD)}
-    #   it {is_expected.to validate_presence_of(:scheme_id)}
-    #   it {is_expected.to validate_presence_of(:business_type_id)}
-    #   it {is_expected.to validate_presence_of(:business_subtype_id)}
-    #   it {is_expected.to validate_presence_of(:scheme_status_code_id)}
-    #   it {is_expected.to validate_presence_of(:registration_status_code_id)}
-    #   it {is_expected.to validate_presence_of(:registration_status_code_id)}
-    #   it {is_expected.to validate_presence_of(:sic_code_id)}
-    # end
+  # describe '#validates_presence_of' do
+  #   it {is_expected.to validate_presence_of(:NPWD)}
+  #   it {is_expected.to validate_presence_of(:scheme_id)}
+  #   it {is_expected.to validate_presence_of(:business_type_id)}
+  #   it {is_expected.to validate_presence_of(:business_subtype_id)}
+  #   it {is_expected.to validate_presence_of(:scheme_status_code_id)}
+  #   it {is_expected.to validate_presence_of(:registration_status_code_id)}
+  #   it {is_expected.to validate_presence_of(:registration_status_code_id)}
+  #   it {is_expected.to validate_presence_of(:sic_code_id)}
+  # end
   # end
 end

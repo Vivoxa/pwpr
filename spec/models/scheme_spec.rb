@@ -18,8 +18,8 @@ RSpec.describe Scheme, type: :model do
   end
 
   # context 'Validations' do
-    # describe '#validates_presence_of' do
-    #   it {is_expected.to validate_presence_of(:scheme_country_code_id)}
-    # end
+  # describe '#validates_presence_of' do
+  #   it {is_expected.to validate_presence_of(:scheme_country_code_id)}
+  # end
   # end
 end

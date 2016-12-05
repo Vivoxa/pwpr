@@ -4,4 +4,5 @@ class Registration < ActiveRecord::Base
   belongs_to :packaging_sector_main_activity
 
   has_one :small_producer_detail
+  has_one :regular_producer_detail
 end

@@ -10,6 +10,7 @@ RSpec.describe Registration, type: :model do
 
     describe '#has_one' do
       it {is_expected.to have_one(:small_producer_details)}
+      it {is_expected.to have_one(:regular_producer_details)}
     end
    end
 end

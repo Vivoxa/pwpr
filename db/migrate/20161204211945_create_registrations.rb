@@ -5,7 +5,7 @@ class CreateRegistrations < ActiveRecord::Migration
       t.references :sic_code, foreign_key: true
       t.references :packaging_sector_main_activity, foreign_key: true
       t.string :resubmission
-      t.float :turnover
+      t.decimal :turnover
       t.boolean :licensor
       t.boolean :allocation_method_used
       t.string :change_to_application_or_obligation

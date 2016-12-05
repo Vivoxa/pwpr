@@ -62,9 +62,9 @@ ActiveRecord::Schema.define(version: 20161204211956) do
   create_table "agency_template_uploads", force: :cascade do |t|
     t.datetime "uploaded_at"
     t.integer  "scheme_id",        limit: 4
-    t.float    "uploaded_by_id",   limit: 24
+    t.integer  "uploaded_by_id",   limit: 4
     t.string   "uploaded_by_type", limit: 255
-    t.float    "year",             limit: 24
+    t.integer  "year",             limit: 4
     t.string   "status",           limit: 255
     t.string   "filename",         limit: 255
     t.datetime "created_at",                   null: false
@@ -75,10 +75,10 @@ ActiveRecord::Schema.define(version: 20161204211956) do
 
   create_table "annual_target_sets", force: :cascade do |t|
     t.integer  "scheme_country_code_id", limit: 4
-    t.float    "value",                  limit: 24
+    t.decimal  "value",                              precision: 10
     t.string   "year",                   limit: 255
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
   end
 
   add_index "annual_target_sets", ["scheme_country_code_id"], name: "fk_rails_d2d9db2df5", using: :btree
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20161204211956) do
     t.integer  "scheme_id",                   limit: 4
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
-    t.string   "membership_number",           limit: 255
+    t.string   "scheme_ref",                  limit: 255
     t.string   "trading_name",                limit: 255
     t.string   "company_number",              limit: 255
     t.integer  "business_type_id",            limit: 4
@@ -166,9 +166,9 @@ ActiveRecord::Schema.define(version: 20161204211956) do
     t.integer  "business_id",               limit: 4
     t.date     "joining_date"
     t.string   "previously_registered_at",  limit: 255
-    t.float    "total_recovery",            limit: 24
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.decimal  "total_recovery",                        precision: 10
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
   end
 
   add_index "joiners", ["agency_template_upload_id"], name: "fk_rails_5b476c16f9", using: :btree
@@ -178,12 +178,12 @@ ActiveRecord::Schema.define(version: 20161204211956) do
     t.integer  "business_id",               limit: 4
     t.integer  "leaving_code_id",           limit: 4
     t.integer  "agency_template_upload_id", limit: 4
-    t.date     "date",                                 null: false
-    t.float    "total_recovery_previous",   limit: 24
+    t.date     "date",                                               null: false
+    t.decimal  "total_recovery_previous",             precision: 10
     t.boolean  "sub_leaver"
     t.date     "scheme_registration_date"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
   end
 
   add_index "leavers", ["agency_template_upload_id"], name: "fk_rails_e783cea255", using: :btree
@@ -212,25 +212,25 @@ ActiveRecord::Schema.define(version: 20161204211956) do
   create_table "material_details", force: :cascade do |t|
     t.integer  "regular_producer_detail_id", limit: 4
     t.integer  "packaging_material_id",      limit: 4
-    t.float    "t1manwo",                    limit: 24
-    t.float    "t1conv",                     limit: 24
-    t.float    "t1pf",                       limit: 24
-    t.float    "t1sell",                     limit: 24
-    t.float    "t2aman",                     limit: 24
-    t.float    "t2conv",                     limit: 24
-    t.float    "t2apf",                      limit: 24
-    t.float    "t2sell",                     limit: 24
-    t.float    "t2bman",                     limit: 24
-    t.float    "t2bconv",                    limit: 24
-    t.float    "t2bp",                       limit: 24
-    t.float    "t2bsell",                    limit: 24
-    t.float    "t3aconv",                    limit: 24
-    t.float    "t3apf",                      limit: 24
-    t.float    "t3asell",                    limit: 24
-    t.float    "t3b",                        limit: 24
-    t.float    "t3c",                        limit: 24
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.decimal  "t1manwo",                              precision: 10
+    t.decimal  "t1conv",                               precision: 10
+    t.decimal  "t1pf",                                 precision: 10
+    t.decimal  "t1sell",                               precision: 10
+    t.decimal  "t2aman",                               precision: 10
+    t.decimal  "t2conv",                               precision: 10
+    t.decimal  "t2apf",                                precision: 10
+    t.decimal  "t2sell",                               precision: 10
+    t.decimal  "t2bman",                               precision: 10
+    t.decimal  "t2bconv",                              precision: 10
+    t.decimal  "t2bp",                                 precision: 10
+    t.decimal  "t2bsell",                              precision: 10
+    t.decimal  "t3aconv",                              precision: 10
+    t.decimal  "t3apf",                                precision: 10
+    t.decimal  "t3asell",                              precision: 10
+    t.decimal  "t3b",                                  precision: 10
+    t.decimal  "t3c",                                  precision: 10
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
   end
 
   add_index "material_details", ["packaging_material_id"], name: "fk_rails_63989b169c", using: :btree
@@ -240,9 +240,9 @@ ActiveRecord::Schema.define(version: 20161204211956) do
     t.integer  "packaging_material_id", limit: 4
     t.integer  "annual_target_set_id",  limit: 4
     t.string   "year",                  limit: 255
-    t.float    "value",                 limit: 24
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.decimal  "value",                             precision: 10
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
   end
 
   add_index "material_targets", ["annual_target_set_id"], name: "fk_rails_9799cbb55e", using: :btree
@@ -251,9 +251,9 @@ ActiveRecord::Schema.define(version: 20161204211956) do
   create_table "material_totals", force: :cascade do |t|
     t.integer  "regular_producer_detail_id", limit: 4
     t.integer  "packaging_material_id",      limit: 4
-    t.float    "recycling_obligation",       limit: 24
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.decimal  "recycling_obligation",                 precision: 10
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
   end
 
   add_index "material_totals", ["packaging_material_id"], name: "fk_rails_7e6a94d761", using: :btree
@@ -287,12 +287,12 @@ ActiveRecord::Schema.define(version: 20161204211956) do
     t.integer  "sic_code_id",                         limit: 4
     t.integer  "packaging_sector_main_activity_id",   limit: 4
     t.string   "resubmission",                        limit: 255
-    t.float    "turnover",                            limit: 24
+    t.decimal  "turnover",                                        precision: 10
     t.boolean  "licensor"
     t.boolean  "allocation_method_used"
     t.string   "change_to_application_or_obligation", limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.datetime "created_at",                                                     null: false
+    t.datetime "updated_at",                                                     null: false
   end
 
   add_index "registrations", ["agency_template_upload_id"], name: "fk_rails_b77d53b2a3", using: :btree
@@ -396,7 +396,6 @@ ActiveRecord::Schema.define(version: 20161204211956) do
     t.boolean  "active"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
-    t.string   "scheme_ref",             limit: 255
     t.integer  "scheme_country_code_id", limit: 4
   end
 
@@ -430,13 +429,13 @@ ActiveRecord::Schema.define(version: 20161204211956) do
 
   create_table "target_totals", force: :cascade do |t|
     t.integer  "regular_producer_detail_id",                   limit: 4
-    t.float    "total_recycling_obligation",                   limit: 24
-    t.float    "total_recovery_obligation",                    limit: 24
-    t.float    "total_material_specific_recycling_obligation", limit: 24
-    t.float    "adjusted_total_recovery_obligation",           limit: 24
-    t.float    "ninetytwo_percent_min_recycling_target",       limit: 24
-    t.datetime "created_at",                                              null: false
-    t.datetime "updated_at",                                              null: false
+    t.decimal  "total_recycling_obligation",                             precision: 10
+    t.decimal  "total_recovery_obligation",                              precision: 10
+    t.decimal  "total_material_specific_recycling_obligation",           precision: 10
+    t.decimal  "adjusted_total_recovery_obligation",                     precision: 10
+    t.decimal  "ninetytwo_percent_min_recycling_target",                 precision: 10
+    t.datetime "created_at",                                                            null: false
+    t.datetime "updated_at",                                                            null: false
   end
 
   add_index "target_totals", ["regular_producer_detail_id"], name: "fk_rails_4653c8a7c8", using: :btree
@@ -445,9 +444,9 @@ ActiveRecord::Schema.define(version: 20161204211956) do
     t.integer  "target_field_id",      limit: 4
     t.integer  "annual_target_set_id", limit: 4
     t.string   "year",                 limit: 255
-    t.float    "value",                limit: 24
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.decimal  "value",                            precision: 10
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
   end
 
   add_index "targets", ["annual_target_set_id"], name: "fk_rails_64aa8d93b5", using: :btree

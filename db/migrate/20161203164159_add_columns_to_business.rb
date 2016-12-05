@@ -1,6 +1,6 @@
 class AddColumnsToBusiness < ActiveRecord::Migration
   def change
-    add_column :businesses, :membership_number, :string
+    add_column :businesses, :scheme_ref, :string
     add_column :businesses, :trading_name, :string
     add_column :businesses, :company_number, :string
     add_column :businesses, :business_type_id, :integer

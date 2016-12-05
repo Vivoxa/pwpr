@@ -4,7 +4,7 @@ class CreateTargets < ActiveRecord::Migration
       t.references :target_field, foreign_key: true
       t.references :annual_target_set, foreign_key: true
       t.string :year
-      t.float :value
+      t.decimal :value
 
       t.timestamps null: false
     end

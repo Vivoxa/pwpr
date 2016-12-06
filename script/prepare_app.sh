@@ -3,6 +3,7 @@
 set -e
 
 echo "Preparing app..."
+export RAILS_ENV=development
 
 echo "Bundling..."
 bundle install || exit 1

@@ -37,9 +37,6 @@ module PermissionsForRole
           active_schemes << scheme.id if scheme.active
         end
         can :read, Scheme, id: active_schemes if user.schemes_r?
-        can %i(new create), Scheme if user.schemes_w?
-        can %i(edit update), Scheme, id: active_schemes if user.schemes_e?
-        can :destroy, Scheme, id: active_schemes if user.schemes_d?
       end
 
 
@@ -54,7 +51,6 @@ module PermissionsForRole
         return unless user.co_users_w?
         can %i(read new create update_permissions edit update update_businesses), CompanyOperators::InvitationsController
         can %i(read new create update_permissions edit update update_businesses), CompanyOperators::RegistrationsController
-
         can %i(new create permissions update_permissions update_businesses), CompanyOperator
 
       end

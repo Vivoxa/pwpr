@@ -5,7 +5,7 @@ RSpec.describe SchemesController, type: :controller do
     let(:sc_director_roles) { %i(sc_director sc_users_r sc_users_w sc_users_e schemes_r schemes_w schemes_e schemes_d) }
     before do
       co_marti.email = 'jennifer@back_to_the_future.com'
-      co_marti.name = 'Jennifer'
+      co_marti.first_name = 'Jennifer'
       co_marti.password = 'mypassword'
       co_marti.confirmed_at = DateTime.now
       co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]

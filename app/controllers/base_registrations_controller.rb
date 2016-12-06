@@ -49,7 +49,7 @@ class BaseRegistrationsController < Devise::RegistrationsController
                          :email,
                          :password,
                          :password_confirmation,
-                         :name,
+                         :first_name,
                          :confirmed_at,
                          :approved,
                          :invitation_accepted_at,

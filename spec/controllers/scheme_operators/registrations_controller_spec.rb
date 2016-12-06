@@ -21,7 +21,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
     let(:co_marti) { SchemeOperator.new }
     before do
       co_marti.email = 'jennifer@back_to_the_future.com'
-      co_marti.name = 'Jennifer'
+      co_marti.first_name = 'Jennifer'
       co_marti.password = 'mypassword'
       co_marti.confirmed_at = DateTime.now
       co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
@@ -47,12 +47,12 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
 
       context 'when calling new' do
         it 'expects an alert message to be flashed to the user' do
-          post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', password: 'my_password', schemes: [Scheme.last]
           expect(flash[:alert]).to be_present
         end
 
         it 'expects the message to tell the user they are not approved yet' do
-          post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', password: 'my_password', schemes: [Scheme.last]
           expect(flash[:alert]).to eq 'Your account has not been approved by your administrator yet.'
         end
       end
@@ -68,12 +68,12 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
 
       context 'when calling new' do
         it 'expects an alert message to be flashed to the user' do
-          post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', password: 'my_password', schemes: [Scheme.last]
           expect(flash[:alert]).to be_present
         end
 
         it 'expects the message to alert that not authorised' do
-          post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', password: 'my_password', schemes: [Scheme.last]
           expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
@@ -99,7 +99,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
         let(:so_user) { SchemeOperator.find_by_email('freddy@pwpr.com') }
         before do
           post :create, scheme_operator: {email:                  'freddy@pwpr.com',
-                                          name:                   'freddy',
+                                          first_name:             'freddy',
                                           password:               'my_password',
                                           invitation_sent_at:     DateTime.now,
                                           confirmed_at:           DateTime.now,
@@ -117,7 +117,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
         end
 
         it 'expects the newly created user to have the correct name' do
-          expect(so_user.name).to eq 'freddy'
+          expect(so_user.first_name).to eq 'freddy'
         end
       end
       context 'when creating a confirmed user' do
@@ -125,7 +125,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
         context 'when calling create' do
           before do
             post :create, scheme_operator: {email:        'confirmed@pwpr.com',
-                                            name:         'confirmed',
+                                            first_name:   'confirmed',
                                             password:     'my_password',
                                             scheme_ids:   [Scheme.last.id],
                                             confirmed_at: DateTime.now}
@@ -137,7 +137,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
             expect(response.status).to eq 302
           end
           it 'expects the newly created user to have the correct name' do
-            expect(so_user.name).to eq 'confirmed'
+            expect(so_user.first_name).to eq 'confirmed'
           end
         end
       end
@@ -162,7 +162,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
 
     context 'when calling create' do
       it 'expects a 200 response status' do
-        post :create, scheme_operator: {email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', scheme_ids: [Scheme.last.id]}
+        post :create, scheme_operator: {email: 'freddy@pwpr.com', first_name: 'freddy', password: 'my_password', scheme_ids: [Scheme.last.id]}
         expect(response.status).to eq 302
       end
     end
@@ -173,7 +173,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
           expect_any_instance_of(DeviseController).to receive(:clean_up_passwords)
           expect_any_instance_of(DeviseController).to receive(:set_minimum_password_length)
           post :create, scheme_operator: {email:        'confirmed@pwpr.com',
-                                          name:         'confirmed',
+                                          first_name:   'confirmed',
                                           password:     'my_password',
                                           confirmed_at: DateTime.now}
         end

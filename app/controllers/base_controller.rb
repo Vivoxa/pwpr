@@ -24,7 +24,7 @@ class BaseController < ApplicationController
   def destroy_operator(operator, url)
     object = operator.class.find(params[:id])
     object.destroy
-    redirect_to url, notice: "#{operator.name} with email: #{operator.email} has been deleted."
+    redirect_to url, notice: "#{operator.first_name} with email: #{operator.email} has been deleted."
   end
 
   def pending_operators(unapproved_operators)

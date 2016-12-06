@@ -22,7 +22,7 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
     let(:co_marti) { SchemeOperator.new }
     before do
       co_marti.email = 'jennifer@back_to_the_future.com'
-      co_marti.name = 'Jennifer'
+      co_marti.first_name = 'Jennifer'
       co_marti.password = 'mypassword'
       co_marti.confirmed_at = DateTime.now
       co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
@@ -44,7 +44,7 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
 
       context 'when calling new' do
         before do
-          post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', business: Business.last
+          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', password: 'my_password', business: Business.last
         end
         it 'expects an error to be raised' do
           expect(flash[:alert]).to be_present
@@ -66,7 +66,7 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
 
       context 'when calling new' do
         before do
-          post :create, email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', business: Business.last
+          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', password: 'my_password', business: Business.last
         end
         it 'expects a CanCan AccessDenied error to be raised' do
           expect(flash[:alert]).to be_present
@@ -98,7 +98,7 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
       context 'when calling create' do
         it 'expects a CompanyOperator to be created' do
           post :create, company_operator: {email:                  'freddy1@pwpr.com',
-                                           name:                   'freddy',
+                                           first_name:             'freddy',
                                            password:               'my_password',
                                            invitation_sent_at:     DateTime.now,
                                            confirmed_at:           DateTime.now,
@@ -108,14 +108,14 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
           expect(response.status).to eq 302
           so_user = CompanyOperator.find_by_email('freddy1@pwpr.com')
           expect(so_user).to be_a(CompanyOperator)
-          expect(so_user.name).to eq 'freddy'
+          expect(so_user.first_name).to eq 'freddy'
         end
       end
       context 'when creating a confirmed user' do
         let(:so_user) { CompanyOperator.find_by_email('confirmed@pwpr.com') }
         before do
           post :create, company_operator: {email:        'confirmed@pwpr.com',
-                                           name:         'confirmed',
+                                           first_name:   'confirmed',
                                            password:     'my_password',
                                            business_id:  Business.last.id,
                                            confirmed_at: DateTime.now}
@@ -130,7 +130,7 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
           end
 
           it 'expects a SchemeOperator to be confirmed' do
-            expect(so_user.name).to eq 'confirmed'
+            expect(so_user.first_name).to eq 'confirmed'
           end
         end
       end
@@ -155,7 +155,7 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
 
     context 'when calling create' do
       it 'expects a 200 response status' do
-        post :create, company_operator: {email: 'freddy@pwpr.com', name: 'freddy', password: 'my_password', business_id: Business.last.id}
+        post :create, company_operator: {email: 'freddy@pwpr.com', first_name: 'freddy', password: 'my_password', business_id: Business.last.id}
         expect(response.status).to eq 302
       end
     end

@@ -12,4 +12,10 @@ RSpec.describe RegularProducerDetail, type: :model do
       it { is_expected.to have_many(:target_totals) }
     end
   end
+
+  context 'Validations' do
+    describe '#validates_presence_of' do
+      it { is_expected.to validate_presence_of(:registration_id)}
+    end
+  end
 end

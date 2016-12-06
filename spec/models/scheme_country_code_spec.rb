@@ -7,4 +7,10 @@ RSpec.describe SchemeCountryCode, type: :model do
       it { is_expected.to have_many(:annual_target_sets) }
     end
   end
+
+  context 'Validations' do
+    describe '#validates_presence_of' do
+      it { is_expected.to validate_presence_of(:country)}
+    end
+  end
 end

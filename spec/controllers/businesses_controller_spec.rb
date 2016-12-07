@@ -26,7 +26,7 @@ RSpec.describe BusinessesController, type: :controller do
     let(:co_marti) { SchemeOperator.new }
     before do
       co_marti.email = 'jennifer@back_to_the_future.com'
-      co_marti.name = 'Jennifer'
+      co_marti.first_name = 'Jennifer'
       co_marti.password = 'mypassword'
       co_marti.confirmed_at = DateTime.now
       co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
@@ -37,11 +37,11 @@ RSpec.describe BusinessesController, type: :controller do
       sign_in co_marti
     end
     let(:valid_attributes) do
-      {scheme_id: co_marti.schemes.last.id, NPWD: 'kgkgk', SIC: 'khgifk', name: 'business 1', membership_id: 'mem-1', company_no: '123456789'}
+      {scheme_id: co_marti.schemes.last.id, NPWD: 'kgkgk', sic_code_id: SicCode.first.id, name: 'business 1', membership_id: 'mem-1', company_no: '123456789'}
     end
 
     let(:invalid_attributes) do
-      {scheme_id: 1, NPWD: nil, SIC: nil, name: 'business 1', membership_id: 'mem-1', company_no: '123456789'}
+      {scheme_id: 1, NPWD: nil, sic_code_id: nil, name: 'business 1', membership_id: 'mem-1', company_no: '123456789'}
     end
 
     # This should return the minimal set of values that should be in the session

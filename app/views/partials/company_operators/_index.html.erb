@@ -25,7 +25,7 @@
                         <div class="col-md-3"></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-1"><%= user.name.to_s if user.name %></div>
+                        <div class="col-md-1"><%= user.first_name.to_s if user.first_name %></div>
                         <div class="col-md-4"><%= user.email.to_s %></div>
                         <div class="col-md-2">
                           <%= current_admin ? 'N/A for Admin' : user.business.name %>

@@ -11,6 +11,8 @@ def random_string(length)
   (0...length).map { (65 + rand(26)).chr }.join
 end
 
+sic = SicCode.create(code: 'SIC101', active: true, year_introduced: '2013')
+
 schemes = Scheme.create([{name: 'dans pack scheme'},
                          {name: 'mypack scheme'},
                          {name: 'pack one'},
@@ -19,12 +21,12 @@ schemes = Scheme.create([{name: 'dans pack scheme'},
                          {name: 'Packaging for you', active: true}
                         ])
 
-businesses = Business.create([{name: 'dans pack business', membership_id: 'mem-01', NPWD: 'NPWD-1'},
-                              {name: 'my pack business', membership_id: 'mem-02', NPWD: 'NPWD-1'},
-                              {name: 'pack one business', membership_id: 'mem-03', NPWD: 'NPWD-1'},
-                              {name: 'test business', membership_id: 'mem-04', NPWD: 'NPWD-1'},
-                              {name: 'synergy business', membership_id: 'mem-05', NPWD: 'NPWD-1'},
-                              {name: 'pack for you', membership_id: 'mem-06', NPWD: 'NPWD-1'}])
+businesses = Business.create([{name: 'dans pack business', membership_id: 'mem-01', NPWD: 'NPWD-1', sic_code_id: sic.id},
+                              {name: 'my pack business', membership_id: 'mem-02', NPWD: 'NPWD-1', sic_code_id: sic.id},
+                              {name: 'pack one business', membership_id: 'mem-03', NPWD: 'NPWD-1', sic_code_id: sic.id},
+                              {name: 'test business', membership_id: 'mem-04', NPWD: 'NPWD-1', sic_code_id: sic.id},
+                              {name: 'synergy business', membership_id: 'mem-05', NPWD: 'NPWD-1', sic_code_id: sic.id},
+                              {name: 'pack for you', membership_id: 'mem-06', NPWD: 'NPWD-1', sic_code_id: sic.id}])
 
 agency_templates = AgencyTemplateUpload.create([{year: '2015',
                                                  filename: ActionDispatch::Http::UploadedFile.new(tempfile: 'public/favicon.ico', filename: 'favicon.ico'),

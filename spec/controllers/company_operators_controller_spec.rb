@@ -6,14 +6,14 @@ RSpec.describe CompanyOperatorsController, type: :controller do
     let(:business) do
       Business.create(scheme_id:     scheme_operator.schemes.first.id,
                       NPWD:          'kgkgk',
-                      SIC:           'khgifk',
+                      sic_code_id:   SicCode.first.id,
                       name:          'business 1',
                       membership_id: 'mem-1',
                       company_no:    '123456789')
     end
     before do
       scheme_operator.email = 'jennifer@back_to_the_future.com'
-      scheme_operator.name = 'Jennifer'
+      scheme_operator.first_name = 'Jennifer'
       scheme_operator.password = 'mypassword'
       scheme_operator.confirmed_at = DateTime.now
       scheme_operator.schemes = [Scheme.create(name: 'test scheme', active: true)]

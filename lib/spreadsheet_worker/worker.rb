@@ -25,7 +25,7 @@ module SpreadsheetWorker
       process(event)
       sleep 1
 
-      log_info(' [x] Done')
+      log(:info, ' [x] Done')
       acknowledge(delivery_tag)
       log(:info, ' [*] Waiting for events...')
 

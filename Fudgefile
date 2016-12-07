@@ -8,6 +8,7 @@ build :prepare_for_test, about: 'Preparing for test...', &Proc.new { task_group(
 
 # Testing for code duplication, complexity and style violations
 task_group :code_analysis, about: 'Running code analysis...' do
+  shell 'renogen test'
   shell 'rubocop --require rubocop-rspec --color'
   task :flay, exclude: exclude
   task :flog, exclude: exclude

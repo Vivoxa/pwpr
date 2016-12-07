@@ -193,6 +193,7 @@ GEM
     rake (11.3.0)
     rdoc (4.2.2)
       json (~> 1.4)
+    renogen (1.2.0)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
     royce (1.0.6)
@@ -309,6 +310,7 @@ DEPENDENCIES
   pry-byebug
   rails (= 4.2.7)
   rails-assets-tether (>= 1.1.0)!
+  renogen (= 1.2.0)
   royce
   rspec-rails
   rubocop

@@ -53,6 +53,7 @@ end
 
 namespace :pwpr do
 
+  # bundle exec rake pwpr:populate_lookup_tables[development]
   desc 'Populate lookup tables'
   task :populate_lookup_tables, [:env] => :environment do |t, args|
     if args[:env].nil?

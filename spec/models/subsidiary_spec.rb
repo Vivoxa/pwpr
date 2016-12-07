@@ -10,8 +10,8 @@ RSpec.describe Subsidiary, type: :model do
 
   context 'Validations' do
     describe '#validates_presence_of' do
-      it { is_expected.to validate_presence_of(:business_id)}
-      it { is_expected.to validate_presence_of(:agency_template_upload_id)}
+      it { is_expected.to validate_presence_of(:business_id) }
+      it { is_expected.to validate_presence_of(:agency_template_upload_id) }
     end
   end
 end

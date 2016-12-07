@@ -103,7 +103,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
       before do
         allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename.xls').and_return(true)
         allow(subject).to receive(:upload_params).and_return(year: 2015, filename: filename)
-        expect { post :create, agency_template_upload:  {year: 2015, filename: 'feef.xls'}, scheme_id: 1 }.to change { AgencyTemplateUpload.count }.by(1)
+        expect { post :create, agency_template_upload: {year: 2015, filename: 'feef.xls'}, scheme_id: 1 }.to change { AgencyTemplateUpload.count }.by(1)
       end
       it 'responds with 302' do
         expect(response.status).to eq 302
@@ -148,7 +148,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
         allow(subject).to receive(:upload_params).and_return(year: 2015, filename: filename)
       end
       it 'expects the user to see a flash message' do
-        post :create, agency_template_upload:  {year: 2015, filename: 'feef.xls'}, scheme_id: 1
+        post :create, agency_template_upload: {year: 2015, filename: 'feef.xls'}, scheme_id: 1
         expect(flash[:alert]).to eq "'my original filename.xls' was not uploaded!"
       end
     end
@@ -172,7 +172,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
         allow(subject).to receive(:upload_params).and_return(year: 2015, filename: invalid_filename)
       end
       it 'expects the user to see a flash message' do
-        post :create, agency_template_upload:  {year: 2015, filename: 'feef.abc'}, scheme_id: 1
+        post :create, agency_template_upload: {year: 2015, filename: 'feef.abc'}, scheme_id: 1
         expect(flash[:alert]).to eq "ERROR: Unsupported file type!'my original filename.abc'' was not uploaded!"
       end
     end

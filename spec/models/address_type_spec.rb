@@ -9,7 +9,7 @@ RSpec.describe AddressType, type: :model do
 
   context 'Validations' do
     describe '#validates_presence_of' do
-      it { is_expected.to validate_presence_of(:title)}
+      it { is_expected.to validate_presence_of(:title) }
     end
   end
 end

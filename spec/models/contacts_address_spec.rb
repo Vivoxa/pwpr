@@ -10,8 +10,8 @@ RSpec.describe ContactsAddress, type: :model do
 
   context 'Validations' do
     describe '#validates_presence_of' do
-      it { is_expected.to validate_presence_of(:address_id)}
-      it { is_expected.to validate_presence_of(:contact_id)}
+      it { is_expected.to validate_presence_of(:address_id) }
+      it { is_expected.to validate_presence_of(:contact_id) }
     end
   end
 end

@@ -9,8 +9,8 @@ RSpec.describe LeavingCode, type: :model do
 
   context 'Validations' do
     describe '#validates_presence_of' do
-      it { is_expected.to validate_presence_of(:code)}
-      it { is_expected.to validate_presence_of(:reason)}
+      it { is_expected.to validate_presence_of(:code) }
+      it { is_expected.to validate_presence_of(:reason) }
     end
   end
 end

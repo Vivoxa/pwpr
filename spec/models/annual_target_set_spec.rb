@@ -14,9 +14,9 @@ RSpec.describe AnnualTargetSet, type: :model do
 
   context 'Validations' do
     describe '#validates_presence_of' do
-      it { is_expected.to validate_presence_of(:scheme_country_code_id)}
-      it { is_expected.to validate_presence_of(:value)}
-      it { is_expected.to validate_presence_of(:year)}
+      it { is_expected.to validate_presence_of(:scheme_country_code_id) }
+      it { is_expected.to validate_presence_of(:value) }
+      it { is_expected.to validate_presence_of(:year) }
     end
   end
 end

@@ -10,7 +10,7 @@ RSpec.describe SchemeCountryCode, type: :model do
 
   context 'Validations' do
     describe '#validates_presence_of' do
-      it { is_expected.to validate_presence_of(:country)}
+      it { is_expected.to validate_presence_of(:country) }
     end
   end
 end

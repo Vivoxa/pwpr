@@ -10,9 +10,9 @@ RSpec.describe MaterialTotal, type: :model do
 
   context 'Validations' do
     describe '#validates_presence_of' do
-      it { is_expected.to validate_presence_of(:regular_producer_detail_id)}
-      it { is_expected.to validate_presence_of(:packaging_material_id)}
-      it { is_expected.to validate_presence_of(:recycling_obligation)}
+      it { is_expected.to validate_presence_of(:regular_producer_detail_id) }
+      it { is_expected.to validate_presence_of(:packaging_material_id) }
+      it { is_expected.to validate_presence_of(:recycling_obligation) }
     end
   end
 end

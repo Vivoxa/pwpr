@@ -9,9 +9,9 @@ RSpec.describe SmallProducerDetail, type: :model do
 
   context 'Validations' do
     describe '#validates_presence_of' do
-      it { is_expected.to validate_presence_of(:allocation_method_predominant_material)}
-      it { is_expected.to validate_presence_of(:registration_id)}
-      it { is_expected.to validate_presence_of(:allocation_method_obligation)}
+      it { is_expected.to validate_presence_of(:allocation_method_predominant_material) }
+      it { is_expected.to validate_presence_of(:registration_id) }
+      it { is_expected.to validate_presence_of(:allocation_method_obligation) }
     end
   end
 end

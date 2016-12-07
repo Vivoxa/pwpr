@@ -15,7 +15,7 @@ RSpec.describe RegularProducerDetail, type: :model do
 
   context 'Validations' do
     describe '#validates_presence_of' do
-      it { is_expected.to validate_presence_of(:registration_id)}
+      it { is_expected.to validate_presence_of(:registration_id) }
     end
   end
 end

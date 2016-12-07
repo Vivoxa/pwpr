@@ -10,8 +10,8 @@ RSpec.describe SicCode, type: :model do
 
   context 'Validations' do
     describe '#validates_presence_of' do
-      it { is_expected.to validate_presence_of(:year_introduced)}
-      it { is_expected.to validate_presence_of(:code)}
+      it { is_expected.to validate_presence_of(:year_introduced) }
+      it { is_expected.to validate_presence_of(:code) }
     end
   end
 end

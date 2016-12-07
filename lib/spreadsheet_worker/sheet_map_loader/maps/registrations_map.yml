@@ -1,0 +1,122 @@
+registrations:
+  change_to_member_application_or_obligation:
+    field: A
+  resubmission_reason:
+    field: B
+  scheme_ref:
+    field: C
+  npwd:
+    field: D
+  company_name:
+    field: E
+  company_type:
+    field: F
+  company_subtype:
+    field: G
+  company_house_no:
+    field: H
+
+  registered:
+    address_1:
+      field: I
+    address_2:
+      field: J
+    address_3:
+      field: K
+    address_4:
+      field: L
+    town:
+      field: M
+    postal_code:
+      field: N
+    country:
+      field: O
+    phone:
+      field: P
+    fax:
+      field: Q
+    email:
+      field: R
+
+  correspondence:
+    address_1:
+      field: AI
+    address_2:
+      field: AJ
+    address_3:
+      field: AK
+    address_4:
+      field: AL
+    town:
+      field: AM
+    postal_code:
+      field: AN
+
+  sic_code:
+    field: S
+  packaging_sector_main_activity:
+    field: T
+  turnover:
+    field: U
+  licensor:
+    field: V
+
+  allocation:
+    method_used:
+      field: W
+    method_obligation:
+      field: X
+    predominant_material:
+      field: Y
+
+  calculation_or_other_method:
+    field: AE
+  other_method_details:
+    field: AF
+
+  calculation_method:
+    suplier_data:
+      field: Z
+    sample_weighing:
+      field: AA
+    sales_records:
+      field: AB
+
+  trade_assoc_method_details:
+    field: AC
+  consultant_or_data_system_used:
+    field: AG
+  name_of_consultant_or_data_system:
+    field: AH
+
+  contact:
+    title:
+      field: AT
+    first_name:
+      field: AR
+    last_name:
+      field: AS
+    email:
+      field: AQ
+    phone:
+      field: AO
+    fax:
+      field: AP
+    audit:
+      address_1:
+        field: AU
+      address_2:
+        field: AV
+      address_3:
+        field: AW
+      address_4:
+        field: AX
+      town:
+        field: AY
+      postal_code:
+        field: AZ
+      country:
+        field: BA
+      phone:
+        field: BB
+

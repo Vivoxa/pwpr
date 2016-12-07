@@ -1,0 +1,75 @@
+subsidiaries:
+  change_to_subsidiary_data:
+    field: A
+  registration_company_scheme_ref:
+    field: B
+  scheme_ref:
+    field: E
+  registration_company_npwd:
+    field: C
+  subsidiary_npwd:
+    field: F
+  registration_company_name:
+    field: D
+  subsidiary_company_name:
+    field: G
+  company_house_no:
+    field: H
+
+  registered:
+    address_1:
+      field: I
+    address_2:
+      field: J
+    address_3:
+      field: K
+    address_4:
+      field: L
+    town:
+      field: M
+    postal_code:
+      field: N
+    country:
+      field: P
+
+  correspondence:
+    address_1:
+      field: V
+    address_2:
+      field: W
+    address_3:
+      field: X
+    address_4:
+      field: Y
+    town:
+      field: Z
+    postal_code:
+      field: AA
+
+  sic_code:
+    field: I
+  packaging_sector_main_activity:
+    field: R
+  turnover:
+    field: Q
+
+  allocation:
+    method_used:
+      field: S
+    method_obligation:
+      field: U
+    predominant_material:
+      field: T
+
+  contact:
+    title:
+      field: AF
+    first_name:
+      field: AD
+    last_name:
+      field: AF
+    email:
+      field: AC
+    phone:
+      field: AB
+

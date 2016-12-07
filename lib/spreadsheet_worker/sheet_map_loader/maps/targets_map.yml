@@ -1,0 +1,305 @@
+targets:
+  scheme_ref:
+    field: A
+  npwd:
+    field: B
+  company_name:
+    field: C
+
+  obligation:
+    paper:
+      field: D
+    glass:
+      field: E
+    aluminium:
+      field: F
+    steel:
+      field: G
+    plastic:
+      field: H
+    wood:
+      field: I
+
+  total_obligation:
+    material_specific:
+      field: J
+    recycling:
+      field: K
+    92_min:
+      field: L
+    adjusted_recovery:
+      field: M
+    recovery:
+      field: N
+
+  t1man:
+    paper:
+      field: O
+    glass:
+      field: AF
+    aluminium:
+      field: AW
+    steel:
+      field: BN
+    plastic:
+      field: CE
+    wood:
+      field: CV
+    other:
+      field: DM
+
+  t1conv:
+    paper:
+      field: P
+    glass:
+      field: AG
+    aluminium:
+      field: AX
+    steel:
+      field: BO
+    plastic:
+      field: CF
+    wood:
+      field: CW
+    other:
+      field: DN
+
+  t1pf:
+    paper:
+      field: Q
+    glass:
+      field: AH
+    aluminium:
+      field: AY
+    steel:
+      field: BP
+    plastic:
+      field: CG
+    wood:
+      field: CX
+    other:
+      field: DO
+
+  t1sell:
+    paper:
+      field: R
+    glass:
+      field: AI
+    aluminium:
+      field: AZ
+    steel:
+      field: BQ
+    plastic:
+      field: CH
+    wood:
+      field: CY
+    other:
+      field: DP
+
+  t2aman:
+    paper:
+      field: S
+    glass:
+      field: AJ
+    aluminium:
+      field: BA
+    steel:
+      field: BR
+    plastic:
+      field: CI
+    wood:
+      field: CZ
+    other:
+      field: DQ
+
+  t2aconv:
+    paper:
+      field: T
+    glass:
+      field: AK
+    aluminium:
+      field: BB
+    steel:
+      field: BS
+    plastic:
+      field: CJ
+    wood:
+      field: DA
+    other:
+      field: DR
+
+  t2apf:
+    paper:
+      field: U
+    glass:
+      field: AL
+    aluminium:
+      field: BC
+    steel:
+      field: BT
+    plastic:
+      field: CK
+    wood:
+      field: DB
+    other:
+      field: DS
+
+  t2asell:
+    paper:
+      field: V
+    glass:
+      field: AM
+    aluminium:
+      field: BD
+    steel:
+      field: BU
+    plastic:
+      field: CL
+    wood:
+      field: DC
+    other:
+      field: DT
+
+  t2bman:
+    paper:
+      field: W
+    glass:
+      field: AN
+    aluminium:
+      field: BE
+    steel:
+      field: BV
+    plastic:
+      field: CM
+    wood:
+      field: DD
+    other:
+      field: DU
+
+  t2bconv:
+    paper:
+      field: X
+    glass:
+      field: AO
+    aluminium:
+      field: BF
+    steel:
+      field: BW
+    plastic:
+      field: CN
+    wood:
+      field: DE
+    other:
+      field: DV
+
+  t2bpf:
+    paper:
+      field: Y
+    glass:
+      field: AP
+    aluminium:
+      field: BG
+    steel:
+      field: BX
+    plastic:
+      field: CO
+    wood:
+      field: DF
+    other:
+      field: DW
+
+  t2bsell:
+    paper:
+      field: Z
+    glass:
+      field: AQ
+    aluminium:
+      field: BH
+    steel:
+      field: BY
+    plastic:
+      field: CP
+    wood:
+      field: DG
+    other:
+      field: DX
+
+  t3aconv:
+    paper:
+      field: AA
+    glass:
+      field: AR
+    aluminium:
+      field: BI
+    steel:
+      field: BZ
+    plastic:
+      field: CQ
+    wood:
+      field: DH
+    other:
+      field: DY
+
+  t3apf:
+    paper:
+      field: AB
+    glass:
+      field: AS
+    aluminium:
+      field: BJ
+    steel:
+      field: CA
+    plastic:
+      field: CR
+    wood:
+      field: DI
+    other:
+      field: DZ
+
+  t3asell:
+    paper:
+      field: AC
+    glass:
+      field: AT
+    aluminium:
+      field: BK
+    steel:
+      field: CB
+    plastic:
+      field: CS
+    wood:
+      field: DJ
+    other:
+      field: EA
+
+  t3b:
+    paper:
+      field: AD
+    glass:
+      field: AU
+    aluminium:
+      field: BL
+    steel:
+      field: CC
+    plastic:
+      field: CT
+    wood:
+      field: DK
+    other:
+      field: EB
+
+  t3c:
+    paper:
+      field: AE
+    glass:
+      field: AV
+    aluminium:
+      field: BM
+    steel:
+      field: CD
+    plastic:
+      field: CU
+    wood:
+      field: DL
+    other:
+      field: EC

@@ -191,6 +191,12 @@ ActiveRecord::Schema.define(version: 20161205201037) do
   add_index "contacts_addresses", ["address_id"], name: "fk_rails_baca6520ab", using: :btree
   add_index "contacts_addresses", ["contact_id"], name: "fk_rails_862a942894", using: :btree
 
+  create_table "country_of_business_registrations", force: :cascade do |t|
+    t.string   "country",    limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "joiners", force: :cascade do |t|
     t.integer  "agency_template_upload_id", limit: 4
     t.integer  "business_id",               limit: 4
@@ -316,6 +322,7 @@ ActiveRecord::Schema.define(version: 20161205201037) do
     t.integer  "agency_template_upload_id",           limit: 4
     t.integer  "sic_code_id",                         limit: 4
     t.integer  "packaging_sector_main_activity_id",   limit: 4
+    t.integer  "country_of_business_registration_id", limit: 4
     t.string   "resubmission",                        limit: 255
     t.decimal  "turnover",                                        precision: 10
     t.boolean  "licensor"
@@ -326,6 +333,7 @@ ActiveRecord::Schema.define(version: 20161205201037) do
   end
 
   add_index "registrations", ["agency_template_upload_id"], name: "fk_rails_b77d53b2a3", using: :btree
+  add_index "registrations", ["country_of_business_registration_id"], name: "fk_rails_7a70587019", using: :btree
   add_index "registrations", ["packaging_sector_main_activity_id"], name: "fk_rails_bb82cb95dd", using: :btree
   add_index "registrations", ["sic_code_id"], name: "fk_rails_b4a78f5f34", using: :btree
 
@@ -365,9 +373,10 @@ ActiveRecord::Schema.define(version: 20161205201037) do
   add_index "royce_role", ["name"], name: "index_royce_role_on_name", using: :btree
 
   create_table "scheme_country_codes", force: :cascade do |t|
-    t.string   "country",    limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "country",     limit: 255, null: false
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "scheme_operators", force: :cascade do |t|
@@ -435,8 +444,8 @@ ActiveRecord::Schema.define(version: 20161205201037) do
 
   create_table "sic_codes", force: :cascade do |t|
     t.string   "code",            limit: 255
-    t.boolean  "active"
     t.string   "year_introduced", limit: 255
+    t.boolean  "active"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
@@ -519,6 +528,7 @@ ActiveRecord::Schema.define(version: 20161205201037) do
   add_foreign_key "material_totals", "packaging_materials"
   add_foreign_key "material_totals", "regular_producer_details"
   add_foreign_key "registrations", "agency_template_uploads"
+  add_foreign_key "registrations", "country_of_business_registrations"
   add_foreign_key "registrations", "packaging_sector_main_activities"
   add_foreign_key "registrations", "sic_codes"
   add_foreign_key "regular_producer_details", "registrations"

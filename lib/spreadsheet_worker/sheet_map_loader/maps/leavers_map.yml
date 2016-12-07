@@ -1,0 +1,17 @@
+leavers:
+  scheme_ref:
+    field: A
+  npwd:
+    field: B
+  company_name:
+    field: C
+  company_house_no:
+    field: D
+  allocation_method_used:
+    field: F
+  total_recovery:
+    field: G
+  leaving_reason:
+    field: H
+  date_left:
+    field: I

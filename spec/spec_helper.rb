@@ -18,7 +18,7 @@ SimpleCov.start 'rails' do
   add_group 'Library', 'app/lib'
 end
 
-SimpleCov.minimum_coverage 99.17
+SimpleCov.minimum_coverage 96.20
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)

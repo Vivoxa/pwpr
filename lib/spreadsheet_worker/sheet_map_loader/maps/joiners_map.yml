@@ -1,10 +1,19 @@
 joiners:
   scheme_ref:
+    field: A
   npwd:
+    field: B
   company_name:
+    field: C
   company_house_no:
+    field: D
   allocation_method_used:
+    field: F
   total_recovery:
+    field: G
   previously_registered_at:
+    field: H
   date_joined:
+    field: I
   date_scheme_registered:
+    field: J

@@ -1,29 +1,43 @@
 licencees:
   scheme_ref:
+    field: A
   registration_company_npwd:
+    field: B
   registration_company_name:
+    field: C
+  company_name:
+    field: E
   company_house_no:
-  licencee_scheme_ref_number:
+    field: F
 
   registered:
     address_1:
+      field: G
     address_2:
+      field: H
     address_3:
-    address_4:
+      field: I
     town:
+      field: J
     postal_code:
-    country:
-    phone:
-    fax:
-    email:
+      field: K
 
   contact:
     first_name:
+      field: L
     last_name:
+      field: M
     email:
+      field: O
     phone:
+      field: N
     address_1:
+      field: P
     address_2:
+      field: Q
     address_3:
+      field: R
     town:
+      field: S
     postal_code:
+      field: T

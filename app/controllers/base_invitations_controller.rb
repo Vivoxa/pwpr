@@ -46,7 +46,7 @@ class BaseInvitationsController < Devise::InvitationsController
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:invite) do |user_params|
-      user_params.permit({scheme_ids: []}, :email, :name, :business_id)
+      user_params.permit({scheme_ids: []}, :email, :first_name, :business_id)
     end
   end
 end

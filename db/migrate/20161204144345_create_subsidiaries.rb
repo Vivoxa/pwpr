@@ -4,7 +4,6 @@ class CreateSubsidiaries < ActiveRecord::Migration
       t.references :business, foreign_key: true
       t.references :agency_template_upload, foreign_key: true
       t.references :change_detail, foreign_key: true, null: false
-      t.string :change_details
 
       t.timestamps null: false
     end

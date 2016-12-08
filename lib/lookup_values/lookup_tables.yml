@@ -4,6 +4,22 @@ leaving_codes:
     title: code
     data_type: string
     values:
+    - "A"
+    - "B"
+    - "C"
+    - "D"
+    - "E"
+    - "F"
+    - "G"
+    - "H"
+    - "I"
+    - "J"
+    - "K"
+    - "L"
+  column_2:
+    title: reason
+    data_type: string
+    values:
     - "Administration/Receivership"
     - "Liquidation/Dissolution"
     - "Dropped below turnover threshold"
@@ -16,19 +32,49 @@ leaving_codes:
     - "Now a subsidiary of another company (not incapacity related)"
     - "Not ready to register by 15th April"
     - "No longer obligated (Not threshold related)"
+scheme_country_codes:
+  no_columns: 2
+  column_1:
+    title: country
+    data_type: string
+    values:
+    - "GB"
+    - "NI"
   column_2:
-    title: reason
+    title: description
+    data_type: string
+    values:
+    - "na"
+    - "na"
+business_types:
+  no_columns: 2
+  column_1:
+    title: name
+    data_type: string
+    values:
+    - "Sole Trader"
+    - "Partnership"
+    - "Individual Co"
+  column_2:
+    title: description
     data_type: string
     values:
     - "na"
     - "na"
     - "na"
-    - "na"
-    - "na"
-    - "na"
-    - "na"
-    - "na"
-    - "na"
+submission_types:
+  no_columns: 2
+  column_1:
+    title: code
+    data_type: string
+    values:
+    - "New Member"
+    - "Resubmission Data"
+    - "Resubmission Other"
+  column_2:
+    title: description
+    data_type: string
+    values:
     - "na"
     - "na"
     - "na"

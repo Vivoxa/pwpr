@@ -319,17 +319,17 @@ ActiveRecord::Schema.define(version: 20161205201037) do
   end
 
   create_table "registrations", force: :cascade do |t|
-    t.integer  "agency_template_upload_id",           limit: 4
-    t.integer  "sic_code_id",                         limit: 4
-    t.integer  "packaging_sector_main_activity_id",   limit: 4
-    t.integer  "country_of_business_registration_id", limit: 4
-    t.string   "resubmission",                        limit: 255
-    t.decimal  "turnover",                                        precision: 10
+    t.integer  "agency_template_upload_id",              limit: 4
+    t.integer  "sic_code_id",                            limit: 4
+    t.integer  "packaging_sector_main_activity_id",      limit: 4
+    t.integer  "country_of_business_registration_id",    limit: 4
+    t.integer  "change_to_application_or_obligation_id", limit: 4
+    t.string   "resubmission",                           limit: 255
+    t.decimal  "turnover",                                           precision: 10
     t.boolean  "licensor"
     t.boolean  "allocation_method_used"
-    t.string   "change_to_application_or_obligation", limit: 255
-    t.datetime "created_at",                                                     null: false
-    t.datetime "updated_at",                                                     null: false
+    t.datetime "created_at",                                                        null: false
+    t.datetime "updated_at",                                                        null: false
   end
 
   add_index "registrations", ["agency_template_upload_id"], name: "fk_rails_b77d53b2a3", using: :btree
@@ -459,6 +459,13 @@ ActiveRecord::Schema.define(version: 20161205201037) do
   end
 
   add_index "small_producer_details", ["registration_id"], name: "fk_rails_dbdafa2a38", using: :btree
+
+  create_table "submission_types", force: :cascade do |t|
+    t.string   "code",        limit: 255
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "subsidiaries", force: :cascade do |t|
     t.integer  "business_id",               limit: 4

@@ -4,7 +4,7 @@ class CreateMaterialTargets < ActiveRecord::Migration
       t.references :packaging_material, foreign_key: true
       t.references :annual_target_set, foreign_key: true
       t.string :year
-      t.decimal :value
+      t.decimal :value, precision: 10, scale: 2
 
       t.timestamps null: false
     end

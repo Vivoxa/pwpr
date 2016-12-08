@@ -5,9 +5,9 @@ class CreateRegistrations < ActiveRecord::Migration
       t.references :sic_code, foreign_key: true
       t.references :packaging_sector_main_activity, foreign_key: true
       t.references :country_of_business_registration, foreign_key: true
-      t.references :change_to_application_or_obligation, references: :submission_types
-      t.string :resubmission
-      t.decimal :turnover
+      t.references :submission_type, foreign_key: true, null: false
+      t.references :resubmission_reason, foreign_key: true, null: false
+      t.decimal :turnover, precision: 10, scale: 2
       t.boolean :licensor
       t.boolean :allocation_method_used
 

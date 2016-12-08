@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161205201037) do
+ActiveRecord::Schema.define(version: 20161208182445) do
 
   create_table "address_types", force: :cascade do |t|
     t.string   "title",       limit: 255, null: false
@@ -75,10 +75,10 @@ ActiveRecord::Schema.define(version: 20161205201037) do
 
   create_table "annual_target_sets", force: :cascade do |t|
     t.integer  "scheme_country_code_id", limit: 4
-    t.decimal  "value",                              precision: 10
+    t.decimal  "value",                              precision: 5, scale: 2
     t.string   "year",                   limit: 255
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
   end
 
   add_index "annual_target_sets", ["scheme_country_code_id"], name: "fk_rails_d2d9db2df5", using: :btree
@@ -119,6 +119,13 @@ ActiveRecord::Schema.define(version: 20161205201037) do
   end
 
   add_index "businesses", ["scheme_id"], name: "index_businesses_on_scheme_id", using: :btree
+
+  create_table "change_details", force: :cascade do |t|
+    t.string   "modification", limit: 255
+    t.string   "description",  limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "company_operators", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "",    null: false
@@ -202,9 +209,9 @@ ActiveRecord::Schema.define(version: 20161205201037) do
     t.integer  "business_id",               limit: 4
     t.date     "joining_date"
     t.string   "previously_registered_at",  limit: 255
-    t.decimal  "total_recovery",                        precision: 10
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
+    t.decimal  "total_recovery",                        precision: 10, scale: 2
+    t.datetime "created_at",                                                     null: false
+    t.datetime "updated_at",                                                     null: false
   end
 
   add_index "joiners", ["agency_template_upload_id"], name: "fk_rails_5b476c16f9", using: :btree
@@ -214,12 +221,12 @@ ActiveRecord::Schema.define(version: 20161205201037) do
     t.integer  "business_id",               limit: 4
     t.integer  "leaving_code_id",           limit: 4
     t.integer  "agency_template_upload_id", limit: 4
-    t.date     "date",                                               null: false
-    t.decimal  "total_recovery_previous",             precision: 10
+    t.date     "date",                                                        null: false
+    t.decimal  "total_recovery_previous",             precision: 5, scale: 2
     t.boolean  "sub_leaver"
     t.date     "scheme_registration_date"
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
   end
 
   add_index "leavers", ["agency_template_upload_id"], name: "fk_rails_e783cea255", using: :btree
@@ -248,25 +255,25 @@ ActiveRecord::Schema.define(version: 20161205201037) do
   create_table "material_details", force: :cascade do |t|
     t.integer  "regular_producer_detail_id", limit: 4
     t.integer  "packaging_material_id",      limit: 4
-    t.decimal  "t1manwo",                              precision: 10
-    t.decimal  "t1conv",                               precision: 10
-    t.decimal  "t1pf",                                 precision: 10
-    t.decimal  "t1sell",                               precision: 10
-    t.decimal  "t2aman",                               precision: 10
-    t.decimal  "t2conv",                               precision: 10
-    t.decimal  "t2apf",                                precision: 10
-    t.decimal  "t2sell",                               precision: 10
-    t.decimal  "t2bman",                               precision: 10
-    t.decimal  "t2bconv",                              precision: 10
-    t.decimal  "t2bp",                                 precision: 10
-    t.decimal  "t2bsell",                              precision: 10
-    t.decimal  "t3aconv",                              precision: 10
-    t.decimal  "t3apf",                                precision: 10
-    t.decimal  "t3asell",                              precision: 10
-    t.decimal  "t3b",                                  precision: 10
-    t.decimal  "t3c",                                  precision: 10
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.decimal  "t1manwo",                              precision: 10, scale: 2
+    t.decimal  "t1conv",                               precision: 10, scale: 2
+    t.decimal  "t1pf",                                 precision: 10, scale: 2
+    t.decimal  "t1sell",                               precision: 10, scale: 2
+    t.decimal  "t2aman",                               precision: 10, scale: 2
+    t.decimal  "t2conv",                               precision: 10, scale: 2
+    t.decimal  "t2apf",                                precision: 10, scale: 2
+    t.decimal  "t2sell",                               precision: 10, scale: 2
+    t.decimal  "t2bman",                               precision: 10, scale: 2
+    t.decimal  "t2bconv",                              precision: 10, scale: 2
+    t.decimal  "t2bp",                                 precision: 10, scale: 2
+    t.decimal  "t2bsell",                              precision: 10, scale: 2
+    t.decimal  "t3aconv",                              precision: 10, scale: 2
+    t.decimal  "t3apf",                                precision: 10, scale: 2
+    t.decimal  "t3asell",                              precision: 10, scale: 2
+    t.decimal  "t3b",                                  precision: 10, scale: 2
+    t.decimal  "t3c",                                  precision: 10, scale: 2
+    t.datetime "created_at",                                                    null: false
+    t.datetime "updated_at",                                                    null: false
   end
 
   add_index "material_details", ["packaging_material_id"], name: "fk_rails_63989b169c", using: :btree
@@ -276,9 +283,9 @@ ActiveRecord::Schema.define(version: 20161205201037) do
     t.integer  "packaging_material_id", limit: 4
     t.integer  "annual_target_set_id",  limit: 4
     t.string   "year",                  limit: 255
-    t.decimal  "value",                             precision: 10
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
+    t.decimal  "value",                             precision: 10, scale: 2
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
   end
 
   add_index "material_targets", ["annual_target_set_id"], name: "fk_rails_9799cbb55e", using: :btree
@@ -287,9 +294,9 @@ ActiveRecord::Schema.define(version: 20161205201037) do
   create_table "material_totals", force: :cascade do |t|
     t.integer  "regular_producer_detail_id", limit: 4
     t.integer  "packaging_material_id",      limit: 4
-    t.decimal  "recycling_obligation",                 precision: 10
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.decimal  "recycling_obligation",                 precision: 10, scale: 2
+    t.datetime "created_at",                                                    null: false
+    t.datetime "updated_at",                                                    null: false
   end
 
   add_index "material_totals", ["packaging_material_id"], name: "fk_rails_7e6a94d761", using: :btree
@@ -319,23 +326,25 @@ ActiveRecord::Schema.define(version: 20161205201037) do
   end
 
   create_table "registrations", force: :cascade do |t|
-    t.integer  "agency_template_upload_id",              limit: 4
-    t.integer  "sic_code_id",                            limit: 4
-    t.integer  "packaging_sector_main_activity_id",      limit: 4
-    t.integer  "country_of_business_registration_id",    limit: 4
-    t.integer  "change_to_application_or_obligation_id", limit: 4
-    t.string   "resubmission",                           limit: 255
-    t.decimal  "turnover",                                           precision: 10
+    t.integer  "agency_template_upload_id",           limit: 4
+    t.integer  "sic_code_id",                         limit: 4
+    t.integer  "packaging_sector_main_activity_id",   limit: 4
+    t.integer  "country_of_business_registration_id", limit: 4
+    t.integer  "submission_type_id",                  limit: 4,                          null: false
+    t.integer  "resubmission_reason_id",              limit: 4,                          null: false
+    t.decimal  "turnover",                                      precision: 10, scale: 2
     t.boolean  "licensor"
     t.boolean  "allocation_method_used"
-    t.datetime "created_at",                                                        null: false
-    t.datetime "updated_at",                                                        null: false
+    t.datetime "created_at",                                                             null: false
+    t.datetime "updated_at",                                                             null: false
   end
 
   add_index "registrations", ["agency_template_upload_id"], name: "fk_rails_b77d53b2a3", using: :btree
   add_index "registrations", ["country_of_business_registration_id"], name: "fk_rails_7a70587019", using: :btree
   add_index "registrations", ["packaging_sector_main_activity_id"], name: "fk_rails_bb82cb95dd", using: :btree
+  add_index "registrations", ["resubmission_reason_id"], name: "fk_rails_fe6ce2c717", using: :btree
   add_index "registrations", ["sic_code_id"], name: "fk_rails_b4a78f5f34", using: :btree
+  add_index "registrations", ["submission_type_id"], name: "fk_rails_7aa93260c0", using: :btree
 
   create_table "regular_producer_details", force: :cascade do |t|
     t.integer  "registration_id",                                     limit: 4
@@ -352,6 +361,13 @@ ActiveRecord::Schema.define(version: 20161205201037) do
   end
 
   add_index "regular_producer_details", ["registration_id"], name: "fk_rails_200684d40d", using: :btree
+
+  create_table "resubmission_reasons", force: :cascade do |t|
+    t.string   "reason",      limit: 255
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "royce_connector", force: :cascade do |t|
     t.integer  "roleable_id",   limit: 4,   null: false
@@ -460,6 +476,14 @@ ActiveRecord::Schema.define(version: 20161205201037) do
 
   add_index "small_producer_details", ["registration_id"], name: "fk_rails_dbdafa2a38", using: :btree
 
+  create_table "small_producer_obligations", force: :cascade do |t|
+    t.decimal  "sme",                     precision: 10, scale: 2
+    t.decimal  "glass_split",             precision: 10, scale: 2
+    t.string   "year",        limit: 255
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+  end
+
   create_table "submission_types", force: :cascade do |t|
     t.string   "code",        limit: 255
     t.string   "description", limit: 255
@@ -470,6 +494,7 @@ ActiveRecord::Schema.define(version: 20161205201037) do
   create_table "subsidiaries", force: :cascade do |t|
     t.integer  "business_id",               limit: 4
     t.integer  "agency_template_upload_id", limit: 4
+    t.integer  "change_detail_id",          limit: 4,   null: false
     t.string   "change_details",            limit: 255
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
@@ -477,6 +502,7 @@ ActiveRecord::Schema.define(version: 20161205201037) do
 
   add_index "subsidiaries", ["agency_template_upload_id"], name: "fk_rails_8637b10479", using: :btree
   add_index "subsidiaries", ["business_id"], name: "fk_rails_75332f4c56", using: :btree
+  add_index "subsidiaries", ["change_detail_id"], name: "fk_rails_c91c61f6f6", using: :btree
 
   create_table "target_fields", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -489,13 +515,13 @@ ActiveRecord::Schema.define(version: 20161205201037) do
 
   create_table "target_totals", force: :cascade do |t|
     t.integer  "regular_producer_detail_id",                   limit: 4
-    t.decimal  "total_recycling_obligation",                             precision: 10
-    t.decimal  "total_recovery_obligation",                              precision: 10
-    t.decimal  "total_material_specific_recycling_obligation",           precision: 10
-    t.decimal  "adjusted_total_recovery_obligation",                     precision: 10
-    t.decimal  "ninetytwo_percent_min_recycling_target",                 precision: 10
-    t.datetime "created_at",                                                            null: false
-    t.datetime "updated_at",                                                            null: false
+    t.decimal  "total_recycling_obligation",                             precision: 10, scale: 2
+    t.decimal  "total_recovery_obligation",                              precision: 10, scale: 2
+    t.decimal  "total_material_specific_recycling_obligation",           precision: 10, scale: 2
+    t.decimal  "adjusted_total_recovery_obligation",                     precision: 10, scale: 2
+    t.decimal  "ninetytwo_percent_min_recycling_target",                 precision: 10, scale: 2
+    t.datetime "created_at",                                                                      null: false
+    t.datetime "updated_at",                                                                      null: false
   end
 
   add_index "target_totals", ["regular_producer_detail_id"], name: "fk_rails_4653c8a7c8", using: :btree
@@ -504,9 +530,9 @@ ActiveRecord::Schema.define(version: 20161205201037) do
     t.integer  "target_field_id",      limit: 4
     t.integer  "annual_target_set_id", limit: 4
     t.string   "year",                 limit: 255
-    t.decimal  "value",                            precision: 10
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.decimal  "value",                            precision: 5, scale: 2
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
   end
 
   add_index "targets", ["annual_target_set_id"], name: "fk_rails_64aa8d93b5", using: :btree
@@ -537,11 +563,14 @@ ActiveRecord::Schema.define(version: 20161205201037) do
   add_foreign_key "registrations", "agency_template_uploads"
   add_foreign_key "registrations", "country_of_business_registrations"
   add_foreign_key "registrations", "packaging_sector_main_activities"
+  add_foreign_key "registrations", "resubmission_reasons"
   add_foreign_key "registrations", "sic_codes"
+  add_foreign_key "registrations", "submission_types"
   add_foreign_key "regular_producer_details", "registrations"
   add_foreign_key "small_producer_details", "registrations"
   add_foreign_key "subsidiaries", "agency_template_uploads"
   add_foreign_key "subsidiaries", "businesses"
+  add_foreign_key "subsidiaries", "change_details"
   add_foreign_key "target_totals", "regular_producer_details"
   add_foreign_key "targets", "annual_target_sets"
   add_foreign_key "targets", "target_fields"

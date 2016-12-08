@@ -26,10 +26,13 @@ def get_values(columns, lookup_tables, table_name)
   value_count.times do |index|
     values << "("
     columns.each do |column|
-      if column['data_type'] == 'integer'
-        values << "#{column['values'][index]},"
-      else
-        values << "'#{column['values'][index]}',"
+      case column['data_type']
+        when 'integer'
+          values << "#{column['values'][index]},"
+        when 'string'
+          values << "'#{column['values'][index]}',"
+        when 'decimal'
+          values << "#{column['values'][index]},"
       end
     end
     values << "'#{timestamp}','#{timestamp}')"

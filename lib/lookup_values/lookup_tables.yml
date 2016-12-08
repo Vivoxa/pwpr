@@ -46,6 +46,48 @@ scheme_country_codes:
     values:
     - "na"
     - "na"
+small_producer_obligations:
+  no_columns: 2
+  column_1:
+    title: sme
+    data_type: integer
+    values:
+    - 30
+  column_2:
+    title: glass_split
+    data_type: decimal
+    values:
+    - 0.63
+resubmission_reasons:
+  no_columns: 2
+  column_1:
+    title: reason
+    data_type: string
+    values:
+    - "Agency Led"
+    - "Scheme Led"
+    - "Member Led"
+  column_2:
+    title: description
+    data_type: string
+    values:
+    - "na"
+    - "na"
+    - "na"
+change_details:
+  no_columns: 2
+  column_1:
+    title: modification
+    data_type: string
+    values:
+    - "New Subsidiary"
+    - "Resubmission Other"
+  column_2:
+    title: description
+    data_type: string
+    values:
+    - "na"
+    - "na"
 business_types:
   no_columns: 2
   column_1:

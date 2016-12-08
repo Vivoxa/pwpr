@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :submission_type do
-    code 'MyString'
+  factory :change_detail do
+    change 'MyString'
     description 'MyString'
   end
 end

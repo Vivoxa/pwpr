@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :submission_type do
-    code 'MyString'
+  factory :resubmission_reason do
+    reason 'MyString'
     description 'MyString'
   end
 end

@@ -4,23 +4,23 @@ class CreateMaterialDetails < ActiveRecord::Migration
       t.references :regular_producer_detail, foreign_key: true
       t.references :packaging_material, foreign_key: true
 
-      t.decimal :t1manwo
-      t.decimal :t1conv
-      t.decimal :t1pf
-      t.decimal :t1sell
-      t.decimal :t2aman
-      t.decimal :t2conv
-      t.decimal :t2apf
-      t.decimal :t2sell
-      t.decimal :t2bman
-      t.decimal :t2bconv
-      t.decimal :t2bp
-      t.decimal :t2bsell
-      t.decimal :t3aconv
-      t.decimal :t3apf
-      t.decimal :t3asell
-      t.decimal :t3b
-      t.decimal :t3c
+      t.decimal :t1manwo, precision: 10, scale: 2
+      t.decimal :t1conv, precision: 10, scale: 2
+      t.decimal :t1pf, precision: 10, scale: 2
+      t.decimal :t1sell, precision: 10, scale: 2
+      t.decimal :t2aman, precision: 10, scale: 2
+      t.decimal :t2conv, precision: 10, scale: 2
+      t.decimal :t2apf, precision: 10, scale: 2
+      t.decimal :t2sell, precision: 10, scale: 2
+      t.decimal :t2bman, precision: 10, scale: 2
+      t.decimal :t2bconv, precision: 10, scale: 2
+      t.decimal :t2bp, precision: 10, scale: 2
+      t.decimal :t2bsell, precision: 10, scale: 2
+      t.decimal :t3aconv, precision: 10, scale: 2
+      t.decimal :t3apf, precision: 10, scale: 2
+      t.decimal :t3asell, precision: 10, scale: 2
+      t.decimal :t3b, precision: 10, scale: 2
+      t.decimal :t3c, precision: 10, scale: 2
 
       t.timestamps null: false
     end

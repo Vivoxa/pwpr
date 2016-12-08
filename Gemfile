@@ -2,8 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.7'
 
-gem 'aws-sdk', '~> 2'
-
 # UI gems
 gem 'bootstrap', '~> 4.0.0.alpha4'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
@@ -20,6 +18,8 @@ gem 'royce'
 
 # worker gems
 gem 'bunny', require: false
+gem 'aws-sdk', '~> 2'
+gem 'roo-xls', '1.0.0', require: false
 
 # DB gems
 gem 'mysql2', '~> 0.3.18'

@@ -11,8 +11,7 @@ class BusinessesController < BaseController
 
   # GET /businesses/1
   # GET /businesses/1.json
-  def show
-  end
+  def show; end
 
   # GET /businesses/new
   def new
@@ -22,8 +21,7 @@ class BusinessesController < BaseController
   end
 
   # GET /businesses/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /businesses
   # POST /businesses.json

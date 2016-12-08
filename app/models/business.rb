@@ -5,7 +5,10 @@ class Business < ActiveRecord::Base
   belongs_to :scheme_status_code
   belongs_to :registration_status_code
   belongs_to :sic_code
-
+  belongs_to :submission_type
+  belongs_to :business_subtype
+  belongs_to :business_type
+  belongs_to :country_of_business_registration
   has_many :company_operators, dependent: :destroy
   has_many :addresses
 

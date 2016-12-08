@@ -98,24 +98,26 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   end
 
   create_table "businesses", force: :cascade do |t|
-    t.string   "name",                        limit: 255
-    t.string   "membership_id",               limit: 255
-    t.string   "company_no",                  limit: 255
-    t.string   "NPWD",                        limit: 255
-    t.integer  "scheme_id",                   limit: 4
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.string   "scheme_ref",                  limit: 255
-    t.string   "trading_name",                limit: 255
-    t.string   "company_number",              limit: 255
-    t.integer  "business_type_id",            limit: 4
-    t.integer  "business_subtype_id",         limit: 4
-    t.integer  "sic_code_id",                 limit: 4
-    t.string   "country_of_regitration",      limit: 255
-    t.string   "year_first_reg",              limit: 255
-    t.string   "year_last_reg",               limit: 255
-    t.integer  "scheme_status_code_id",       limit: 4
-    t.integer  "registration_status_code_id", limit: 4
+    t.string   "name",                                limit: 255
+    t.string   "membership_id",                       limit: 255
+    t.string   "company_no",                          limit: 255
+    t.string   "NPWD",                                limit: 255
+    t.integer  "scheme_id",                           limit: 4
+    t.integer  "submission_type_id",                  limit: 4
+    t.integer  "country_of_business_registration_id", limit: 4
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.string   "scheme_ref",                          limit: 255
+    t.string   "trading_name",                        limit: 255
+    t.string   "company_number",                      limit: 255
+    t.integer  "business_type_id",                    limit: 4
+    t.integer  "business_subtype_id",                 limit: 4
+    t.integer  "sic_code_id",                         limit: 4
+    t.string   "country_of_regitration",              limit: 255
+    t.string   "year_first_reg",                      limit: 255
+    t.string   "year_last_reg",                       limit: 255
+    t.integer  "scheme_status_code_id",               limit: 4
+    t.integer  "registration_status_code_id",         limit: 4
   end
 
   add_index "businesses", ["scheme_id"], name: "index_businesses_on_scheme_id", using: :btree

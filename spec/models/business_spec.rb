@@ -8,7 +8,6 @@ RSpec.describe Business, type: :model do
       it { is_expected.to belong_to(:business_subtype) }
       it { is_expected.to belong_to(:scheme_status_code) }
       it { is_expected.to belong_to(:registration_status_code) }
-      it { is_expected.to belong_to(:submission_type) }
       it { is_expected.to belong_to(:country_of_business_registration) }
       it { is_expected.to belong_to(:sic_code) }
     end

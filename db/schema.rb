@@ -103,7 +103,6 @@ ActiveRecord::Schema.define(version: 20161208182445) do
     t.string   "company_no",                          limit: 255
     t.string   "NPWD",                                limit: 255
     t.integer  "scheme_id",                           limit: 4
-    t.integer  "submission_type_id",                  limit: 4
     t.integer  "country_of_business_registration_id", limit: 4
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false

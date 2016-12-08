@@ -1,10 +1,10 @@
 class CreateTargets < ActiveRecord::Migration
   def change
     create_table :targets do |t|
-      t.references :target_field, foreign_key: true
-      t.references :annual_target_set, foreign_key: true
-      t.string :year
-      t.decimal :value
+      t.references :target_field, foreign_key: true, null: false
+      t.references :annual_target_set, foreign_key: true, null: false
+      t.string :year, null: false
+      t.decimal :value, null: false
 
       t.timestamps null: false
     end

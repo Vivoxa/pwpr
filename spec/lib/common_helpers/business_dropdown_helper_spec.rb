@@ -12,8 +12,7 @@ RSpec.describe CommonHelpers::BusinessDropdownHelper do
     end
 
     class File
-      def js
-      end
+      def js; end
     end
   end
 

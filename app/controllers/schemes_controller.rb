@@ -11,8 +11,7 @@ class SchemesController < BaseController
 
   # GET /schemes/1
   # GET /schemes/1.json
-  def show
-  end
+  def show; end
 
   # GET /schemes/new
   def new
@@ -20,8 +19,7 @@ class SchemesController < BaseController
   end
 
   # GET /schemes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /schemes
   # POST /schemes.json

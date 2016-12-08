@@ -24,8 +24,7 @@ class CompanyOperatorsController < BaseController
   end
 
   # GET /company_operators/1/edit
-  def edit
-  end
+  def edit; end
 
   # PATCH/PUT /company_operators/:id
   def update

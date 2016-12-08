@@ -30,8 +30,7 @@ class SchemeOperatorsController < BaseController
   end
 
   # GET /scheme_operators/1/edit
-  def edit
-  end
+  def edit; end
 
   # PATCH/PUT /scheme_operators/:id
   def update

@@ -2,7 +2,9 @@ module SpreadsheetWorker
   module SheetProcessor
     class RegistrationsHandler
       def process
-        process_address
+        process_audit_address
+        process_correspondence_address
+        process_registered_address
         process_contact
         process_calculations
         process_allocation
@@ -12,7 +14,6 @@ module SpreadsheetWorker
       private
 
       def process_audit_address(row)
-        # process address (registrations, correspondence, contact/audit) data
         address = Address.new
         address.address_1 = column_value(row, map['contact']['audit']['address_1']['field'])
         address.address_2 = column_value(row, map['contact']['audit']['address_2']['field'])
@@ -21,11 +22,11 @@ module SpreadsheetWorker
         address.town = column_value(row, map['contact']['audit']['town']['field'])
         address.post_code = column_value(row, map['contact']['audit']['postal_code']['field'])
         address.country = column_value(row, map['contact']['audit']['country']['field'])
-        address
+        address.address_type = AddressType.where(title: 'audit').first
+        address.business = @registration.business
       end
 
       def process_correspondence_address(row)
-        # process address (registrations, correspondence, contact/audit) data
         address = Address.new
         address.address_1 = column_value(row, map['correspondence']['address_1']['field'])
         address.address_2 = column_value(row, map['correspondence']['address_2']['field'])
@@ -33,11 +34,12 @@ module SpreadsheetWorker
         address.address_4 = column_value(row, map['correspondence']['address_4']['field'])
         address.town = column_value(row, map['correspondence']['town']['field'])
         address.post_code = column_value(row, map['correspondence']['postal_code']['field'])
-        address
+        address.address_type = AddressType.where(title: 'correspondence').first
+        address.contact = process_contact
+        address.business = @registration.business
       end
 
-      def process_registration_address(row)
-        # process address (registrations, correspondence, contact/audit) data
+      def process_registered_address(row)
         address = Address.new
         address.address_1 = column_value(row, map['registered']['address_1']['field'])
         address.address_2 = column_value(row, map['registered']['address_2']['field'])
@@ -48,14 +50,15 @@ module SpreadsheetWorker
         address.country = column_value(row, map['registered']['country']['field'])
         address.telephone = column_value(row, map['registered']['phone']['field'])
         address.email = column_value(row, map['registered']['email']['field'])
-        address
+        address.address_type = AddressType.where(title: 'registered').first
+        address.business = @registration.business
       end
 
       def process_contact(row)
         #  process contact data
         contact = Contact.new
         contact.title = column_value(row, map['contact']['title']['field'])
-        contact.fisrt_name = column_value(row, map['contact']['fisrt_name']['field'])
+        contact.first_name = column_value(row, map['contact']['first_name']['field'])
         contact.last_name = column_value(row, map['contact']['last_name']['field'])
         contact.email = column_value(row, map['contact']['email']['field'])
         contact.phone = column_value(row, map['contact']['telephone_1']['field'])
@@ -69,20 +72,33 @@ module SpreadsheetWorker
 
       def process_allocation
         # process allocation data
-
-        @registration.allocation_method_obligation
-        @registration.allocation_method_used
-        @registration.allocation_method_used
-        @registration.allocation_method_used
+        @registration.allocation_method_used = column_value(row, map['allocation']['method_used']['field'])
       end
 
       def process_other
-        # process the rest of the data
-        @registration.allocation_method_used
+        @registration.licensor = column_value(row, map['licensor']['field'])
+        @registration.turnover = column_value(row, map['turnover']['field'])
+        @registration.change_detail = ChangeDetail.where(modification: column_value(row, map['change_to_member_application_or_obligation']['field'])).first
+        @registration.resubmission_reason = ResubmissionReason.where(reason: column_value(row, map['resubmission_reason']['field'])).first
+        @registration.packaging_sector_main_activity = PackagingSectorMainActivity.where(type: column_value(row, map['change_to_member_application_or_obligation']['field'])).first
+        @registration.country_of_business_registration = CountryOfBusinessRegistrations.where(country: column_value(row, map['registered']['country']['field'])).first
       end
 
-      def create_business
-        # create business if it doesn't exist
+      def get_or_create_business(npwd)
+        business = Business.where(NPWD: npwd).first
+
+        unless business
+          business = Business.new
+          business.trading_name = column_value(row, map['company_name']['field'])
+          business.company_number = column_value(row, map['company_house_no']['field'])
+          business.NPWD = npwd
+          business.sic_code = SicCodes.where(code: column_value(row, map['sic_code']['field']))
+          business.scheme_ref = column_value(row, map['scheme_ref']['field'])
+          business.business_type = BusinessTypeCode.where(name: column_value(row, map['business_type']['field'])).first
+          business.business_subtype = BusinessSubtypeCode.where(name: column_value(row, map['business_subtype']['field'])).first
+        end
+
+        @registration.business = business
       end
 
       def map
@@ -103,7 +119,14 @@ module SpreadsheetWorker
 
       def column_value(row, letter)
         index = transform_to_index(letter)
-        registrations.row(row)[index]
+        value = registrations.row(row)[index]
+
+        return boolean_column_value if ['Y', 'N'].include? value
+        value
+      end
+
+      def boolean_column_value(value)
+        value == 'Y' ? true : false
       end
 
       def transform_to_index(letter)

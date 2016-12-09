@@ -46,6 +46,22 @@ scheme_country_codes:
     values:
     - "na"
     - "na"
+address_types:
+  no_columns: 2
+  column_1:
+    title: title
+    data_type: string
+    values:
+    - "Contact"
+    - "Registered"
+    - "Audit"
+  column_2:
+    title: description
+    data_type: string
+    values:
+    - "na"
+    - "na"
+    - "na"
 small_producer_obligations:
   no_columns: 2
   column_1:

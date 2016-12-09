@@ -5,7 +5,7 @@ class CreateJoiners < ActiveRecord::Migration
       t.references :business, foreign_key: true, null: false
       t.date :joining_date, null: false
       t.string :previously_registered_at
-      t.decimal :total_recovery, null: false
+      t.decimal :total_recovery, precision: 10, scale: 2, null: false
 
       t.timestamps null: false
     end

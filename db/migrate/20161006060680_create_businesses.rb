@@ -7,7 +7,7 @@ class CreateBusinesses < ActiveRecord::Migration
       t.string :NPWD
       t.string :SIC
       t.references :scheme, index: true, foreign_key: true
-
+      t.references :country_of_business_registration
       t.timestamps null: false
     end
   end

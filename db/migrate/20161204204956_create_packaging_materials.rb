@@ -4,7 +4,7 @@ class CreatePackagingMaterials < ActiveRecord::Migration
       t.string :name, null: false
       t.string :description
       t.string :year_introduced, null: false
-      t.boolean :active
+      t.boolean :active, default: false, null: false
 
       t.timestamps null: false
     end

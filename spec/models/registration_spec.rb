@@ -6,6 +6,8 @@ RSpec.describe Registration, type: :model do
       it { is_expected.to belong_to(:agency_template_upload) }
       it { is_expected.to belong_to(:sic_code) }
       it { is_expected.to belong_to(:packaging_sector_main_activity) }
+      it { is_expected.to belong_to(:submission_type) }
+      it { is_expected.to belong_to(:resubmission_reason) }
     end
 
     describe '#has_one' do

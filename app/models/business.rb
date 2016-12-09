@@ -10,6 +10,12 @@ class Business < ActiveRecord::Base
   belongs_to :country_of_business_registration
   has_many :company_operators, dependent: :destroy
   has_many :addresses
+  has_many :registrations
+  has_many :subsidiaries
+  has_many :joiners
+  has_many :leavers
+  has_many :licensors
+
 
   validates_presence_of :NPWD, :scheme_id # , :business_type_id, :business_subtype_id,
   #:scheme_status_code_id, :registration_status_code_id, :sic_code_id, :submission_type_id,

@@ -9,7 +9,7 @@ class CreateContacts < ActiveRecord::Migration
       t.string :telephone_1, null: false
       t.string :telephone_2
       t.string :fax
-      t.boolean :active
+      t.boolean :active, default: false
 
       t.timestamps null: false
     end

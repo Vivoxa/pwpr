@@ -3,13 +3,13 @@ module SpreadsheetWorker
     class RegistrationsHandler < BaseHandler
       def initialize
         @registration = Registration.new
-        @business = get_business(row_array)
       end
 
       def process(row)
         row_array = registrations.row(row)
+        @business = get_business(row_array)
+        @contact = process_contact(row_array)
 
-        process_contact(row_array)
         process_registered_address(row_array)
         process_correspondence_address(row_array)
         process_audit_address(row_array)
@@ -73,6 +73,7 @@ module SpreadsheetWorker
         contact.telephone_1 = column_value(row, map['contact']['phone']['field'])
         contact.fax = column_value(row, map['contact']['fax']['field'])
         contact.business = @business
+        contact
       end
 
       def process_small_producer(row)

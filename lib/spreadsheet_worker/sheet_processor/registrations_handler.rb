@@ -16,7 +16,7 @@ module SpreadsheetWorker
         process_small_producer(row)
         process_regular_producer(row)
         process_other(row)
-      endb
+      end
 
       private
 
@@ -62,7 +62,6 @@ module SpreadsheetWorker
       end
 
       def process_contact(row)
-        #  process contact data
         contact = Contact.new
         contact.title = column_value(row, map['contact']['title']['field'])
         contact.first_name = column_value(row, map['contact']['first_name']['field'])
@@ -113,7 +112,7 @@ module SpreadsheetWorker
           business.company_number = column_value(row, map['company_house_no']['field'])
           business.NPWD = npwd
           business.scheme =
-          business.sic_code = SicCodes.where(code: column_value(row, map['sic_code']['field']))
+          business.sic_code = SicCode.where(code: column_value(row, map['sic_code']['field']))
           business.scheme_ref = column_value(row, map['scheme_ref']['field'])
           business.business_type = BusinessTypeCode.where(name: column_value(row, map['business_type']['field'])).first
           business.business_subtype = BusinessSubtypeCode.where(name: column_value(row, map['business_subtype']['field'])).first
@@ -123,15 +122,15 @@ module SpreadsheetWorker
       end
 
       def map
-        map_loader(:registrations)
+        map_loader.load(:registrations)
       end
 
       def map_loader
-        @map ||= SheetMapLoader::Map.new
+        @map ||= SpreadsheetWorker::SheetMapLoader::Map.new
       end
 
       def registrations
-        spreadsheet.sheets[2]
+        spreadsheet.sheet(2)
       end
 
       def spreadsheet

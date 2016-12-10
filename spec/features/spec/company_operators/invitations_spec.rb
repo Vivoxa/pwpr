@@ -12,8 +12,8 @@ RSpec.describe '[Company Operator] Company Operator Invitations', js: true do
             expect(page).to have_content('Send invitation')
             id = SecureRandom.uuid
             fill_in 'Email', with: "#{id}@pwpr_test.com"
-            fill_in 'First Name', with: 'Doc'
-            fill_in 'Last Name', with: 'Brown'
+            fill_in 'First name', with: 'Doc'
+            fill_in 'Last name', with: 'Brown'
 
             within '#schemes_select' do
               find("option[value='#{user[:business_id]}']").click
@@ -36,7 +36,8 @@ RSpec.describe '[Company Operator] Company Operator Invitations', js: true do
             find_by_id("#{user[:business_id]}-invite_company_operator").click
             expect(page).to have_content('Send invitation')
 
-            fill_in 'Name', with: 'Doc Brown'
+            fill_in 'First name', with: 'Doc'
+            fill_in 'Last name', with: 'Brown'
 
             within '#schemes_select' do
               find("option[value='#{user[:business_id]}']").click
@@ -65,7 +66,9 @@ RSpec.describe '[Company Operator] Company Operator Invitations', js: true do
               find("option[value='#{user[:business_id]}']").click
             end
             click_on 'Send an invitation'
-            expect(page).to have_content("An invitation email has been sent to #{id}@pwpr_test.com.")
+            expect(page).to have_content('2 errors prohibited this company operator from being saved:')
+            expect(page).to have_content("First name can't be blank")
+            expect(page).to have_content("Last name can't be blank")
             click_link('Sign Out')
           end
         end

@@ -124,7 +124,7 @@ end
 #                           Admins
 #************************************************************************************
 super_admin = Admin.create(email: 'super_admin@pwpr.com',
-                           password: 'min700si',
+                           password: @password,
                            name: 'Nigel')
 
 super_admin.add_role :super_admin

@@ -12,7 +12,8 @@ RSpec.describe '[Company Operator] Company Operator Invitations', js: true do
             expect(page).to have_content('Send invitation')
             id = SecureRandom.uuid
             fill_in 'Email', with: "#{id}@pwpr_test.com"
-            fill_in 'Name', with: 'Doc Brown'
+            fill_in 'First Name', with: 'Doc'
+            fill_in 'Last Name', with: 'Brown'
 
             within '#schemes_select' do
               find("option[value='#{user[:business_id]}']").click

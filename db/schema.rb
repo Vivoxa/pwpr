@@ -99,8 +99,6 @@ ActiveRecord::Schema.define(version: 20161208182445) do
 
   create_table "businesses", force: :cascade do |t|
     t.string   "name",                                limit: 255
-    t.string   "membership_id",                       limit: 255
-    t.string   "company_no",                          limit: 255
     t.string   "NPWD",                                limit: 255
     t.integer  "scheme_id",                           limit: 4
     t.integer  "country_of_business_registration_id", limit: 4

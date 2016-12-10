@@ -55,10 +55,12 @@ address_types:
     - "Contact"
     - "Registered"
     - "Audit"
+    - "Correspondence"
   column_2:
     title: description
     data_type: string
     values:
+    - "na"
     - "na"
     - "na"
     - "na"

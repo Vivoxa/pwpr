@@ -112,8 +112,8 @@ ActiveRecord::Schema.define(version: 20161208182445) do
     t.integer  "sic_code_id",                         limit: 4,   null: false
     t.string   "year_first_reg",                      limit: 255, null: false
     t.string   "year_last_reg",                       limit: 255
-    t.integer  "scheme_status_code_id",               limit: 4,   null: false
-    t.integer  "registration_status_code_id",         limit: 4,   null: false
+    t.integer  "scheme_status_code_id",               limit: 4
+    t.integer  "registration_status_code_id",         limit: 4
   end
 
   add_index "businesses", ["scheme_id"], name: "index_businesses_on_scheme_id", using: :btree

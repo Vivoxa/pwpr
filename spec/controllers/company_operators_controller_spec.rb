@@ -8,7 +8,6 @@ RSpec.describe CompanyOperatorsController, type: :controller do
                       NPWD:                        'kgkgk',
                       sic_code_id:                 SicCode.first.id,
                       name:                        'business 1',
-                      membership_id:               'mem-1',
                       company_number:              '123456789',
                       scheme_ref:                  'scheme_ref 1',
                       trading_name:                'my trading name',

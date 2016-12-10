@@ -42,7 +42,6 @@ RSpec.describe BusinessesController, type: :controller do
        NPWD:                        'kgkgk',
        sic_code_id:                 SicCode.first.id,
        name:                        'business 1',
-       membership_id:               'mem-1',
        company_number:              '123456789',
        scheme_ref:                  'scheme_ref 1',
        trading_name:                'my trading name',
@@ -56,7 +55,6 @@ RSpec.describe BusinessesController, type: :controller do
        NPWD:                        nil,
        sic_code_id:                 nil,
        name:                        'business 1',
-       membership_id:               'mem-1',
        company_number:              '123456789',
        scheme_ref:                  'scheme_ref 1',
        trading_name:                'my trading name',
@@ -139,7 +137,7 @@ RSpec.describe BusinessesController, type: :controller do
     describe 'PUT #update' do
       context 'with valid params' do
         let(:new_attributes) do
-          {name: 'business 2', membership_id: 'mem-2', company_no: '987654321'}
+          {name: 'business 2', membership_id: 'mem-2', company_number: '987654321'}
         end
 
         it 'updates the requested business' do

@@ -3,7 +3,7 @@ class CreateSubsidiaries < ActiveRecord::Migration
     create_table :subsidiaries do |t|
       t.references :business, foreign_key: true, null: false
       t.references :agency_template_upload, foreign_key: true, null: false
-      t.references :change_detail, foreign_key: true, null: false
+      t.references :change_detail, foreign_key: true
 
       t.timestamps null: false
     end

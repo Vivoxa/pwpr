@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 20161208182445) do
     t.string   "address_line_2",  limit: 255
     t.string   "address_line_3",  limit: 255
     t.string   "address_line_4",  limit: 255
+    t.string   "town",            limit: 255
     t.string   "post_code",       limit: 255, null: false
-    t.string   "county",          limit: 255, null: false
     t.string   "site_country",    limit: 255, null: false
     t.string   "telephone",       limit: 255, null: false
     t.string   "fax",             limit: 255
@@ -98,10 +98,10 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   end
 
   create_table "businesses", force: :cascade do |t|
-    t.string   "membership_id",                       limit: 255
+    t.integer  "scheme_id",                           limit: 4,   null: false
+    t.string   "name",                                limit: 255
+    t.integer  "membership_id",                       limit: 4
     t.string   "NPWD",                                limit: 255
-    t.integer  "scheme_id",                           limit: 4
-    t.integer  "country_of_business_registration_id", limit: 4
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
     t.string   "scheme_ref",                          limit: 255, null: false
@@ -110,11 +110,11 @@ ActiveRecord::Schema.define(version: 20161208182445) do
     t.integer  "business_type_id",                    limit: 4
     t.integer  "business_subtype_id",                 limit: 4
     t.integer  "sic_code_id",                         limit: 4,   null: false
-    t.string   "country_of_regitration",              limit: 255, null: false
     t.string   "year_first_reg",                      limit: 255, null: false
     t.string   "year_last_reg",                       limit: 255
-    t.integer  "scheme_status_code_id",               limit: 4,   null: false
-    t.integer  "registration_status_code_id",         limit: 4,   null: false
+    t.integer  "scheme_status_code_id",               limit: 4
+    t.integer  "registration_status_code_id",         limit: 4
+    t.integer  "country_of_business_registration_id", limit: 4,   null: false
   end
 
   add_index "businesses", ["scheme_id"], name: "index_businesses_on_scheme_id", using: :btree
@@ -172,12 +172,12 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   add_index "company_operators", ["reset_password_token"], name: "index_company_operators_on_reset_password_token", unique: true, using: :btree
 
   create_table "contacts", force: :cascade do |t|
-    t.integer  "business_id", limit: 4,   null: false
-    t.string   "title",       limit: 255, null: false
-    t.string   "first_name",  limit: 255, null: false
-    t.string   "last_name",   limit: 255, null: false
-    t.string   "email",       limit: 255, null: false
-    t.string   "telephone_1", limit: 255, null: false
+    t.integer  "business_id", limit: 4,                   null: false
+    t.string   "title",       limit: 255,                 null: false
+    t.string   "first_name",  limit: 255,                 null: false
+    t.string   "last_name",   limit: 255,                 null: false
+    t.string   "email",       limit: 255,                 null: false
+    t.string   "telephone_1", limit: 255,                 null: false
     t.string   "telephone_2", limit: 255
     t.string   "fax",         limit: 255
     t.boolean  "active",                  default: false
@@ -325,22 +325,21 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   end
 
   create_table "registrations", force: :cascade do |t|
-    t.integer  "agency_template_upload_id",           limit: 4,                          null: false
-    t.integer  "sic_code_id",                         limit: 4,                          null: false
-    t.integer  "packaging_sector_main_activity_id",   limit: 4,                          null: false
-    t.integer  "country_of_business_registration_id", limit: 4,                          null: false
-    t.integer  "submission_type_id",                  limit: 4,                          null: false
-    t.integer  "resubmission_reason_id",              limit: 4
-    t.integer  "business_id",                         limit: 4
-    t.decimal  "turnover",                                      precision: 10, scale: 2, null: false
+    t.integer  "agency_template_upload_id",         limit: 4,                          null: false
+    t.integer  "sic_code_id",                       limit: 4,                          null: false
+    t.integer  "packaging_sector_main_activity_id", limit: 4,                          null: false
+    t.integer  "submission_type_id",                limit: 4,                          null: false
+    t.integer  "resubmission_reason_id",            limit: 4
+    t.integer  "business_id",                       limit: 4,                          null: false
+    t.integer  "change_detail_id",                  limit: 4
+    t.decimal  "turnover",                                    precision: 10, scale: 2, null: false
     t.boolean  "licensor"
     t.boolean  "allocation_method_used"
-    t.datetime "created_at",                                                             null: false
-    t.datetime "updated_at",                                                             null: false
+    t.datetime "created_at",                                                           null: false
+    t.datetime "updated_at",                                                           null: false
   end
 
   add_index "registrations", ["agency_template_upload_id"], name: "fk_rails_b77d53b2a3", using: :btree
-  add_index "registrations", ["country_of_business_registration_id"], name: "fk_rails_7a70587019", using: :btree
   add_index "registrations", ["packaging_sector_main_activity_id"], name: "fk_rails_bb82cb95dd", using: :btree
   add_index "registrations", ["resubmission_reason_id"], name: "fk_rails_fe6ce2c717", using: :btree
   add_index "registrations", ["sic_code_id"], name: "fk_rails_b4a78f5f34", using: :btree
@@ -494,7 +493,7 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   create_table "subsidiaries", force: :cascade do |t|
     t.integer  "business_id",               limit: 4, null: false
     t.integer  "agency_template_upload_id", limit: 4, null: false
-    t.integer  "change_detail_id",          limit: 4, null: false
+    t.integer  "change_detail_id",          limit: 4
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end
@@ -560,7 +559,6 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   add_foreign_key "material_totals", "packaging_materials"
   add_foreign_key "material_totals", "regular_producer_details"
   add_foreign_key "registrations", "agency_template_uploads"
-  add_foreign_key "registrations", "country_of_business_registrations"
   add_foreign_key "registrations", "packaging_sector_main_activities"
   add_foreign_key "registrations", "resubmission_reasons"
   add_foreign_key "registrations", "sic_codes"

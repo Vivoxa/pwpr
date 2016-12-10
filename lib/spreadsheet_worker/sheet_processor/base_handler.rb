@@ -12,11 +12,11 @@ module SpreadsheetWorker
         npwd = column_value(row, map['npwd']['field'])
         business = Business.where(NPWD: npwd).first if npwd
 
-        business ||= create_business(row)
+        business ||= create_business(row, npwd)
         business
       end
 
-      def create_business(row)
+      def create_business(row, npwd)
         business = Business.new
         business.trading_name = column_value(row, map['company_name']['field'])
         business.company_number = column_value(row, map['company_house_no']['field'])

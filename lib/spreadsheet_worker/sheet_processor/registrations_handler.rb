@@ -3,19 +3,24 @@ module SpreadsheetWorker
     class RegistrationsHandler < BaseHandler
       def initialize
         @registration = Registration.new
+        # below is temporary just for faster testing
+        process
       end
 
-      def process(row)
-        row_array = registrations.row(row)
-        @business = get_business(row_array)
-        @contact = process_contact(row_array)
+      def process
+        # row_array = registrations.row(2)
 
-        process_registered_address(row_array)
-        process_correspondence_address(row_array)
-        process_audit_address(row_array)
-        process_small_producer(row_array)
-        process_regular_producer(row_array)
-        finalise_registration_processing(row_array)
+        registrations.each do |row_array|
+          @business = get_business(row_array)
+          @contact = process_contact(row_array)
+
+          process_registered_address(row_array)
+          process_correspondence_address(row_array)
+          process_audit_address(row_array)
+          process_small_producer(row_array)
+          process_regular_producer(row_array)
+          finalise_registration_processing(row_array)
+        end
       end
 
       private

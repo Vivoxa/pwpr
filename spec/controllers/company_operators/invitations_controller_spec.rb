@@ -1,5 +1,12 @@
 RSpec.describe CompanyOperators::InvitationsController, type: :controller do
   context 'scheme operator' do
+    let(:valid_attributes) do
+      {password:    'my_password',
+       email:       'star@star.com',
+       first_name:  'star',
+       last_name:   'gazer',
+       business_id: 1}
+    end
     before do
       @request.env['devise.mapping'] = Devise.mappings[:company_operator]
     end
@@ -63,7 +70,7 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
         context 'when calling create' do
           context 'with correct params' do
             it 'expects a 200 response status' do
-              params = {company_operator: {password: 'my_password', email: 'star@star.com', first_name: 'star', business_id: 1}}
+              params = {company_operator: valid_attributes}
               post :create, params
               expect(response.status).to eq 302
               user = CompanyOperator.find_by_email('star@star.com')
@@ -74,7 +81,7 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
           context 'with scheme_id missing' do
             it 'expects validation to fail' do
               expect(subject).to receive(:populate_schemes_and_businesses)
-              params = {company_operator: {password: 'my_password', email: 'star@star.com', first_name: 'star', business_id: nil}}
+              params = {company_operator: {password: 'my_password', email: 'star@star.com', first_name: 'star', last_name: 'gazer', business_id: nil}}
               post :create, params
               expect(assigns(:company_operator).errors.messages[:business]).to include("can't be blank")
             end
@@ -92,6 +99,13 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
   end
 
   context 'when Admin Operator' do
+    let(:valid_attributes) do
+      {password:    'my_password',
+       email:       'star@star.com',
+       first_name:  'star',
+       last_name:   'gazer',
+       business_id: 1}
+    end
     context 'when Admin has super_admin role' do
       let(:super_admin) { FactoryGirl.create(:super_admin) }
       before do
@@ -112,7 +126,7 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
 
       context 'when calling create' do
         it 'expects a 302 response status' do
-          params = {company_operator: {invitation_sent_at: DateTime.now, password: 'my_password', email: 'star@star.com', first_name: 'star', business_id: 1}}
+          params = {company_operator: valid_attributes}
           post :create, params
           expect(response.status).to eq 302
 
@@ -131,6 +145,13 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
   end
 
   context 'when Company Operator' do
+    let(:valid_attributes) do
+      {password:    'my_password',
+       email:       'star@star.com',
+       first_name:  'star',
+       last_name:   'gazer',
+       business_id: 1}
+    end
     context 'when Company has super_admin role' do
       let(:co) { FactoryGirl.create(:company_operator) }
       before do
@@ -153,7 +174,11 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
 
       context 'when calling create' do
         it 'expects a 302 response status' do
-          params = {company_operator: {invitation_sent_at: DateTime.now, password: 'my_password', email: 'star222@star.com', first_name: 'star', business_id: 1}}
+          params = {company_operator: {password:    'my_password',
+                                       email:       'star222@star.com',
+                                       first_name:  'star',
+                                       last_name:   'gazer',
+                                       business_id: 1}}
           post :create, params
           expect(response.status).to eq 302
 

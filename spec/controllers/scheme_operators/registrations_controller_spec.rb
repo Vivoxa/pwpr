@@ -165,7 +165,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
 
     context 'when calling create' do
       it 'expects a 200 response status' do
-        post :create, scheme_operator: {email: 'freddy@pwpr.com', first_name: 'freddy', password: 'my_password', scheme_ids: [Scheme.last.id]}
+        post :create, scheme_operator: {email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'Kruger', password: 'my_password', scheme_ids: [Scheme.last.id]}
         expect(response.status).to eq 302
       end
     end
@@ -177,6 +177,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
           expect_any_instance_of(DeviseController).to receive(:set_minimum_password_length)
           post :create, scheme_operator: {email:        'confirmed@pwpr.com',
                                           first_name:   'confirmed',
+                                          last_name:    'at',
                                           password:     'my_password',
                                           confirmed_at: DateTime.now}
         end

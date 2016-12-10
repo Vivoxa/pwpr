@@ -23,7 +23,7 @@ build :rspec, about: 'Running Rspec suite...', &Proc.new { task_group(:rspec) }
 
 # Test application security vulnerabilities
 task_group :security, about: 'Running security check...' do
-  task :brakeman, max: 1
+  task :brakeman , max: 1
 end
 build :security, about: 'Running security check...', &Proc.new { task_group(:security) }
 

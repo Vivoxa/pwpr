@@ -23,9 +23,10 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
     before do
       co_marti.email = 'jennifer@back_to_the_future.com'
       co_marti.first_name = 'Jennifer'
+      co_marti.last_name = 'Smith'
       co_marti.password = 'mypassword'
       co_marti.confirmed_at = DateTime.now
-      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
+      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
       co_marti.approved = true
       co_marti.save
     end
@@ -99,6 +100,7 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
         it 'expects a CompanyOperator to be created' do
           post :create, company_operator: {email:                  'freddy1@pwpr.com',
                                            first_name:             'freddy',
+                                           last_name:              'kruger',
                                            password:               'my_password',
                                            invitation_sent_at:     DateTime.now,
                                            confirmed_at:           DateTime.now,
@@ -116,6 +118,7 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
         before do
           post :create, company_operator: {email:        'confirmed@pwpr.com',
                                            first_name:   'confirmed',
+                                           last_name:    'kruger',
                                            password:     'my_password',
                                            business_id:  Business.last.id,
                                            confirmed_at: DateTime.now}
@@ -155,7 +158,11 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
 
     context 'when calling create' do
       it 'expects a 200 response status' do
-        post :create, company_operator: {email: 'freddy@pwpr.com', first_name: 'freddy', password: 'my_password', business_id: Business.last.id}
+        post :create, company_operator: {email:       'freddy@pwpr.com',
+                                         first_name:  'freddy',
+                                         last_name:   'kruger',
+                                         password:    'my_password',
+                                         business_id: Business.last.id}
         expect(response.status).to eq 302
       end
     end

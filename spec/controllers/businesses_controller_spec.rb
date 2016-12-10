@@ -27,9 +27,10 @@ RSpec.describe BusinessesController, type: :controller do
     before do
       co_marti.email = 'jennifer@back_to_the_future.com'
       co_marti.first_name = 'Jennifer'
+      co_marti.last_name = 'Smith'
       co_marti.password = 'mypassword'
       co_marti.confirmed_at = DateTime.now
-      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
+      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
       co_marti.save
       co_marti.add_role('sc_director')
       co_marti.approved = true
@@ -37,11 +38,31 @@ RSpec.describe BusinessesController, type: :controller do
       sign_in co_marti
     end
     let(:valid_attributes) do
-      {scheme_id: co_marti.schemes.last.id, NPWD: 'kgkgk', sic_code_id: SicCode.first.id, name: 'business 1', membership_id: 'mem-1', company_no: '123456789'}
+      {scheme_id:                   co_marti.schemes.last.id,
+       NPWD:                        'kgkgk',
+       sic_code_id:                 SicCode.first.id,
+       name:                        'business 1',
+       membership_id:               'mem-1',
+       company_number:              '123456789',
+       scheme_ref:                  'scheme_ref 1',
+       trading_name:                'my trading name',
+       year_first_reg:              '2010',
+       scheme_status_code_id:       1,
+       registration_status_code_id: 1}
     end
 
     let(:invalid_attributes) do
-      {scheme_id: 1, NPWD: nil, sic_code_id: nil, name: 'business 1', membership_id: 'mem-1', company_no: '123456789'}
+      {scheme_id:                   co_marti.schemes.last.id,
+       NPWD:                        nil,
+       sic_code_id:                 nil,
+       name:                        'business 1',
+       membership_id:               'mem-1',
+       company_number:              '123456789',
+       scheme_ref:                  'scheme_ref 1',
+       trading_name:                'my trading name',
+       year_first_reg:              '2010',
+       scheme_status_code_id:       1,
+       registration_status_code_id: 1}
     end
 
     # This should return the minimal set of values that should be in the session

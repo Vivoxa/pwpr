@@ -3,8 +3,10 @@
   <% if can? :new, Business %>
       <%= link_to 'New Business', new_business_path, class: ['btn btn-sm btn-primary', 'devise-btn'] %>
   <% end %>
+  <% binding.pry %>
   <% if @businesses.any? %>
       <% @businesses.each do |business| %>
+          <% binding.pry %>
           <div class="row">
             <% if can? :read, business %>
                 <div class="card">

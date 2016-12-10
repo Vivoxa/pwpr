@@ -172,12 +172,12 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   add_index "company_operators", ["reset_password_token"], name: "index_company_operators_on_reset_password_token", unique: true, using: :btree
 
   create_table "contacts", force: :cascade do |t|
-    t.integer  "business_id", limit: 4,                   null: false
-    t.string   "title",       limit: 255,                 null: false
-    t.string   "first_name",  limit: 255,                 null: false
-    t.string   "last_name",   limit: 255,                 null: false
-    t.string   "email",       limit: 255,                 null: false
-    t.string   "telephone_1", limit: 255,                 null: false
+    t.integer  "business_id", limit: 4,   null: false
+    t.string   "title",       limit: 255, null: false
+    t.string   "first_name",  limit: 255, null: false
+    t.string   "last_name",   limit: 255, null: false
+    t.string   "email",       limit: 255, null: false
+    t.string   "telephone_1", limit: 255, null: false
     t.string   "telephone_2", limit: 255
     t.string   "fax",         limit: 255
     t.boolean  "active",                  default: false

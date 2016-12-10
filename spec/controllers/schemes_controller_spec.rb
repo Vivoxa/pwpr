@@ -5,10 +5,11 @@ RSpec.describe SchemesController, type: :controller do
     let(:sc_director_roles) { %i(sc_director sc_users_r sc_users_w sc_users_e schemes_r schemes_w schemes_e schemes_d) }
     before do
       co_marti.email = 'jennifer@back_to_the_future.com'
+      co_marti.last_name = 'Smith'
       co_marti.first_name = 'Jennifer'
       co_marti.password = 'mypassword'
       co_marti.confirmed_at = DateTime.now
-      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
+      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
       co_marti.save
       co_marti.approved = true
       sc_director_roles.each do |permission|
@@ -29,11 +30,11 @@ RSpec.describe SchemesController, type: :controller do
     # Scheme. As you add validations to Scheme, be sure to
     # adjust the attributes here as well.
     let(:valid_attributes) do
-      {name: 'MyScheme', active: true}
+      {name: 'MyScheme', active: true, scheme_country_code_id: 1}
     end
 
     let(:invalid_attributes) do
-      {name: 'MyScheme', active: true}
+      {name: 'MyScheme', active: true, scheme_country_code_id: 1}
     end
 
     # This should return the minimal set of values that should be in the session

@@ -49,6 +49,6 @@ class SchemesController < BaseController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def scheme_params
-    params.require(:scheme).permit(:name, :active)
+    params.require(:scheme).permit(:name, :active, :scheme_country_code_id)
   end
 end

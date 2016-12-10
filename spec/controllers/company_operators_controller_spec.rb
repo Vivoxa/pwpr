@@ -14,6 +14,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
     before do
       scheme_operator.email = 'jennifer@back_to_the_future.com'
       scheme_operator.first_name = 'Jennifer'
+      scheme_operator.last_name = 'Smith'
       scheme_operator.password = 'mypassword'
       scheme_operator.confirmed_at = DateTime.now
       scheme_operator.schemes = [Scheme.create(name: 'test scheme', active: true)]

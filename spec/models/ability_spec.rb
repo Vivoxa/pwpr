@@ -18,7 +18,7 @@ RSpec.describe Ability do
       sc_marti.first_name = 'Jennifer'
       sc_marti.password = 'mypassword'
       sc_marti.confirmed_at = DateTime.now
-      sc_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
+      sc_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
       sc_marti.add_role :sc_director
       sc_marti.add_role :sc_users_w
       sc_marti.save

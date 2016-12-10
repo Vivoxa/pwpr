@@ -52,6 +52,10 @@ class BusinessesController < BaseController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def business_params
-    params.require(:business).permit(:name, :membership_no, :company_no, :NPWD, :SIC, :scheme_id)
+    params.require(:business).permit(:name, :membership_no, :company_number,
+                                     :NPWD, :sic_code_id, :scheme_id,
+                                     :trading_name, :scheme_ref, :business_type_id,
+                                     :business_subtype_id, :year_first_reg,
+                                     :scheme_status_code_id, :registration_status_code_id)
   end
 end

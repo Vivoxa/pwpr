@@ -22,9 +22,10 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
     before do
       co_marti.email = 'jennifer@back_to_the_future.com'
       co_marti.first_name = 'Jennifer'
+      co_marti.last_name = 'Smith'
       co_marti.password = 'mypassword'
       co_marti.confirmed_at = DateTime.now
-      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
+      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
       co_marti.approved = true
       co_marti.save
     end
@@ -47,12 +48,12 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
 
       context 'when calling new' do
         it 'expects an alert message to be flashed to the user' do
-          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'at last', password: 'my_password', schemes: [Scheme.last]
           expect(flash[:alert]).to be_present
         end
 
         it 'expects the message to tell the user they are not approved yet' do
-          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'at last', password: 'my_password', schemes: [Scheme.last]
           expect(flash[:alert]).to eq 'Your account has not been approved by your administrator yet.'
         end
       end
@@ -68,12 +69,12 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
 
       context 'when calling new' do
         it 'expects an alert message to be flashed to the user' do
-          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'at last', password: 'my_password', schemes: [Scheme.last]
           expect(flash[:alert]).to be_present
         end
 
         it 'expects the message to alert that not authorised' do
-          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', password: 'my_password', schemes: [Scheme.last]
+          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'at last', password: 'my_password', schemes: [Scheme.last]
           expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
@@ -100,6 +101,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
         before do
           post :create, scheme_operator: {email:                  'freddy@pwpr.com',
                                           first_name:             'freddy',
+                                          last_name:              'at last',
                                           password:               'my_password',
                                           invitation_sent_at:     DateTime.now,
                                           confirmed_at:           DateTime.now,
@@ -126,6 +128,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
           before do
             post :create, scheme_operator: {email:        'confirmed@pwpr.com',
                                             first_name:   'confirmed',
+                                            last_name:    'at last',
                                             password:     'my_password',
                                             scheme_ids:   [Scheme.last.id],
                                             confirmed_at: DateTime.now}

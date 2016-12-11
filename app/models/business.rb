@@ -16,7 +16,6 @@ class Business < ActiveRecord::Base
   has_many :leavers
   has_many :licensors
 
-
   validates_presence_of :NPWD, :scheme_id, :trading_name, :company_number # , :business_type_id, :business_subtype_id,
   #:scheme_status_code_id, :registration_status_code_id, :sic_code_id, :submission_type_id,
   #:business_type_id, :business_subtype_id, :country_of_business_registration

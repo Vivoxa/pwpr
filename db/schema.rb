@@ -100,7 +100,9 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   create_table "businesses", force: :cascade do |t|
     t.integer  "scheme_id",                           limit: 4,   null: false
     t.string   "name",                                limit: 255
+    t.integer  "membership_id",                       limit: 4
     t.string   "NPWD",                                limit: 255
+    t.integer  "country_of_business_registration_id", limit: 4
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
     t.string   "scheme_ref",                          limit: 255, null: false
@@ -466,7 +468,7 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   create_table "small_producer_details", force: :cascade do |t|
     t.integer  "registration_id",                        limit: 4,   null: false
     t.string   "allocation_method_predominant_material", limit: 255, null: false
-    t.string   "allocation_method_obligation",           limit: 255, null: false
+    t.integer  "allocation_method_obligation",           limit: 4,   null: false
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
   end

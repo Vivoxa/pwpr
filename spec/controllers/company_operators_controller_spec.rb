@@ -4,19 +4,24 @@ RSpec.describe CompanyOperatorsController, type: :controller do
   context 'when a scheme operator is signed in' do
     let(:scheme_operator) { SchemeOperator.new }
     let(:business) do
-      Business.create(scheme_id:     scheme_operator.schemes.first.id,
-                      NPWD:          'kgkgk',
-                      SIC:           'khgifk',
-                      name:          'business 1',
-                      membership_id: 'mem-1',
-                      company_no:    '123456789')
+      Business.create(scheme_id:                   scheme_operator.schemes.first.id,
+                      NPWD:                        'kgkgk',
+                      sic_code_id:                 SicCode.first.id,
+                      name:                        'business 1',
+                      company_number:              '123456789',
+                      scheme_ref:                  'scheme_ref 1',
+                      trading_name:                'my trading name',
+                      year_first_reg:              '2010',
+                      scheme_status_code_id:       1,
+                      registration_status_code_id: 1)
     end
     before do
       scheme_operator.email = 'jennifer@back_to_the_future.com'
-      scheme_operator.name = 'Jennifer'
+      scheme_operator.first_name = 'Jennifer'
+      scheme_operator.last_name = 'Smith'
       scheme_operator.password = 'mypassword'
       scheme_operator.confirmed_at = DateTime.now
-      scheme_operator.schemes = [Scheme.create(name: 'test scheme', active: true)]
+      scheme_operator.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
       scheme_operator.add_role :sc_director
       # TODO: these will have to be tweaked when roles are finished
       scheme_operator.add_role :co_users_r
@@ -40,7 +45,9 @@ RSpec.describe CompanyOperatorsController, type: :controller do
 
     context 'when an invitation has NOT been accepted' do
       it 'expects a collection of scheme operators' do
-        company_operator = CompanyOperator.create(email:              'invited@pwpr.com',
+        company_operator = CompanyOperator.create(first_name: 'Nigel',
+                                                  last_name: 'surtees',
+                                                  email:              'invited@pwpr.com',
                                                   password:           'my_password',
                                                   business_id:        business.id,
                                                   invitation_sent_at: DateTime.now)
@@ -53,7 +60,9 @@ RSpec.describe CompanyOperatorsController, type: :controller do
 
     context 'when an invitation HAS been accepted but not approved' do
       it 'expects a collection of scheme operators' do
-        company_operator = CompanyOperator.create(email:                  'invited@pwpr.com',
+        company_operator = CompanyOperator.create(first_name: 'Nigel',
+                                                  last_name: 'surtees',
+                                                  email:                  'invited@pwpr.com',
                                                   password:               'my_password',
                                                   business_id:            business.id,
                                                   invitation_sent_at:     DateTime.now - 5.days,

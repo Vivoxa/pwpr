@@ -1,0 +1,7 @@
+class MaterialDetail < ActiveRecord::Base
+  belongs_to :regular_producer_detail
+  belongs_to :packaging_material
+
+  validates_presence_of :regular_producer_detail_id, :packaging_material_id, :t1manwo, :t1conv, :t1pf, :t1sell, :t2aman,
+                        :t2conv, :t2apf, :t2sell, :t2bman, :t2bconv, :t2bp, :t2bsell, :t3aconv, :t3apf, :t3asell, :t3b, :t3c
+end

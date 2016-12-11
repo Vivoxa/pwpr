@@ -3,7 +3,8 @@ FactoryGirl.define do
 
   factory :company_operator do |co|
     email
-    name 'Jennifer'
+    first_name 'Jennifer'
+    last_name 'smith'
     password 'mypassword'
     confirmed_at DateTime.now
     approved true

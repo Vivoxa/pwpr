@@ -15,10 +15,11 @@ RSpec.describe Ability do
     let(:sc_marti) { SchemeOperator.new }
     before do
       sc_marti.email = 'jennifer@back_to_the_future.com'
-      sc_marti.name = 'Jennifer'
+      sc_marti.first_name = 'Jennifer'
+      sc_marti.last_name = 'Smith'
       sc_marti.password = 'mypassword'
       sc_marti.confirmed_at = DateTime.now
-      sc_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
+      sc_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
       sc_marti.add_role :sc_director
       sc_marti.add_role :sc_users_w
       sc_marti.save

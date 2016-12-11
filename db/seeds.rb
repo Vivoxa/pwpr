@@ -11,20 +11,76 @@ def random_string(length)
   (0...length).map { (65 + rand(26)).chr }.join
 end
 
-schemes = Scheme.create([{name: 'dans pack scheme'},
-                         {name: 'mypack scheme'},
-                         {name: 'pack one'},
-                         {name: 'Test scheme', active: true},
-                         {name: 'Synergy'},
-                         {name: 'Packaging for you', active: true}
+sic = SicCode.create(code: 'SIC101', active: true, year_introduced: '2013')
+
+schemes = Scheme.create([{name: 'dans pack scheme', scheme_country_code_id: 1},
+                         {name: 'mypack scheme', scheme_country_code_id: 1},
+                         {name: 'pack one', scheme_country_code_id: 1},
+                         {name: 'Test scheme', active: true, scheme_country_code_id: 1},
+                         {name: 'Synergy', scheme_country_code_id: 1},
+                         {name: 'Packaging for you', active: true, scheme_country_code_id: 1}
                         ])
 
-businesses = Business.create([{name: 'dans pack business', membership_id: 'mem-01', NPWD: 'NPWD-1', SIC: 'SIC-1'},
-                              {name: 'my pack business', membership_id: 'mem-02', NPWD: 'NPWD-1', SIC: 'SIC-1'},
-                              {name: 'pack one business', membership_id: 'mem-03', NPWD: 'NPWD-1', SIC: 'SIC-1'},
-                              {name: 'test business', membership_id: 'mem-04', NPWD: 'NPWD-1', SIC: 'SIC-1'},
-                              {name: 'synergy business', membership_id: 'mem-05', NPWD: 'NPWD-1', SIC: 'SIC-1'},
-                              {name: 'pack for you', membership_id: 'mem-06', NPWD: 'NPWD-1', SIC: 'SIC-1'}])
+businesses = Business.create([{name: 'dans pack business',
+                               NPWD: 'NPWD-1',
+                               sic_code_id: sic.id,
+                               scheme_ref: '123',
+                               trading_name: 'trade name',
+                               company_number: '123456789',
+                               country_of_business_registration_id: 1,
+                               year_first_reg: '2007',
+                               scheme_status_code_id: 1,
+                               registration_status_code_id: 1},
+                              {name: 'my pack business',
+                               NPWD: 'NPWD-1',
+                               sic_code_id: sic.id,
+                               scheme_ref: '123',
+                               trading_name: 'trade name',
+                               company_number: '123456789',
+                               country_of_business_registration_id: 1,
+                               year_first_reg: '2007',
+                               scheme_status_code_id: 1,
+                               registration_status_code_id: 1},
+                              {name: 'pack one business',
+                               NPWD: 'NPWD-1',
+                               sic_code_id:sic.id,
+                               scheme_ref: '123',
+                               trading_name: 'trade name',
+                               company_number: '123456789',
+                               country_of_business_registration_id: 1,
+                               year_first_reg: '2007',
+                               scheme_status_code_id: 1,
+                               registration_status_code_id: 1},
+                              {name: 'test business',
+                               NPWD: 'NPWD-1',
+                               sic_code_id: sic.id,
+                               scheme_ref: '123',
+                               trading_name: 'trade name',
+                               company_number: '123456789',
+                               country_of_business_registration_id: 1,
+                               year_first_reg: '2007',
+                               scheme_status_code_id: 1,
+                               registration_status_code_id: 1},
+                              {name: 'synergy business',
+                               NPWD: 'NPWD-1',
+                               sic_code_id: sic.id,
+                               scheme_ref: '123',
+                               trading_name: 'trade name',
+                               company_number: '123456789',
+                               country_of_business_registration_id: 1,
+                               year_first_reg: '2007',
+                               scheme_status_code_id: 1,
+                               registration_status_code_id: 1},
+                              {name: 'pack for you',
+                               NPWD: 'NPWD-1',
+                               sic_code_id: sic.id,
+                               scheme_ref: '123',
+                               trading_name: 'trade name',
+                               company_number: '123456789',
+                               country_of_business_registration_id: 1,
+                               year_first_reg: '2007',
+                               scheme_status_code_id: 1,
+                               registration_status_code_id: 1}])
 
 agency_templates = AgencyTemplateUpload.create([{year: '2015',
                                                  filename: ActionDispatch::Http::UploadedFile.new(tempfile: 'public/favicon.ico', filename: 'favicon.ico'),
@@ -68,7 +124,7 @@ end
 #                           Admins
 #************************************************************************************
 super_admin = Admin.create(email: 'super_admin@pwpr.com',
-                           password: 'min700si',
+                           password: @password,
                            name: 'Nigel')
 
 super_admin.add_role :super_admin
@@ -102,13 +158,14 @@ end
 #                                 Scheme Operators
 #************************************************************************************
   sc_director = SchemeOperator.create({email: "sc_director_#{index}@pwpr.com",
+                                       last_name: 'surtees',
                                        password: @password,
                                        confirmation_token: random_string(20),
                                        invitation_sent_at: DateTime.now - 5.days,
                                        invitation_accepted_at: DateTime.now,
                                        confirmation_sent_at: DateTime.now - 5.days,
                                        confirmed_at: DateTime.now,
-                                       name: "sc_director_#{index}",
+                                       first_name: "sc_director_#{index}",
                                        approved: true,
                                        scheme_ids: schemes[0].id})
 
@@ -120,13 +177,14 @@ end
   end
 
   sc_super_user = SchemeOperator.create({email: "sc_super_user_#{index}@pwpr.com",
+                                         last_name: 'surtees',
                                          password: @password,
                                          confirmation_token: random_string(20),
                                          invitation_sent_at: DateTime.now - 5.days,
                                          invitation_accepted_at: DateTime.now,
                                          confirmation_sent_at: DateTime.now - 5.days,
                                          confirmed_at: DateTime.now,
-                                         name: "sc_super_user_#{index}",
+                                         first_name: "sc_super_user_#{index}",
                                          approved: true,
                                          scheme_ids: [schemes[1].id, schemes[2].id]})
 
@@ -138,13 +196,14 @@ end
   end
 
   sc_user = SchemeOperator.create({email: "sc_user_#{index}@pwpr.com",
+                                   last_name: 'surtees',
                                    password: @password,
                                    confirmation_token: random_string(20),
                                    invitation_sent_at: DateTime.now - 5.days,
                                    invitation_accepted_at: DateTime.now,
                                    confirmation_sent_at: DateTime.now - 5.days,
                                    confirmed_at: DateTime.now,
-                                   name: "sc_user_#{index}",
+                                   first_name: "sc_user_#{index}",
                                    approved: true,
                                    scheme_ids: [schemes[3].id, schemes[4].id]})
 
@@ -156,13 +215,14 @@ end
 #                                 Company Operators
 #************************************************************************************
   co_director = CompanyOperator.create({email: "co_director_#{index}@pwpr.com",
+                                        last_name: 'surtees',
                                         password: @password,
                                         confirmation_token: random_string(20),
                                         invitation_sent_at: DateTime.now - 5.days,
                                         invitation_accepted_at: DateTime.now,
                                         confirmation_sent_at: DateTime.now - 5.days,
                                         confirmed_at: DateTime.now,
-                                        name: "co_director_#{index}",
+                                        first_name: "co_director_#{index}",
                                         approved: true,
                                         business_id: businesses[0].id})
 
@@ -173,13 +233,14 @@ end
   end
 
   co_super_user = CompanyOperator.create({email: "co_super_user_#{index}@pwpr.com",
+                                          last_name: 'surtees',
                                           password: @password,
                                           confirmation_token: random_string(20),
                                           invitation_sent_at: DateTime.now - 5.days,
                                           invitation_accepted_at: DateTime.now,
                                           confirmation_sent_at: DateTime.now - 5.days,
                                           confirmed_at: DateTime.now,
-                                          name: "co_super_user_#{index}",
+                                          first_name: "co_super_user_#{index}",
                                           approved: true,
                                           business_id: businesses[1].id})
 
@@ -192,13 +253,14 @@ end
 
 
   co_user = CompanyOperator.create({email: "co_user_#{index}@pwpr.com",
+                                    last_name: 'surtees',
                                     password: @password,
                                     confirmation_token: random_string(20),
                                     invitation_sent_at: DateTime.now - 5.days,
                                     invitation_accepted_at: DateTime.now,
                                     confirmation_sent_at: DateTime.now - 5.days,
                                     confirmed_at: DateTime.now,
-                                    name: "co_user_#{index}",
+                                    first_name: "co_user_#{index}",
                                     approved: true,
                                     business_id: businesses[2].id})
 

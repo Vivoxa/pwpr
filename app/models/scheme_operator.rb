@@ -7,9 +7,9 @@ class SchemeOperator < ActiveRecord::Base
 
   royce_roles PermissionsForRole::SchemeOperatorDefinitions::ROLES + PermissionsForRole::SchemeOperatorDefinitions::PERMISSIONS
   has_and_belongs_to_many :schemes
-  validates_presence_of :schemes
+  validates_presence_of :schemes, :first_name, :last_name
 
-  scope :company_operators, -> (scheme) { scheme.company_operators }
+  scope :company_operators, ->(scheme) { scheme.company_operators }
   scope :pending_scheme_operators, -> { where('confirmed_at <= NOW()') }
 
   after_create :assign_roles

@@ -24,8 +24,7 @@ class CompanyOperatorsController < BaseController
   end
 
   # GET /company_operators/1/edit
-  def edit
-  end
+  def edit; end
 
   # PATCH/PUT /company_operators/:id
   def update
@@ -90,6 +89,6 @@ class CompanyOperatorsController < BaseController
 
   def secure_params
     # We need to pull the params and handle company_operator as well maybe?
-    params.require(:company_operator).permit(:role, :name, :email, :approved)
+    params.require(:company_operator).permit(:role, :first_name, :email, :approved, :last_name)
   end
 end

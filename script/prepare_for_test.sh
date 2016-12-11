@@ -15,4 +15,8 @@ bundle exec rake db:drop \
   db:setup \
   || exit 1
 echo 'Test DB setup Success!'
+
+echo 'Seeding lookup tables'
+bundle exec rake pwpr:populate_lookup_tables[test]
+echo 'Lookup tables populated....'
 echo 'App ready for testing!'

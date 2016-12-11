@@ -8,7 +8,7 @@ class CompanyOperator < ActiveRecord::Base
 
   belongs_to :business
 
-  validates_presence_of :business
+  validates_presence_of :business, :first_name, :last_name
 
   # scope :active, -> { where(approved: true) }
   # scope :pending, -> { where(approved: false) }

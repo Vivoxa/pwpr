@@ -24,7 +24,9 @@ RSpec.describe PermissionsForRole::BaseDefinitions do
 
     context 'when assigning to a new scheme operator' do
       it 'expects permissions to be assigned correctly' do
-        sc_operator = SchemeOperator.create(email:      'test_sc101@pwpr.com',
+        sc_operator = SchemeOperator.create(first_name: 'rspec owner',
+                                            last_name:  'last',
+                                            email:      'test_sc101@pwpr.com',
                                             password:   'my password',
                                             scheme_ids: [Scheme.last.id])
 
@@ -43,7 +45,9 @@ RSpec.describe PermissionsForRole::BaseDefinitions do
 
     context 'when assigning to a new company operator' do
       it 'expects permissions to be assigned correctly' do
-        co_operator = CompanyOperator.create(email:       'test_co101@pwpr.com',
+        co_operator = CompanyOperator.create(first_name:  'John',
+                                             last_name:   'Smith',
+                                             email:       'test_co101@pwpr.com',
                                              password:    'my password',
                                              business_id: Business.last.id)
 

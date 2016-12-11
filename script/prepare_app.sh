@@ -3,6 +3,7 @@
 set -e
 
 echo "Preparing app..."
+export RAILS_ENV=development
 
 echo "Bundling..."
 bundle install || exit 1
@@ -14,4 +15,9 @@ bundle exec rake db:drop \
   db:setup \
   || exit 1
 echo 'DB setup Success!'
+
+echo 'Seeding lookup tables'
+bundle exec rake pwpr:populate_lookup_tables[development]
+echo 'Lookup tables populated....'
+
 echo 'App ready!'

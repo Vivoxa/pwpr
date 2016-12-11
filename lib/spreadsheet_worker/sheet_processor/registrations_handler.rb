@@ -84,7 +84,7 @@ module SpreadsheetWorker
 
       def process_small_producer(row)
         producer = SmallProducerDetail.new
-        producer.allocation_method_obligation = column_value(row, map['allocation']['method_obligation']['field'])
+        producer.allocation_method_obligation = column_value(row, map['allocation']['method_obligation']['field']).to_f
         producer.allocation_method_predominant_material = column_value(row, map['allocation']['predominant_material']['field'])
         producer.registration = @registration
         producer.save!
@@ -106,7 +106,7 @@ module SpreadsheetWorker
 
       def process_registration(row)
         @registration.licensor = column_value(row, map['licensor']['field'])
-        @registration.turnover = column_value(row, map['turnover']['field'])
+        @registration.turnover = column_value(row, map['turnover']['field']).to_f
         @registration.allocation_method_used = column_value(row, map['allocation']['method_used']['field'])
 
         @registration.change_detail = ChangeDetail.where(modification: column_value(row, map['change_to_member_application_or_obligation']['field'])).first

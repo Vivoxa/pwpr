@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
   before_filter :current_user
   around_action :tag_logs
 
+  def after_sign_in_path_for(_resource)
+    '/'
+  end
+
   protected
 
   def current_ability

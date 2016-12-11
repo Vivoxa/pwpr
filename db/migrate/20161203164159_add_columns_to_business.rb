@@ -6,11 +6,9 @@ class AddColumnsToBusiness < ActiveRecord::Migration
     add_column :businesses, :business_type_id, :integer
     add_column :businesses, :business_subtype_id, :integer
     add_column :businesses, :sic_code_id, :integer, null: false
-    add_column :businesses, :country_of_regitration, :string, null: false
     add_column :businesses, :year_first_reg, :string, null: false
     add_column :businesses, :year_last_reg, :string
-    add_column :businesses, :scheme_status_code_id, :integer, null: false
-    add_column :businesses, :registration_status_code_id, :integer, null: false
-    remove_column :businesses, :SIC
+    add_column :businesses, :scheme_status_code_id, :integer
+    add_column :businesses, :registration_status_code_id, :integer
   end
 end

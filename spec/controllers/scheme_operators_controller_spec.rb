@@ -6,9 +6,10 @@ RSpec.describe SchemeOperatorsController, type: :controller do
     before do
       sc_marti.email = 'jennifer@back_to_the_future.com'
       sc_marti.first_name = 'Jennifer'
+      sc_marti.last_name = 'Smith'
       sc_marti.password = 'mypassword'
       sc_marti.confirmed_at = DateTime.now
-      sc_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
+      sc_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
       sc_marti.add_role :sc_director
       sc_marti.add_role :sc_users_r
       sc_marti.approved = true
@@ -24,7 +25,13 @@ RSpec.describe SchemeOperatorsController, type: :controller do
 
     context 'when an invitation has not been accepted' do
       it 'expects a collection of scheme operators' do
-        scheme_operator = SchemeOperator.create(approved: true, email: 'invited@pwpr.com', password: 'my_password', schemes: sc_marti.schemes, invitation_sent_at: DateTime.now)
+        scheme_operator = SchemeOperator.create(first_name:         'rspec owner',
+                                                last_name:          'last',
+                                                approved:           true,
+                                                email:              'invited@pwpr.com',
+                                                password:           'my_password',
+                                                schemes:            sc_marti.schemes,
+                                                invitation_sent_at: DateTime.now)
         get 'invited_not_accepted'
         object = assigns(:scheme_operators).first
         expect(object).to be_a SchemeOperator
@@ -93,9 +100,10 @@ RSpec.describe SchemeOperatorsController, type: :controller do
     before do
       sc_marti.email = 'jennifer@back_to_the_future.com'
       sc_marti.first_name = 'Jennifer'
+      sc_marti.last_name = 'Smith'
       sc_marti.password = 'mypassword'
       sc_marti.confirmed_at = DateTime.now
-      sc_marti.schemes = [Scheme.create(name: 'test scheme', active: true)]
+      sc_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
       sc_marti.save
       sc_marti.approved = true
       sc_marti.save
@@ -184,7 +192,9 @@ RSpec.describe SchemeOperatorsController, type: :controller do
 
       context 'when an invitation HAS been accepted but not approved' do
         it 'expects a collection of scheme operators' do
-          scheme_operator = SchemeOperator.create(email:                  'invited@pwpr.com',
+          scheme_operator = SchemeOperator.create(first_name:             'rspec owner',
+                                                  last_name:              'last',
+                                                  email:                  'invited@pwpr.com',
                                                   password:               'my_password',
                                                   scheme_ids:             [Scheme.last.id],
                                                   invitation_sent_at:     DateTime.now - 5.days,

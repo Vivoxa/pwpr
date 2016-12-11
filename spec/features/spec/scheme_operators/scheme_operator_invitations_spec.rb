@@ -14,7 +14,8 @@ RSpec.describe '[Scheme Operator] Scheme Operator Invitations', js: true do
             expect(page).to have_content('Send invitation')
             id = SecureRandom.uuid
             fill_in 'Email', with: "#{id}@pwpr_test.com"
-            fill_in 'Name', with: 'Doc Brown'
+            fill_in 'First name', with: 'Doc'
+            fill_in 'Last name', with: 'Brown'
 
             within '#scheme_operator_scheme_ids' do
               find("option[value='#{user[:scheme_id]}']").click
@@ -33,7 +34,8 @@ RSpec.describe '[Scheme Operator] Scheme Operator Invitations', js: true do
             find_by_id("#{user[:scheme_id]}-invite_scheme_operator").click
             expect(page).to have_content('Send invitation')
 
-            fill_in 'Name', with: 'Doc Brown'
+            fill_in 'First name', with: 'Doc'
+            fill_in 'Last name', with: 'Brown'
 
             within '#scheme_operator_scheme_ids' do
               find("option[value='#{user[:scheme_id]}']").click
@@ -58,7 +60,9 @@ RSpec.describe '[Scheme Operator] Scheme Operator Invitations', js: true do
               find("option[value='#{user[:scheme_id]}']").click
             end
             click_on 'Send an invitation'
-            expect(page).to have_content("An invitation email has been sent to #{id}@pwpr_test.com.")
+            expect(page).to have_content('2 errors prohibited this scheme operator from being saved:')
+            expect(page).to have_content("First name can't be blank")
+            expect(page).to have_content("Last name can't be blank")
             click_link('Sign Out')
           end
         end
@@ -71,7 +75,8 @@ RSpec.describe '[Scheme Operator] Scheme Operator Invitations', js: true do
             expect(page).to have_content('Send invitation')
             id = SecureRandom.uuid
             fill_in 'Email', with: "#{id}@pwpr_test.com"
-            fill_in 'Name', with: 'Doc Brown'
+            fill_in 'First name', with: 'Doc'
+            fill_in 'Last name', with: 'Brown'
 
             click_on 'Send an invitation'
             expect(page).to have_content('1 error prohibited this scheme operator from being saved:')

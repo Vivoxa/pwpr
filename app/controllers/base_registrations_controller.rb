@@ -50,6 +50,7 @@ class BaseRegistrationsController < Devise::RegistrationsController
                          :password,
                          :password_confirmation,
                          :first_name,
+                         :last_name,
                          :confirmed_at,
                          :approved,
                          :invitation_accepted_at,

@@ -79,6 +79,6 @@ class SchemeOperatorsController < BaseController
 
   def secure_params
     # We need to pull the params and handle company_operator as well maybe?
-    params.require(:scheme_operator).permit(:role, :first_name, :email, :approved)
+    params.require(:scheme_operator).permit(:role, :first_name, :email, :approved, :last_name)
   end
 end

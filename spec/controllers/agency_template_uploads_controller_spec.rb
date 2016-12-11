@@ -10,6 +10,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
   before do
     co_marti.email = 'jennifer@back_to_the_future.com'
     co_marti.first_name = 'Jennifer'
+    co_marti.last_name = 'Smith'
     co_marti.password = 'mypassword'
     co_marti.confirmed_at = DateTime.now
     co_marti.schemes = [Scheme.first]

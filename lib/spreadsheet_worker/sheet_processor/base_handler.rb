@@ -16,8 +16,8 @@ module SpreadsheetWorker
         business
       end
 
-      def get_agency_template(value)
-        AgencyTemplateUpload.where(filename: value).first
+      def get_agency_template
+        AgencyTemplateUpload.where(filename: @sheet_filename).first
       end
 
       def create_business(row, npwd)
@@ -46,7 +46,7 @@ module SpreadsheetWorker
       end
 
       def spreadsheet
-        @sheet ||= Roo::Spreadsheet.open('./public/template_sheet.xls')
+        @sheet ||= Roo::Spreadsheet.open(@sheet_filename)
       end
 
       def column_value(row, letter)

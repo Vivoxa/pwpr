@@ -29,10 +29,10 @@ ActiveRecord::Schema.define(version: 20161208182445) do
     t.string   "address_line_4",  limit: 255
     t.string   "town",            limit: 255
     t.string   "post_code",       limit: 255, null: false
-    t.string   "site_country",    limit: 255, null: false
-    t.string   "telephone",       limit: 255, null: false
+    t.string   "site_country",    limit: 255
+    t.string   "telephone",       limit: 255
     t.string   "fax",             limit: 255
-    t.string   "email",           limit: 255, null: false
+    t.string   "email",           limit: 255
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
@@ -311,7 +311,7 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   end
 
   create_table "packaging_sector_main_activities", force: :cascade do |t|
-    t.string   "type",        limit: 255, null: false
+    t.string   "material",    limit: 255, null: false
     t.string   "description", limit: 255
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false

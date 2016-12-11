@@ -166,7 +166,7 @@ country_of_business_registrations:
 packaging_sector_main_activities:
   no_columns: 2
   column_1:
-    title: type
+    title: material
     data_type: string
     values:
     - "Raw material manufacturing"

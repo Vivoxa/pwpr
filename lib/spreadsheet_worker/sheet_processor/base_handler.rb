@@ -16,6 +16,10 @@ module SpreadsheetWorker
         business
       end
 
+      def get_agency_template(value)
+        AgencyTemplateUpload.where(filename: value).first
+      end
+
       def create_business(row, npwd)
         business = Business.new
         business.trading_name = column_value(row, map['company_name']['field'])
@@ -29,6 +33,7 @@ module SpreadsheetWorker
         business.business_subtype = BusinessSubtype.where(name: column_value(row, map['company_subtype']['field'])).first
         business.year_first_reg = Date.today.year
         business.year_last_reg = Date.today.year
+        business.save!
         business
       end
 

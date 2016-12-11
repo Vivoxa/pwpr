@@ -7,11 +7,11 @@ subsidiaries:
     field: E
   registration_company_npwd:
     field: C
-  subsidiary_npwd:
+  npwd:
     field: F
   registration_company_name:
     field: D
-  subsidiary_company_name:
+  company_name:
     field: G
   company_house_no:
     field: H
@@ -72,4 +72,3 @@ subsidiaries:
       field: AC
     phone:
       field: AB
-

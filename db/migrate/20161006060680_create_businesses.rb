@@ -5,6 +5,7 @@ class CreateBusinesses < ActiveRecord::Migration
       t.string :name
       t.integer :membership_id
       t.string :NPWD
+      t.references :country_of_business_registration
       t.timestamps null: false
     end
   end

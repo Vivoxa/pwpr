@@ -1,0 +1,20 @@
+title: Report Title
+sections:
+  section1:
+    title: Section 1 Title
+    body_text: Some text dection 1
+    fields:
+      tb_first_name:
+        control_type: text_box
+        table_name: registrations
+        column_name: firstname
+        data_type: string
+  section2:
+    title: Section 2 Title
+    body_text: Some text dection 2
+    fields:
+      tb_last_name:
+        control_type: text_box
+        table_name: registrations
+        column_name: lastname
+        data_type: string

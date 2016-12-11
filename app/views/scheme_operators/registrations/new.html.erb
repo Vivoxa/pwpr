@@ -1,31 +1,35 @@
 <% title "Sign up" %>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field centre">
-    <%= f.email_field :email, placeholder: "Email", class: "devise-lgn form-control", autofocus: true %>
-  </div>
-
-  <div class="field centre">
-    <%= f.text_field :first_name, placeholder: "Name", class: "devise-lgn form-control", autofocus: true %>
-  </div>
-
-  <div class="field centre">
-    <%= f.password_field :password, placeholder: "Password", class: "devise-lgn form-control", autocomplete: "off" %>
-  </div>
-
-  <div class="field centre">
-    <%= f.password_field :password_confirmation, placeholder: "Confirm password", class: "devise-lgn form-control", autocomplete: "off" %>
-  </div>
+    <%= devise_error_messages! %>
 
     <div class="field centre">
-      <%= f.collection_select :scheme_ids, @current_user.schemes.order(:name), :id, :name,{}, { multiple: true, class: "devise-lgn form-control" } %>
+      <%= f.email_field :email, placeholder: "Email", class: "devise-lgn form-control", autofocus: true %>
     </div>
 
-  <div class="actions centre">
-    <%= f.submit "Sign up", class: ["btn", "btn-success", "devise-btn"] %>
-  </div>
+    <div class="field centre">
+      <%= f.text_field :first_name, placeholder: "First ame", class: "devise-lgn form-control", autofocus: true %>
+    </div>
+
+    <div class="field centre">
+      <%= f.text_field :last_name, placeholder: "Last name", class: "devise-lgn form-control", autofocus: true %>
+    </div>
+
+    <div class="field centre">
+      <%= f.password_field :password, placeholder: "Password", class: "devise-lgn form-control", autocomplete: "off" %>
+    </div>
+
+    <div class="field centre">
+      <%= f.password_field :password_confirmation, placeholder: "Confirm password", class: "devise-lgn form-control", autocomplete: "off" %>
+    </div>
+
+    <div class="field centre">
+      <%= f.collection_select :scheme_ids, @current_user.schemes.order(:name), :id, :name, {}, {multiple: true, class: "devise-lgn form-control", style: "min-height:125px"} %>
+    </div>
+
+    <div class="actions centre">
+      <%= f.submit "Sign up", class: ["btn", "btn-success", "devise-btn"] %>
+    </div>
 <% end %>
 
 <%= render "devise/shared/links" %>

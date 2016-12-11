@@ -100,7 +100,6 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   create_table "businesses", force: :cascade do |t|
     t.integer  "scheme_id",                           limit: 4,   null: false
     t.string   "name",                                limit: 255
-    t.integer  "membership_id",                       limit: 4
     t.string   "NPWD",                                limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
@@ -114,7 +113,6 @@ ActiveRecord::Schema.define(version: 20161208182445) do
     t.string   "year_last_reg",                       limit: 255
     t.integer  "scheme_status_code_id",               limit: 4
     t.integer  "registration_status_code_id",         limit: 4
-    t.integer  "country_of_business_registration_id", limit: 4,   null: false
   end
 
   add_index "businesses", ["scheme_id"], name: "index_businesses_on_scheme_id", using: :btree

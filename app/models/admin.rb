@@ -17,6 +17,10 @@ class Admin < ActiveRecord::Base
     schemes.map(&:id)
   end
 
+  def first_name
+    name
+  end
+
   private
 
   def assign_roles

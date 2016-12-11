@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :business do
     name 'MyString'
-    membership_id 'MyString'
     company_number 'MyString'
     NPWD 'MyString'
     scheme_id 1

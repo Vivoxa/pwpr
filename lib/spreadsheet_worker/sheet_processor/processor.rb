@@ -18,37 +18,37 @@ module SpreadsheetWorker
       private
 
       def process_registrations
-        handler = RegistrationsHandler.new(@agency_template_id)
+        handler = SheetHandler::RegistrationsHandler.new(@agency_template_id)
         handler.process
       end
 
       def process_subsidiaries
-        handler = SubsidiariesHandler.new(@agency_template_id)
+        handler = SheetHandler::SubsidiariesHandler.new(@agency_template_id)
         handler.process
       end
 
       def process_leavers
-        handler = LeaversHandler.new(@agency_template_id)
+        handler = SheetHandler::LeaversHandler.new(@agency_template_id)
         handler.process
       end
 
       def process_subleavers
-        handler = SubleaversHandler.new(@agency_template_id)
+        handler = SheetHandler::SubleaversHandler.new(@agency_template_id)
         handler.process
       end
 
       def process_joiners
-        handler = JoinersHandler.new
+        handler = SheetHandler::JoinersHandler.new
         handler.process
       end
 
       def process_licencees
-        handler = LicenceesHandler.new
+        handler = SheetHandler::LicenceesHandler.new
         handler.process
       end
 
       def process_targets
-        handler = TargetsHandler.new
+        handler = SheetHandler::TargetsHandler.new
         handler.process
       end
     end

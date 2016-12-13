@@ -15,7 +15,7 @@ module SpreadsheetWorker
           process_contact(row_array)
           process_registered_address(row_array)
           process_contact_address(row_array)
-          process_licensor(row_array)
+          process_licensor
         end
       end
 
@@ -57,7 +57,7 @@ module SpreadsheetWorker
         @contact.save!
       end
 
-      def process_licensor(row)
+      def process_licensor
         @licensor.business = @business
         @licensor.agency_tempalte_upload = @agency_template
         @licensor.save!

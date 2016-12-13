@@ -7,7 +7,7 @@ module SpreadsheetWorker
       include SheetMapLoader
 
       def initialize
-        process_registration
+        process_registrations
         process_subsidiaries
         process_licencees
         process_joiners
@@ -18,7 +18,7 @@ module SpreadsheetWorker
 
       private
 
-      def process_registration
+      def process_registrations
         handler = RegistrationsHandler.new
         handler.process
       end

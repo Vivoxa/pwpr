@@ -60,11 +60,11 @@ module SpreadsheetWorker
       def process_target_totals(row)
         target_total = TargetTotal.new
         target_total.regular_producer_detail = @business.registration.regular_producer_detail
-        target_total.total_recycling_obligation = column_value(row map['total_obligation']['recycling']['field']).to_f
-        target_total.total_recovery_obligation = column_value(row map['total_obligation']['recovery']['field']).to_f
-        target_total.total_material_specific_recycling_obligation = column_value(row map['total_obligation']['material_specific']['field']).to_f
-        target_total.adjusted_total_recovery_obligation = column_value(row map['total_obligation']['adjusted_recovery']['field']).to_f
-        target_total.ninetytwo_percent_min_recycling_target = column_value(row map['total_obligation']['nintytwo_min']['field']).to_f
+        target_total.total_recycling_obligation = column_value(row, map['total_obligation']['recycling']['field']).to_f
+        target_total.total_recovery_obligation = column_value(row, map['total_obligation']['recovery']['field']).to_f
+        target_total.total_material_specific_recycling_obligation = column_value(row, map['total_obligation']['material_specific']['field']).to_f
+        target_total.adjusted_total_recovery_obligation = column_value(row, map['total_obligation']['adjusted_recovery']['field']).to_f
+        target_total.ninetytwo_percent_min_recycling_target = column_value(row, map['total_obligation']['nintytwo_min']['field']).to_f
         target_total.save!
       end
 
@@ -73,7 +73,7 @@ module SpreadsheetWorker
       end
 
       def materials
-        ['paper', 'glass', 'aluminium', 'steel', 'plastic', 'wood', 'other']
+        %w(paper glass aluminium steel plastic wood other)
       end
     end
   end

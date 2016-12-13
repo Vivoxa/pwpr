@@ -3,7 +3,7 @@ class CreateMaterialDetails < ActiveRecord::Migration
     create_table :material_details do |t|
       t.references :regular_producer_detail, foreign_key: true, null: false
       t.references :packaging_material, foreign_key: true, null: false
-      t.decimal :t1manwo, precision: 10, scale: 2, null: false
+      t.decimal :t1man, precision: 10, scale: 2, null: false
       t.decimal :t1conv, precision: 10, scale: 2, null: false
       t.decimal :t1pf, precision: 10, scale: 2, null: false
       t.decimal :t1sell, precision: 10, scale: 2, null: false

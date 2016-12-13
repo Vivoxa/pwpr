@@ -67,7 +67,7 @@ module SpreadsheetWorker
         producer = SmallProducerDetail.new
         producer.allocation_method_obligation = column_value(row, map['allocation']['method_obligation']['field']).to_f
         producer.allocation_method_predominant_material = column_value(row, map['allocation']['predominant_material']['field'])
-        producer.registration = @subsidiary
+        producer.subsidiary = @subsidiary
         producer.save!
       end
 
@@ -84,7 +84,24 @@ module SpreadsheetWorker
       end
 
       def subsidiaries
-        spreadsheet.sheet(2)
+        spreadsheet.sheet(3)
+      end
+
+      def create_business(row, npwd)
+        business = Business.new
+        business.trading_name = column_value(row, map['company_name']['field'])
+        business.company_number = column_value(row, map['company_house_no']['field'])
+        business.NPWD = npwd
+        business.scheme = @agency_template.scheme
+        business.country_of_business_registration = CountryOfBusinessRegistration.where(country: column_value(row, map['registered']['country']['field'])).first
+        business.sic_code = SicCode.where(code: column_value(row, map['sic_code']['field'])).first
+        business.scheme_ref = column_value(row, map['scheme_ref']['field'])
+        # business.business_type = BusinessType.where(name: column_value(row, map['company_type']['field'])).first
+        # business.business_subtype = BusinessSubtype.where(name: column_value(row, map['company_subtype']['field'])).first
+        business.year_first_reg = Date.today.year
+        business.year_last_reg = Date.today.year
+        business.save!
+        business
       end
     end
   end

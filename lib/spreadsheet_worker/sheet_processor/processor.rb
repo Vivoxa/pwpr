@@ -1,36 +1,39 @@
 module SpreadsheetWorker
   module SheetProcessor
     class Processor
+      def initialize(template_id)
+        @agency_template_id = template_id
+      end
 
-      def process_spreadsheet(agency_template_id)
-        process_registrations(agency_template_id)
-        process_subsidiaries(agency_template_id)
-        process_licencees(agency_template_id)
-        process_joiners(agency_template_id)
-        process_leavers(agency_template_id)
-        process_subleavers(agency_template_id)
-        process_targets(agency_template_id)
+      def process_spreadsheet
+        process_registrations
+        process_subsidiaries
+        process_licencees
+        process_joiners
+        process_leavers
+        process_subleavers
+        process_targets
       end
 
       private
 
       def process_registrations
-        handler = RegistrationsHandler.new
+        handler = RegistrationsHandler.new(@agency_template_id)
         handler.process
       end
 
       def process_subsidiaries
-        handler = SubsidiariesHandler.new
+        handler = SubsidiariesHandler.new(@agency_template_id)
         handler.process
       end
 
       def process_leavers
-        handler = LeaversHandler.new
+        handler = LeaversHandler.new(@agency_template_id)
         handler.process
       end
 
       def process_subleavers
-        handler = SubleaversHandler.new
+        handler = SubleaversHandler.new(@agency_template_id)
         handler.process
       end
 

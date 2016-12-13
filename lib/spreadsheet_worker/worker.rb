@@ -43,6 +43,9 @@ module SpreadsheetWorker
       ################################################
       #### spreadsheet processing code called here ###
       ################################################
+      processor = SheetProcessor::Processor.new
+      processor.process_spreadsheet(event.to_i)
+
       log(:info, " [x] Event '#{event}' has been processed!")
     end
 

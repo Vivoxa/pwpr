@@ -1,13 +1,13 @@
 module SpreadsheetWorker
   module SheetProcessor
     class SubsidiariesHandler < BaseHandler
-      def initialize
+      def initialize(agency_template_id)
+        super
         @subsidiary = Subsidiary.new
       end
 
       def process
         @sheet_filename = './public/template_sheet.xls'
-        @agency_template = get_agency_template
 
         subsidiaries.each do |row_array|
           @business = get_business(row_array)

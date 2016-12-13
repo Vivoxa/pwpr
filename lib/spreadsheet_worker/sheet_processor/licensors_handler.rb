@@ -1,13 +1,14 @@
 module SpreadsheetWorker
   module SheetProcessor
     class LicensorsHandler < BaseHandler
-      def initialize
+      def initialize(agency_template_id)
+        super
         @licensor = Licensor.new
       end
 
       def process
+        binding.pry
         @sheet_filename = './public/template_sheet.xls'
-        @agency_template = get_agency_template
 
         licensors.each do |row_array|
           @business = get_business(row_array)

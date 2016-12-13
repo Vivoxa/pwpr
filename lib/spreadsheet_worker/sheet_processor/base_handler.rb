@@ -6,7 +6,24 @@ module SpreadsheetWorker
     class BaseHandler
       include SheetMapLoader
 
+      def initialize(agency_template_id)
+        load_agency_template(agency_template_id)
+        load_sheet_path(@agency_template)
+      end
+
       protected
+
+      def load_sheet_path(agency_template)
+        @sheet_filename ||= aws_handler.get_server_file_path(agency_template)
+      end
+
+      def aws_handler
+        @aws_handler ||= S3::AgencyTemplateAwsHandler.new
+      end
+
+      def load_agency_template(id)
+        @agency_template ||= AgencyTemplateUpload.find_by_id(id)
+      end
 
       def get_business(row)
         npwd = column_value(row, map['npwd']['field'])
@@ -14,10 +31,6 @@ module SpreadsheetWorker
 
         business ||= create_business(row, npwd)
         business
-      end
-
-      def get_agency_template
-        AgencyTemplateUpload.where(filename: @sheet_filename).first
       end
 
       def map

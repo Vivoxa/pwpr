@@ -1,19 +1,15 @@
-require 'roo-xls'
-require_relative '../sheet_map_loader/map'
-
 module SpreadsheetWorker
   module SheetProcessor
     class Processor
-      include SheetMapLoader
 
-      def initialize
-        process_registrations
-        process_subsidiaries
-        process_licencees
-        process_joiners
-        process_leavers
-        process_subleavers
-        process_targets
+      def process_spreadsheet(agency_template_id)
+        process_registrations(agency_template_id)
+        process_subsidiaries(agency_template_id)
+        process_licencees(agency_template_id)
+        process_joiners(agency_template_id)
+        process_leavers(agency_template_id)
+        process_subleavers(agency_template_id)
+        process_targets(agency_template_id)
       end
 
       private

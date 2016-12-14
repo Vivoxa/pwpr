@@ -5,7 +5,6 @@ class Registration < ActiveRecord::Base
   belongs_to :packaging_sector_main_activity
   belongs_to :resubmission_reason
   belongs_to :business
-  belongs_to :change_detail
 
   has_one :small_producer_detail
   has_one :regular_producer_detail

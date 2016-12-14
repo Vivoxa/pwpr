@@ -16,7 +16,10 @@ class Business < ActiveRecord::Base
   has_many :leavers
   has_many :licensors
 
-  validates_presence_of :NPWD, :scheme_id, :trading_name, :company_number # , :business_type_id, :business_subtype_id,
+  belongs_to :holding_business, class_name: 'Business'
+  has_many :businesses, class_name: 'Business', foreign_key: :holding_business_id
+
+  validates_presence_of :NPWD, :scheme_id, :name, :company_number # , :business_type_id, :business_subtype_id,
   #:scheme_status_code_id, :registration_status_code_id, :sic_code_id, :submission_type_id,
   #:business_type_id, :business_subtype_id, :country_of_business_registration
 end

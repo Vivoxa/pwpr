@@ -9,8 +9,9 @@ module SpreadsheetWorker
 
         def process
           @sheet_filename = './public/template_sheet.xls'
+          # row_array = leavers.row(4)
 
-          leavers.each do |row_array|
+          leavers.drop(2).each do |row_array|
             @business = get_business(row_array)
 
             process_leaver(row_array)
@@ -20,12 +21,12 @@ module SpreadsheetWorker
         private
 
         def process_leaver(row)
-          @leaver.allocation_method_used = column_value(row, map['allocation_method_used']['field'])
           @leaver.total_recovery_previous = column_value(row, map['total_recovery']['field']).to_f
-          @leaver.date = Date.parse(column_value(row, map['date_left']['field']))
+          @leaver.leaving_date = Date.parse(column_value(row, map['date_left']['field']).to_s)
           @leaver.leaving_code = LeavingCode.where(code: column_value(row, map['leaving_reason']['field'])).first
+          @leaver.sub_leaver = false
           @leaver.business = @business
-          @leaver.agency_tempalte_upload = @agency_template
+          @leaver.agency_template_upload = @agency_template
           @leaver.save!
         end
 
@@ -33,19 +34,8 @@ module SpreadsheetWorker
           spreadsheet.sheet(6)
         end
 
-        def create_business(row, npwd)
-          business = Business.new
-          business.trading_name = column_value(row, map['company_name']['field'])
-          business.company_number = column_value(row, map['company_house_no']['field'])
-          business.NPWD = npwd
-          business.scheme = @agency_template.scheme
-          business.scheme_ref = column_value(row, map['scheme_ref']['field'])
-          # business.business_type = BusinessType.where(name: column_value(row, map['company_type']['field'])).first
-          # business.business_subtype = BusinessSubtype.where(name: column_value(row, map['company_subtype']['field'])).first
-          business.year_first_reg = Date.today.year
-          business.year_last_reg = Date.today.year
-          business.save!
-          business
+        def map
+          map_loader.load(:leavers)
         end
       end
     end

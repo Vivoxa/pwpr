@@ -9,11 +9,12 @@ module SpreadsheetWorker
 
         def process
           @sheet_filename = './public/template_sheet.xls'
+          # row_array = targets.row(3)
 
           targets.each do |row_array|
             @business = get_business(row_array)
 
-            materials.each do |material|
+            materials.drop(2).each do |material|
               process_material_details(row_array, material)
               process_material_totals(row_array, material) unless material == 'other'
             end
@@ -27,7 +28,7 @@ module SpreadsheetWorker
 
         def process_material_details(row, material)
           material = MaterialDetail.new
-          material.regular_producer_detail = @business.registration.regular_producer_detail
+          material.regular_producer_detail = @business.registrations.last.regular_producer_detail
           material.packaging_material = PackagingMaterial.where(name: material).first
 
           material.t1man = column_value(row, map['t1man'][material]['field']).to_f
@@ -71,6 +72,10 @@ module SpreadsheetWorker
 
         def targets
           spreadsheet.sheet(5)
+        end
+
+        def map
+          map_loader.load(:targets)
         end
 
         def materials

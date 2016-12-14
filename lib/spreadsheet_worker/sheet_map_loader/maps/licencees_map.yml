@@ -1,10 +1,10 @@
 licencees:
   scheme_ref:
     field: A
-  registration_company_npwd:
-    field: B
-  registration_company_name:
+  npwd:
     field: C
+  registration_company_name:
+    field: B
   company_name:
     field: E
   company_house_no:

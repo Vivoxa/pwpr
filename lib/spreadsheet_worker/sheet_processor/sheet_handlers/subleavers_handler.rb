@@ -4,13 +4,14 @@ module SpreadsheetWorker
       class SubleaversHandler < BaseHandler
         def initialize(agency_template_id)
           super
-          @subleaver = Subleaver.new
+          @subleaver = Leaver.new
         end
 
         def process
           @sheet_filename = './public/template_sheet.xls'
+          # row_array = subleavers.row(4)
 
-          subleavers.each do |row_array|
+          subleavers.drop(2).each do |row_array|
             @business = get_business(row_array)
 
             process_subleaver(row_array)
@@ -20,12 +21,11 @@ module SpreadsheetWorker
         private
 
         def process_subleaver(row)
-          @subleaver.allocation_method_used = column_value(row, map['allocation_method_used']['field'])
-          @subleaver.total_recovery_previous = column_value(row, map['total_recovery']['field']).to_f
-          @subleaver.date = Date.parse(column_value(row, map['date_left']['field']))
+          @subleaver.leaving_date = Date.parse(column_value(row, map['date_left']['field']).to_s)
           @subleaver.leaving_code = LeavingCode.where(code: column_value(row, map['leaving_reason']['field'])).first
+          @subleaver.sub_leaver = true
           @subleaver.business = @business
-          @subleaver.agency_tempalte_upload = @agency_template
+          @subleaver.agency_template_upload = @agency_template
           @subleaver.save!
         end
 
@@ -33,19 +33,8 @@ module SpreadsheetWorker
           spreadsheet.sheet(7)
         end
 
-        def create_business(row, npwd)
-          business = Business.new
-          business.trading_name = column_value(row, map['company_name']['field'])
-          business.company_number = column_value(row, map['company_house_no']['field'])
-          business.NPWD = npwd
-          business.scheme = @agency_template.scheme
-          business.scheme_ref = column_value(row, map['scheme_ref']['field'])
-          # business.business_type = BusinessType.where(name: column_value(row, map['company_type']['field'])).first
-          # business.business_subtype = BusinessSubtype.where(name: column_value(row, map['company_subtype']['field'])).first
-          business.year_first_reg = Date.today.year
-          business.year_last_reg = Date.today.year
-          business.save!
-          business
+        def map
+          map_loader.load(:subleavers)
         end
       end
     end

@@ -9,8 +9,9 @@ module SpreadsheetWorker
 
         def process
           @sheet_filename = './public/template_sheet.xls'
+          # row_array = joiners.row(4)
 
-          joiners.each do |row_array|
+          joiners.drop(2).each do |row_array|
             @business = get_business(row_array)
 
             process_joiner(row_array)
@@ -20,13 +21,12 @@ module SpreadsheetWorker
         private
 
         def process_joiner(row)
-          @joiner.allocation_method_used = column_value(row, map['allocation_method_used']['field'])
           @joiner.total_recovery = column_value(row, map['total_recovery']['field']).to_f
           @joiner.previously_registered_at = column_value(row, map['previously_registered_at']['field'])
-          @joiner.joined_date = Date.parse(column_value(row, map['date_joined']['field']))
-          # @joiner.date_scheme_registered = Date.parse(column_value(row, map['date_scheme_registered']['field']))
+          @joiner.joining_date = Date.parse(column_value(row, map['date_joined']['field']).to_s)
+          @joiner.date_scheme_registered = Date.parse(column_value(row, map['date_scheme_registered']['field']).to_s)
           @joiner.business = @business
-          @joiner.agency_tempalte_upload = @agency_template
+          @joiner.agency_template_upload = @agency_template
           @joiner.save!
         end
 
@@ -34,19 +34,8 @@ module SpreadsheetWorker
           spreadsheet.sheet(8)
         end
 
-        def create_business(row, npwd)
-          business = Business.new
-          business.trading_name = column_value(row, map['company_name']['field'])
-          business.company_number = column_value(row, map['company_house_no']['field'])
-          business.NPWD = npwd
-          business.scheme = @agency_template.scheme
-          business.scheme_ref = column_value(row, map['scheme_ref']['field'])
-          # business.business_type = BusinessType.where(name: column_value(row, map['company_type']['field'])).first
-          # business.business_subtype = BusinessSubtype.where(name: column_value(row, map['company_subtype']['field'])).first
-          business.year_first_reg = Date.today.year
-          business.year_last_reg = Date.today.year
-          business.save!
-          business
+        def map
+          map_loader.load(:joiners)
         end
       end
     end

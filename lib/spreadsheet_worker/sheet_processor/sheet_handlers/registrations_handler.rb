@@ -9,9 +9,12 @@ module SpreadsheetWorker
 
         def process
           @sheet_filename = './public/template_sheet.xls'
+          # row_array = registrations.row(2)
 
-          registrations.each do |row_array|
-            @business = get_business(row_array)
+          registrations.drop(1).each do |row_array|
+            business = get_business(row_array)
+            business ||= create_business(row_array, column_value(row_array, map['npwd']['field']))
+            @business = business
 
             process_contact(row_array)
             process_registered_address(row_array)
@@ -111,14 +114,12 @@ module SpreadsheetWorker
           @registration.licensor = column_value(row, map['licensor']['field'])
           @registration.turnover = column_value(row, map['turnover']['field']).to_f
           @registration.allocation_method_used = column_value(row, map['allocation']['method_used']['field'])
-
-          @registration.change_detail = ChangeDetail.where(modification: column_value(row, map['change_to_member_application_or_obligation']['field'])).first
           @registration.resubmission_reason = ResubmissionReason.where(reason: column_value(row, map['resubmission_reason']['field'])).first
           @registration.packaging_sector_main_activity = PackagingSectorMainActivity.where(material: column_value(row, map['packaging_sector_main_activity']['field'])).first
-          # @registration.submission_type = SubmissionType.where(code: )
+          @registration.submission_type = SubmissionType.where(code: column_value(row, map['change_to_member_application_or_obligation']['field'])).first
           @registration.business = @business
           @registration.sic_code = @registration.business.sic_code
-          @registration.agency_tempalte_upload = @agency_template
+          @registration.agency_template_upload = @agency_template
           @registration.save!
         end
 
@@ -126,25 +127,8 @@ module SpreadsheetWorker
           spreadsheet.sheet(2)
         end
 
-        def create_business(row, npwd)
-          business = Business.new
-          business.trading_name = column_value(row, map['company_name']['field'])
-          business.company_number = column_value(row, map['company_house_no']['field'])
-          business.NPWD = npwd
-          business.scheme = @agency_template.scheme
-          business.country_of_business_registration = CountryOfBusinessRegistration.where(country: column_value(row, map['registered']['country']['field'])).first
-          business.sic_code = SicCode.where(code: column_value(row, map['sic_code']['field'])).first
-          business.scheme_ref = column_value(row, map['scheme_ref']['field'])
-          business.business_type = BusinessType.where(name: column_value(row, map['company_type']['field'])).first
-          business.business_subtype = BusinessSubtype.where(name: column_value(row, map['company_subtype']['field'])).first
-          business.year_first_reg = Date.today.year
-          business.year_last_reg = Date.today.year
-          business.save!
-          business
-        end
-
-        def small_producer?(row)
-          column_value(row, map['allocation']['method_used'])
+        def map
+          map_loader.load(:registrations)
         end
       end
     end

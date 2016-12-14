@@ -99,14 +99,13 @@ ActiveRecord::Schema.define(version: 20161208182445) do
 
   create_table "businesses", force: :cascade do |t|
     t.integer  "scheme_id",                           limit: 4,   null: false
-    t.string   "name",                                limit: 255
     t.integer  "membership_id",                       limit: 4
     t.string   "NPWD",                                limit: 255
+    t.string   "name",                                limit: 255
     t.integer  "country_of_business_registration_id", limit: 4
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
     t.string   "scheme_ref",                          limit: 255, null: false
-    t.string   "trading_name",                        limit: 255, null: false
     t.string   "company_number",                      limit: 255, null: false
     t.integer  "business_type_id",                    limit: 4
     t.integer  "business_subtype_id",                 limit: 4
@@ -115,6 +114,7 @@ ActiveRecord::Schema.define(version: 20161208182445) do
     t.string   "year_last_reg",                       limit: 255
     t.integer  "scheme_status_code_id",               limit: 4
     t.integer  "registration_status_code_id",         limit: 4
+    t.integer  "holding_business_id",                 limit: 4
   end
 
   add_index "businesses", ["scheme_id"], name: "index_businesses_on_scheme_id", using: :btree
@@ -218,14 +218,14 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   add_index "joiners", ["business_id"], name: "fk_rails_a38bc3cfe3", using: :btree
 
   create_table "leavers", force: :cascade do |t|
-    t.integer  "business_id",               limit: 4,                         null: false
-    t.integer  "leaving_code_id",           limit: 4,                         null: false
-    t.integer  "agency_template_upload_id", limit: 4,                         null: false
-    t.date     "leaving_date",                                                null: false
+    t.integer  "business_id",               limit: 4,                                         null: false
+    t.integer  "leaving_code_id",           limit: 4,                                         null: false
+    t.integer  "agency_template_upload_id", limit: 4,                                         null: false
+    t.date     "leaving_date",                                                                null: false
     t.decimal  "total_recovery_previous",             precision: 5, scale: 2
-    t.boolean  "sub_leaver",                                                  null: false
-    t.datetime "created_at",                                                  null: false
-    t.datetime "updated_at",                                                  null: false
+    t.boolean  "sub_leaver",                                                  default: false
+    t.datetime "created_at",                                                                  null: false
+    t.datetime "updated_at",                                                                  null: false
   end
 
   add_index "leavers", ["agency_template_upload_id"], name: "fk_rails_e783cea255", using: :btree
@@ -490,13 +490,13 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   end
 
   create_table "subsidiaries", force: :cascade do |t|
-    t.integer  "business_id",                       limit: 4, null: false
-    t.integer  "agency_template_upload_id",         limit: 4, null: false
+    t.integer  "business_id",                       limit: 4,                 null: false
+    t.integer  "agency_template_upload_id",         limit: 4,                 null: false
     t.integer  "change_detail_id",                  limit: 4
-    t.integer  "packaging_sector_main_activity_id", limit: 4, null: false
-    t.boolean  "allocation_method_used",                      null: false
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.integer  "packaging_sector_main_activity_id", limit: 4,                 null: false
+    t.boolean  "allocation_method_used",                      default: false
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
   end
 
   add_index "subsidiaries", ["agency_template_upload_id"], name: "fk_rails_8637b10479", using: :btree

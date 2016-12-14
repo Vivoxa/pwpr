@@ -9,5 +9,6 @@ class AddColumnsToBusiness < ActiveRecord::Migration
     add_column :businesses, :year_last_reg, :string
     add_column :businesses, :scheme_status_code_id, :integer
     add_column :businesses, :registration_status_code_id, :integer
+    add_column :businesses, :holding_business_id, :integer
   end
 end

@@ -11,8 +11,8 @@ module SpreadsheetWorker
           @sheet_filename = './public/template_sheet.xls'
           # row_array = subleavers.row(4)
 
-          subleavers.drop(2).each do |row_array|
-            @business = get_business(row_array)
+          subleavers.drop(3).each do |row_array|
+            @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
 
             process_subleaver(row_array)
           end

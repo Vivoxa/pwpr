@@ -11,8 +11,8 @@ module SpreadsheetWorker
           @sheet_filename = './public/template_sheet.xls'
           # row_array = joiners.row(4)
 
-          joiners.drop(2).each do |row_array|
-            @business = get_business(row_array)
+          joiners.drop(3).each do |row_array|
+            @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
 
             process_joiner(row_array)
           end

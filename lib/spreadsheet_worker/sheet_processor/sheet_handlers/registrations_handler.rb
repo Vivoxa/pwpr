@@ -12,8 +12,8 @@ module SpreadsheetWorker
           # row_array = registrations.row(2)
 
           registrations.drop(1).each do |row_array|
-            business = get_business(row_array)
-            business ||= create_business(row_array, column_value(row_array, map['npwd']['field']))
+            business = get_business(row_array, column_value(row_array, map['npwd']['field']))
+            business ||= create_holding_business(row_array, column_value(row_array, map['npwd']['field']))
             @business = business
 
             process_contact(row_array)

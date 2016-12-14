@@ -12,7 +12,9 @@ module SpreadsheetWorker
           # row_array = subsidiaries.row(2)
 
           subsidiaries.drop(1).each do |row_array|
-            @business = get_business(row_array)
+            business = get_business(row_array, column_value(row_array, map['npwd']['field']))
+            business ||= create_sub_business(row_array, column_value(row_array, map['npwd']['field']))
+            @business = business
 
             process_contact(row_array)
             process_registered_address(row_array)

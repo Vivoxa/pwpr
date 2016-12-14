@@ -26,8 +26,7 @@ module SpreadsheetWorker
           @agency_template ||= AgencyTemplateUpload.find_by_id(id)
         end
 
-        def get_business(row)
-          npwd = column_value(row, map['npwd']['field'])
+        def get_business(row, npwd)
           business = Business.where(NPWD: npwd).first if npwd
         end
 
@@ -43,7 +42,7 @@ module SpreadsheetWorker
           index = transform_to_index(letter)
           value = row[index]
 
-          return boolean_column_value(value) if %w(Y N).include? value || value.nil?
+          return boolean_column_value(value) if %w(Y N).include? value
           value
         end
 
@@ -60,6 +59,21 @@ module SpreadsheetWorker
           set.find_index(letter) if set.include? letter
         end
 
+        def create_holding_business(row, npwd)
+          business = create_business(row, npwd)
+          business.business_type = BusinessType.where(name: column_value(row, map['company_type']['field'])).first
+          business.business_subtype = BusinessSubtype.where(name: column_value(row, map['company_subtype']['field'])).first
+          business.save!
+          business
+        end
+
+        def create_sub_business(row, npwd)
+          business = create_business(row, npwd)
+          business.holding_business = get_business(row, column_value(row, map['registration_company_npwd']['field']))
+          business.save!
+          business
+        end
+
         def create_business(row, npwd)
           business = Business.new
           business.name = column_value(row, map['company_name']['field'])
@@ -69,11 +83,8 @@ module SpreadsheetWorker
           business.country_of_business_registration = CountryOfBusinessRegistration.where(country: column_value(row, map['registered']['country']['field'])).first
           business.sic_code = SicCode.where(code: column_value(row, map['sic_code']['field'])).first
           business.scheme_ref = column_value(row, map['scheme_ref']['field'])
-          business.business_type = BusinessType.where(name: column_value(row, map['company_type']['field'])).first
-          business.business_subtype = BusinessSubtype.where(name: column_value(row, map['company_subtype']['field'])).first
           business.year_first_reg = Date.today.year
           business.year_last_reg = Date.today.year
-          business.save!
           business
         end
       end

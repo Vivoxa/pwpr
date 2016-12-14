@@ -12,7 +12,7 @@ module SpreadsheetWorker
           # row_array = licensors.row(2)
 
           licensors.drop(1).each do |row_array|
-            @business = get_business(row_array)
+            @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
 
             process_contact(row_array)
             process_registered_address(row_array)

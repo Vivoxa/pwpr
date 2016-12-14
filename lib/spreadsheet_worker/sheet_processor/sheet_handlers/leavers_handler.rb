@@ -11,8 +11,8 @@ module SpreadsheetWorker
           @sheet_filename = './public/template_sheet.xls'
           # row_array = leavers.row(4)
 
-          leavers.drop(2).each do |row_array|
-            @business = get_business(row_array)
+          leavers.drop(3).each do |row_array|
+            @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
 
             process_leaver(row_array)
           end
@@ -24,7 +24,6 @@ module SpreadsheetWorker
           @leaver.total_recovery_previous = column_value(row, map['total_recovery']['field']).to_f
           @leaver.leaving_date = Date.parse(column_value(row, map['date_left']['field']).to_s)
           @leaver.leaving_code = LeavingCode.where(code: column_value(row, map['leaving_reason']['field'])).first
-          @leaver.sub_leaver = false
           @leaver.business = @business
           @leaver.agency_template_upload = @agency_template
           @leaver.save!

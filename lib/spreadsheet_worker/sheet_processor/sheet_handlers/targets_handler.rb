@@ -11,10 +11,10 @@ module SpreadsheetWorker
           @sheet_filename = './public/template_sheet.xls'
           # row_array = targets.row(3)
 
-          targets.each do |row_array|
-            @business = get_business(row_array)
+          targets.drop(3).each do |row_array|
+            @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
 
-            materials.drop(2).each do |material|
+            materials.each do |material|
               process_material_details(row_array, material)
               process_material_totals(row_array, material) unless material == 'other'
             end

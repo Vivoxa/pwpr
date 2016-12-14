@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20161208182445) do
     t.string   "address_line_2",  limit: 255
     t.string   "address_line_3",  limit: 255
     t.string   "address_line_4",  limit: 255
+    t.string   "town",            limit: 255
     t.string   "post_code",       limit: 255, null: false
     t.string   "county",          limit: 255, null: false
     t.string   "site_country",    limit: 255, null: false

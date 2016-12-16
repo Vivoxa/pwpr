@@ -30,9 +30,10 @@ module Reporting
         @pdftk ||= PdfForms.new(PDFTK_LIB_LOCATION)
       end
 
-      def remove_tmp_report(year, business, ext=DEFAULT_FILE_EXT)
+      def cleanup(year, business, ext=DEFAULT_FILE_EXT)
         path_to_save_file = "#{BaseReport::SERVER_TMP_FILE_DIR}/#{report_type}_#{year}_#{business.NPWD}.#{ext}"
         FileUtils.rm [path_to_save_file], force: true
+        ReportTemplateHelper.cleanup
       end
 
       def report_type

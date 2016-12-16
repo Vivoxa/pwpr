@@ -11,7 +11,7 @@ module Reporting
 
         pdftk.fill_form(template, tmp_filename(year, business), form_values_hash(template, year, business))
         upload_to_S3(year, business)
-        remove_tmp_report(year, business)
+        cleanup(year, business)
       end
 
       private

@@ -1,5 +1,5 @@
 function checkAll() {
-    var $my_check=document.getElementById('selectAll')
+    var $my_check = document.getElementById('selectAll')
     if ($my_check.checked) {
         $(':checkbox').each(function () {
             this.checked = true;
@@ -11,4 +11,14 @@ function checkAll() {
         });
         $my_check.checked = false
     }
+}
+
+function yearChanged(year) {
+    $.ajax({
+        url: 'reports',
+        data: {
+            report: document.getElementById('report').value,
+            year: year.value
+        }
+    });
 }

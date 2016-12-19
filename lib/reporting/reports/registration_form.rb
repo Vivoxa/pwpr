@@ -5,7 +5,7 @@ module Reporting
     class RegistrationForm < Reporting::Reports::BaseReport
       REPORT_TYPE = name.demodulize.underscore.freeze
 
-      def process_report(business_id, year, template = nil)
+      def process_report(business_id, year, current_user, template = nil)
         business = Business.find(business_id)
         template ||= ReportTemplateHelper.get_default_template(report_type)
         local_file_path = tmp_filename(year, business)
@@ -14,15 +14,18 @@ module Reporting
 
         upload_to_S3(year, business)
 
-        email_business(business, build_filename(report_type, year, business), local_file_path, year)
+        email_business(business, build_filename(report_type, year, business), local_file_path, year, current_user)
 
         cleanup(year, business)
       end
 
       private
 
-      def email_business(business, filename, filepath, year)
-        SchemeMailer.registration_email(business, filename, filepath, year).deliver_now
+      def email_business(business, filename, filepath, year, current_user)
+        success = SchemeMailer.registration_email(business, filename, filepath, year).deliver_now
+        EmailedReport.where(business_id: business.id, report_name: report_type, year: year).first_or_create(date_last_sent: DateTime.now,
+                                                                                                            sent_by_id:     current_user.id,
+                                                                                                            sent_by_type:   current_user.class.name) if success
       end
 
       def form_values_hash(template, year, business)

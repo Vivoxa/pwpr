@@ -2,10 +2,10 @@
 <div class="container" style='margin-top:30px'>
   <%= form_tag controller: :reports, action: :create do %>
       <div class="field centre">
-        <%= select_tag "report", options_for_select(@reports), {:class => 'devise-lgn form-control'} %>
+        <%= select_tag "report", options_for_select(@reports), {:class => 'devise-lgn form-control', :prompt => 'Select Report'} %>
       </div>
       <div class="field centre">
-        <%= select_tag "year", options_for_select(@years), {:class => 'devise-lgn form-control'} %>
+        <%= select_tag "year", options_for_select(@years), {:class => 'devise-lgn form-control', onchange: "return yearChanged(this);", :prompt => 'Select Year'} %>
       </div>
 
       <div class="field centre">
@@ -17,18 +17,25 @@
           <thead>
           <tr>
             <th>Business</th>
+            <th>Date last sent</th>
             <th>Send?</th>
           </tr>
           </thead>
           <tbody>
+
           <% @report_form_data.each do |report_form| %>
               <%= fields_for "businesses[#{report_form.business_id}]", report_form do |rf| %>
                   <tr>
                     <td><%= rf.label report_form.business_name %></td>
+                    <% if report_form.date_last_sent %>
+                        <td><%= label_tag report_form.date_last_sent %></td>
+                    <% else %>
+                        <td><%= label_tag 'Report not yet sent' %></td>
+                    <% end %>
                     <% if report_form.email_contact_present %>
                         <td><%= rf.check_box :email %></td>
                     <% else %>
-                        <td><%= label_tag 'Contact not present'  %></td>
+                        <td><%= label_tag 'Contact not present' %></td>
                     <% end %>
                   </tr>
               <% end %>

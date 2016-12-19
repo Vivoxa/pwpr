@@ -3,7 +3,7 @@ class ReportFormData
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :business_id, :business_name, :email, :email_contact_present
+  attr_accessor :business_id, :business_name, :email, :email_contact_present, :date_last_sent
 
   def persisted?
     true

@@ -1,5 +1,4 @@
 class SchemeMailer < ApplicationMailer
-
   def registration_email(business, filename, file_path, year)
     attachments[filename] = File.read(file_path)
     @business = business

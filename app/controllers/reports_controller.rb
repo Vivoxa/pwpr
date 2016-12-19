@@ -1,5 +1,4 @@
 class ReportsController < ApplicationController
-
   def index
     scheme_id = params[:scheme_id]
     businesses = Scheme.find(scheme_id).businesses
@@ -9,14 +8,14 @@ class ReportsController < ApplicationController
   end
 
   def create
-    report_type = params['report'].gsub(' ', '')
+    report_type = params['report'].delete(' ')
     year = params['year']
 
     report = case report_type
-               when 'RegistrationForm'
-                 Reporting::Reports::RegistrationForm.new
-               when 'DataForm'
-                 nil
+             when 'RegistrationForm'
+               Reporting::Reports::RegistrationForm.new
+             when 'DataForm'
+               nil
              end
     require 'pry'
     num_reports = 0

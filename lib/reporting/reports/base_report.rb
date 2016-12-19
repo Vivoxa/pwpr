@@ -13,7 +13,7 @@ module Reporting
         "#{Rails.env}-pwpr-templates"
       end
 
-      def upload_to_S3(year, business, ext=DEFAULT_FILE_EXT)
+      def upload_to_S3(year, business, ext = DEFAULT_FILE_EXT)
         s3 = Aws::S3::Resource.new
 
         # Create the object to upload
@@ -30,8 +30,8 @@ module Reporting
         @pdftk ||= PdfForms.new(PDFTK_LIB_LOCATION)
       end
 
-      def cleanup(year, business, ext=DEFAULT_FILE_EXT)
-        path_to_save_file = "#{BaseReport::SERVER_TMP_FILE_DIR}/#{report_type}_#{year}_#{business.NPWD}.#{ext}"
+      def cleanup(year, business)
+        path_to_save_file = tmp_filename(year, business)
         FileUtils.rm [path_to_save_file], force: true
         ReportTemplateHelper.cleanup
       end
@@ -40,13 +40,13 @@ module Reporting
         raise NotImplementedError.new
       end
 
-      def build_filename(report_type, year, business, ext=DEFAULT_FILE_EXT)
+      def build_filename(report_type, year, business, ext = DEFAULT_FILE_EXT)
         "#{report_type}_#{year}_#{business.NPWD}.#{ext}"
       end
 
       private
 
-      def tmp_filename(year, business, ext=DEFAULT_FILE_EXT)
+      def tmp_filename(year, business, ext = DEFAULT_FILE_EXT)
         "#{BaseReport::SERVER_TMP_FILE_DIR}/#{report_type}_#{year}_#{business.NPWD}.#{ext}"
       end
     end

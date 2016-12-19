@@ -3,9 +3,9 @@ require 'pdf-forms'
 module Reporting
   module Reports
     class RegistrationForm < Reporting::Reports::BaseReport
-      REPORT_TYPE = self.name.demodulize.underscore.freeze
+      REPORT_TYPE = name.demodulize.underscore.freeze
 
-      def process_report(business_id, year, template=nil)
+      def process_report(business_id, year, template = nil)
         business = Business.find(business_id)
         template ||= ReportTemplateHelper.get_default_template(report_type)
         local_file_path = tmp_filename(year, business)

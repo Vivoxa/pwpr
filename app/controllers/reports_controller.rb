@@ -1,4 +1,6 @@
 class ReportsController < ApplicationController
+  authorize_resource class: ReportsController
+
   def index
     scheme_id = params[:scheme_id]
     businesses = Scheme.find(scheme_id).businesses

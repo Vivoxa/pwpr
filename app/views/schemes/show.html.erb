@@ -5,20 +5,26 @@
     <div class="card-block">
       <div class="card card-block" style='height:150px'>
         <!--	<h4 class="card-title">Administration</h4>-->
-        <div class='col-md-4'></div>
-        <div class='col-md-4'>
+        <div class='col-md-6'>
           <div class="row">
-            <p>
-              <strong>Name:</strong>
-              <%= @scheme.name %>
-            </p>
-          </div>
+          <p>
+            <strong>Name:</strong>
+            <%= @scheme.name %>
+          </p>
+        </div>
           <div class="row">
             <strong>Active:</strong>
             <%= @scheme.active ? @scheme.active : 'False' %>
           </div>
         </div>
-        <div class='col-md-4'></div>
+        <div class='col-md-6'>
+          <div class="row">
+            <% if can? :create, ReportsController %>
+                <%= link_to 'Reports', scheme_reports_path(@scheme.id), class: ['btn btn-sm btn-primary', 'show-btn-lg'] %>
+            <% end %>
+          </div>
+        </div>
+
       </div>
     </div>
     <div class="card-footer">

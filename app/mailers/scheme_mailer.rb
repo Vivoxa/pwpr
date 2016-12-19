@@ -5,6 +5,6 @@ class SchemeMailer < ApplicationMailer
     @scheme = business.scheme
     @year = year
     @url  = 'http://app-pwpr.com/sign_in'
-    mail(to: 'nigel@surtees.com', subject: "[RESPONSE REQUIRED]: Registration form #{year}")
+    mail(to: business.correspondence_contact.email, subject: "[RESPONSE REQUIRED]: Registration form #{year}")
   end
 end

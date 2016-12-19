@@ -46,7 +46,7 @@ businesses = Business.create([{name: 'dans pack business',
                                registration_status_code_id: 1},
                               {name: 'pack one business',
                                NPWD: 'NPWD-1',
-                               sic_code_id:sic.id,
+                               sic_code_id: sic.id,
                                scheme_ref: '123',
                                trading_name: 'trade name',
                                company_number: '123456789',
@@ -136,8 +136,22 @@ address = Address.new(address_type_id: 2,
                       post_code: 'DH5 9PL',
                       email: 'nigelsurtees@hotmail.co.uk')
 
+correspondence_contact = Contact.create(title: 'correspondance',
+                                        first_name: 'Doc',
+                                        last_name: 'Brown',
+                                        email: 'nigelsurtees@hotmail.co.uk',
+                                        telephone_1: '0191 6749933')
+
+audit_contact = Contact.create(title: 'audit',
+                               first_name: 'Doc',
+                               last_name: 'Brown',
+                               email: 'nigelsurtees@hotmail1.co.uk',
+                               telephone_1: '0191 6749933')
 business = businesses.first
 business.addresses << address
+
+business.contacts << correspondence_contact
+business.contacts << audit_contact
 
 #************************************************************************************
 #                           Admins

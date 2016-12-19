@@ -17,7 +17,7 @@ class ReportsController < ApplicationController
              when 'DataForm'
                nil
              end
-    require 'pry'
+
     num_reports = 0
     params['businesses'].each do |business_id, values|
       if values['email'] == '1'
@@ -38,6 +38,7 @@ class ReportsController < ApplicationController
       r.business_id = business.id
       r.business_name = business.name
       r.email = false
+      r.email_contact_present = business.correspondence_contact.present?
       report_form_data << r
     end
     report_form_data

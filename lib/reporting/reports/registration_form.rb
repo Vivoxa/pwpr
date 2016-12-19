@@ -48,7 +48,7 @@ module Reporting
       end
 
       def process_address_attribute(report_field_config, business)
-        address_type_id = AddressType.find_by_title(report_field_config['address_type']).id
+        address_type_id = AddressType.id_from_setting(report_field_config['address_type'])
         address = business.addresses.where(address_type_id).first
         address.send(report_field_config['model_attribute'])
       end

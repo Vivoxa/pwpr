@@ -16,8 +16,4 @@ bundle exec rake db:drop \
   || exit 1
 echo 'DB setup Success!'
 
-echo 'Seeding lookup tables'
-bundle exec rake pwpr:populate_lookup_tables[development]
-echo 'Lookup tables populated....'
-
 echo 'App ready!'

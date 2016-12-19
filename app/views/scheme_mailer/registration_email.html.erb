@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+</head>
+<body>
+<h1>Registration Form for <%= @year %></h1>
+
+<p>
+  Please find attached a PDF version of the Registration form for  <%= @year %>. This has been sent to you by
+  <strong><%= @scheme.name %></strong>.<br>
+</p>
+
+<p>
+  To login to the site, just follow this link: <a href=<%= @url %>>Sign in</a>.
+
+</p>
+
+<p>Any queries please contact <strong><%= @scheme.name %></strong></p>
+</body>
+</html>

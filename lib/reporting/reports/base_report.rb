@@ -40,11 +40,11 @@ module Reporting
         raise NotImplementedError.new
       end
 
-      private
-
-      def build_filename(report_type, year, business, ext)
+      def build_filename(report_type, year, business, ext=DEFAULT_FILE_EXT)
         "#{report_type}_#{year}_#{business.NPWD}.#{ext}"
       end
+
+      private
 
       def tmp_filename(year, business, ext=DEFAULT_FILE_EXT)
         "#{BaseReport::SERVER_TMP_FILE_DIR}/#{report_type}_#{year}_#{business.NPWD}.#{ext}"

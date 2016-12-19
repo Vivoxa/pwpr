@@ -11,9 +11,12 @@ def random_string(length)
   (0...length).map { (65 + rand(26)).chr }.join
 end
 
-sic = SicCode.create(code: 'SIC101', active: true, year_introduced: '2013')
+seeder = LookupValues::Seeder.new
+seeder.populate_lookup_tables
 
-schemes = Scheme.create([{name: 'dans pack scheme', scheme_country_code_id: 1},
+sic = SicCode.first
+
+schemes = Scheme.create([{name: 'dans pack scheme', active: true, scheme_country_code_id: 1},
                          {name: 'mypack scheme', scheme_country_code_id: 1},
                          {name: 'pack one', scheme_country_code_id: 1},
                          {name: 'Test scheme', active: true, scheme_country_code_id: 1},
@@ -119,6 +122,22 @@ schemes.each_with_index do |scheme, index|
   agency_templates[index].scheme_id = scheme.id
   agency_templates[index].save!
 end
+
+address = Address.new(address_type_id: 2,
+                      address_line_1: '108 houghton road',
+                      address_line_2: 'Hetton le hole',
+                      address_line_3: '',
+                      address_line_4: '',
+                      town: 'Houghton le spring',
+                      county: 'Tyne and Wear',
+                      site_country: 'UK',
+                      telephone: '0191 5178644',
+                      fax: '0191 5174533',
+                      post_code: 'DH5 9PL',
+                      email: 'nigelsurtees@hotmail.co.uk')
+
+business = businesses.first
+business.addresses << address
 
 #************************************************************************************
 #                           Admins

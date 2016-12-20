@@ -40,7 +40,7 @@ module SpreadsheetWorker
     end
 
     def process(event)
-      processor = SheetProcessor::Processor.new(event.to_i)
+      processor = SpreadsheetWorker::SheetProcessor::Processor.new(event.to_i)
       processor.process_spreadsheet
 
       log(:info, " [x] Event '#{event}' has been processed!")

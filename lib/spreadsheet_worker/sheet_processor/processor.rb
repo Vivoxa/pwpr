@@ -1,7 +1,6 @@
 module SpreadsheetWorker
   module SheetProcessor
     class Processor
-
       def initialize(template_id)
         @agency_template_id = template_id
       end

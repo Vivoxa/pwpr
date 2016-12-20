@@ -15,7 +15,7 @@ set -e
       echo $command
       echo '*****************************************************************************************************************************************************************************************************************'
       echo ''
-      docker build --build-arg APP_DIR=app-pwpr --build-arg COMMAND="$command" -t=pwpr .
+      docker build --build-arg APP_DIR=pwpr --build-arg COMMAND="$command" -t=pwpr .
       echo ''
       echo ''
       echo '***********************************************************************'
@@ -38,7 +38,7 @@ set -e
       echo $command
       echo '********************************************************************************************************************************************'
       echo ''
-      docker build --build-arg APP_DIR=pre-pwpr --build-arg  COMMAND="$command" -t=pwpr .
+      docker build --build-arg APP_DIR=pwpr --build-arg  COMMAND="$command" -t=pwpr .
       echo ''
       echo ''
       echo '***********************************************************************'

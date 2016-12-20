@@ -8,7 +8,7 @@ module SpreadsheetWorker
         end
 
         def process
-          @sheet_filename = './public/template_sheet.xls'
+          #@sheet_filename = './public/template_sheet.xls'
           # row_array = targets.row(3)
 
           targets.drop(3).each do |row_array|
@@ -19,7 +19,6 @@ module SpreadsheetWorker
               process_material_totals(row_array, material) unless material == 'other'
             end
 
-            process_material_totals(row_array)
             process_target_totals(row_array)
           end
         end

@@ -8,7 +8,7 @@ module SpreadsheetWorker
         end
 
         def process
-          @sheet_filename = './public/template_sheet.xls'
+          #@sheet_filename = './public/template_sheet.xls'
           # row_array = subsidiaries.row(2)
 
           subsidiaries.drop(1).each do |row_array|

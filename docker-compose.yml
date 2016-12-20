@@ -22,7 +22,7 @@ services:
       - SPREADSHEET_QUEUE_HOST=queue_rabbitmq:5672
       - SPREADSHEET_WORKER_LOG_PATH=log/spreadsheet_worker.log
     volumes:
-      - ../pwpr:/pp_pwpr
+      - ../pwpr:/pwpr
     ports:
       - "3000:3000"
     links:

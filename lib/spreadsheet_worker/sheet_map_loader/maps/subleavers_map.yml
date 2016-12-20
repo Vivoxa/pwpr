@@ -1,11 +1,11 @@
 subleavers:
-  subsidiary_scheme_ref:
+  scheme_ref:
     field: A
-  subsidiary_npwd:
+  npwd:
     field: B
-  subsidiary_company_name:
+  company_name:
     field: C
-  subsidiary_company_house_no:
+  company_house_no:
     field: D
   allocation_method_used:
     field: E

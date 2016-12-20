@@ -13,18 +13,14 @@ module S3
       obj = s3.bucket(bucket_name).object(s3_desired_filename)
 
       # Upload it
-      success = obj.upload_file(server_file_path(agency_template_upload))
+      obj.upload_file(server_file_path(agency_template_upload))
+    end
 
-      # Publish event to spreadsheet_queue for later processing
-      publish_uploaded_notification(s3_build_filename(agency_template_upload)) if success
+    def get_server_file_path(agency_template_upload)
+      server_file_path(agency_template_upload)
     end
 
     private
-
-    def publish_uploaded_notification(file_path)
-      publisher = SpreadsheetWorker::Publisher.new
-      publisher.publish(file_path)
-    end
 
     def server_file_path(agency_template_upload)
       "#{AgencyTemplateAwsHandler::SERVER_TMP_FILE_DIR}/#{agency_template_upload.filename}"

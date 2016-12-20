@@ -12,7 +12,8 @@ echo 'Bundling success!'
 echo "Setting up DB..."
 bundle exec rake db:drop \
   db:create \
-  db:setup \
+  db:migrate \
+  db:seed \
   || exit 1
 echo 'DB setup Success!'
 

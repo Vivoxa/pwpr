@@ -25,7 +25,7 @@ targets:
       field: J
     recycling:
       field: K
-    92_min:
+    nintytwo_min:
       field: L
     adjusted_recovery:
       field: M

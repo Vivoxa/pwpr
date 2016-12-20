@@ -42,6 +42,7 @@ class AgencyTemplateUploadsController < ApplicationController
         assign_upload_filename!(upload)
         upload_to_s3(upload)
         upload.save!
+        publish_uploaded_notification(upload.id)
         delete_file_from_server
       end
 
@@ -54,6 +55,11 @@ class AgencyTemplateUploadsController < ApplicationController
   end
 
   private
+
+  def publish_uploaded_notification(upload_id)
+    publisher = SpreadsheetWorker::Publisher.new
+    publisher.publish(upload_id.to_s)
+  end
 
   def upload_to_s3(upload)
     agency_template_handler = S3::AgencyTemplateAwsHandler.new

@@ -9,11 +9,10 @@ class CreateAddresses < ActiveRecord::Migration
       t.string :address_line_4
       t.string :town
       t.string :post_code, null: false
-      t.string :county, null: false
-      t.string :site_country, null: false
-      t.string :telephone, null: false
+      t.string :site_country
+      t.string :telephone
       t.string :fax
-      t.string :email, null: false
+      t.string :email
 
       t.timestamps null: false
     end

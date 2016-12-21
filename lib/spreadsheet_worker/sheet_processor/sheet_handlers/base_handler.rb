@@ -26,8 +26,8 @@ module SpreadsheetWorker
           @agency_template ||= AgencyTemplateUpload.find_by_id(id)
         end
 
-        def get_business(row, npwd)
-          business = Business.where(NPWD: npwd).first if npwd
+        def get_business(_row, npwd)
+          Business.where(NPWD: npwd).first if npwd
         end
 
         def map_loader

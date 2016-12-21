@@ -13,4 +13,10 @@ namespace :pwpr do
     seeder = LookupValues::Seeder.new
     seeder.populate_lookup_tables
   end
+
+  desc 'start the rabbitmq worker'
+  task :start_queue_worker, [:env] => :environment do |t, args|
+    worker = SpreadsheetWorker::Worker.new
+    worker.start
+  end
 end

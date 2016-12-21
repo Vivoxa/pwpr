@@ -15,7 +15,7 @@ function checkAll() {
 
 function yearChanged(year) {
     $.ajax({
-        url: 'reports',
+        url: 'reports/report_data',
         data: {
             report: document.getElementById('report').value,
             year: year.value

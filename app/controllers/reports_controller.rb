@@ -1,20 +1,42 @@
 class ReportsController < ApplicationController
   authorize_resource class: ReportsController
 
-  YEARS =  %w(2013 2014 2015 2016).freeze
+  YEARS = %w(2013 2014 2015 2016).freeze
   REPORTS = ['Registration Form', 'Data Form'].freeze
 
   def index
     @reports = REPORTS
     @years = YEARS
+    @report_form_data = []
+  end
 
-    @report_form_data = if can_process_report?(params['year'], params['report'])
-                          scheme_id = params[:scheme_id]
+  def report_data
+    report = params['report']
+    year = params['year']
+    scheme_uid = params[:scheme_id]
+    @report_form_data = []
+
+    @errors = []
+
+    unless REPORTS.include?(report)
+      @errors << 'Select a Report'
+    end
+
+    unless YEARS.include?(year)
+      @errors << 'Select a Year'
+    end
+
+    @report_form_data = if can_process_report?(year, report)
+                          scheme_id = scheme_uid
                           businesses = Scheme.find(scheme_id).businesses
-                          get_report_data(businesses, params['report'].first.demodulize.underscore.freeze, params['year'])
+                          get_report_data(businesses, report.delete(' ').demodulize.underscore.freeze, year)
                         else
                           []
                         end
+  end
+
+  respond_to do |format|
+    format.js
   end
 
   def create

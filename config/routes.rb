@@ -34,6 +34,7 @@ end
   resources :schemes do
     resources :agency_template_uploads, only: [:index, :show, :new, :create]
     resources :reports, only: [:index, :create]
+    get '/reports/report_data' => 'reports/report_data', as: 'report_data'
   end
 
   # Example of regular route:

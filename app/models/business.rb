@@ -27,8 +27,6 @@ class Business < ActiveRecord::Base
 
   def correspondence_contact
     contact = contacts.where(title: 'correspondance')
-    if contact.any?
-      return contact.first
-    end
+    return contact.first if contact.any?
   end
 end

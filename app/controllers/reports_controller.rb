@@ -1,12 +1,42 @@
 class ReportsController < ApplicationController
   authorize_resource class: ReportsController
 
+  YEARS = %w(2013 2014 2015 2016).freeze
+  REPORTS = ['Registration Form', 'Data Form'].freeze
+
   def index
-    scheme_id = params[:scheme_id]
-    businesses = Scheme.find(scheme_id).businesses
-    @reports = ['Registration Form', 'Data Form']
-    @years = %w(2013 2014 2015 2016)
-    @report_form_data = get_report_data(businesses)
+    @reports = REPORTS
+    @years = YEARS
+    @report_form_data = []
+  end
+
+  def report_data
+    report = params['report']
+    year = params['year']
+    scheme_uid = params[:scheme_id]
+    @report_form_data = []
+
+    @errors = []
+
+    unless REPORTS.include?(report)
+      @errors << 'Select a Report'
+    end
+
+    unless YEARS.include?(year)
+      @errors << 'Select a Year'
+    end
+
+    @report_form_data = if can_process_report?(year, report)
+                          scheme_id = scheme_uid
+                          businesses = Scheme.find(scheme_id).businesses
+                          get_report_data(businesses, report.delete(' ').demodulize.underscore.freeze, year)
+                        else
+                          []
+                        end
+  end
+
+  respond_to do |format|
+    format.js
   end
 
   def create
@@ -14,16 +44,14 @@ class ReportsController < ApplicationController
     year = params['year']
 
     report = case report_type
-             when 'RegistrationForm'
-               Reporting::Reports::RegistrationForm.new
-             when 'DataForm'
-               nil
+               when 'RegistrationForm'
+                 Reporting::Reports::RegistrationForm.new
              end
 
     num_reports = 0
     params['businesses'].each do |business_id, values|
       if values['email'] == '1'
-        report.process_report(business_id.to_i, year)
+        report.process_report(business_id.to_i, year, current_user)
         num_reports += 1
       end
     end
@@ -33,7 +61,13 @@ class ReportsController < ApplicationController
     redirect_to :root
   end
 
-  def get_report_data(businesses)
+  private
+
+  def can_process_report?(year, report)
+    !year.blank? && YEARS.include?(year) && !report.blank? && REPORTS.include?(report)
+  end
+
+  def get_report_data(businesses, report_name, year)
     report_form_data = []
     businesses.each do |business|
       r = ReportFormData.new
@@ -41,8 +75,14 @@ class ReportsController < ApplicationController
       r.business_name = business.name
       r.email = false
       r.email_contact_present = business.correspondence_contact.present?
+      r.date_last_sent = report_last_sent(business, report_name, year)
       report_form_data << r
     end
     report_form_data
+  end
+
+  def report_last_sent(business, report_name, year)
+    emailed_report = EmailedReport.where(business_id: business.id, report_name: report_name, year: year)
+    emailed_report.first.date_last_sent if emailed_report.any?
   end
 end

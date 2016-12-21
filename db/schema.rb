@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161208182445) do
+ActiveRecord::Schema.define(version: 20161219195614) do
 
   create_table "address_types", force: :cascade do |t|
     t.string   "title",       limit: 255, null: false
@@ -203,6 +203,19 @@ ActiveRecord::Schema.define(version: 20161208182445) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "emailed_reports", force: :cascade do |t|
+    t.string   "report_name",    limit: 255
+    t.string   "year",           limit: 255
+    t.datetime "date_last_sent"
+    t.integer  "business_id",    limit: 4
+    t.integer  "sent_by_id",     limit: 4
+    t.string   "sent_by_type",   limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "emailed_reports", ["business_id"], name: "index_emailed_reports_on_business_id", using: :btree
 
   create_table "joiners", force: :cascade do |t|
     t.integer  "agency_template_upload_id", limit: 4,                            null: false
@@ -548,6 +561,7 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   add_foreign_key "contacts", "businesses"
   add_foreign_key "contacts_addresses", "addresses"
   add_foreign_key "contacts_addresses", "contacts"
+  add_foreign_key "emailed_reports", "businesses"
   add_foreign_key "joiners", "agency_template_uploads"
   add_foreign_key "joiners", "businesses"
   add_foreign_key "leavers", "agency_template_uploads"

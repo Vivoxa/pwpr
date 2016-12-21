@@ -1,0 +1,42 @@
+<% if report_form_data.any? %>
+    <div class="centre-wide">
+      <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th>Business</th>
+          <th>Date last sent</th>
+          <th>            <%= label_tag('Select All') %>
+            <%= check_box_tag 'selectAll', 1, checked = false, {onclick: "return checkAll();"} %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% report_form_data.each do |report_form| %>
+            <%= fields_for "businesses[#{report_form.business_id}]", report_form do |rf| %>
+                <tr>
+                  <td><%= rf.label report_form.business_name %></td>
+                  <% if report_form.date_last_sent %>
+                      <td><%= label_tag report_form.date_last_sent %></td>
+                  <% else %>
+                      <td><%= label_tag 'Report not yet sent' %></td>
+                  <% end %>
+                  <% if report_form.email_contact_present %>
+                      <td><%= rf.check_box :email %></td>
+                  <% else %>
+                      <td><%= label_tag 'Contact not present' %></td>
+                  <% end %>
+                </tr>
+            <% end %>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="actions centre">
+      <%= submit_tag 'Email Report', class: 'btn btn-primary devise-btn' %>
+    </div>
+<% else %>
+    <% if errors.any? %>
+        <% errors.each do |error| %>
+            <div class="devise-lgn bg-danger centre"> <%= error %>*</div><br/>
+        <% end %>
+    <% end %>
+<% end %>

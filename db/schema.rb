@@ -205,17 +205,26 @@ ActiveRecord::Schema.define(version: 20161219195614) do
   end
 
   create_table "emailed_reports", force: :cascade do |t|
-    t.string   "report_name",    limit: 255
-    t.string   "year",           limit: 255
+    t.string   "report_name",       limit: 255
+    t.string   "year",              limit: 255
     t.datetime "date_last_sent"
-    t.integer  "business_id",    limit: 4
-    t.integer  "sent_by_id",     limit: 4
-    t.string   "sent_by_type",   limit: 255
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "business_id",       limit: 4
+    t.integer  "emailed_status_id", limit: 4
+    t.integer  "sent_by_id",        limit: 4
+    t.string   "sent_by_type",      limit: 255
+    t.string   "error_notices",     limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   add_index "emailed_reports", ["business_id"], name: "index_emailed_reports_on_business_id", using: :btree
+  add_index "emailed_reports", ["emailed_status_id"], name: "index_emailed_reports_on_emailed_status_id", using: :btree
+
+  create_table "emailed_statuses", force: :cascade do |t|
+    t.string   "status",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "joiners", force: :cascade do |t|
     t.integer  "agency_template_upload_id", limit: 4,                            null: false
@@ -562,6 +571,7 @@ ActiveRecord::Schema.define(version: 20161219195614) do
   add_foreign_key "contacts_addresses", "addresses"
   add_foreign_key "contacts_addresses", "contacts"
   add_foreign_key "emailed_reports", "businesses"
+  add_foreign_key "emailed_reports", "emailed_statuses"
   add_foreign_key "joiners", "agency_template_uploads"
   add_foreign_key "joiners", "businesses"
   add_foreign_key "leavers", "agency_template_uploads"

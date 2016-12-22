@@ -75,14 +75,13 @@ class ReportsController < ApplicationController
       r.business_name = business.name
       r.email = false
       r.email_contact_present = business.correspondence_contact.present?
-      r.date_last_sent = report_last_sent(business, report_name, year)
+      r.emailed_report = emailed_report(business, report_name, year)
       report_form_data << r
     end
     report_form_data
   end
 
-  def report_last_sent(business, report_name, year)
-    emailed_report = EmailedReport.where(business_id: business.id, report_name: report_name, year: year)
-    emailed_report.first.date_last_sent if emailed_report.any?
+  def emailed_report(business, report_name, year)
+    EmailedReport.where(business_id: business.id, report_name: report_name, year: year).first
   end
 end

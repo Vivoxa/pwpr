@@ -1,3 +1,11 @@
+emailed_statuses:
+  no_columns: 1
+  column_1:
+    title: status
+    data_type: string
+    values:
+    - "SUCCESS"
+    - "FAILED"
 leaving_codes:
   no_columns: 2
   column_1:

@@ -3,29 +3,49 @@ require 'pdf-forms'
 module Reporting
   module Reports
     class RegistrationForm < Reporting::Reports::BaseReport
+      include Logging
+
       REPORT_TYPE = name.demodulize.underscore.freeze
 
       def process_report(business_id, year, current_user, template = nil)
-        business = Business.find(business_id)
-        template ||= ReportTemplateHelper.get_default_template(report_type)
-        local_file_path = tmp_filename(year, business)
+        logger.tagged("RegistrationForm for business with id #{business_id}, #{year}") do
+          @errors = []
+          begin
+            logger.info 'process_report() = finding business'
+            business = Business.find(business_id)
+            logger.info 'process_report() = FOUND business'
 
-        pdftk.fill_form(template, local_file_path, form_values_hash(template, year, business))
+            template ||= ReportTemplateHelper.get_default_template(report_type)
+            local_file_path = tmp_filename(year, business)
 
-        upload_to_S3(year, business)
+            logger.info 'process_report() = Filling in RegistrationForm PDF with data'
+            pdftk.fill_form(template, local_file_path, form_values_hash(template, year, business))
 
-        email_business(business, build_filename(report_type, year, business), local_file_path, year, current_user)
+            logger.info 'process_report() = Uploading RegistrationForm PDF to S3'
+            upload_to_S3(year, business)
+          rescue => e
+            @errors << e.message
+          ensure
+            logger.info 'process_report() = Emailing RegistrationForm PDF'
+            email_business(business, build_filename(report_type, year, business), local_file_path, year, current_user)
 
-        cleanup(year, business)
+            logger.info 'process_report() = Cleaning up tmp files '
+            cleanup(year, business)
+          end
+        end
       end
 
       private
 
       def email_business(business, filename, filepath, year, current_user)
         success = SchemeMailer.registration_email(business, filename, filepath, year).deliver_now
+        status_id = success ? EmailedStatus.id_from_setting('SUCCESS') : EmailedStatus.id_from_setting('FAILED')
+        logger.info "process_report() = Email sent?: #{success}"
         EmailedReport.where(business_id: business.id, report_name: report_type, year: year).first_or_create(date_last_sent: DateTime.now,
-                                                                                                            sent_by_id:     current_user.id,
-                                                                                                            sent_by_type:   current_user.class.name) if success
+                                                                                                            sent_by_id: current_user.id,
+                                                                                                            sent_by_type: current_user.class.name,
+                                                                                                            emailed_status_id: status_id,
+                                                                                                            error_notices: @errors)
       end
 
       def form_values_hash(template, year, business)

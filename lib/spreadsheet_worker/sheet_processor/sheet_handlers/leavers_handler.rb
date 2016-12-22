@@ -4,14 +4,13 @@ module SpreadsheetWorker
       class LeaversHandler < BaseHandler
         def initialize(agency_template_id)
           super
-          @leaver = Leaver.new
         end
 
         def process
-          #@sheet_filename = './public/template_sheet.xls'
-          # row_array = leavers.row(4)
+          # @sheet_filename = './public/template_sheet.xls'
 
           leavers.drop(3).each do |row_array|
+            @leaver = Leaver.new
             @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
 
             process_leaver(row_array)
@@ -24,7 +23,9 @@ module SpreadsheetWorker
           @leaver.total_recovery_previous = column_value(row, map['total_recovery']['field']).to_f
           @leaver.leaving_date = Date.parse(column_value(row, map['date_left']['field']).to_s)
           @leaver.leaving_code = LeavingCode.where(code: column_value(row, map['leaving_reason']['field'])).first
+          @leaver.scheme_comments = column_value(row, map['scheme_comments']['field'])
           @leaver.business = @business
+          @leaver.leaving_business = create_leaving_business(row) unless @business
           @leaver.agency_template_upload = @agency_template
           @leaver.save!
         end

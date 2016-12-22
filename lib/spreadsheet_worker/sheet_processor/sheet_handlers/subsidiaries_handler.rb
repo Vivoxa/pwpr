@@ -4,23 +4,26 @@ module SpreadsheetWorker
       class SubsidiariesHandler < BaseHandler
         def initialize(agency_template_id)
           super
-          @subsidiary = Subsidiary.new
         end
 
         def process
-          #@sheet_filename = './public/template_sheet.xls'
-          # row_array = subsidiaries.row(2)
+          # @sheet_filename = './public/template_sheet.xls'
 
           subsidiaries.drop(1).each do |row_array|
+            @subsidiary = Subsidiary.new
+
             business = get_business(row_array, column_value(row_array, map['npwd']['field']))
             business ||= create_sub_business(row_array, column_value(row_array, map['npwd']['field']))
+
             @business = business
+            @business.small_producer = column_value(row_array, map['allocation']['method_used']['field'])
+            @business.save!
 
             process_contact(row_array)
             process_registered_address(row_array)
             process_correspondence_address(row_array)
             process_subsidiary(row_array)
-            process_small_producer(row_array) if small_producer?(row_array)
+            process_small_producer(row_array) if @business.small_producer
           end
         end
 

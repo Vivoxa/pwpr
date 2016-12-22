@@ -4,14 +4,13 @@ module SpreadsheetWorker
       class JoinersHandler < BaseHandler
         def initialize(agency_template_id)
           super
-          @joiner = Joiner.new
         end
 
         def process
-          #@sheet_filename = './public/template_sheet.xls'
-          # row_array = joiners.row(4)
+          # @sheet_filename = './public/template_sheet.xls'
 
           joiners.drop(3).each do |row_array|
+            @joiner = Joiner.new
             @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
 
             process_joiner(row_array)

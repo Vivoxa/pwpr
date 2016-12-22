@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20161219195614) do
     t.integer  "membership_id",                       limit: 4
     t.string   "NPWD",                                limit: 255
     t.string   "name",                                limit: 255
+    t.boolean  "small_producer"
     t.integer  "country_of_business_registration_id", limit: 4
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
@@ -241,19 +242,32 @@ ActiveRecord::Schema.define(version: 20161219195614) do
   add_index "joiners", ["business_id"], name: "fk_rails_a38bc3cfe3", using: :btree
 
   create_table "leavers", force: :cascade do |t|
-    t.integer  "business_id",               limit: 4,                                         null: false
-    t.integer  "leaving_code_id",           limit: 4,                                         null: false
-    t.integer  "agency_template_upload_id", limit: 4,                                         null: false
-    t.date     "leaving_date",                                                                null: false
-    t.decimal  "total_recovery_previous",             precision: 5, scale: 2
-    t.boolean  "sub_leaver",                                                  default: false
-    t.datetime "created_at",                                                                  null: false
-    t.datetime "updated_at",                                                                  null: false
+    t.integer  "business_id",               limit: 4
+    t.integer  "leaving_code_id",           limit: 4,                                           null: false
+    t.integer  "agency_template_upload_id", limit: 4,                                           null: false
+    t.integer  "leaving_business_id",       limit: 4
+    t.date     "leaving_date",                                                                  null: false
+    t.decimal  "total_recovery_previous",               precision: 6, scale: 2
+    t.boolean  "sub_leaver",                                                    default: false
+    t.string   "scheme_comments",           limit: 255
+    t.datetime "created_at",                                                                    null: false
+    t.datetime "updated_at",                                                                    null: false
   end
 
   add_index "leavers", ["agency_template_upload_id"], name: "fk_rails_e783cea255", using: :btree
   add_index "leavers", ["business_id"], name: "fk_rails_a42f2cbe46", using: :btree
+  add_index "leavers", ["leaving_business_id"], name: "fk_rails_71e28a1e96", using: :btree
   add_index "leavers", ["leaving_code_id"], name: "fk_rails_65d9f57c99", using: :btree
+
+  create_table "leaving_businesses", force: :cascade do |t|
+    t.string   "scheme_ref",          limit: 255
+    t.string   "npwd",                limit: 255
+    t.string   "company_name",        limit: 255
+    t.string   "company_number",      limit: 255
+    t.integer  "subsidiaries_number", limit: 4
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
 
   create_table "leaving_codes", force: :cascade do |t|
     t.string   "code",       limit: 255, null: false
@@ -280,12 +294,12 @@ ActiveRecord::Schema.define(version: 20161219195614) do
     t.decimal  "t1pf",                                 precision: 10, scale: 2, null: false
     t.decimal  "t1sell",                               precision: 10, scale: 2, null: false
     t.decimal  "t2aman",                               precision: 10, scale: 2, null: false
-    t.decimal  "t2conv",                               precision: 10, scale: 2, null: false
+    t.decimal  "t2aconv",                              precision: 10, scale: 2, null: false
     t.decimal  "t2apf",                                precision: 10, scale: 2, null: false
-    t.decimal  "t2sell",                               precision: 10, scale: 2, null: false
+    t.decimal  "t2asell",                              precision: 10, scale: 2, null: false
     t.decimal  "t2bman",                               precision: 10, scale: 2, null: false
     t.decimal  "t2bconv",                              precision: 10, scale: 2, null: false
-    t.decimal  "t2bp",                                 precision: 10, scale: 2, null: false
+    t.decimal  "t2bpf",                                precision: 10, scale: 2, null: false
     t.decimal  "t2bsell",                              precision: 10, scale: 2, null: false
     t.decimal  "t3aconv",                              precision: 10, scale: 2, null: false
     t.decimal  "t3apf",                                precision: 10, scale: 2, null: false
@@ -576,6 +590,7 @@ ActiveRecord::Schema.define(version: 20161219195614) do
   add_foreign_key "joiners", "businesses"
   add_foreign_key "leavers", "agency_template_uploads"
   add_foreign_key "leavers", "businesses"
+  add_foreign_key "leavers", "leaving_businesses"
   add_foreign_key "leavers", "leaving_codes"
   add_foreign_key "licensors", "agency_template_uploads"
   add_foreign_key "licensors", "businesses"

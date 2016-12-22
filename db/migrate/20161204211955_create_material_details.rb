@@ -8,12 +8,12 @@ class CreateMaterialDetails < ActiveRecord::Migration
       t.decimal :t1pf, precision: 10, scale: 2, null: false
       t.decimal :t1sell, precision: 10, scale: 2, null: false
       t.decimal :t2aman, precision: 10, scale: 2, null: false
-      t.decimal :t2conv, precision: 10, scale: 2, null: false
+      t.decimal :t2aconv, precision: 10, scale: 2, null: false
       t.decimal :t2apf, precision: 10, scale: 2, null: false
-      t.decimal :t2sell, precision: 10, scale: 2, null: false
+      t.decimal :t2asell, precision: 10, scale: 2, null: false
       t.decimal :t2bman, precision: 10, scale: 2, null: false
       t.decimal :t2bconv, precision: 10, scale: 2, null: false
-      t.decimal :t2bp, precision: 10, scale: 2, null: false
+      t.decimal :t2bpf, precision: 10, scale: 2, null: false
       t.decimal :t2bsell, precision: 10, scale: 2, null: false
       t.decimal :t3aconv, precision: 10, scale: 2, null: false
       t.decimal :t3apf, precision: 10, scale: 2, null: false

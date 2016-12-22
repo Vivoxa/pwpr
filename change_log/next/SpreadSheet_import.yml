@@ -1,0 +1,2 @@
+Improvements: "Add spreadsheet import feature, hooking up upload button to process mechanism directly"
+Deploy Tasks: "`RAILS_ENV= <env> bundle exec db:migrate db:seed && bundle exec rake pwpr:populate_lookup_tables[<env>]`"

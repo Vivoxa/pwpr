@@ -193,16 +193,18 @@ packaging_materials:
     title: name
     data_type: string
     values:
-    - "Raw material manufacturing"
-    - "Packaging conversion"
-    - "Packing/Filling"
-    - "Selling"
-    - "Importing"
-    - "Service Provider"
+    - "paper"
+    - "glass"
+    - "aluminium"
+    - "steel"
+    - "plastic"
+    - "wood"
+    - "other"
   column_2:
     title: description
     data_type: string
     values:
+    - "na"
     - "na"
     - "na"
     - "na"
@@ -219,10 +221,12 @@ packaging_materials:
     - "2007"
     - "2007"
     - "2007"
+    - "2007"
   column_4:
     title: active
     data_type: integer
     values:
+    - 1
     - 1
     - 1
     - 1

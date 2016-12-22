@@ -4,14 +4,13 @@ module SpreadsheetWorker
       class LicensorsHandler < BaseHandler
         def initialize(agency_template_id)
           super
-          @licensor = Licensor.new
         end
 
         def process
-          @sheet_filename = './public/template_sheet.xls'
-          # row_array = licensors.row(2)
+          # @sheet_filename = './public/template_sheet.xls'
 
           licensors.drop(1).each do |row_array|
+            @licensor = Licensor.new
             @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
 
             process_contact(row_array)

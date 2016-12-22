@@ -13,3 +13,5 @@ subleavers:
     field: F
   date_left:
     field: G
+  scheme_comments:
+    field: H

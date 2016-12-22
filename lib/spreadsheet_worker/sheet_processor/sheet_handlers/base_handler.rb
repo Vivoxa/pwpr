@@ -50,10 +50,6 @@ module SpreadsheetWorker
           value == 'Y' ? true : false
         end
 
-        def small_producer?(row)
-          column_value(row, map['allocation']['method_used']['field'])
-        end
-
         def transform_to_index(letter)
           set = ('A'..'EZ').to_a
           set.find_index(letter) if set.include? letter
@@ -72,6 +68,16 @@ module SpreadsheetWorker
           business.holding_business = get_business(row, column_value(row, map['registration_company_npwd']['field']))
           business.save!
           business
+        end
+
+        def create_leaving_business(row)
+          leaving_business = LeavingBusiness.new
+          leaving_business.scheme_ref = column_value(row, map['scheme_ref']['field'])
+          leaving_business.npwd = column_value(row, map['npwd']['field'])
+          leaving_business.company_name = column_value(row, map['company_name']['field'])
+          leaving_business.company_number = column_value(row, map['company_house_no']['field'])
+          leaving_business.subsidiaries_number = column_value(row, map['subsidiaries_no']['field']).to_i unless @subleaver
+          leaving_business
         end
 
         def create_business(row, npwd)

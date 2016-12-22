@@ -4,17 +4,20 @@ module SpreadsheetWorker
       class RegistrationsHandler < BaseHandler
         def initialize(agency_template_id)
           super
-          @registration = Registration.new
         end
 
         def process
-          @sheet_filename = './public/template_sheet.xls'
-          # row_array = registrations.row(2)
+          # @sheet_filename = './public/template_sheet.xls'
 
           registrations.drop(1).each do |row_array|
+            @registration = Registration.new
+
             business = get_business(row_array, column_value(row_array, map['npwd']['field']))
             business ||= create_holding_business(row_array, column_value(row_array, map['npwd']['field']))
+
             @business = business
+            @business.small_producer = column_value(row_array, map['allocation']['method_used']['field'])
+            @business.save!
 
             process_contact(row_array)
             process_registered_address(row_array)
@@ -22,7 +25,7 @@ module SpreadsheetWorker
             process_audit_address(row_array)
             process_registration(row_array)
 
-            if small_producer?(row_array)
+            if @business.small_producer
               process_small_producer(row_array)
             else
               process_regular_producer(row_array)

@@ -23,6 +23,7 @@ module SpreadsheetWorker
         private
 
         def process_registered_address(row)
+          return if empty_row?(row)
           address = Address.new
           address.address_line_1 = column_value(row, map['registered']['address_1']['field'])
           address.address_line_2 = column_value(row, map['registered']['address_2']['field'])
@@ -35,6 +36,7 @@ module SpreadsheetWorker
         end
 
         def process_contact_address(row)
+          return if empty_row?(row)
           address = Address.new
           address.address_line_1 = column_value(row, map['contact']['address_1']['field'])
           address.address_line_2 = column_value(row, map['contact']['address_2']['field'])
@@ -47,6 +49,7 @@ module SpreadsheetWorker
         end
 
         def process_contact(row)
+          return if empty_row?(row)
           @contact = Contact.new
           @contact.first_name = column_value(row, map['contact']['first_name']['field'])
           @contact.last_name = column_value(row, map['contact']['last_name']['field'])

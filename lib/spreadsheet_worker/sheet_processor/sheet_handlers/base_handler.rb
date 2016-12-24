@@ -15,11 +15,7 @@ module SpreadsheetWorker
         protected
 
         def load_sheet_path(agency_template)
-          @sheet_filename ||= aws_handler.get_server_file_path(agency_template)
-        end
-
-        def aws_handler
-          @aws_handler ||= S3::AgencyTemplateAwsHandler.new
+          @sheet_filename ||= InputOutput::ServerFileHandler.server_file_path_for(agency_template.filename)
         end
 
         def load_agency_template(id)
@@ -36,6 +32,14 @@ module SpreadsheetWorker
 
         def spreadsheet
           @sheet ||= Roo::Spreadsheet.open(@sheet_filename)
+        end
+
+        def empty_row?(row)
+          is_empty = true
+          row.each do |field|
+            is_empty = false if field.present?
+          end
+          is_empty
         end
 
         def column_value(row, letter)

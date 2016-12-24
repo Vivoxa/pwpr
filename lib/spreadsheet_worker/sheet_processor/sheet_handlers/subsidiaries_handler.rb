@@ -30,6 +30,7 @@ module SpreadsheetWorker
         private
 
         def process_correspondence_address(row)
+          return if empty_row?(row)
           address = Address.new
           address.address_line_1 = column_value(row, map['correspondence']['address_1']['field'])
           address.address_line_2 = column_value(row, map['correspondence']['address_2']['field'])
@@ -44,6 +45,7 @@ module SpreadsheetWorker
         end
 
         def process_registered_address(row)
+          return if empty_row?(row)
           address = Address.new
           address.address_line_1 = column_value(row, map['registered']['address_1']['field'])
           address.address_line_2 = column_value(row, map['registered']['address_2']['field'])
@@ -58,6 +60,7 @@ module SpreadsheetWorker
         end
 
         def process_contact(row)
+          return if empty_row?(row)
           @contact = Contact.new
           @contact.title = column_value(row, map['contact']['title']['field'])
           @contact.first_name = column_value(row, map['contact']['first_name']['field'])
@@ -69,6 +72,7 @@ module SpreadsheetWorker
         end
 
         def process_small_producer(row)
+          return if empty_row?(row)
           producer = SmallProducerDetail.new
           producer.allocation_method_obligation = column_value(row, map['allocation']['method_obligation']['field']).to_f
           producer.allocation_method_predominant_material = column_value(row, map['allocation']['predominant_material']['field'])
@@ -77,6 +81,7 @@ module SpreadsheetWorker
         end
 
         def process_subsidiary(row)
+          return if empty_row?(row)
           @subsidiary.allocation_method_used = column_value(row, map['allocation']['method_used']['field'])
           @subsidiary.change_detail = ChangeDetail.where(modification: column_value(row, map['change_to_subsidiary_data']['field'])).first
           @subsidiary.packaging_sector_main_activity = PackagingSectorMainActivity.where(material: column_value(row, map['packaging_sector_main_activity']['field'])).first

@@ -36,6 +36,7 @@ module SpreadsheetWorker
         private
 
         def process_audit_address(row)
+          return if empty_row?(row)
           address = Address.new
           address.address_line_1 = column_value(row, map['contact']['audit']['address_1']['field'])
           address.address_line_2 = column_value(row, map['contact']['audit']['address_2']['field'])
@@ -50,6 +51,7 @@ module SpreadsheetWorker
         end
 
         def process_correspondence_address(row)
+          return if empty_row?(row)
           address = Address.new
           address.address_line_1 = column_value(row, map['correspondence']['address_1']['field'])
           address.address_line_2 = column_value(row, map['correspondence']['address_2']['field'])
@@ -64,6 +66,7 @@ module SpreadsheetWorker
         end
 
         def process_registered_address(row)
+          return if empty_row?(row)
           address = Address.new
           address.address_line_1 = column_value(row, map['registered']['address_1']['field'])
           address.address_line_2 = column_value(row, map['registered']['address_2']['field'])
@@ -80,6 +83,7 @@ module SpreadsheetWorker
         end
 
         def process_contact(row)
+          return if empty_row?(row)
           @contact = Contact.new
           @contact.title = column_value(row, map['contact']['title']['field'])
           @contact.first_name = column_value(row, map['contact']['first_name']['field'])
@@ -92,6 +96,7 @@ module SpreadsheetWorker
         end
 
         def process_small_producer(row)
+          return if empty_row?(row)
           producer = SmallProducerDetail.new
           producer.allocation_method_obligation = column_value(row, map['allocation']['method_obligation']['field']).to_f
           producer.allocation_method_predominant_material = column_value(row, map['allocation']['predominant_material']['field'])
@@ -100,6 +105,7 @@ module SpreadsheetWorker
         end
 
         def process_regular_producer(row)
+          return if empty_row?(row)
           producer = RegularProducerDetail.new
           producer.calculation_method_supplier_data = column_value(row, map['calculation_method']['suplier_data']['field'])
           producer.calculation_method_or_other_method_used = column_value(row, map['calculation_or_other_method']['field'])
@@ -114,6 +120,7 @@ module SpreadsheetWorker
         end
 
         def process_registration(row)
+          return if empty_row?(row)
           @registration.licensor = column_value(row, map['licensor']['field'])
           @registration.turnover = column_value(row, map['turnover']['field']).to_f
           @registration.allocation_method_used = column_value(row, map['allocation']['method_used']['field'])

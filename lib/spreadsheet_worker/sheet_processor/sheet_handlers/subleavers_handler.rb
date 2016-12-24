@@ -20,6 +20,7 @@ module SpreadsheetWorker
         private
 
         def process_subleaver(row)
+          return if empty_row?(row)
           @subleaver.leaving_date = Date.parse(column_value(row, map['date_left']['field']).to_s)
           @subleaver.leaving_code = LeavingCode.where(code: column_value(row, map['leaving_reason']['field'])).first
           @subleaver.sub_leaver = true

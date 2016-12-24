@@ -13,6 +13,8 @@ module SpreadsheetWorker
         process_leavers
         process_subleavers
         process_targets
+
+        InputOutput::ServerFileHandler.delete_file_from_server(AgencyTemplateUpload.find_by_id(@agency_template_id).filename)
       end
 
       private

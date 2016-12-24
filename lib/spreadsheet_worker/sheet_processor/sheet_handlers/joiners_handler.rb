@@ -20,6 +20,7 @@ module SpreadsheetWorker
         private
 
         def process_joiner(row)
+          return if empty_row?(row)
           @joiner.total_recovery = column_value(row, map['total_recovery']['field']).to_f
           @joiner.previously_registered_at = column_value(row, map['previously_registered_at']['field'])
           @joiner.joining_date = Date.parse(column_value(row, map['date_joined']['field']).to_s)

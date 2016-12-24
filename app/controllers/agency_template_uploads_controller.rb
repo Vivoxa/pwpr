@@ -43,7 +43,6 @@ class AgencyTemplateUploadsController < ApplicationController
         upload_to_s3(upload)
         upload.save!
         publish_uploaded_notification(upload.id)
-        delete_file_from_server
       end
 
       redirect_to action: :index, notice: "#{upload.class} was successfully uploaded!"
@@ -73,10 +72,6 @@ class AgencyTemplateUploadsController < ApplicationController
   def transfer_file_to_server
     tmp = upload_params[:filename].tempfile
     FileUtils.cp tmp.path, path_to_save_file
-  end
-
-  def delete_file_from_server
-    FileUtils.rm [path_to_save_file], force: true
   end
 
   def path_to_save_file

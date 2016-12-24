@@ -20,6 +20,7 @@ module SpreadsheetWorker
         private
 
         def process_leaver(row)
+          return if empty_row?(row)
           @leaver.total_recovery_previous = column_value(row, map['total_recovery']['field']).to_f
           @leaver.leaving_date = Date.parse(column_value(row, map['date_left']['field']).to_s)
           @leaver.leaving_code = LeavingCode.where(code: column_value(row, map['leaving_reason']['field'])).first

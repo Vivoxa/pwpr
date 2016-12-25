@@ -18,14 +18,17 @@ class ReportsController < ApplicationController
 
     @errors = []
 
-    unless REPORTS.include?(report)
-      @errors << 'Select a Report'
-    end
+    @errors << 'Select a Report' unless REPORTS.include?(report)
 
-    unless YEARS.include?(year)
-      @errors << 'Select a Year'
-    end
+    @errors << 'Select a Year' unless YEARS.include?(year)
+    build_report_form_data(report, scheme_uid, year)
 
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def build_report_form_data(report, scheme_uid, year)
     @report_form_data = if can_process_report?(year, report)
                           scheme_id = scheme_uid
                           businesses = Scheme.find(scheme_id).businesses
@@ -35,26 +38,18 @@ class ReportsController < ApplicationController
                         end
   end
 
-  respond_to do |format|
-    format.js
-  end
-
   def create
     report_type = params['report'].delete(' ')
     year = params['year']
 
-    report = case report_type
-               when 'RegistrationForm'
-                 Reporting::Reports::RegistrationForm
-             end
-    business_ids = []
+    report = report_type(report_type)
 
+    business_ids = []
     num_reports = 0
     params['businesses'].each do |business_id, values|
-      if values['email'] == '1'
-        business_ids << business_id.to_i
-        num_reports += 1
-      end
+      next unless values['email'] == '1'
+      business_ids << business_id.to_i
+      num_reports += 1
     end
 
     event_data = ReportEventDatum.create({report_type: report,
@@ -69,6 +64,13 @@ class ReportsController < ApplicationController
 
     flash[:notice] = "#{num_reports} #{params['report']}#{plural} queued to be emailed"
     redirect_to :root
+  end
+
+  def report_type(report_type)
+    report = case report_type
+               when 'RegistrationForm'
+                 Reporting::Reports::RegistrationForm
+             end
   end
 
   private

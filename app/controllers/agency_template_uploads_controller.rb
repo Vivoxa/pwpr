@@ -56,7 +56,9 @@ class AgencyTemplateUploadsController < ApplicationController
   private
 
   def publish_uploaded_notification(upload_id)
-    publisher = SpreadsheetWorker::Publisher.new
+    publisher = QueueHelpers::RabbitMq::Publisher.new(ENV['SPREADSHEET_QUEUE_NAME'],
+                                                      ENV['SPREADSHEET_QUEUE_HOST'],
+                                                      ENV['SPREADSHEET_WORKER_LOG_PATH'])
     publisher.publish(upload_id.to_s)
   end
 

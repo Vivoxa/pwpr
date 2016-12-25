@@ -45,23 +45,40 @@ class ReportsController < ApplicationController
 
     report = case report_type
                when 'RegistrationForm'
-                 Reporting::Reports::RegistrationForm.new
+                 Reporting::Reports::RegistrationForm
              end
+    business_ids = []
 
     num_reports = 0
     params['businesses'].each do |business_id, values|
       if values['email'] == '1'
-        report.process_report(business_id.to_i, year, current_user)
+        business_ids << business_id.to_i
         num_reports += 1
       end
     end
+
+    event_data = ReportEventDatum.create({report_type: report,
+                                          year: year,
+                                          current_user_id: current_user.id,
+                                          current_user_type: current_user.class.name,
+                                          business_ids: business_ids.join(',')})
+
+    publish_email_reports(event_data.id.to_s)
+
     plural = num_reports > 1 ? 's' : ''
 
-    flash[:notice] = "#{num_reports} #{params['report']}#{plural} successfully emailed"
+    flash[:notice] = "#{num_reports} #{params['report']}#{plural} queued to be emailed"
     redirect_to :root
   end
 
   private
+
+  def publish_email_reports(event_data)
+    publisher = QueueHelpers::RabbitMq::Publisher.new(ENV['REPORTS_QUEUE_NAME'],
+                                                      ENV['REPORTS_QUEUE_HOST'],
+                                                      ENV['REPORTS_WORKER_LOG_PATH'])
+    publisher.publish(event_data)
+  end
 
   def can_process_report?(year, report)
     !year.blank? && YEARS.include?(year) && !report.blank? && REPORTS.include?(report)

@@ -3,51 +3,58 @@
     <h3 class="card-header"><%= @business.name %></h3>
 
     <div class="card-block">
-      <div class='col-md-4'>
-        <div class="card card-block" style='height:150px'>
-          <!--	<h4 class="card-title">Administration</h4>-->
-          <div class="row">
-            <div><strong>ID: </strong><%= @business.id.to_s %></div>
+      <% if can? :read, @business %>
+          <div class='col-md-4'>
+            <div class="card card-block" style='height:150px'>
+              <!--	<h4 class="card-title">Administration</h4>-->
+
+              <div class="row">
+                <div><strong>ID: </strong><%= @business.id.to_s %></div>
+              </div>
+              <div class="row">
+                <div><strong>Name: </strong><%= @business.name if @business.name %></div>
+              </div>
+              <div class="row">
+                <div><strong>Membership ID: </strong><%= @business.membership_id.to_s %></div>
+              </div>
+              <div class="row">
+                <div><strong>Company No: </strong><%= @business.company_no.to_s %></div>
+              </div>
+            </div>
           </div>
-          <div class="row">
-            <div><strong>Name: </strong><%= @business.name if @business.name %></div>
+          <div class='col-md-4'>
+            <div class="card card-block" style='height:150px'>
+              <!--	<h4 class="card-title">Administration</h4>-->
+              <div class="row">
+                <div><strong>NPWD: </strong><%= @business.NPWD.to_s %></div>
+              </div>
+              <div class="row">
+                <div><strong>SIC: </strong><%= @business.SIC if @business.name %></div>
+              </div>
+              <div class="row">
+                <div><strong>Scheme: </strong><%= @business.scheme.name %></div>
+              </div>
+              <div class="row">
+                <div><strong></strong></div>
+              </div>
+            </div>
           </div>
-          <div class="row">
-            <div><strong>Scheme Ref: </strong><%= @business.scheme_ref.to_s %></div>
+          <div class='col-md-4'>
+            <div class="card card-block" style='height:150px'>
+              <!--	<h4 class="card-title">Administration</h4>-->
+              <% if can? :new, CompanyOperators::InvitationsController %>
+                  <%= link_to 'Invite new Company Operator',
+                              new_company_operator_invitation_path,
+                              class: ['btn btn-sm btn-primary', 'devise-btn'],
+                              id: "#{@business.id}-invite_company_operator" %>
+              <% end %>
+            </div>
           </div>
-          <div class="row">
-            <div><strong>Company No: </strong><%= @business.company_number.to_s %></div>
+      <% else %>
+          <div class="card-block">
+            <p class="card-text">You are not authorised to view this Business</p>
           </div>
-        </div>
-      </div>
-      <div class='col-md-4'>
-        <div class="card card-block" style='height:150px'>
-          <!--	<h4 class="card-title">Administration</h4>-->
-          <div class="row">
-            <div><strong>NPWD: </strong><%= @business.NPWD.to_s %></div>
-          </div>
-          <div class="row">
-            <div><strong>SIC code: </strong><%= @business.sic_code_id if @business.name %></div>
-          </div>
-          <div class="row">
-            <div><strong>Scheme: </strong><%= @business.scheme.name %></div>
-          </div>
-          <div class="row">
-            <div><strong></strong></div>
-          </div>
-        </div>
-      </div>
-      <div class='col-md-4'>
-        <div class="card card-block" style='height:150px'>
-          <!--	<h4 class="card-title">Administration</h4>-->
-          <% if can? :new, CompanyOperators::InvitationsController %>
-              <%= link_to 'Invite new Company Operator',
-                          new_company_operator_invitation_path,
-                          class: ['btn btn-sm btn-primary', 'devise-btn'],
-                          id: "#{@business.id}-invite_company_operator" %>
-          <% end %>
-        </div>
-      </div>
+      <% end %>
     </div>
     <div class="card-footer">
       <% if can? :edit, @business %>

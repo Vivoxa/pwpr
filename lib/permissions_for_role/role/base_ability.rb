@@ -8,7 +8,7 @@ module PermissionsForRole
       end
 
       def scheme_operator_ids_for_associated_schemes(user)
-        user.schemes.each.map(&:scheme_operator_ids).flatten
+        user.schemes.where(active: true).each.map(&:scheme_operator_ids).flatten
       end
 
       def company_operator_ids_for_associated_schemes(user)

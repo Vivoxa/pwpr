@@ -1,6 +1,7 @@
 class BusinessesController < BaseController
   before_action :set_business, only: %i(show edit update destroy)
   before_filter :authenticate_company_operator
+  load_and_authorize_resource
 
   # GET /businesses
   # GET /businesses.json

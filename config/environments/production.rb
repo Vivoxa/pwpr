@@ -69,7 +69,7 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      address: "email-smtp.us-east-1.amazonaws.com",
+      address: ENV['SES_ENDPOINT'],
       port: 587,
       user_name: ENV['SES_USERNAME'],
       password: ENV['SES_PASSWORD'],

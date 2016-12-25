@@ -24,6 +24,8 @@ services:
       - REPORTS_QUEUE_NAME=reports_email_queue
       - REPORTS_QUEUE_HOST=queue_rabbitmq:5672
       - REPORTS_WORKER_LOG_PATH=log/reports_email_worker.log
+      - FROM_EMAIL=notifications@app-pwpr.com
+      - SES_ENDPOINT=email-smtp.us-east-1.amazonaws.com
     volumes:
       - ../pwpr:/pwpr
     ports:

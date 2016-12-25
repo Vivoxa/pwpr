@@ -1,8 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: from_email_address
+  default from:  ENV['FROM_EMAIL'] || 'notifications@app-pwpr.com'
   layout 'mailer'
 
-  def from_email_address
-    ENV['FROM_EMAIL'] || 'notifications@app-pwpr.com'
-  end
 end

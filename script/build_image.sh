@@ -11,7 +11,7 @@ set -e
       echo ''
       echo '*****************************************************************************************************************************************************************************************************************'
       echo '          Building the command to run on the container'
-      command="RAILS_ENV=production bundle exec rake assets:precompile && RAILS_ENV=production bundle && RAILS_ENV=production bundle exec rake db:migrate && RAILS_ENV=production bundle exec rails s -p 3000 -b '0.0.0.0'"
+      command="bundle exec rake assets:precompile RAILS_ENV=production && bundle RAILS_ENV=production && bundle exec rake db:migrate RAILS_ENV=production && bundle exec rails s -p 3000 -b '0.0.0.0' RAILS_ENV=production"
       echo $command
       echo '*****************************************************************************************************************************************************************************************************************'
       echo ''

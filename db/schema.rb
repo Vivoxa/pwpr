@@ -173,19 +173,21 @@ ActiveRecord::Schema.define(version: 20161225080451) do
   add_index "company_operators", ["reset_password_token"], name: "index_company_operators_on_reset_password_token", unique: true, using: :btree
 
   create_table "contacts", force: :cascade do |t|
-    t.integer  "business_id", limit: 4,                   null: false
-    t.string   "title",       limit: 255
-    t.string   "first_name",  limit: 255,                 null: false
-    t.string   "last_name",   limit: 255,                 null: false
-    t.string   "email",       limit: 255
-    t.string   "telephone_1", limit: 255,                 null: false
-    t.string   "telephone_2", limit: 255
-    t.string   "fax",         limit: 255
-    t.boolean  "active",                  default: false
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.integer  "business_id",     limit: 4,                   null: false
+    t.integer  "address_type_id", limit: 4,                   null: false
+    t.string   "title",           limit: 255
+    t.string   "first_name",      limit: 255,                 null: false
+    t.string   "last_name",       limit: 255,                 null: false
+    t.string   "email",           limit: 255
+    t.string   "telephone_1",     limit: 255,                 null: false
+    t.string   "telephone_2",     limit: 255
+    t.string   "fax",             limit: 255
+    t.boolean  "active",                      default: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
+  add_index "contacts", ["address_type_id"], name: "fk_rails_c500c9f0b6", using: :btree
   add_index "contacts", ["business_id"], name: "fk_rails_5d1918d88d", using: :btree
 
   create_table "contacts_addresses", force: :cascade do |t|
@@ -590,6 +592,7 @@ ActiveRecord::Schema.define(version: 20161225080451) do
   add_foreign_key "annual_target_sets", "scheme_country_codes"
   add_foreign_key "businesses", "schemes"
   add_foreign_key "company_operators", "businesses"
+  add_foreign_key "contacts", "address_types"
   add_foreign_key "contacts", "businesses"
   add_foreign_key "contacts_addresses", "addresses"
   add_foreign_key "contacts_addresses", "contacts"

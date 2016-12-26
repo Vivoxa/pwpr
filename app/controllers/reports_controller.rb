@@ -52,11 +52,11 @@ class ReportsController < ApplicationController
       num_reports += 1
     end
 
-    event_data = ReportEventDatum.create({report_type: report,
-                                          year: year,
-                                          current_user_id: current_user.id,
-                                          current_user_type: current_user.class.name,
-                                          business_ids: business_ids.join(',')})
+    event_data = ReportEventDatum.create(report_type: report,
+                                         year: year,
+                                         current_user_id: current_user.id,
+                                         current_user_type: current_user.class.name,
+                                         business_ids: business_ids.join(','))
 
     publish_email_reports(event_data.id.to_s)
 
@@ -67,10 +67,10 @@ class ReportsController < ApplicationController
   end
 
   def report_type(report_type)
-    report = case report_type
-               when 'RegistrationForm'
-                 Reporting::Reports::RegistrationForm
-             end
+    case report_type
+      when 'RegistrationForm'
+        Reporting::Reports::RegistrationForm
+    end
   end
 
   private

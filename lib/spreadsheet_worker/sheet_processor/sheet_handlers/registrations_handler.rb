@@ -8,6 +8,8 @@ module SpreadsheetWorker
 
         def process
           # @sheet_filename = './public/template_sheet.xls'
+          id = described_class.id_from_setting('Correspondence')
+          @contact_title = described_class.find(id)
 
           registrations.drop(1).each do |row_array|
             @registration = Registration.new
@@ -92,6 +94,7 @@ module SpreadsheetWorker
           @contact.telephone_1 = column_value(row, map['contact']['phone']['field'])
           @contact.fax = column_value(row, map['contact']['fax']['field'])
           @contact.business = @business
+          @contact.type = @contact_title
           @contact.save!
         end
 

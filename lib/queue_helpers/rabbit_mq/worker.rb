@@ -3,7 +3,6 @@ require 'bunny'
 module QueueHelpers
   module RabbitMq
     class Worker
-
       def initialize(queue_name, host, log_path)
         @queue_manager = QueueHelpers::RabbitMq::ConnectionManager.new(queue_name, host, log_path)
       end

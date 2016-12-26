@@ -3,7 +3,6 @@ require 'bunny'
 module QueueHelpers
   module RabbitMq
     class ConnectionManager
-
       def initialize(queue_name, host, log_file_path)
         @queue_name = queue_name
         @host = host
@@ -35,10 +34,10 @@ module QueueHelpers
 
       def connection_params
         {
-            hostname: @host,
-            automatically_recover: false,
-            log_file: @log_file_path,
-            log_level: :info
+          hostname:              @host,
+          automatically_recover: false,
+          log_file:              @log_file_path,
+          log_level:             :info
         }
       end
     end

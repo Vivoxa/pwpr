@@ -7,7 +7,7 @@ module Reporting
 
       REPORT_TYPE = name.demodulize.underscore.freeze
 
-      def process_report(business_id, year, current_user, template = nil)
+      def process_report(business_id, year, _current_user, template = nil)
         logger.tagged("RegistrationForm for business with id #{business_id}, #{year}") do
           @errors = []
           begin
@@ -41,11 +41,11 @@ module Reporting
         success = SchemeMailer.registration_email(business, filename, filepath, year).deliver_now
         status_id = success ? EmailedStatus.id_from_setting('SUCCESS') : EmailedStatus.id_from_setting('FAILED')
         logger.info "process_report() = Email sent?: #{success}"
-        EmailedReport.where(business_id: business.id, report_name: report_type, year: year).first_or_create(date_last_sent: DateTime.now,
-                                                                                                            sent_by_id: current_user.id,
-                                                                                                            sent_by_type: current_user.class.name,
+        EmailedReport.where(business_id: business.id, report_name: report_type, year: year).first_or_create(date_last_sent:    DateTime.now,
+                                                                                                            sent_by_id:        current_user.id,
+                                                                                                            sent_by_type:      current_user.class.name,
                                                                                                             emailed_status_id: status_id,
-                                                                                                            error_notices: @errors)
+                                                                                                            error_notices:     @errors)
       end
 
       def form_values_hash(template, year, business)

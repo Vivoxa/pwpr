@@ -27,7 +27,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
     sign_in co_marti
 
     # This will need to better be included in the spec once we have a process
-    allow_any_instance_of(SpreadsheetWorker::Publisher).to receive(:publish).and_return true
+    allow_any_instance_of(QueueHelpers::RabbitMq::Publisher).to receive(:publish).and_return true
   end
 
   after do

@@ -6,5 +6,5 @@ class Scheme < ActiveRecord::Base
 
   has_and_belongs_to_many :scheme_operators
 
-  # validates_presence_of :scheme_country_code_id
+  validates_presence_of :scheme_country_code_id, :name
 end

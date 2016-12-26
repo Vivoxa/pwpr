@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :emailed_status do
-    status "MyString"
+    status 'MyString'
   end
 end

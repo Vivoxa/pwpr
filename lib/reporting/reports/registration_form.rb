@@ -15,7 +15,7 @@ module Reporting
             business = Business.find(business_id)
             logger.info 'process_report() = FOUND business'
 
-            template ||= ReportTemplateHelper.get_default_template(report_type)
+            template = ReportTemplateHelper.get_default_template(report_type)
             local_file_path = tmp_filename(year, business)
 
             logger.info 'process_report() = Filling in RegistrationForm PDF with data'
@@ -25,9 +25,9 @@ module Reporting
             upload_to_S3(year, business)
           rescue => e
             @errors << e.message
+
           ensure
-            logger.info 'process_report() = Emailing RegistrationForm PDF'
-            email_business(business, build_filename(report_type, year, business), local_file_path, year, current_user)
+            logger.warn "process_report() ERROR: #{e.message}"
 
             logger.info 'process_report() = Cleaning up tmp files '
             cleanup(year, business)

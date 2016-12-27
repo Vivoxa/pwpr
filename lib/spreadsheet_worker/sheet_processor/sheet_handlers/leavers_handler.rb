@@ -11,7 +11,7 @@ module SpreadsheetWorker
 
           leavers.drop(3).each do |row_array|
             @leaver = Leaver.new
-            @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
+              @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
 
             process_leaver(row_array)
           end

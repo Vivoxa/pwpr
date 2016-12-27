@@ -40,8 +40,8 @@ module SpreadsheetWorker
           address.post_code = column_value(row, map['correspondence']['postal_code']['field'])
           address.address_type = AddressType.where(title: 'correspondence').first
           address.business = @business
-          address.contacts << @contact
           address.save!
+          address.contacts << @contact
         end
 
         def process_registered_address(row)
@@ -68,6 +68,7 @@ module SpreadsheetWorker
           @contact.email = column_value(row, map['contact']['email']['field'])
           @contact.telephone_1 = column_value(row, map['contact']['phone']['field'])
           @contact.business = @business
+          @contact.address_title = 'Correspondence'
           @contact.save!
         end
 
@@ -77,6 +78,7 @@ module SpreadsheetWorker
           producer.allocation_method_obligation = column_value(row, map['allocation']['method_obligation']['field']).to_f
           producer.allocation_method_predominant_material = column_value(row, map['allocation']['predominant_material']['field'])
           producer.subsidiary = @subsidiary
+          producer.registration_id = @agency_template.registration.id
           producer.save!
         end
 

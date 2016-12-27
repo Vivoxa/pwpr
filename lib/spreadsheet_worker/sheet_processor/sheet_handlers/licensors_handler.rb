@@ -56,6 +56,7 @@ module SpreadsheetWorker
           @contact.email = column_value(row, map['contact']['email']['field'])
           @contact.telephone_1 = column_value(row, map['contact']['phone']['field'])
           @contact.business = @business
+          @contact.address_title = 'Correspondence'
           @contact.save!
         end
 

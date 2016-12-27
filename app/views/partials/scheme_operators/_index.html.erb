@@ -16,25 +16,29 @@
                   <div class="col-md-3">
                     <strong>Name</strong>
                   </div>
-                  <div class="col-md-5">
+                  <div class="col-md-4">
                     <strong>Email</strong>
                   </div>
-                  <div class="col-md-2">
+                  <div class="col-md-3">
                     <strong>Scheme</strong>
                   </div>
                   <div class="col-md-2"></div>
                 </div>
                 <div class="row">
                   <div class="col-md-3"><%= user.first_name.to_s if user.first_name %></div>
-                  <div class="col-md-5"><%= user.email.to_s %></div>
-                  <div class="col-md-2">
+                  <div class="col-md-4"><%= user.email.to_s %></div>
+                  <div class="col-md-3">
                     <% user.schemes.each do |s| %>
                         <div class='row'>
                           <%= s.name %>
                         </div>
                     <% end %>
                   </div>
-                  <div class="col-md-2"></div>
+                  <div class="col-md-2">
+                    <% if tab_partial.include?('pending') && user.approved? == false %>
+                        <%= link_to 'Approve', scheme_operator_approve_path(scheme_operator_id: user.id), class: ['btn btn-sm btn-success', 'show-btn-md'] %>
+                    <% end %>
+                  </div>
                 </div>
               </div>
               <div class="card-footer">

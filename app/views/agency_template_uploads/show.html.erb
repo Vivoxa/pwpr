@@ -7,7 +7,7 @@
         <p class="card-text">
           <div class="col-xs-3 col-md-3"><strong>Year:</strong> <%= @upload.year %></div>
           <div class="col-xs-5 col-md-5"><strong>Uploader:</strong> <%= SchemeOperator.find_by_id(@upload.uploaded_by_id).email %></div>
-          <div class="col-xs-4 col-md-4"><strong>Uploaded at:</strong> <%= @upload.uploaded_at.to_date %></div>
+          <div class="col-xs-4 col-md-4"><strong>Uploaded at:</strong> <%= @upload.uploaded_at %></div>
         </p>
 
         <p class="card-text">

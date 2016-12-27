@@ -45,7 +45,7 @@
             </div>
 
             <div class="field centre">
-              <%= f.text_field :year_first_reg, placeholder: 'Year first registered', class: "devise-lgn form-control" %>
+              <%= f.select :year_first_reg, options_for_select(LookupValues::ValidYears.for('first_registered')), {prompt: true, prompt: 'First year registered?'},  class: "devise-lgn form-control" %>
             </div>
 
             <div class="actions centre">

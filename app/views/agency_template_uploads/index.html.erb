@@ -23,7 +23,7 @@
                 <div class="col-xs-5 col-md-5">
                   <strong>Uploader:</strong> <%= Object.const_get(upload.uploaded_by_type).find_by_id(upload.uploaded_by_id).email %>
                 </div>
-                <div class="col-xs-4 col-md-4"><strong>Uploaded at:</strong> <%= upload.uploaded_at.to_date %></div>
+                <div class="col-xs-4 col-md-4"><strong>Uploaded at:</strong> <%= upload.uploaded_at %></div>
                 </p>
 
                 <p class="card-text">

@@ -33,7 +33,7 @@
             </div>
 
             <div class="field centre">
-              <%= f.collection_select :scheme_id, @schemes.order(:name), :id, :name, {include_blank: 'Select a Scheme'}, {id: 'scheme_id_select', class: "devise-lgn form-control"} %>
+              <%= f.text_field :scheme_ref, placeholder: 'Scheme Ref', class: "devise-lgn form-control" %>
             </div>
 
             <div class="field centre">

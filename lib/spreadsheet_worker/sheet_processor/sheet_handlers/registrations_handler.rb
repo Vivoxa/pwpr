@@ -8,8 +8,6 @@ module SpreadsheetWorker
 
         def process
           # @sheet_filename = './public/template_sheet.xls'
-          id = described_class.id_from_setting('Correspondence')
-          @contact_title = described_class.find(id)
 
           registrations.drop(1).each do |row_array|
             @registration = Registration.new
@@ -63,8 +61,8 @@ module SpreadsheetWorker
           address.post_code = column_value(row, map['correspondence']['postal_code']['field'])
           address.address_type = AddressType.where(title: 'correspondence').first
           address.business = @business
-          address.contacts << @contact
           address.save!
+          address.contacts << @contact
         end
 
         def process_registered_address(row)
@@ -94,7 +92,7 @@ module SpreadsheetWorker
           @contact.telephone_1 = column_value(row, map['contact']['phone']['field'])
           @contact.fax = column_value(row, map['contact']['fax']['field'])
           @contact.business = @business
-          @contact.type = @contact_title
+          @contact.address_title = 'Correspondence'
           @contact.save!
         end
 

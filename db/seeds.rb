@@ -130,25 +130,28 @@ address = Address.new(address_type_id: 2,
                       email: 'nigelsurtees@hotmail.co.uk')
 
 correspondence_contact = Contact.create(title: 'Mr',
+                                        address_title: 'Correspondence',
                                         first_name: 'Doc',
                                         last_name: 'Brown',
                                         email: 'nigelsurtees@hotmail.co.uk',
                                         telephone_1: '0191 6749933')
 
 audit_contact = Contact.create(title: 'Mr',
+                               address_title: 'Audit',
                                first_name: 'Doc',
                                last_name: 'Brown',
                                email: 'nigelsurtees@hotmail1.co.uk',
                                telephone_1: '0191 6749933')
 
-correspondence_contact.address_type_id =  AddressType.id_from_setting('Correspondence')
-audit_contact.address_type_id =  AddressType.id_from_setting('Audit')
-
 business = businesses.first
-business.addresses << address
-
 business.contacts << correspondence_contact
 business.contacts << audit_contact
+
+business.addresses << address
+
+address.save!
+address.contacts << correspondence_contact
+address.contacts << audit_contact
 
 #************************************************************************************
 #                           Admins

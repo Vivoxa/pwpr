@@ -45,7 +45,7 @@ class AgencyTemplateUploadsController < ApplicationController
         publish_uploaded_notification(upload.id)
       end
 
-      redirect_to action: :index, notice: "#{upload.class} was successfully uploaded!"
+      redirect_to action: :index, notice: "#{upload.class} was successfully uploaded."
     else
       @scheme = Scheme.find_by_id(params[:scheme_id])
       @upload = upload
@@ -65,7 +65,11 @@ class AgencyTemplateUploadsController < ApplicationController
   def upload_to_s3(upload)
     agency_template_handler = S3::AgencyTemplateAwsHandler.new
     if agency_template_handler.put(upload)
-      flash.notice = "'#{upload.filename}' uploaded successfully!"
+      message =  "'#{upload.filename}' uploaded successfully! "
+      message << "Processing of this template will be done in the background. "
+      message << "The status of the Agency Template Upload will be updated when processing is complete."
+
+      flash.notice = message
     else
       flash.alert = "'#{upload.filename}' was not uploaded!"
     end

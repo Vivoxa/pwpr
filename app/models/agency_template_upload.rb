@@ -3,6 +3,8 @@ class AgencyTemplateUpload < ActiveRecord::Base
 
   belongs_to :scheme
 
+  has_one :registration
+
   VALID_YEARS_FOR_UPLOAD = [2010, 2011, 2012, 2013, 2014, 2015].freeze
 
   validates_presence_of :scheme_id, :year, :uploaded_at, :uploaded_by_id, :uploaded_by_type, :filename

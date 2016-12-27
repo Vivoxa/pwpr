@@ -24,9 +24,18 @@ class Business < ActiveRecord::Base
   validates_presence_of :NPWD, :scheme_id, :name, :company_number # , :business_type_id, :business_subtype_id,
   #:scheme_status_code_id, :registration_status_code_id, :sic_code_id, :submission_type_id,
   #:business_type_id, :business_subtype_id, :country_of_business_registration
+  validate :year_first_reg_format, if: 'year_first_reg.present?'
 
   def correspondence_contact
     contact = contacts.where(title: 'correspondance')
     return contact.first if contact.any?
+  end
+
+  def year_first_reg_format
+    errors.add('Year must be in the format YYYY') unless is_i?(year_first_reg)
+  end
+
+  def is_i?(value)
+    !!(value =~ /\A[-+]?[0-9]+\z/)
   end
 end

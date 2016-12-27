@@ -29,7 +29,7 @@
                 <div><strong>NPWD: </strong><%= @business.NPWD.to_s %></div>
               </div>
               <div class="row">
-                <div><strong>SIC: </strong><%= @business.SIC if @business.name %></div>
+                <div><strong>SIC: </strong><%= SicCode.find(@business.sic_code_id).code %></div>
               </div>
               <div class="row">
                 <div><strong>Scheme: </strong><%= @business.scheme.name %></div>

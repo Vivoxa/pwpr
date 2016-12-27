@@ -131,7 +131,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
       end
 
       it 'expects the user to see a flash message' do
-        expect(flash[:notice]).to eq "'my original filename.xls' uploaded successfully!"
+        expect(flash[:notice]).to eq "'my original filename.xls' uploaded successfully! Processing of this template will be done in the background. The status of the Agency Template Upload will be updated when processing is complete."
       end
 
       it 'expects the scheme_id to be correct' do

@@ -11,11 +11,9 @@ RSpec.describe Leaver, type: :model do
 
   context 'Validations' do
     describe '#validates_presence_of' do
-      it { is_expected.to validate_presence_of(:business_id) }
       it { is_expected.to validate_presence_of(:leaving_code_id) }
       it { is_expected.to validate_presence_of(:agency_template_upload_id) }
       it { is_expected.to validate_presence_of(:leaving_date) }
-      it { is_expected.to validate_presence_of(:total_recovery_previous) }
       xit { is_expected.to validate_presence_of(:scheme_registration_date) }
     end
   end

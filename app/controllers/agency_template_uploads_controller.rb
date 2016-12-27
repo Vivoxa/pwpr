@@ -66,8 +66,8 @@ class AgencyTemplateUploadsController < ApplicationController
     agency_template_handler = S3::AgencyTemplateAwsHandler.new
     if agency_template_handler.put(upload)
       message =  "'#{upload.filename}' uploaded successfully! "
-      message << "Processing of this template will be done in the background. "
-      message << "The status of the Agency Template Upload will be updated when processing is complete."
+      message << 'Processing of this template will be done in the background. '
+      message << 'The status of the Agency Template Upload will be updated when processing is complete.'
 
       flash.notice = message
     else

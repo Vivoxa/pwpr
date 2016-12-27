@@ -5,4 +5,10 @@ class Leaver < ActiveRecord::Base
   belongs_to :leaving_business
 
   validates_presence_of :leaving_code_id, :agency_template_upload_id, :leaving_date
+
+  before_destroy :delete_parents
+
+  def delete_parents
+    LeavingBusiness.find(leaving_code_id).delete
+  end
 end

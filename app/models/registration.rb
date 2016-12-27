@@ -6,8 +6,8 @@ class Registration < ActiveRecord::Base
   belongs_to :resubmission_reason
   belongs_to :business
 
-  has_one :small_producer_detail
-  has_one :regular_producer_detail
+  has_one :small_producer_detail, dependent: :delete
+  has_one :regular_producer_detail, dependent: :delete
 
   validates_presence_of :agency_template_upload_id, :sic_code_id, :packaging_sector_main_activity, :turnover
 end

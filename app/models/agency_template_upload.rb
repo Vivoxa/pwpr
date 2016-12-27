@@ -3,7 +3,11 @@ class AgencyTemplateUpload < ActiveRecord::Base
 
   belongs_to :scheme
 
-  has_one :registration
+  has_one :registration, dependent: :delete
+  has_many :joiners, dependent: :delete_all
+  has_many :leavers, dependent: :delete_all
+  has_many :licensors, dependent: :delete_all
+  has_many :subsidiaries, dependent: :delete_all
 
   VALID_YEARS_FOR_UPLOAD = [2010, 2011, 2012, 2013, 2014, 2015].freeze
 

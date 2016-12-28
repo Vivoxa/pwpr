@@ -27,19 +27,15 @@ class AgencyTemplateUploadsController < ApplicationController
       ' Please resubmit the upload and confirm you want to replace the existing file in the checkbox highlighted red.'
       redirect_to :back
     else
-      attributes = {uploaded_by_id: current_user.id,
-                    uploaded_by_type: current_user.class.name,
-                    scheme_id: params['scheme_id']}
-
-      params_to_sym = Hash[upload_params.map { |k, v| [k.to_sym, v] }]
-      attributes = attributes.merge(params_to_sym)
-      upload = AgencyTemplateUpload.new(attributes)
+      upload = build_upload
 
       unless accepted_format?(upload_params[:filename])
         flash.alert = "ERROR: Unsupported file type!'#{upload.filename}'' was not uploaded!"
         redirect_to action: :index
         return
       end
+
+      destroy_existing_agency_template
 
       if upload.save
         transfer_file_to_server
@@ -74,6 +70,25 @@ class AgencyTemplateUploadsController < ApplicationController
   end
 
   private
+
+  def destroy_existing_agency_template
+    if params[:upload_exists].present? && params[:confirm_replace].to_i == 1
+      existing_upload = AgencyTemplateUpload.where(scheme_id: params[:scheme_id].to_i,
+                                                   year: params[:agency_template_upload][:year])
+
+      existing_upload.each{ |upload| upload.destroy } if existing_upload.any?
+    end
+  end
+
+  def build_upload
+    attributes = {uploaded_by_id: current_user.id,
+                  uploaded_by_type: current_user.class.name,
+                  scheme_id: params['scheme_id']}
+
+    params_to_sym = Hash[upload_params.map { |k, v| [k.to_sym, v] }]
+    attributes = attributes.merge(params_to_sym)
+    AgencyTemplateUpload.new(attributes)
+  end
 
   def publish_uploaded_notification(upload_id)
     publisher = QueueHelpers::RabbitMq::Publisher.new(ENV['SPREADSHEET_QUEUE_NAME'],

@@ -1,6 +1,8 @@
-<p><%= t("devise.mailer.invitation_instructions.hello", email: @resource.email) %></p>
+<p>Hello <%= @resource.first_name.capitalize  %></p>
+<% @inviter_user = Object.const_get(@resource.invited_by_type).find(@resource.invited_by_id) %>
 
-<p><%= t("devise.mailer.invitation_instructions.someone_invited_you", url: root_url) %></p>
+<p><%= @inviter_user.first_name.capitalize %> <%= @inviter_user.last_name.capitalize %> from business: <strong><%= @resource.business.name.capitalize %></strong> and Scheme: <strong><%= @resource.business.scheme.name.capitalize %></strong> has invited you
+to open an account on pwpr.com, a cloud based solution that <strong><%= @resource.business.name.capitalize %></strong> uses to process the company's Packaging Waste Recycling Responsibilities.</p>
 
 <p><%= link_to t("devise.mailer.invitation_instructions.accept"), accept_invitation_url(@resource, :invitation_token => @token) %></p>
 

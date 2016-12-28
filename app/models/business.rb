@@ -9,7 +9,7 @@ class Business < ActiveRecord::Base
   belongs_to :business_type
   belongs_to :country_of_business_registration
 
-  has_many :company_operators, dependent: :delete_all
+  has_many :company_operators, dependent: :destroy
   has_many :addresses
   has_many :contacts
   has_many :registrations

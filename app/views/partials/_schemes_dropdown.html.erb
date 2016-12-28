@@ -6,9 +6,17 @@
         <span class="sr-only">Toggle Dropdown</span>
       </button>
       <div class="dropdown-menu">
-        <% @current_user.schemes.each do |scheme| %>
+        <h6 class="dropdown-header">Active</h6>
+        <div class="dropdown-divider"></div>
+        <% @current_user.schemes.where(active: true).each do |scheme| %>
           <a class="dropdown-item" href=<%= scheme_path(scheme) %>><%= scheme.name %></a>
         <% end %>
+        <div class="dropdown-divider"></div>
+        <h6 class="dropdown-header">Not Activated</h6>
+        <% @current_user.schemes.where(active: false).each do |scheme| %>
+            <a class="dropdown-item disabled" href=<%= scheme_path(scheme) %>><%= scheme.name %> </a>
+        <% end %>
+
       </div>
     </div>
   </li>

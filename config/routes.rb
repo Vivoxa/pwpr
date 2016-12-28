@@ -31,6 +31,10 @@ end
     put 'update_permissions', action: :update_permissions
   end
 
+  resources :scheme_operators, :company_operators do
+    get 'approve', action: :approve
+  end
+
   resources :schemes do
     resources :agency_template_uploads, only: [:index, :show, :new, :create]
     resources :reports, only: [:index, :create]

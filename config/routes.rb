@@ -30,6 +30,10 @@ Rails.application.routes.draw do
     put 'update_permissions', action: :update_permissions
   end
 
+  resources :scheme_operators, :company_operators do
+    get 'approve', action: :approve
+  end
+
   resources :schemes do
     get '/agency_template_uploads/previous_upload_for_year' => 'agency_template_uploads/previous_upload_for_year', as: 'previous_upload_for_year'
     resources :agency_template_uploads, only: [:index, :show, :new, :create]

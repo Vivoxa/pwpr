@@ -13,6 +13,22 @@ class BaseController < ApplicationController
     end
   end
 
+  def approve
+    object = SchemeOperator.find(params['scheme_operator_id'].to_i) if params['scheme_operator_id']
+    object = SchemeOperator.find(params['company_operator_id'].to_i) if params['company_operator_id']
+    object.approved = true
+
+    respond_to do |format|
+      if object.save
+        format.html { redirect_to object, notice: "#{object.class} was successfully approved." }
+        format.json { render :show, status: :ok, location: object }
+      else
+        format.html { render :new }
+        format.json { render json: object.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy_business_or_scheme(object, url)
     object.destroy
     respond_to do |format|

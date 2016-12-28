@@ -14,7 +14,7 @@ module PermissionsForRole
         can %i(new create previous_upload_for_year), AgencyTemplateUpload if user.uploads_w?
         can :read, AgencyTemplateUpload if user.uploads_r?
         # permissions for Company Operator
-        can %i(edit update permissions update_permissions), CompanyOperator, id: company_operator_ids_for_associated_schemes(user) if user.co_users_e?
+        can %i(edit update permissions update_permissions approve), CompanyOperator, id: company_operator_ids_for_associated_schemes(user) if user.co_users_e?
 
         if user.co_users_d?
           can :destroy, CompanyOperator, id: company_operator_ids_for_associated_schemes(user)
@@ -52,7 +52,7 @@ module PermissionsForRole
         return unless user.co_users_w?
         can %i(read new create update_permissions edit update update_businesses), CompanyOperators::InvitationsController
         can %i(read new create update_permissions edit update update_businesses), CompanyOperators::RegistrationsController
-        can %i(new create permissions update_permissions update_businesses), CompanyOperator
+        can %i(new create permissions update_permissions update_businesses approve), CompanyOperator
 
       end
 
@@ -70,7 +70,7 @@ module PermissionsForRole
           can %i(new create edit update read), SchemeOperators::RegistrationsController
 
           can %i(new create), SchemeOperator
-          can %i(read permissions update_permissions), SchemeOperator, id: scheme_operator_ids_for_associated_schemes(user)
+          can %i(read permissions update_permissions approve), SchemeOperator, id: scheme_operator_ids_for_associated_schemes(user)
         end
       end
 

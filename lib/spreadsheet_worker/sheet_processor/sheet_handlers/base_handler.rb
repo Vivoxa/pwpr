@@ -50,6 +50,18 @@ module SpreadsheetWorker
           value
         end
 
+        def existing_contact(email, address_title)
+          contacts = Contact.where(email: email,
+                                   address_title: address_title)
+          contacts.any? ? contacts.first : nil
+        end
+
+        def existing_address(address_title, business)
+          address_type_id = AddressType.id_from_setting(address_title)
+          addresses = business.addresses.where(address_type_id: address_type_id)
+          addresses.any? ? addresses.first : nil
+        end
+
         def boolean_column_value(value)
           value == 'Y' ? true : false
         end

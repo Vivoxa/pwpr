@@ -19,17 +19,14 @@
                   <div class="col-md-4">
                     <strong>Email</strong>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <strong>Business</strong>
-                  </div>
-                  <div class="col-md-2">
-                    <strong></strong>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-3"><%= user.first_name.to_s if user.first_name %></div>
-                  <div class="col-md-4"><%= user.email.to_s %></div>
-                  <div class="col-md-3">
+                  <div class="col-md-5"><%= user.email.to_s %></div>
+                  <div class="col-md-4">
                     <%= current_admin ? 'N/A for Admin' : user.business.name %>
                   </div>
                 </div>

@@ -37,6 +37,8 @@ module SpreadsheetWorker
 
         def process_audit_address(row)
           return if empty_row?(row)
+          return if existing_address('Audit', @business)
+
           address = Address.new
           address.address_line_1 = column_value(row, map['contact']['audit']['address_1']['field'])
           address.address_line_2 = column_value(row, map['contact']['audit']['address_2']['field'])
@@ -45,13 +47,15 @@ module SpreadsheetWorker
           address.town = column_value(row, map['contact']['audit']['town']['field'])
           address.post_code = column_value(row, map['contact']['audit']['postal_code']['field'])
           address.site_country = column_value(row, map['contact']['audit']['country']['field'])
-          address.address_type = AddressType.where(title: 'audit').first
+          address.address_type = AddressType.where(title: 'Audit').first
           address.business = @business
           address.save!
         end
 
         def process_correspondence_address(row)
           return if empty_row?(row)
+          return if existing_address('Correspondence', @business)
+
           address = Address.new
           address.address_line_1 = column_value(row, map['correspondence']['address_1']['field'])
           address.address_line_2 = column_value(row, map['correspondence']['address_2']['field'])
@@ -59,7 +63,7 @@ module SpreadsheetWorker
           address.address_line_4 = column_value(row, map['correspondence']['address_4']['field'])
           address.town = column_value(row, map['correspondence']['town']['field'])
           address.post_code = column_value(row, map['correspondence']['postal_code']['field'])
-          address.address_type = AddressType.where(title: 'correspondence').first
+          address.address_type = AddressType.where(title: 'Correspondence').first
           address.business = @business
           address.save!
           address.contacts << @contact
@@ -67,6 +71,8 @@ module SpreadsheetWorker
 
         def process_registered_address(row)
           return if empty_row?(row)
+          return if existing_address( 'Registered', @business)
+
           address = Address.new
           address.address_line_1 = column_value(row, map['registered']['address_1']['field'])
           address.address_line_2 = column_value(row, map['registered']['address_2']['field'])
@@ -77,13 +83,16 @@ module SpreadsheetWorker
           address.site_country = column_value(row, map['registered']['country']['field'])
           address.telephone = column_value(row, map['registered']['phone']['field'])
           address.email = column_value(row, map['registered']['email']['field'])
-          address.address_type = AddressType.where(title: 'registered').first
+          address.address_type = AddressType.where(title: 'Registered').first
           address.business = @business
           address.save!
         end
 
         def process_contact(row)
           return if empty_row?(row)
+          @contact = existing_contact(column_value(row, map['contact']['email']['field']), 'Correspondence')
+          return if @contact
+
           @contact = Contact.new
           @contact.title = column_value(row, map['contact']['title']['field'])
           @contact.first_name = column_value(row, map['contact']['first_name']['field'])
@@ -95,6 +104,7 @@ module SpreadsheetWorker
           @contact.address_title = 'Correspondence'
           @contact.save!
         end
+
 
         def process_small_producer(row)
           return if empty_row?(row)

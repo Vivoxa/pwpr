@@ -43,12 +43,15 @@ class BaseController < ApplicationController
     redirect_to url, notice: "#{operator.first_name} with email: #{operator.email} has been deleted."
   end
 
-  def pending_operators(unapproved_operators)
-    pending_operators = []
-    unapproved_operators.each do |op|
-      pending_operators << op if op.confirmed_at.present?
+  def pending_operators(schemes)
+    schemes.each do |_scheme_id, details|
+      details[:users].each do |user|
+        pending_operators = []
+        pending_operators << op if op.confirmed_at.present?
+        details[:users] = pending_operators
+      end
     end
-    pending_operators
+    schemes
   end
 
   def create_business_or_scheme(object)

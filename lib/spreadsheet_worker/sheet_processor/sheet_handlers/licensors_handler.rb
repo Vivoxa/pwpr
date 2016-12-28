@@ -24,32 +24,39 @@ module SpreadsheetWorker
 
         def process_registered_address(row)
           return if empty_row?(row)
+          return if existing_address( 'Registered', @business)
+
           address = Address.new
           address.address_line_1 = column_value(row, map['registered']['address_1']['field'])
           address.address_line_2 = column_value(row, map['registered']['address_2']['field'])
           address.address_line_3 = column_value(row, map['registered']['address_3']['field'])
           address.town = column_value(row, map['registered']['town']['field'])
           address.post_code = column_value(row, map['registered']['postal_code']['field'])
-          address.address_type = AddressType.where(title: 'registered').first
+          address.address_type = AddressType.where(title: 'Registered').first
           address.business = @business
           address.save!
         end
 
         def process_contact_address(row)
           return if empty_row?(row)
+          return if existing_address( 'Contact', @business)
+
           address = Address.new
           address.address_line_1 = column_value(row, map['contact']['address_1']['field'])
           address.address_line_2 = column_value(row, map['contact']['address_2']['field'])
           address.address_line_3 = column_value(row, map['contact']['address_3']['field'])
           address.town = column_value(row, map['contact']['town']['field'])
           address.post_code = column_value(row, map['contact']['postal_code']['field'])
-          address.address_type = AddressType.where(title: 'contact').first
+          address.address_type = AddressType.where(title: 'Contact').first
           address.business = @business
           address.save!
         end
 
         def process_contact(row)
           return if empty_row?(row)
+          @contact = existing_contact(column_value(row, map['contact']['email']['field']), 'Correspondence')
+          return if @contact
+
           @contact = Contact.new
           @contact.first_name = column_value(row, map['contact']['first_name']['field'])
           @contact.last_name = column_value(row, map['contact']['last_name']['field'])

@@ -596,33 +596,33 @@ ActiveRecord::Schema.define(version: 20161225080451) do
   add_foreign_key "contacts_addresses", "contacts"
   add_foreign_key "emailed_reports", "businesses"
   add_foreign_key "emailed_reports", "emailed_statuses"
-  add_foreign_key "joiners", "agency_template_uploads"
+  add_foreign_key "joiners", "agency_template_uploads", on_delete: :cascade
   add_foreign_key "joiners", "businesses"
-  add_foreign_key "leavers", "agency_template_uploads"
+  add_foreign_key "leavers", "agency_template_uploads", on_delete: :cascade
   add_foreign_key "leavers", "businesses"
-  add_foreign_key "leavers", "leaving_businesses"
-  add_foreign_key "leavers", "leaving_codes"
-  add_foreign_key "licensors", "agency_template_uploads"
+  add_foreign_key "leavers", "leaving_businesses", on_delete: :cascade
+  add_foreign_key "leavers", "leaving_codes", on_delete: :cascade
+  add_foreign_key "licensors", "agency_template_uploads", on_delete: :cascade
   add_foreign_key "licensors", "businesses"
-  add_foreign_key "material_details", "packaging_materials"
-  add_foreign_key "material_details", "regular_producer_details"
+  add_foreign_key "material_details", "packaging_materials", on_delete: :cascade
+  add_foreign_key "material_details", "regular_producer_details", on_delete: :cascade
   add_foreign_key "material_targets", "annual_target_sets"
-  add_foreign_key "material_targets", "packaging_materials"
-  add_foreign_key "material_totals", "packaging_materials"
-  add_foreign_key "material_totals", "regular_producer_details"
-  add_foreign_key "registrations", "agency_template_uploads"
-  add_foreign_key "registrations", "packaging_sector_main_activities"
+  add_foreign_key "material_targets", "packaging_materials", on_delete: :cascade
+  add_foreign_key "material_totals", "packaging_materials", on_delete: :cascade
+  add_foreign_key "material_totals", "regular_producer_details", on_delete: :cascade
+  add_foreign_key "registrations", "agency_template_uploads", on_delete: :cascade
+  add_foreign_key "registrations", "packaging_sector_main_activities", on_delete: :cascade
   add_foreign_key "registrations", "resubmission_reasons"
   add_foreign_key "registrations", "sic_codes"
   add_foreign_key "registrations", "submission_types"
-  add_foreign_key "regular_producer_details", "registrations"
-  add_foreign_key "small_producer_details", "registrations"
-  add_foreign_key "small_producer_details", "subsidiaries"
-  add_foreign_key "subsidiaries", "agency_template_uploads"
+  add_foreign_key "regular_producer_details", "registrations", on_delete: :cascade
+  add_foreign_key "small_producer_details", "registrations", on_delete: :cascade
+  add_foreign_key "small_producer_details", "subsidiaries", on_delete: :cascade
+  add_foreign_key "subsidiaries", "agency_template_uploads", on_delete: :cascade
   add_foreign_key "subsidiaries", "businesses"
-  add_foreign_key "subsidiaries", "change_details"
-  add_foreign_key "subsidiaries", "packaging_sector_main_activities"
-  add_foreign_key "target_totals", "regular_producer_details"
+  add_foreign_key "subsidiaries", "change_details", on_delete: :cascade
+  add_foreign_key "subsidiaries", "packaging_sector_main_activities", on_delete: :cascade
+  add_foreign_key "target_totals", "regular_producer_details", on_delete: :cascade
   add_foreign_key "targets", "annual_target_sets"
   add_foreign_key "targets", "target_fields"
 end

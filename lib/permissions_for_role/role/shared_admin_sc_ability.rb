@@ -10,8 +10,8 @@ module PermissionsForRole
         sc_users_e(user)
         sc_users_d(user)
 
-        can %i(index create report_data), ReportsController if user.uploads_w?
-        can %i(new create), AgencyTemplateUpload if user.uploads_w?
+        can %i(index create report_data previous_upload_for_year), ReportsController if user.uploads_w?
+        can %i(new create previous_upload_for_year), AgencyTemplateUpload if user.uploads_w?
         can :read, AgencyTemplateUpload if user.uploads_r?
         # permissions for Company Operator
         can %i(edit update permissions update_permissions approve), CompanyOperator, id: company_operator_ids_for_associated_schemes(user) if user.co_users_e?

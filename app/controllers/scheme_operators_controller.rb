@@ -5,21 +5,11 @@ class SchemeOperatorsController < BaseController
   # GET /scheme_operators
   def index
     # TODO: this needs scoping to a scheme
-    @scheme_operators = scheme_operators_by_approved(true) - [current_user]
+    @schemes = scheme_operators_by_approved(true)
   end
 
   def pending
-    @scheme_operators = pending_operators(scheme_operators_by_approved(false))
-  end
-
-  def invited_not_accepted
-    query = 'invitation_sent_at IS NOT NULL AND invitation_accepted_at IS NULL'
-    @scheme_operators = []
-    current_user.schemes.each do |scheme|
-      scheme.scheme_operators.where(query).each do |scheme_operator|
-        @scheme_operators << scheme_operator
-      end
-    end
+    @schemes = pending_operators(scheme_operators_by_approved(false))
   end
 
   # GET /scheme_operators/:id
@@ -30,7 +20,8 @@ class SchemeOperatorsController < BaseController
   end
 
   # GET /scheme_operators/1/edit
-  def edit; end
+  def edit;
+  end
 
   # PATCH/PUT /scheme_operators/:id
   def update
@@ -65,15 +56,23 @@ class SchemeOperatorsController < BaseController
     modify_roles_and_permissions(scheme_operator_path(@user.id))
   end
 
+  def invited_not_accepted
+    query = 'invitation_sent_at IS NOT NULL AND invitation_accepted_at IS NULL'
+    @schemes = {}
+    current_user.schemes.each do |scheme|
+      @schemes[scheme.id] = {users: (scheme.scheme_operators.where(query)), name: scheme.name}
+    end
+  end
+
   private
 
   def scheme_operators_by_approved(approved = true)
     if current_scheme_operator || current_admin
-      scheme_operators = []
+      schemes = {}
       current_user.schemes.each do |scheme|
-        scheme_operators << scheme.scheme_operators.where(approved: approved)
+        schemes[scheme.id] = {users: (scheme.scheme_operators.where(approved: approved) - [current_user]), name: scheme.name}
       end
-      scheme_operators.flatten
+      return schemes
     end
   end
 

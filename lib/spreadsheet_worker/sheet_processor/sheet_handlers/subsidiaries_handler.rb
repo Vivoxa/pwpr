@@ -65,7 +65,7 @@ module SpreadsheetWorker
 
         def process_contact(row)
           return if empty_row?(row)
-          @contact = existing_contact(column_value(row, map['contact']['email']['field']), 'Correspondence')
+          @contact = existing_contact(column_value(row, map['contact']['email']['field']), correspondence_address_type_id)
           return if @contact
 
           @contact = Contact.new
@@ -75,7 +75,7 @@ module SpreadsheetWorker
           @contact.email = column_value(row, map['contact']['email']['field'])
           @contact.telephone_1 = column_value(row, map['contact']['phone']['field'])
           @contact.business = @business
-          @contact.address_title = 'Correspondence'
+          @contact.address_type_id = correspondence_address_type_id
           @contact.save!
         end
 
@@ -85,7 +85,7 @@ module SpreadsheetWorker
           producer.allocation_method_obligation = column_value(row, map['allocation']['method_obligation']['field']).to_f
           producer.allocation_method_predominant_material = column_value(row, map['allocation']['predominant_material']['field'])
           producer.subsidiary = @subsidiary
-          producer.registration_id = @agency_template.registration.id
+          producer.registration_id = create_registration_for_small_producer(row)
           producer.save!
         end
 
@@ -97,6 +97,17 @@ module SpreadsheetWorker
           @subsidiary.business = @business
           @subsidiary.agency_template_upload = @agency_template
           @subsidiary.save!
+        end
+
+        def create_registration_for_small_producer(row)
+          registration = Registration.new
+          registration.turnover = column_value(row, map['turnover']['field']).to_f
+          registration.allocation_method_used = column_value(row, map['allocation']['method_used']['field'])
+          registration.packaging_sector_main_activity = PackagingSectorMainActivity.where(material: column_value(row, map['packaging_sector_main_activity']['field'])).first
+          registration.business = @business
+          registration.sic_code_id = SicCode.id_from_setting(column_value(row, map['sic_code']['field']))
+          registration.agency_template_upload = @agency_template
+          registration.save!
         end
 
         def subsidiaries

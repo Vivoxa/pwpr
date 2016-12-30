@@ -26,6 +26,8 @@ services:
       - REPORTS_WORKER_LOG_PATH=log/reports_email_worker.log
       - FROM_EMAIL=notifications@app-pwpr.com
       - SES_ENDPOINT=email-smtp.us-east-1.amazonaws.com
+      - APP_SO_SIGN_IN_URL=http://192.168.99.100:3000/scheme_operators/sign_in
+      - APP_CO_SIGN_IN_URL=http://192.168.99.100:3000/company_operators/sign_in
     volumes:
       - ../pwpr:/pwpr
     ports:

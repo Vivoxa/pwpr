@@ -14,6 +14,22 @@ module SpreadsheetWorker
 
         protected
 
+        def correspondence_address_type_id
+          AddressType.id_from_setting('Correspondence')
+        end
+
+        def registered_address_type_id
+          AddressType.id_from_setting('Registered')
+        end
+
+        def audit_address_type_id
+          AddressType.id_from_setting('Audit')
+        end
+
+        def contact_address_type_id
+          AddressType.id_from_setting('Contact')
+        end
+
         def load_sheet_path(agency_template)
           @sheet_filename ||= InputOutput::ServerFileHandler.server_file_path_for(agency_template.filename)
         end
@@ -50,9 +66,9 @@ module SpreadsheetWorker
           value
         end
 
-        def existing_contact(email, address_title)
+        def existing_contact(email, address_type_id)
           contacts = Contact.where(email: email,
-                                   address_title: address_title)
+                                   address_type_id: address_type_id)
           contacts.any? ? contacts.first : nil
         end
 

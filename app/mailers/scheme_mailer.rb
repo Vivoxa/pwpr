@@ -9,8 +9,4 @@ class SchemeMailer < ApplicationMailer
   rescue => e
     Rails.logger.warn("SchemeMailer::registration_email() ERROR: #{e.message}")
   end
-
-  def alert_director_businesses_email(businesses, email, recipient)
-    
-  end
 end

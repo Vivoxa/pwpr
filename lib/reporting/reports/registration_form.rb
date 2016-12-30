@@ -73,7 +73,7 @@ module Reporting
               when 'registration'
                 value = process_registration_attribute(report_field_config, business, year)
                 value_pairs[pdf_field.name] = configure_field_format(pdf_field, value)
-                binding.pry
+
               when 'contact'
                 value = process_contact_attribute(report_field_config, business)
                 value_pairs[pdf_field.name] = configure_field_format(pdf_field, value)
@@ -83,7 +83,6 @@ module Reporting
           end
         end
         value_pairs['tb_year_title'] = year
-        binding.pry
         value_pairs
       end
 

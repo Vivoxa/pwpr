@@ -1,0 +1,2 @@
+registration_email:
+  subject: '[RESPONSE REQUIRED]: Registration form %{year}'

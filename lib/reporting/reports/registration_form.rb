@@ -37,9 +37,11 @@ module Reporting
 
       private
 
-      def email_business(business, filename, filepath, year, current_user)
-        success = SchemeMailer.registration_email(business, filename, filepath, year).deliver_now
+      def email_business(business, filename, file_path, year, current_user)
+        success = SchemeMailer.registration_email(business, filename, file_path, year, business.correspondence_contact.email).deliver_now
+
         status_id = success ? EmailedStatus.id_from_setting('SUCCESS') : EmailedStatus.id_from_setting('FAILED')
+
         logger.info "process_report() = Email sent?: #{success}"
         EmailedReport.where(business_id: business.id, report_name: report_type, year: year).first_or_create(date_last_sent:    DateTime.now,
                                                                                                             sent_by_id:        current_user.id,

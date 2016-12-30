@@ -27,7 +27,7 @@ class Business < ActiveRecord::Base
   validate :year_first_reg_format, if: 'year_first_reg.present?'
 
   def correspondence_contact
-    contact = contacts.where(title: 'correspondance')
+    contact = contacts.where(title: 'Correspondence')
     return contact.first if contact.any?
   end
 

@@ -3,7 +3,7 @@ class AgencyTemplateUpload < ActiveRecord::Base
 
   belongs_to :scheme
 
-  has_one :registration, dependent: :destroy
+  has_many :registrations, dependent: :destroy
   has_many :joiners, dependent: :destroy
   has_many :leavers, dependent: :destroy
   has_many :licensors, dependent: :destroy

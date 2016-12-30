@@ -90,7 +90,7 @@ module SpreadsheetWorker
 
         def process_contact(row)
           return if empty_row?(row)
-          @contact = existing_contact(column_value(row, map['contact']['email']['field']), 'Correspondence')
+          @contact = existing_contact(column_value(row, map['contact']['email']['field']), correspondence_address_type_id)
           return if @contact
 
           @contact = Contact.new
@@ -101,7 +101,7 @@ module SpreadsheetWorker
           @contact.telephone_1 = column_value(row, map['contact']['phone']['field'])
           @contact.fax = column_value(row, map['contact']['fax']['field'])
           @contact.business = @business
-          @contact.address_title = 'Correspondence'
+          @contact.address_type_id = correspondence_address_type_id
           @contact.save!
         end
 

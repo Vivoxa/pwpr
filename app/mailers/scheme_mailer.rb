@@ -29,6 +29,6 @@ class SchemeMailer < ApplicationMailer
 
     attachments[report_name] = File.read(file_path)
 
-    mail(to: recipient_email, subject: subject)
+    mail(to: recipient.email, subject: subject)
   end
 end

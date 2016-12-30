@@ -1,20 +1,28 @@
 module Reporting
   class Worker < QueueHelpers::RabbitMq::Worker
+    include Logging
+
     def process(event)
-      event_data = ReportEventDatum.find(event)
-      report_instance = report(event_data)
+      logger.tagged('Reporting Worker::process(event)') do
+        event_data = ReportEventDatum.find(event)
+        report_instance = report(event_data)
 
-      business_ids= []
+        business_ids= []
 
-      event_data.retrieve_business_ids.each do |business_id|
-        success = report_instance.process_report(business_id, event_data.year, current_user(event_data))
-        business_ids << business_id if success
+        logger.info('Iterating over businesses, processing registration forms')
+        event_data.retrieve_business_ids.each do |business_id|
+          success = report_instance.process_report(business_id, event_data.year, current_user(event_data))
+          business_ids << business_id if success
+        end
+
+        logger.info("Successfully processed the following businesses: #{business_ids.inspect}")
+        @queue_manager.log(:info, " [x] Event '#{event}' has been processed!")
+
+        businesses = Business.where(id: business_ids)
+
+        logger.info('Emailing report to SchemeOperator')
+        email_scheme_operator(businesses, businesses.first.scheme, event_data.year, current_user(event_data).email)
       end
-
-      @queue_manager.log(:info, " [x] Event '#{event}' has been processed!")
-
-      businesses = Business.where(id: business_ids)
-      email_scheme_operator(businesses, businesses.first.scheme, event_data.year, 'so@scheme.com')
     end
 
     def current_user(event)
@@ -24,6 +32,7 @@ module Reporting
         when 'Admin'
           Admin.find(event.current_user_id)
         when 'CompanyOperator'
+          CompanyOperator.find(event.current_user_id)
       end
     end
 

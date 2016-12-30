@@ -1,23 +1,26 @@
 <% if current_admin || current_scheme_operator %>
-  <li class="nav-item">
-    <div class="btn-group">
-      <a class="btn btn-outline-secondary btn-sm" href=<%= schemes_path %>>Schemes</a>
-      <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" id="schemes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="sr-only">Toggle Dropdown</span>
-      </button>
-      <div class="dropdown-menu">
-        <h6 class="dropdown-header">Active</h6>
-        <div class="dropdown-divider"></div>
-        <% @current_user.schemes.where(active: true).each do |scheme| %>
-          <a class="dropdown-item" href=<%= scheme_path(scheme) %>><%= scheme.name %></a>
-        <% end %>
-        <div class="dropdown-divider"></div>
-        <h6 class="dropdown-header">Not Activated</h6>
-        <% @current_user.schemes.where(active: false).each do |scheme| %>
-            <a class="dropdown-item disabled" href=<%= scheme_path(scheme) %>><%= scheme.name %> </a>
-        <% end %>
+    <% @schemes = @current_user.schemes %>
+    <li class="nav-item">
+      <div class="btn-group">
+        <a class="btn btn-outline-secondary btn-sm" href=<%= schemes_path %>>Schemes</a>
+        <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" id="schemes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <div class="dropdown-menu">
+          <h6 class="dropdown-header">Active</h6>
 
+          <div class="dropdown-divider"></div>
+          <% @schemes.where(active: true).each do |scheme| %>
+              <a class="dropdown-item" href=<%= scheme_path(scheme) %>><%= scheme.name %></a>
+          <% end %>
+          <% if @schemes.where(active: false).any? %>
+              <div class="dropdown-divider"></div>
+              <h6 class="dropdown-header">Not Activated</h6>
+              <% @current_user.schemes.where(active: false).each do |scheme| %>
+                  <a class="dropdown-item disabled" href=<%= scheme_path(scheme) %>><%= scheme.name %> </a>
+              <% end %>
+          <% end %>
+        </div>
       </div>
-    </div>
-  </li>
+    </li>
 <% end %>

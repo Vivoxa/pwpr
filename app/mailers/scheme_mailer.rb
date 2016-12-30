@@ -15,13 +15,18 @@ class SchemeMailer < ApplicationMailer
   end
 
   def scheme_director_info(businesses, scheme, year, recipient_email)
+    @scheme = scheme
+    @year = year
+    @url = ENV['APP_SO_SIGN_IN_URL']
 
     file_path = Pdf::RegistrationFormEmailedBusinesses.pdf(businesses, year)
 
-    attachments[filename] = File.read(file_path)
+    email_settings = LookupValues::Email::EmailSettings.for('scheme_director_info')
 
-    @scheme = scheme
-    @year = year
+    subject = email_settings['subject'] % { year: year }
+    report_name = email_settings['report_name'] % { scheme_id: scheme.id, year: year }
+
+    attachments[report_name] = File.read(file_path)
 
     mail(to: recipient_email, subject: subject)
   end

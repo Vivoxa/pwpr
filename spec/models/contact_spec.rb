@@ -16,7 +16,7 @@ RSpec.describe Contact, type: :model do
     describe '#validates_presence_of' do
       it { is_expected.to validate_presence_of(:business_id) }
       xit { is_expected.to validate_presence_of(:title) }
-      it { is_expected.to validate_presence_of(:address_title) }
+      it { is_expected.to validate_presence_of(:address_type_id) }
       it { is_expected.to validate_presence_of(:first_name) }
       it { is_expected.to validate_presence_of(:last_name) }
       it { is_expected.to validate_presence_of(:telephone_1) }

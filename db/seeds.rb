@@ -117,41 +117,76 @@ schemes.each_with_index do |scheme, index|
   agency_templates[index].save!
 end
 
-address = Address.new(address_type_id: 2,
-                      address_line_1: '108 houghton road',
-                      address_line_2: 'Hetton le hole',
-                      address_line_3: '',
-                      address_line_4: '',
-                      town: 'Houghton le spring',
-                      site_country: 'UK',
-                      telephone: '0191 5178644',
-                      fax: '0191 5174533',
-                      post_code: 'DH5 9PL',
-                      email: 'nigelsurtees@hotmail.co.uk')
+registration_address = Address.new(address_type_id: 2,
+                                   address_line_1: '108 houghton road',
+                                   address_line_2: 'Hetton le hole',
+                                   address_line_3: '',
+                                   address_line_4: '',
+                                   town: 'Houghton le spring',
+                                   site_country: 'UK',
+                                   telephone: '0191 5178644',
+                                   fax: '0191 5174533',
+                                   post_code: 'DH5 9PL',
+                                   email: 'registration@hotmail.co.uk')
+
+correspondence_address = Address.new(address_type_id: 4,
+                                     address_line_1: '108 houghton road',
+                                     address_line_2: 'Hetton le hole',
+                                     address_line_3: '',
+                                     address_line_4: '',
+                                     town: 'Houghton le spring',
+                                     site_country: 'UK',
+                                     telephone: '0191 5178644',
+                                     fax: '0191 5174533',
+                                     post_code: 'DH5 9PL',
+                                     email: 'correspondence@hotmail.co.uk')
+
+audit_address = Address.new(address_type_id: 3,
+                            address_line_1: '108 houghton road',
+                            address_line_2: 'Hetton le hole',
+                            address_line_3: '',
+                            address_line_4: '',
+                            town: 'Houghton le spring',
+                            site_country: 'UK',
+                            telephone: '0191 5178644',
+                            fax: '0191 5174533',
+                            post_code: 'DH5 9PL',
+                            email: 'audit@hotmail.co.uk')
 
 correspondence_contact = Contact.create(title: 'Mr',
-                                        address_title: 'Correspondence',
+                                        address_type_id: 4,
                                         first_name: 'Doc',
                                         last_name: 'Brown',
                                         email: 'nigelsurtees@hotmail.co.uk',
                                         telephone_1: '0191 6749933')
 
 audit_contact = Contact.create(title: 'Mr',
-                               address_title: 'Audit',
+                               address_type_id: 3,
                                first_name: 'Doc',
                                last_name: 'Brown',
                                email: 'nigelsurtees@hotmail1.co.uk',
                                telephone_1: '0191 6749933')
 
+registered_contact = Contact.create(title: 'Mr',
+                                    address_type_id: 2,
+                                    first_name: 'Doc',
+                                    last_name: 'Brown',
+                                    email: 'nigelsurtees@hotmail1.co.uk',
+                                    telephone_1: '0191 6749933')
+
 business = businesses.first
 business.contacts << correspondence_contact
 business.contacts << audit_contact
+business.contacts << registered_contact
 
-business.addresses << address
+business.addresses << registration_address
+business.addresses << correspondence_address
+business.addresses << audit_address
 
-address.save!
-address.contacts << correspondence_contact
-address.contacts << audit_contact
+registration_address.save!
+registration_address.contacts << correspondence_contact
+registration_address.contacts << audit_contact
+registration_address.contacts << registered_contact
 
 #************************************************************************************
 #                           Admins

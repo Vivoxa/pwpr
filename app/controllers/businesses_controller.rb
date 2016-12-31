@@ -6,6 +6,7 @@ class BusinessesController < BaseController
   # GET /businesses
   # GET /businesses.json
   def index
+
     raise 'Must have a scheme id to view businesses' if params['scheme_id'].nil?
     @businesses = current_user.schemes.find(params['scheme_id']).businesses
   end

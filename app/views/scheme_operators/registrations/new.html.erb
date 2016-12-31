@@ -24,7 +24,8 @@
     </div>
 
     <div class="field centre">
-      <%= f.collection_select :scheme_ids, @current_user.schemes.order(:name), :id, :name, {}, {multiple: true, class: "devise-lgn form-control", style: "min-height:125px"} %>
+      <%= f.label 'Active Schemes', class: "devise-lgn" %>
+      <%= f.collection_select :scheme_ids, @current_user.schemes.where(active: true).order(:name), :id, :name, {}, {multiple: true, class: "devise-lgn form-control", style: "min-height:125px"} %>
     </div>
 
     <div class="actions centre">

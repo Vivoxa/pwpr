@@ -2,7 +2,7 @@ class ReportsController < ApplicationController
   authorize_resource class: ReportsController
 
   YEARS = %w(2013 2014 2015 2016).freeze
-  REPORTS = ['Registration Form', 'Data Form'].freeze
+  REPORTS = LookupValues::Reports::ValidReports.for('scheme')
 
   def index
     @reports = REPORTS

@@ -12,12 +12,9 @@ echo 'Bundling success!'
 echo "Setting up DB..."
 bundle exec rake db:drop \
   db:create \
-  db:setup \
+  db:migrate \
+  db:seed \
   || exit 1
 echo 'DB setup Success!'
-
-echo 'Seeding lookup tables'
-bundle exec rake pwpr:populate_lookup_tables[development]
-echo 'Lookup tables populated....'
 
 echo 'App ready!'

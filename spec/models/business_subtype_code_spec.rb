@@ -17,13 +17,15 @@ RSpec.describe BusinessSubtype, type: :model do
     context 'when value exists in the database' do
       it 'expects the value to be returned' do
         result = described_class.id_from_setting('Subsidiary Co')
-        expect(result).to be_a(BusinessSubtype)
+        business_sub_type = described_class.find(result)
+        expect(business_sub_type).to be_a(BusinessSubtype)
       end
     end
     context 'when value does NOT exist in the database' do
       it 'expects nil to be returned' do
         result = described_class.id_from_setting('Absent')
-        expect(result).to be_nil
+        business_sub_type = described_class.where(id: result).first
+        expect(business_sub_type).to be_nil
       end
     end
   end

@@ -1,7 +1,7 @@
 class CreateTargetTotals < ActiveRecord::Migration
   def change
     create_table :target_totals do |t|
-      t.references :regular_producer_detail, foreign_key: true, null: false
+      t.references :regular_producer_detail, null: false, foreign_key: { on_delete: :cascade }
       t.decimal :total_recycling_obligation, precision: 10, scale: 2, null: false
       t.decimal :total_recovery_obligation, precision: 10, scale: 2, null: false
       t.decimal :total_material_specific_recycling_obligation, precision: 10, scale: 2, null: false

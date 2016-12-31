@@ -6,58 +6,55 @@
       <div class="card-header">
         <%= render partial: tab_partial %>
       </div>
-      <div class="card-block" style='min-height:500px'>
-        <h4 class="card-title"></h4>
-        <%- @scheme_operators.each do |user| %>
-            <div class="card card-block card-outline-success" style='height:150px'>
-              <div class="row">
-                <div class="col-md-1">
-                  <strong>Name</strong>
-                </div>
-                <div class="col-md-4">
-                  <strong>Email</strong>
-                </div>
-                <div class="col-md-2">
-                  <strong>Scheme</strong>
-                </div>
-                <div class="col-md-2">
-                  <strong></strong>
-                </div>
-                <div class="col-md-3"></div>
-              </div>
-              <div class="row">
-                <div class="col-md-1"><%= user.first_name.to_s if user.first_name %></div>
-                <div class="col-md-4"><%= user.email.to_s %></div>
-                <div class="col-md-2">
-                  <% user.schemes.each do |s| %>
-                      <div class='row'>
-                        <%= s.name %>
+      <%- @schemes.each do |scheme, details| %>
+          <div class="card">
+            <div class="card-header"><h3><%= details[:name] %></h3></div>
+            <div class="card-block" style='min-height:300px'>
+              <h4 class="card-title"></h4>
+              <%- details[:users].each do |user| %>
+                  <div class="card card-outline-secondary">
+                    <div class="card-header"></div>
+                    <div class="card-block " style='height:150px'>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <strong>Name</strong>
+                        </div>
+                        <div class="col-md-5">
+                          <strong>Email</strong>
+
+                        </div>
+                        <div class="col-md-4">
+                          <strong>Scheme</strong>
+                        </div>
                       </div>
-                  <% end %>
-                </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-1"></div>
-                <div class="col-md-2">
-                  <div class="row">
-                    <% if can? :permissions, user %>
-                        <%= link_to 'Permissions', scheme_operator_permissions_path(scheme_operator_id: user.id), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
-                    <% end %>
+                      <div class="row">
+                        <div class="col-md-3"><%= user.first_name.to_s if user.first_name %></div>
+                        <div class="col-md-5"><%= user.email.to_s %></div>
+                        <div class="col-md-4">
+                          <% user.schemes.each do |s| %>
+                              <div class='row'>
+                                <%= s.name %>
+                              </div>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                      <% if can? :permissions, user %>
+                          <%= link_to 'Permissions', scheme_operator_permissions_path(scheme_operator_id: user.id), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+                      <% end %>
+                      <% if can? :read, user %>
+                          <%= link_to 'Details', user, class: ['btn btn-sm btn-info', 'show-btn-md'] %>
+                      <% end %>
+                      <% if can? :destroy, user %>
+                          <%= link_to 'Destroy', user, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
+                      <% end %>
+                    </div>
                   </div>
-                  <div class="row">
-                    <% if can? :read, user %>
-                        <%= link_to 'Details', user, class: ['btn btn-sm btn-info', 'show-btn-md'] %>
-                    <% end %>
-                  </div>
-                  <div class="row">
-                    <% if can? :destroy, user %>
-                        <%= link_to 'Destroy', user, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
-                    <% end %>
-                  </div>
-                </div>
-              </div>
+              <%- end %>
             </div>
-        <%- end %>
-      </div>
+          </div>
+      <%- end %>
       <div class="card-footer"></div>
     </div>
   </div>

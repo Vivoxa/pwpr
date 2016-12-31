@@ -35,6 +35,9 @@ RSpec.describe BusinessesController, type: :controller do
       co_marti.add_role('sc_director')
       co_marti.approved = true
       co_marti.save
+      PermissionsForRole::SchemeOperatorDefinitions.new.permissions_for_role(:sc_director).each do |permission, has|
+        co_marti.add_role permission if has[:checked]
+      end
       sign_in co_marti
     end
     let(:valid_attributes) do
@@ -44,7 +47,6 @@ RSpec.describe BusinessesController, type: :controller do
        name:                        'business 1',
        company_number:              '123456789',
        scheme_ref:                  'scheme_ref 1',
-       trading_name:                'my trading name',
        year_first_reg:              '2010',
        scheme_status_code_id:       1,
        registration_status_code_id: 1}
@@ -57,7 +59,6 @@ RSpec.describe BusinessesController, type: :controller do
        name:                        'business 1',
        company_number:              '123456789',
        scheme_ref:                  'scheme_ref 1',
-       trading_name:                'my trading name',
        year_first_reg:              '2010',
        scheme_status_code_id:       1,
        registration_status_code_id: 1}

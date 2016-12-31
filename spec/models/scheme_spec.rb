@@ -1,4 +1,3 @@
-
 require 'rails_helper'
 
 RSpec.describe Scheme, type: :model do
@@ -17,9 +16,10 @@ RSpec.describe Scheme, type: :model do
     end
   end
 
-  # context 'Validations' do
-  # describe '#validates_presence_of' do
-  #   it {is_expected.to validate_presence_of(:scheme_country_code_id)}
-  # end
-  # end
+  context 'Validations' do
+    describe '#validates_presence_of' do
+      it { is_expected.to validate_presence_of(:scheme_country_code_id) }
+      it { is_expected.to validate_presence_of(:name) }
+    end
+  end
 end

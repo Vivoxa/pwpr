@@ -21,6 +21,10 @@ class Admin < ActiveRecord::Base
     name
   end
 
+  def last_name
+    ''
+  end
+
   private
 
   def assign_roles

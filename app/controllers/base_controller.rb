@@ -47,7 +47,7 @@ class BaseController < ApplicationController
     schemes.each do |_scheme_id, details|
       details[:users].each do |user|
         pending_operators = []
-        pending_operators << op if op.confirmed_at.present?
+        pending_operators << user if user.confirmed_at.present?
         details[:users] = pending_operators
       end
     end

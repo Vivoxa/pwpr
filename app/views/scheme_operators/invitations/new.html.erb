@@ -1,4 +1,4 @@
-<div class="centre-title">
+<div class="centre-wide">
   <h2>Invite new Scheme Operator</h2>
 </div>
 <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
@@ -12,7 +12,7 @@
     <div class="field centre">
       <% if @scheme_id %>
           <%= f.collection_select :scheme_ids, Scheme.where(id: @scheme_id), :id, :name, {}, {class: "devise-lgn form-control", style: "display:none"} %>
-      <% elsif params[:scheme_operator] && params[:scheme_operator][:scheme_ids] %>
+      <% elsif params[:scheme_operator] && params[:scheme_operator][:scheme_ids] && !params[:scheme_operator][:scheme_ids].is_a?(Array) %>
           <%= f.collection_select :scheme_ids, Scheme.where(id: params[:scheme_operator][:scheme_ids].to_i), :id, :name, {}, {class: "devise-lgn form-control", style: "display:none"} %>
       <% else %>
           <%= f.label 'Active Schemes', class: "devise-lgn" %>

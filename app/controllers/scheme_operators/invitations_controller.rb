@@ -14,7 +14,7 @@ module SchemeOperators
 
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:invite) do |user_params|
-        user_params.permit({scheme_ids: []}, :email, :first_name, :last_name)
+        user_params.permit({scheme_ids: []}, :email, :first_name, :last_name, :scheme_ids)
       end
     end
   end

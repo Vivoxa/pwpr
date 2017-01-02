@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   devise_scope :scheme_operator do
     get '/scheme_operators/pending' => 'scheme_operators#pending', as: 'pending_scheme_operators'
     get '/scheme_operators/invitations/', to: 'scheme_operators#invited_not_accepted', :as => 'scheme_operator_invitations'
+    match 'scheme_operators/invitation', to: 'scheme_operators/invitations#new', via: :get
   end
 
 

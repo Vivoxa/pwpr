@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get '/company_operators/pending' => 'company_operators#pending', as: 'pending_company_operators'
     get '/company_operators/update_businesses' => 'company_operators#update_businesses'
     get '/company_operators/invitations/', to: 'company_operators#invited_not_accepted', :as => 'company_operator_invitations'
+    match 'company_operators/invitation', to: 'company_operators/invitations#new', via: :get
   end
 
   devise_for :admins, controllers: {registrations: 'admins/registrations'}

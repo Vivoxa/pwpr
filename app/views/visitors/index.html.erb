@@ -1,6 +1,6 @@
 <% if current_admin && current_admin.role_list.include?('super_admin') %>
     <div class="card">
-      <h3 class="card-header">Mail Configuration  (<%= Rails.env %>)</h3>
+      <h3 class="card-header">Mail Configuration (<%= Rails.env %>)</h3>
 
       <div class="card">
         <div class="card-block">
@@ -11,7 +11,7 @@
           <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="row">
 
-              <p><strong>SchemeMailer SMTP settings:</strong><%= debug(SchemeMailer.smtp_settings) %></p>
+              <p><strong>SchemeMailer SMTP settings:</strong><%= debug(SchemeMailer.smtp_settings).except!(:password) %></p>
 
               <p><strong> SchemeMailer.default_url_options: </strong><%= debug(SchemeMailer.default_url_options) %></p>
 
@@ -21,7 +21,7 @@
           <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="row">
 
-              <p><strong>Devise::Mailer SMTP settings:</strong><%= debug(Devise::Mailer.smtp_settings) %></p>
+              <p><strong>Devise::Mailer SMTP settings:</strong><%= debug(Devise::Mailer.smtp_settings).except!(:password) %></p>
 
               <p><strong>Devise::Mailer Default Url Options:</strong><%= debug(Devise::Mailer.default_url_options) %>
               </p>
@@ -49,7 +49,9 @@
             <div class="row">
               <ul>
                 <% ENV.sort.each do |key, value| %>
-                    <li><strong><%= key %>: </strong><%= key.downcase.include?('password') || key.downcase.include?('secret') ? 'hidden' : value %></li>
+                    <li><strong><%= key %>
+                      : </strong><%= key.downcase.include?('password') || key.downcase.include?('secret') ? 'hidden' : value %>
+                    </li>
                 <% end %>
               </ul>
             </div>

@@ -34,10 +34,12 @@ module QueueHelpers
 
       def connection_params
         {
-          hostname:              @host,
-          automatically_recover: false,
-          log_file:              @log_file_path,
-          log_level:             :info
+            username: ENV['BUNNY_USERNAME'],
+            password: ENV['BUNNY_PASSWORD'],
+            hostname: @host,
+            automatically_recover: false,
+            log_file: @log_file_path,
+            log_level: :info
         }
       end
     end

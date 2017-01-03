@@ -49,7 +49,7 @@
             <div class="row">
               <ul>
                 <% ENV.sort.each do |key, value| %>
-                    <li><strong><%= key %>: </strong><%= value %></li>
+                    <li><strong><%= key %>: </strong><%= key.downcase.include?('password') || key.downcase.include?('secret') ? 'hidden' : value %></li>
                 <% end %>
               </ul>
             </div>

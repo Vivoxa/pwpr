@@ -29,6 +29,7 @@ module Reporting
           rescue => e
             @errors << e.message
             logger.warn "process_report() ERROR: #{e.message}"
+            raise e
           ensure
             logger.info 'process_report() = Cleaning up tmp files '
             cleanup(year, business)

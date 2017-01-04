@@ -16,7 +16,7 @@ module Reporting
     private
 
     def self.report_template_bucket_name
-      "#{Rails.env}-pwpr-report-templates"
+      "#{Rails.env}-pwpr-templates"
     end
   end
 end

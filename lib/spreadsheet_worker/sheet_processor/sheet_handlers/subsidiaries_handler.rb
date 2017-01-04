@@ -85,7 +85,9 @@ module SpreadsheetWorker
           producer.allocation_method_obligation = column_value(row, map['allocation']['method_obligation']['field']).to_f
           producer.allocation_method_predominant_material = column_value(row, map['allocation']['predominant_material']['field'])
           producer.subsidiary = @subsidiary
-          producer.registration_id = create_registration_for_small_producer(row)
+          registration = create_registration_for_small_producer(row)
+          Rails.logger.info "REGISTRATION_PRINT #{registration.inspect}"
+          producer.registration_id = registration.id
           producer.save!
         end
 
@@ -108,6 +110,7 @@ module SpreadsheetWorker
           registration.sic_code_id = SicCode.id_from_setting(column_value(row, map['sic_code']['field']))
           registration.agency_template_upload = @agency_template
           registration.save!
+          registration
         end
 
         def subsidiaries

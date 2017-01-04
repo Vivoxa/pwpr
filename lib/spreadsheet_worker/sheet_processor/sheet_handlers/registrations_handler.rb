@@ -111,6 +111,7 @@ module SpreadsheetWorker
           producer = SmallProducerDetail.new
           producer.allocation_method_obligation = column_value(row, map['allocation']['method_obligation']['field']).to_f
           producer.allocation_method_predominant_material = column_value(row, map['allocation']['predominant_material']['field'])
+          Rails.logger.info "REGISTRATION_PRINT_REG #{@registration.inspect}"
           producer.registration = @registration
           producer.save!
         end

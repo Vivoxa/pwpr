@@ -11,7 +11,7 @@
           <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="row">
 
-              <p><strong>SchemeMailer SMTP settings:</strong><%= debug(SchemeMailer.smtp_settings.except!(:password)) %></p>
+              <p><strong>SchemeMailer SMTP settings:</strong><%= debug(SchemeMailer.smtp_settings.except(:password)) %></p>
 
               <p><strong> SchemeMailer.default_url_options: </strong><%= debug(SchemeMailer.default_url_options) %></p>
 
@@ -21,7 +21,7 @@
           <div class="col-xs-12 col-md-6 col-lg-6">
             <div class="row">
 
-              <p><strong>Devise::Mailer SMTP settings:</strong><%= debug(Devise::Mailer.smtp_settings.except!(:password)) %></p>
+              <p><strong>Devise::Mailer SMTP settings:</strong><%= debug(Devise::Mailer.smtp_settings.except(:password)) %></p>
 
               <p><strong>Devise::Mailer Default Url Options:</strong><%= debug(Devise::Mailer.default_url_options) %>
               </p>

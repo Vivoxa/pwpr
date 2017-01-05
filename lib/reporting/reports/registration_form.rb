@@ -26,13 +26,13 @@ module Reporting
 
             logger.info 'process_report() = Emailing RegistrationForm PDF'
             email_business(business, build_filename(report_type, year, business), local_file_path, year, current_user)
+            cleanup(year, business)
           rescue => e
             @errors << e.message
             logger.warn "process_report() ERROR: #{e.message}"
             raise e
           ensure
             logger.info 'process_report() = Cleaning up tmp files '
-            cleanup(year, business)
           end
         end
       end

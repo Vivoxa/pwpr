@@ -1,7 +1,76 @@
- <div class="row">
-  <div class="col-sm-12 text-xs-center bootstrap-welcome">
-    <h1>Welcome to PWPR</h1>
-    <p class="lead">The cloud based solution to calculate your scheme's</p>
-    <p class="lead"><strong>P</strong>ackaging <strong>W</strong>aste <strong>P</strong>roducer <strong>R</strong>esponsibilities</p>
-  </div>
-</div>
+<% if current_admin && current_admin.role_list.include?('super_admin') %>
+    <div class="card">
+      <h3 class="card-header">Mail Configuration (<%= Rails.env %>)</h3>
+
+      <div class="card">
+        <div class="card-block">
+          <h4 class="card-title"></h4>
+
+          <p class="card-text">
+
+          <div class="col-xs-12 col-md-6 col-lg-6">
+            <div class="row">
+
+              <p><strong>SchemeMailer SMTP settings:</strong><%= debug(SchemeMailer.smtp_settings.except(:password)) %></p>
+
+              <p><strong> SchemeMailer.default_url_options: </strong><%= debug(SchemeMailer.default_url_options) %></p>
+
+              <p><strong>SchemeMailer Delivery Method:</strong> <%= debug(SchemeMailer.delivery_method) %></p>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-6 col-lg-6">
+            <div class="row">
+
+              <p><strong>Devise::Mailer SMTP settings:</strong><%= debug(Devise::Mailer.smtp_settings.except(:password)) %></p>
+
+              <p><strong>Devise::Mailer Default Url Options:</strong><%= debug(Devise::Mailer.default_url_options) %>
+              </p>
+
+              <p><strong>Devise::Mailer Delivery Method:</strong><%= debug(Devise::Mailer.delivery_method) %></p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+      </div>
+    </div>
+    <div class="card">
+      <h3 class="card-header">Environment Variables (<%= Rails.env %>)</h3>
+
+      <div class="card">
+        <div class="card-block">
+          <h4 class="card-title"></h4>
+
+          <p class="card-text">
+
+          <div class="col-xs-12 col-md-6 col-lg-12">
+
+            <div class="row">
+              <ul>
+                <% ENV.sort.each do |key, value| %>
+                    <li><strong><%= key %>
+                      : </strong><%= key.downcase.include?('password') || key.downcase.include?('secret') ? 'hidden' : value %>
+                    </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+      </div>
+    </div>
+
+<% else %>
+    <div class="row" xmlns="http://www.w3.org/1999/html">
+      <div class="col-sm-12 text-xs-center bootstrap-welcome">
+        <h1>Welcome to PWPR</h1>
+
+        <p class="lead">The cloud based solution to calculate your scheme's</p>
+
+        <p class="lead"><strong>P</strong>ackaging <strong>W</strong>aste <strong>P</strong>roducer <strong>R</strong>esponsibilities
+        </p>
+      </div>
+    </div>
+<% end %>

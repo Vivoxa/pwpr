@@ -155,7 +155,8 @@ RSpec.describe SchemeOperator, type: :model do
 
       it_behaves_like 'a reader', Scheme.last
 
-      it_behaves_like 'an updater', Scheme.last
+      # scheme operators can no longer edit or create schemes
+      # it_behaves_like 'an updater', Scheme.last
 
       it_behaves_like 'a reader', SchemeOperators::RegistrationsController
 

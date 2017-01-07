@@ -9,6 +9,10 @@ leavers:
     field: D
   allocation_method_used:
     field: F
+  subsidiaries_no:
+    field: E
+  scheme_comments:
+    field: J
   total_recovery:
     field: G
   leaving_reason:

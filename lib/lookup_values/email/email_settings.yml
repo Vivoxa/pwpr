@@ -1,0 +1,5 @@
+registration_email:
+  subject: '[RESPONSE REQUIRED]: Registration form %{year}'
+scheme_director_info:
+  subject: '[INFO]: Registration forms emailed for %{year}'
+  report_name: 'recipients_registration_form_%{scheme_id}_%{year}.pdf'

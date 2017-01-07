@@ -1,20 +1,20 @@
 <div class="field centre">
   <h2><%= t 'devise.invitations.edit.header' %></h2>
 </div>
-<%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :invitation_token %>
+<%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :put} do |f| %>
+    <%= devise_error_messages! %>
+    <%= f.hidden_field :invitation_token %>
 
-  <% if f.object.class.require_password_on_accepting %>
-    <div class="field centre">
-      <%= f.password_field :password, placeholder: 'password', class: 'devise-lgn form-control' %></p>
-    </div>
-    <div class="field centre">
-      <%= f.password_field :password_confirmation, placeholder: 'password confirmation', class: 'devise-lgn form-control' %></p>
-    </div>
-  <% end %>
+    <% if f.object.class.require_password_on_accepting %>
+        <div class="field centre">
+          <%= f.password_field :password, placeholder: 'password', class: 'devise-lgn form-control' %></p>
+        </div>
+        <div class="field centre">
+          <%= f.password_field :password_confirmation, placeholder: 'password confirmation', class: 'devise-lgn form-control' %></p>
+        </div>
+    <% end %>
 
-  <div class="action centre">
-    <p><%= f.submit t("devise.invitations.edit.submit_button"), class: ["btn", "btn-success", "devise-btn"] %></p>
-  </div>
+    <div class="action centre">
+      <p><%= f.submit t("devise.invitations.edit.submit_button"), class: ["btn", "btn-success", "devise-btn"] %></p>
+    </div>
 <% end %>

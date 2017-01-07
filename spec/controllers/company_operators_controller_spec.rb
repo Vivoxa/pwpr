@@ -10,7 +10,6 @@ RSpec.describe CompanyOperatorsController, type: :controller do
                       name:                        'business 1',
                       company_number:              '123456789',
                       scheme_ref:                  'scheme_ref 1',
-                      trading_name:                'my trading name',
                       year_first_reg:              '2010',
                       scheme_status_code_id:       1,
                       registration_status_code_id: 1)

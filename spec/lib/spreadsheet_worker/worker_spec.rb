@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SpreadsheetWorker::Worker do
+  subject(:publisher) { described_class.new(queue_name, 'queue_rabbitmq:5672', 'log/spreadsheet_worker.log') }
   let(:bunny) do
     Bunny.new(hostname:              'queue_rabbitmq:5672',
               automatically_recover: false,
@@ -24,11 +25,11 @@ RSpec.describe SpreadsheetWorker::Worker do
     end
 
     after do
-      subject.start
+      publisher.start
     end
 
     it 'calls prefetch' do
-      expect(subject).to receive(:prefetch).once
+      expect(publisher).to receive(:prefetch).once
     end
 
     it 'subscribed with the correct params' do

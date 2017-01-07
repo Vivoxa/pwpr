@@ -1,0 +1,203 @@
+title: Report Title
+fields:
+  tb_company_name:
+    control_type: text_box
+    model_name: business
+    model_attribute: name
+    data_type: string
+  tb_co_reg_no:
+    control_type: text_box
+    model_name: business
+    model_attribute: company_number
+    data_type: string
+  tb_npwd_code:
+    control_type: text_box
+    model_name: business
+    model_attribute: NPWD
+    data_type: string
+  tb_co_sic_2007:
+    control_type: text_box
+    model_name: business
+    model_attribute: sic_code_id
+    lookup:
+      model: SicCode
+      model_attribute: code
+    data_type: string
+  tb_ro_tel_no:
+    address_type: Registered
+    control_type: text_box
+    model_name: address
+    model_attribute: telephone
+    data_type: string
+  tb_ro_fax_no:
+    address_type: Registered
+    control_type: text_box
+    model_name: address
+    model_attribute: fax
+    data_type: string
+  tb_ro_email:
+    address_type: Registered
+    control_type: text_box
+    model_name: address
+    model_attribute: email
+    data_type: string
+  tb_ro_add1_line1:
+    address_type: Registered
+    control_type: text_box
+    model_name: address
+    model_attribute: address_line_1
+    data_type: string
+  tb_ro_add2:
+    address_type: Registered
+    control_type: text_box
+    model_name: address
+    model_attribute: address_line_2
+    data_type: string
+  tb_ro_add3:
+    address_type: Registered
+    control_type: text_box
+    model_name: address
+    model_attribute: address_line_3
+    data_type: string
+  tb_ro_add4:
+    address_type: Registered
+    control_type: text_box
+    model_name: address
+    model_attribute: address_line_4
+    data_type: string
+  tb_ro_add5_town_city:
+    address_type: Registered
+    control_type: text_box
+    model_name: address
+    model_attribute: town
+    data_type: string
+  tb_ro_add6_post_code:
+    address_type: Registered
+    control_type: text_box
+    model_name: address
+    model_attribute: post_code
+    data_type: string
+  tb_corr_contact_salutation:
+    control_type: text_box
+    model_name: contact
+    model_attribute: title
+    data_type: string
+    address_type: Correspondence
+  tb_corr_contact_name:
+    control_type: text_box
+    model_name: contact
+    model_attribute: first_name
+    data_type: string
+    address_type: Correspondence
+  tb_corr_contact_surname:
+    control_type: text_box
+    model_name: contact
+    model_attribute: last_name
+    data_type: string
+    address_type: Correspondence
+  tb_corr_contact_tel_no:
+    control_type: text_box
+    model_name: contact
+    model_attribute: telephone_1
+    data_type: string
+    address_type: Correspondence
+  tb_corr_contact_fax_no:
+    control_type: text_box
+    model_name: contact
+    model_attribute: fax
+    data_type: string
+    address_type: Correspondence
+  tb_corr_contact_mobile:
+    control_type: text_box
+    model_name: contact
+    model_attribute: telephone_2
+    data_type: string
+    address_type: Correspondence
+  tb_corr_contact_email:
+    control_type: text_box
+    model_name: contact
+    model_attribute: email
+    data_type: string
+    address_type: Correspondence
+  tb_corr_add1_line1:
+    address_type: Correspondence
+    control_type: text_box
+    model_name: address
+    model_attribute: address_line_1
+    data_type: string
+  tb_corr_add2:
+    address_type: Correspondence
+    control_type: text_box
+    model_name: address
+    model_attribute: address_line_2
+    data_type: string
+  tb_corr_add3:
+    address_type: Correspondence
+    control_type: text_box
+    model_name: address
+    model_attribute: address_line_3
+    data_type: string
+  tb_corr_add4:
+    address_type: Correspondence
+    control_type: text_box
+    model_name: address
+    model_attribute: address_line_4
+    data_type: string
+  tb_corr_add5_town_city:
+    address_type: Correspondence
+    control_type: text_box
+    model_name: address
+    model_attribute: town
+    data_type: string
+  tb_corr_add6_post_code:
+    address_type: Correspondence
+    control_type: text_box
+    model_name: address
+    model_attribute: post_code
+    data_type: string
+  tb_audit_add1_line1:
+    address_type: Audit
+    control_type: text_box
+    model_name: address
+    model_attribute: address_line_1
+    data_type: string
+  tb_audit_add2:
+    address_type: Audit
+    control_type: text_box
+    model_name: address
+    model_attribute: address_line_2
+    data_type: string
+  tb_audit_add3:
+    address_type: Audit
+    control_type: text_box
+    model_name: address
+    model_attribute: address_line_3
+    data_type: string
+  tb_audit_add4:
+    address_type: Audit
+    control_type: text_box
+    model_name: address
+    model_attribute: address_line_4
+    data_type: string
+  tb_audit_add5_town_city:
+    address_type: Audit
+    control_type: text_box
+    model_name: address
+    model_attribute: town
+    data_type: string
+  tb_audit_add6_post_code:
+    address_type: Audit
+    control_type: text_box
+    model_name: address
+    model_attribute: post_code
+    data_type: string
+  tb_turnover:
+    control_type: text_box
+    model_name: registration
+    model_attribute: turnover
+    data_type: string
+  cb_pubco:
+    control_type: check_box
+    model_name: registration
+    model_attribute: licensor
+    data_type: boolean

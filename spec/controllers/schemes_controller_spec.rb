@@ -1,29 +1,29 @@
 require 'rails_helper'
 RSpec.describe SchemesController, type: :controller do
   context 'when scheme operator is signed in' do
-    let(:co_marti) { SchemeOperator.new }
-    let(:sc_director_roles) { %i(sc_director sc_users_r sc_users_w sc_users_e schemes_r schemes_w schemes_e schemes_d) }
+    let(:admin) { Admin.new }
+    let(:co_marti) { SchemeOperator.first }
     before do
-      co_marti.email = 'jennifer@back_to_the_future.com'
-      co_marti.last_name = 'Smith'
-      co_marti.first_name = 'Jennifer'
-      co_marti.password = 'mypassword'
-      co_marti.confirmed_at = DateTime.now
-      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
-      co_marti.save
-      co_marti.approved = true
-      sc_director_roles.each do |permission|
-        co_marti.add_role permission
+      admin.email = 'jennifer@back_to_the_future.com'
+      admin.name = 'Smith'
+      admin.password = 'mypassword'
+      admin.save
+      PermissionsForRole::AdminDefinitions.new.permissions_for_role(:super_admin).each do |permission, has|
+        admin.add_role permission if has[:checked]
       end
-      co_marti.save
-      sign_in co_marti
+      admin.save!
+
+      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
+      co_marti.save!
+
+      sign_in admin
     end
 
     after do
-      sc_director_roles.each do |permission|
-        co_marti.remove_role permission
+      PermissionsForRole::AdminDefinitions.new.permissions_for_role(:super_admin).each do |permission, _has|
+        admin.remove_role permission
       end
-      sign_out co_marti
+      sign_out admin
     end
 
     # This should return the minimal set of attributes required to create a valid
@@ -161,6 +161,7 @@ RSpec.describe SchemesController, type: :controller do
 
     context 'when SchemeOperator does NOT have a role' do
       before do
+        sign_out admin
         sign_out co_marti
         co_marti.roles.each do |role|
           co_marti.remove_role role.name

@@ -24,18 +24,17 @@ RSpec.describe SchemeOperatorsController, type: :controller do
     end
 
     context 'when an invitation has not been accepted' do
-      it 'expects a collection of scheme operators' do
-        scheme_operator = SchemeOperator.create(first_name:         'rspec owner',
-                                                last_name:          'last',
-                                                approved:           true,
-                                                email:              'invited@pwpr.com',
-                                                password:           'my_password',
-                                                schemes:            sc_marti.schemes,
+      it 'expects a scheme operator' do
+        scheme_operator = SchemeOperator.create(first_name: 'rspec owner',
+                                                last_name: 'last',
+                                                approved: true,
+                                                email: 'invited@pwpr.com',
+                                                password: 'my_password',
+                                                schemes: sc_marti.schemes,
                                                 invitation_sent_at: DateTime.now)
         get 'invited_not_accepted'
-        object = assigns(:scheme_operators).first
+        object = assigns(:scheme_operators).where(id: scheme_operator.id).first
         expect(object).to be_a SchemeOperator
-        expect(object.id).to eq scheme_operator.id
       end
     end
 
@@ -191,21 +190,20 @@ RSpec.describe SchemeOperatorsController, type: :controller do
       end
 
       context 'when an invitation HAS been accepted but not approved' do
-        it 'expects a collection of scheme operators' do
-          scheme_operator = SchemeOperator.create(first_name:             'rspec owner',
-                                                  last_name:              'last',
-                                                  email:                  'invited@pwpr.com',
-                                                  password:               'my_password',
-                                                  scheme_ids:             [Scheme.last.id],
-                                                  invitation_sent_at:     DateTime.now - 5.days,
+        it 'expects a scheme operator' do
+          scheme_operator = SchemeOperator.create(first_name: 'rspec owner',
+                                                  last_name: 'last',
+                                                  email: 'invited@pwpr.com',
+                                                  password: 'my_password',
+                                                  scheme_ids: [Scheme.last.id],
+                                                  invitation_sent_at: DateTime.now - 5.days,
                                                   invitation_accepted_at: DateTime.now,
-                                                  confirmation_sent_at:   DateTime.now - 5.days,
-                                                  confirmed_at:           DateTime.now,
-                                                  approved:               false)
+                                                  confirmation_sent_at: DateTime.now - 5.days,
+                                                  confirmed_at: DateTime.now,
+                                                  approved: false)
           get 'pending'
-          object = assigns(:scheme_operators).first
+          object = assigns(:scheme_operators).where(id: scheme_operator.id).first
           expect(object).to be_a SchemeOperator
-          expect(object.id).to eq scheme_operator.id
         end
       end
 
@@ -225,7 +223,9 @@ RSpec.describe SchemeOperatorsController, type: :controller do
 
         it 'sets @scheme_operators to correct value' do
           get 'index'
-          expect(assigns(:scheme_operators)).not_to include(sc_marti)
+          assigns(:schemes).each do |_s, h|
+            expect(h[:users]).not_to include(sc_marti)
+          end
         end
       end
 
@@ -294,25 +294,25 @@ RSpec.describe SchemeOperatorsController, type: :controller do
           let(:no_role) { sc_marti }
           let(:definitions) do
             {
-              schemes_r:    {checked: false, locked: true},
-              schemes_w:    {checked: false, locked: true},
-              schemes_e:    {checked: false, locked: true},
-              schemes_d:    {checked: false, locked: true},
+                schemes_r: {checked: false, locked: true},
+                schemes_w: {checked: false, locked: true},
+                schemes_e: {checked: false, locked: true},
+                schemes_d: {checked: false, locked: true},
 
-              sc_users_r:   {checked: false, locked: true},
-              sc_users_w:   {checked: false, locked: true},
-              sc_users_e:   {checked: false, locked: true},
-              sc_users_d:   {checked: false, locked: true},
+                sc_users_r: {checked: false, locked: true},
+                sc_users_w: {checked: false, locked: true},
+                sc_users_e: {checked: false, locked: true},
+                sc_users_d: {checked: false, locked: true},
 
-              co_users_r:   {checked: true, locked: true},
-              co_users_w:   {checked: false, locked: false},
-              co_users_e:   {checked: false, locked: false},
-              co_users_d:   {checked: false, locked: false},
+                co_users_r: {checked: true, locked: true},
+                co_users_w: {checked: false, locked: false},
+                co_users_e: {checked: false, locked: false},
+                co_users_d: {checked: false, locked: false},
 
-              businesses_r: {checked: true, locked: true},
-              businesses_e: {checked: false, locked: false},
-              businesses_w: {checked: false, locked: true},
-              businesses_d: {checked: false, locked: true}
+                businesses_r: {checked: true, locked: true},
+                businesses_e: {checked: false, locked: false},
+                businesses_w: {checked: false, locked: true},
+                businesses_d: {checked: false, locked: true}
             }
           end
 

@@ -17,13 +17,15 @@ RSpec.describe AddressType, type: :model do
     context 'when value exists in the database' do
       it 'expects the value to be returned' do
         result = described_class.id_from_setting('Audit')
-        expect(result).to be_a(AddressType)
+        address_type = described_class.find(result)
+        expect(address_type).to be_a(AddressType)
       end
     end
     context 'when value does NOT exist in the database' do
       it 'expects nil to be returned' do
         result = described_class.id_from_setting('Absent')
-        expect(result).to be_nil
+        address_type = described_class.where(id: result)
+        expect(address_type.first).to be_nil
       end
     end
   end

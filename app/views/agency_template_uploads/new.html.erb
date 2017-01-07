@@ -2,49 +2,58 @@
   <div class="card">
     <h3 class="card-header">Agency Template Upload</h3>
     <%= form_for [@scheme, @upload] do |f| %>
-      <div class="card-block">
-        <% if @upload.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@upload.errors.count, "error") %> prohibited this file from uploading:</h2>
-            <ul>
-            <% @upload.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-            </ul>
-          </div>
-        <% end %>
+        <div class="card-block">
+          <% if @upload.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@upload.errors.count, "error") %> prohibited this file from uploading:</h2>
+                <ul>
+                  <% @upload.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+          <% end %>
 
-        <div class='row'>
-          <p class="card-text">
+          <div class='row'>
+            <p class="card-text">
+
             <div class="col-xs-4 col-md-4"></div>
             <div class="col-xs-4 col-md-4"><strong>Upload for:</strong> <%= @scheme.name %></div>
             <div class="col-xs-4 col-md-4"></div>
-          </p>
-        </div>
+            </p>
+          </div>
 
-        <div class='row'>
-          <p class="card-text">
+          <div class='row'>
+            <p class="card-text">
+
             <div class="col-xs-4 col-md-4"></div>
             <div class="col-xs-4 col-md-4">
-              <%=  f.select :year, options_for_select(AgencyTemplateUpload::VALID_YEARS_FOR_UPLOAD),{prompt: true, prompt: 'Select a year'}, { class: "devise-lgn form-control" } %>
+              <%= f.select :year, options_for_select(AgencyTemplateUpload::VALID_YEARS_FOR_UPLOAD), {prompt: true, prompt: 'Select a year'}, {id: 'select_year', onchange: "return selectedYearChanged(this);", class: "devise-lgn form-control"} %>
             </div>
-            <div class="col-xs-4 col-md-4"></div>
-          </p>
-        </div>
 
-        <div class='row'>
-          <p class="card-text">
+            <div class="col-xs-4 col-md-4"></div>
+            </p>
+          </div>
+
+          <div class='row'>
+            <p class="card-text">
+
             <div class="col-xs-4 col-md-4"></div>
             <div class="col-xs-4 col-md-4"><%= f.file_field :filename %></div>
             <div class="col-xs-4 col-md-4"></div>
-          </p>
-        </div>
+            </p>
+          </div>
+          <div class='row'>
+            <div id="confirm_replace">
+              <%= render partial: 'confirm_replace_existing', locals: {show: false} %>
+            </div>
+          </div>
 
+        </div>
         <div class="card-footer">
           <%= f.submit 'Upload', class: ["btn btn-primary btn-sm", "devise-btn"] %>
           <%= link_to 'Back', scheme_agency_template_uploads_path(@scheme), class: ['btn btn-sm btn-success', 'show-btn-md'] %>
         </div>
-      </div>
     <% end %>
   </div>
 </div>

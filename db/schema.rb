@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161208182445) do
+ActiveRecord::Schema.define(version: 20161225080451) do
 
   create_table "address_types", force: :cascade do |t|
     t.string   "title",       limit: 255, null: false
@@ -27,12 +27,12 @@ ActiveRecord::Schema.define(version: 20161208182445) do
     t.string   "address_line_2",  limit: 255
     t.string   "address_line_3",  limit: 255
     t.string   "address_line_4",  limit: 255
+    t.string   "town",            limit: 255
     t.string   "post_code",       limit: 255, null: false
-    t.string   "county",          limit: 255, null: false
-    t.string   "site_country",    limit: 255, null: false
-    t.string   "telephone",       limit: 255, null: false
+    t.string   "site_country",    limit: 255
+    t.string   "telephone",       limit: 255
     t.string   "fax",             limit: 255
-    t.string   "email",           limit: 255, null: false
+    t.string   "email",           limit: 255
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
@@ -98,14 +98,15 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   end
 
   create_table "businesses", force: :cascade do |t|
-    t.string   "name",                                limit: 255
+    t.integer  "scheme_id",                           limit: 4,   null: false
+    t.integer  "membership_id",                       limit: 4
     t.string   "NPWD",                                limit: 255
-    t.integer  "scheme_id",                           limit: 4
+    t.string   "name",                                limit: 255
+    t.boolean  "small_producer"
     t.integer  "country_of_business_registration_id", limit: 4
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
     t.string   "scheme_ref",                          limit: 255, null: false
-    t.string   "trading_name",                        limit: 255, null: false
     t.string   "company_number",                      limit: 255, null: false
     t.integer  "business_type_id",                    limit: 4
     t.integer  "business_subtype_id",                 limit: 4
@@ -114,6 +115,7 @@ ActiveRecord::Schema.define(version: 20161208182445) do
     t.string   "year_last_reg",                       limit: 255
     t.integer  "scheme_status_code_id",               limit: 4
     t.integer  "registration_status_code_id",         limit: 4
+    t.integer  "holding_business_id",                 limit: 4
   end
 
   add_index "businesses", ["scheme_id"], name: "index_businesses_on_scheme_id", using: :btree
@@ -171,19 +173,21 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   add_index "company_operators", ["reset_password_token"], name: "index_company_operators_on_reset_password_token", unique: true, using: :btree
 
   create_table "contacts", force: :cascade do |t|
-    t.integer  "business_id", limit: 4,   null: false
-    t.string   "title",       limit: 255, null: false
-    t.string   "first_name",  limit: 255, null: false
-    t.string   "last_name",   limit: 255, null: false
-    t.string   "email",       limit: 255, null: false
-    t.string   "telephone_1", limit: 255, null: false
-    t.string   "telephone_2", limit: 255
-    t.string   "fax",         limit: 255
-    t.boolean  "active"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "business_id",     limit: 4,                   null: false
+    t.integer  "address_type_id", limit: 4,                   null: false
+    t.string   "title",           limit: 255
+    t.string   "first_name",      limit: 255,                 null: false
+    t.string   "last_name",       limit: 255,                 null: false
+    t.string   "email",           limit: 255
+    t.string   "telephone_1",     limit: 255,                 null: false
+    t.string   "telephone_2",     limit: 255
+    t.string   "fax",             limit: 255
+    t.boolean  "active",                      default: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
+  add_index "contacts", ["address_type_id"], name: "fk_rails_c500c9f0b6", using: :btree
   add_index "contacts", ["business_id"], name: "fk_rails_5d1918d88d", using: :btree
 
   create_table "contacts_addresses", force: :cascade do |t|
@@ -202,10 +206,33 @@ ActiveRecord::Schema.define(version: 20161208182445) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "emailed_reports", force: :cascade do |t|
+    t.string   "report_name",       limit: 255
+    t.string   "year",              limit: 255
+    t.datetime "date_last_sent"
+    t.integer  "business_id",       limit: 4
+    t.integer  "emailed_status_id", limit: 4
+    t.integer  "sent_by_id",        limit: 4
+    t.string   "sent_by_type",      limit: 255
+    t.string   "error_notices",     limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "emailed_reports", ["business_id"], name: "index_emailed_reports_on_business_id", using: :btree
+  add_index "emailed_reports", ["emailed_status_id"], name: "index_emailed_reports_on_emailed_status_id", using: :btree
+
+  create_table "emailed_statuses", force: :cascade do |t|
+    t.string   "status",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "joiners", force: :cascade do |t|
     t.integer  "agency_template_upload_id", limit: 4,                            null: false
     t.integer  "business_id",               limit: 4,                            null: false
     t.date     "joining_date",                                                   null: false
+    t.date     "date_scheme_registered",                                         null: false
     t.string   "previously_registered_at",  limit: 255
     t.decimal  "total_recovery",                        precision: 10, scale: 2, null: false
     t.datetime "created_at",                                                     null: false
@@ -216,20 +243,32 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   add_index "joiners", ["business_id"], name: "fk_rails_a38bc3cfe3", using: :btree
 
   create_table "leavers", force: :cascade do |t|
-    t.integer  "business_id",               limit: 4,                         null: false
-    t.integer  "leaving_code_id",           limit: 4,                         null: false
-    t.integer  "agency_template_upload_id", limit: 4,                         null: false
-    t.date     "date",                                                        null: false
-    t.decimal  "total_recovery_previous",             precision: 5, scale: 2, null: false
-    t.boolean  "sub_leaver"
-    t.date     "scheme_registration_date",                                    null: false
-    t.datetime "created_at",                                                  null: false
-    t.datetime "updated_at",                                                  null: false
+    t.integer  "business_id",               limit: 4
+    t.integer  "leaving_code_id",           limit: 4,                                           null: false
+    t.integer  "agency_template_upload_id", limit: 4,                                           null: false
+    t.integer  "leaving_business_id",       limit: 4
+    t.date     "leaving_date",                                                                  null: false
+    t.decimal  "total_recovery_previous",               precision: 6, scale: 2
+    t.boolean  "sub_leaver",                                                    default: false
+    t.string   "scheme_comments",           limit: 255
+    t.datetime "created_at",                                                                    null: false
+    t.datetime "updated_at",                                                                    null: false
   end
 
   add_index "leavers", ["agency_template_upload_id"], name: "fk_rails_e783cea255", using: :btree
   add_index "leavers", ["business_id"], name: "fk_rails_a42f2cbe46", using: :btree
+  add_index "leavers", ["leaving_business_id"], name: "fk_rails_71e28a1e96", using: :btree
   add_index "leavers", ["leaving_code_id"], name: "fk_rails_65d9f57c99", using: :btree
+
+  create_table "leaving_businesses", force: :cascade do |t|
+    t.string   "scheme_ref",          limit: 255
+    t.string   "npwd",                limit: 255
+    t.string   "company_name",        limit: 255
+    t.string   "company_number",      limit: 255
+    t.integer  "subsidiaries_number", limit: 4
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
 
   create_table "leaving_codes", force: :cascade do |t|
     t.string   "code",       limit: 255, null: false
@@ -239,12 +278,10 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   end
 
   create_table "licensors", force: :cascade do |t|
-    t.integer  "business_id",               limit: 4,   null: false
-    t.integer  "agency_template_upload_id", limit: 4,   null: false
-    t.string   "year",                      limit: 255, null: false
-    t.string   "licensee_scheme_ref_no",    limit: 255, null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.integer  "business_id",               limit: 4, null: false
+    t.integer  "agency_template_upload_id", limit: 4, null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   add_index "licensors", ["agency_template_upload_id"], name: "fk_rails_e095df9179", using: :btree
@@ -253,17 +290,17 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   create_table "material_details", force: :cascade do |t|
     t.integer  "regular_producer_detail_id", limit: 4,                          null: false
     t.integer  "packaging_material_id",      limit: 4,                          null: false
-    t.decimal  "t1manwo",                              precision: 10, scale: 2, null: false
+    t.decimal  "t1man",                                precision: 10, scale: 2, null: false
     t.decimal  "t1conv",                               precision: 10, scale: 2, null: false
     t.decimal  "t1pf",                                 precision: 10, scale: 2, null: false
     t.decimal  "t1sell",                               precision: 10, scale: 2, null: false
     t.decimal  "t2aman",                               precision: 10, scale: 2, null: false
-    t.decimal  "t2conv",                               precision: 10, scale: 2, null: false
+    t.decimal  "t2aconv",                              precision: 10, scale: 2, null: false
     t.decimal  "t2apf",                                precision: 10, scale: 2, null: false
-    t.decimal  "t2sell",                               precision: 10, scale: 2, null: false
+    t.decimal  "t2asell",                              precision: 10, scale: 2, null: false
     t.decimal  "t2bman",                               precision: 10, scale: 2, null: false
     t.decimal  "t2bconv",                              precision: 10, scale: 2, null: false
-    t.decimal  "t2bp",                                 precision: 10, scale: 2, null: false
+    t.decimal  "t2bpf",                                precision: 10, scale: 2, null: false
     t.decimal  "t2bsell",                              precision: 10, scale: 2, null: false
     t.decimal  "t3aconv",                              precision: 10, scale: 2, null: false
     t.decimal  "t3apf",                                precision: 10, scale: 2, null: false
@@ -310,7 +347,7 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   end
 
   create_table "packaging_sector_main_activities", force: :cascade do |t|
-    t.string   "type",        limit: 255, null: false
+    t.string   "material",    limit: 255, null: false
     t.string   "description", limit: 255
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
@@ -324,21 +361,20 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   end
 
   create_table "registrations", force: :cascade do |t|
-    t.integer  "agency_template_upload_id",           limit: 4,                          null: false
-    t.integer  "sic_code_id",                         limit: 4,                          null: false
-    t.integer  "packaging_sector_main_activity_id",   limit: 4,                          null: false
-    t.integer  "country_of_business_registration_id", limit: 4,                          null: false
-    t.integer  "submission_type_id",                  limit: 4,                          null: false
-    t.integer  "resubmission_reason_id",              limit: 4
-    t.decimal  "turnover",                                      precision: 10, scale: 2, null: false
+    t.integer  "agency_template_upload_id",         limit: 4,                          null: false
+    t.integer  "sic_code_id",                       limit: 4,                          null: false
+    t.integer  "packaging_sector_main_activity_id", limit: 4,                          null: false
+    t.integer  "submission_type_id",                limit: 4
+    t.integer  "resubmission_reason_id",            limit: 4
+    t.integer  "business_id",                       limit: 4,                          null: false
+    t.decimal  "turnover",                                    precision: 10, scale: 2, null: false
     t.boolean  "licensor"
     t.boolean  "allocation_method_used"
-    t.datetime "created_at",                                                             null: false
-    t.datetime "updated_at",                                                             null: false
+    t.datetime "created_at",                                                           null: false
+    t.datetime "updated_at",                                                           null: false
   end
 
   add_index "registrations", ["agency_template_upload_id"], name: "fk_rails_b77d53b2a3", using: :btree
-  add_index "registrations", ["country_of_business_registration_id"], name: "fk_rails_7a70587019", using: :btree
   add_index "registrations", ["packaging_sector_main_activity_id"], name: "fk_rails_bb82cb95dd", using: :btree
   add_index "registrations", ["resubmission_reason_id"], name: "fk_rails_fe6ce2c717", using: :btree
   add_index "registrations", ["sic_code_id"], name: "fk_rails_b4a78f5f34", using: :btree
@@ -351,14 +387,24 @@ ActiveRecord::Schema.define(version: 20161208182445) do
     t.boolean  "calculation_method_sample_weighing"
     t.boolean  "calculation_method_sales_records"
     t.boolean  "calculation_method_trade_association_method_details"
+    t.boolean  "consultant_system_used"
     t.string   "other_method_details",                                limit: 255
-    t.string   "consultant_system_used",                              limit: 255
     t.string   "data_system_used",                                    limit: 255
     t.datetime "created_at",                                                      null: false
     t.datetime "updated_at",                                                      null: false
   end
 
   add_index "regular_producer_details", ["registration_id"], name: "fk_rails_200684d40d", using: :btree
+
+  create_table "report_event_data", force: :cascade do |t|
+    t.string   "report_type",       limit: 255
+    t.string   "year",              limit: 255
+    t.integer  "current_user_id",   limit: 4
+    t.string   "current_user_type", limit: 255
+    t.string   "business_ids",      limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
 
   create_table "resubmission_reasons", force: :cascade do |t|
     t.string   "reason",      limit: 255, null: false
@@ -465,14 +511,16 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   end
 
   create_table "small_producer_details", force: :cascade do |t|
-    t.integer  "registration_id",                        limit: 4,   null: false
+    t.integer  "registration_id",                        limit: 4
+    t.integer  "subsidiary_id",                          limit: 4
     t.string   "allocation_method_predominant_material", limit: 255, null: false
-    t.string   "allocation_method_obligation",           limit: 255, null: false
+    t.integer  "allocation_method_obligation",           limit: 4,   null: false
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
   end
 
   add_index "small_producer_details", ["registration_id"], name: "fk_rails_dbdafa2a38", using: :btree
+  add_index "small_producer_details", ["subsidiary_id"], name: "fk_rails_25c374062c", using: :btree
 
   create_table "small_producer_obligations", force: :cascade do |t|
     t.decimal  "sme",                     precision: 10, scale: 2
@@ -490,16 +538,19 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   end
 
   create_table "subsidiaries", force: :cascade do |t|
-    t.integer  "business_id",               limit: 4, null: false
-    t.integer  "agency_template_upload_id", limit: 4, null: false
-    t.integer  "change_detail_id",          limit: 4, null: false
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.integer  "business_id",                       limit: 4,                 null: false
+    t.integer  "agency_template_upload_id",         limit: 4,                 null: false
+    t.integer  "change_detail_id",                  limit: 4
+    t.integer  "packaging_sector_main_activity_id", limit: 4,                 null: false
+    t.boolean  "allocation_method_used",                      default: false
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
   end
 
   add_index "subsidiaries", ["agency_template_upload_id"], name: "fk_rails_8637b10479", using: :btree
   add_index "subsidiaries", ["business_id"], name: "fk_rails_75332f4c56", using: :btree
   add_index "subsidiaries", ["change_detail_id"], name: "fk_rails_c91c61f6f6", using: :btree
+  add_index "subsidiaries", ["packaging_sector_main_activity_id"], name: "fk_rails_faf5299966", using: :btree
 
   create_table "target_fields", force: :cascade do |t|
     t.string   "name",            limit: 255, null: false
@@ -541,34 +592,39 @@ ActiveRecord::Schema.define(version: 20161208182445) do
   add_foreign_key "annual_target_sets", "scheme_country_codes"
   add_foreign_key "businesses", "schemes"
   add_foreign_key "company_operators", "businesses"
+  add_foreign_key "contacts", "address_types"
   add_foreign_key "contacts", "businesses"
   add_foreign_key "contacts_addresses", "addresses"
   add_foreign_key "contacts_addresses", "contacts"
-  add_foreign_key "joiners", "agency_template_uploads"
+  add_foreign_key "emailed_reports", "businesses"
+  add_foreign_key "emailed_reports", "emailed_statuses"
+  add_foreign_key "joiners", "agency_template_uploads", on_delete: :cascade
   add_foreign_key "joiners", "businesses"
-  add_foreign_key "leavers", "agency_template_uploads"
+  add_foreign_key "leavers", "agency_template_uploads", on_delete: :cascade
   add_foreign_key "leavers", "businesses"
-  add_foreign_key "leavers", "leaving_codes"
-  add_foreign_key "licensors", "agency_template_uploads"
+  add_foreign_key "leavers", "leaving_businesses", on_delete: :cascade
+  add_foreign_key "leavers", "leaving_codes", on_delete: :cascade
+  add_foreign_key "licensors", "agency_template_uploads", on_delete: :cascade
   add_foreign_key "licensors", "businesses"
-  add_foreign_key "material_details", "packaging_materials"
-  add_foreign_key "material_details", "regular_producer_details"
+  add_foreign_key "material_details", "packaging_materials", on_delete: :cascade
+  add_foreign_key "material_details", "regular_producer_details", on_delete: :cascade
   add_foreign_key "material_targets", "annual_target_sets"
-  add_foreign_key "material_targets", "packaging_materials"
-  add_foreign_key "material_totals", "packaging_materials"
-  add_foreign_key "material_totals", "regular_producer_details"
-  add_foreign_key "registrations", "agency_template_uploads"
-  add_foreign_key "registrations", "country_of_business_registrations"
-  add_foreign_key "registrations", "packaging_sector_main_activities"
+  add_foreign_key "material_targets", "packaging_materials", on_delete: :cascade
+  add_foreign_key "material_totals", "packaging_materials", on_delete: :cascade
+  add_foreign_key "material_totals", "regular_producer_details", on_delete: :cascade
+  add_foreign_key "registrations", "agency_template_uploads", on_delete: :cascade
+  add_foreign_key "registrations", "packaging_sector_main_activities", on_delete: :cascade
   add_foreign_key "registrations", "resubmission_reasons"
   add_foreign_key "registrations", "sic_codes"
   add_foreign_key "registrations", "submission_types"
-  add_foreign_key "regular_producer_details", "registrations"
-  add_foreign_key "small_producer_details", "registrations"
-  add_foreign_key "subsidiaries", "agency_template_uploads"
+  add_foreign_key "regular_producer_details", "registrations", on_delete: :cascade
+  add_foreign_key "small_producer_details", "registrations", on_delete: :cascade
+  add_foreign_key "small_producer_details", "subsidiaries", on_delete: :cascade
+  add_foreign_key "subsidiaries", "agency_template_uploads", on_delete: :cascade
   add_foreign_key "subsidiaries", "businesses"
-  add_foreign_key "subsidiaries", "change_details"
-  add_foreign_key "target_totals", "regular_producer_details"
+  add_foreign_key "subsidiaries", "change_details", on_delete: :cascade
+  add_foreign_key "subsidiaries", "packaging_sector_main_activities", on_delete: :cascade
+  add_foreign_key "target_totals", "regular_producer_details", on_delete: :cascade
   add_foreign_key "targets", "annual_target_sets"
   add_foreign_key "targets", "target_fields"
 end

@@ -20,16 +20,13 @@
 
             <% if @schemes %>
                 <div class="field centre">
-                  <%= f.collection_select :scheme_id, @schemes.order(:name), :id, :name, {include_blank: 'Select a Scheme'}, {id: 'scheme_id_select', class: "devise-lgn form-control"} %>
+                  <%= f.label 'Active Schemes', class: "devise-lgn" %>
+                  <%= f.collection_select :scheme_id, @schemes.where(active: true).order(:name), :id, :name, {include_blank: 'Select a Scheme'}, {id: 'scheme_id_select', class: "devise-lgn form-control"} %>
                 </div>
             <% end %>
 
             <div class="field centre">
               <%= f.text_field :name, placeholder: 'Name', class: "devise-lgn form-control" %>
-            </div>
-
-            <div class="field centre">
-              <%= f.text_field :trading_name, placeholder: 'Trading Name', class: "devise-lgn form-control" %>
             </div>
 
             <div class="field centre">
@@ -49,7 +46,7 @@
             </div>
 
             <div class="field centre">
-              <%= f.text_field :year_first_reg, placeholder: 'Year first registered', class: "devise-lgn form-control" %>
+              <%= f.select :year_first_reg, options_for_select(LookupValues::ValidYears.for('first_registered')), {prompt: true, prompt: 'First year registered?'},  class: "devise-lgn form-control" %>
             </div>
 
             <div class="actions centre">
@@ -62,3 +59,4 @@
       <%= link_to 'Back', :back, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
     </div>
   </div>
+</div>

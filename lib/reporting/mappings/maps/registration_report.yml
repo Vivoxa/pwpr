@@ -101,6 +101,12 @@ fields:
     model_attribute: telephone_1
     data_type: string
     address_type: Correspondence
+  tb_corr_contact_mob:
+    control_type: text_box
+    model_name: contact
+    model_attribute: telephone_2
+    data_type: string
+    address_type: Correspondence
   tb_corr_contact_fax_no:
     control_type: text_box
     model_name: contact

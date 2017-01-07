@@ -10,7 +10,7 @@ fields:
     model_name: business
     model_attribute: company_number
     data_type: string
-  tb_npwd_code:
+  tb_npwdcode:
     control_type: text_box
     model_name: business
     model_attribute: NPWD

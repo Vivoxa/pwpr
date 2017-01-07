@@ -401,9 +401,9 @@ ActiveRecord::Schema.define(version: 20161225080451) do
     t.string   "year",              limit: 255
     t.integer  "current_user_id",   limit: 4
     t.string   "current_user_type", limit: 255
-    t.string   "business_ids",      limit: 255
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.text     "business_ids",      limit: 65535
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   create_table "resubmission_reasons", force: :cascade do |t|

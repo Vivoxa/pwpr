@@ -5,7 +5,7 @@ class CreateReportEventData < ActiveRecord::Migration
       t.string :year
       t.integer :current_user_id
       t.string :current_user_type
-      t.string :business_ids
+      t.text :business_ids
 
       t.timestamps null: false
     end

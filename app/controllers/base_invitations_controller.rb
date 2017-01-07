@@ -7,7 +7,7 @@ class BaseInvitationsController < Devise::InvitationsController
 
   # GET /resource/invitation/new
   def new
-    @scheme_id = params[:scheme_id].to_i if  params[:scheme_id]
+    @scheme_id = params[:scheme_id].to_i if params[:scheme_id]
 
     populate_schemes_and_businesses
     self.resource = resource_class.new

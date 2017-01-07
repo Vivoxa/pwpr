@@ -45,11 +45,11 @@ module Reporting
         status_id = success ? EmailedStatus.id_from_setting('SUCCESS') : EmailedStatus.id_from_setting('FAILED')
 
         logger.info "process_report() = Email sent?: #{success}"
-        EmailedReport.where(business_id: business.id, report_name: report_type, year: year).first_or_create(date_last_sent: DateTime.now,
-                                                                                                            sent_by_id: current_user.id,
-                                                                                                            sent_by_type: current_user.class.name,
+        EmailedReport.where(business_id: business.id, report_name: report_type, year: year).first_or_create(date_last_sent:    DateTime.now,
+                                                                                                            sent_by_id:        current_user.id,
+                                                                                                            sent_by_type:      current_user.class.name,
                                                                                                             emailed_status_id: status_id,
-                                                                                                            error_notices: @errors)
+                                                                                                            error_notices:     @errors)
         success
       end
 
@@ -64,22 +64,7 @@ module Reporting
           report_field_config = maps['fields'][pdf_field.name]
 
           begin
-            case report_field_config['model_name']
-              when 'business'
-                value = process_business_attribute(report_field_config, business)
-                value_pairs[pdf_field.name] = configure_field_format(pdf_field, value)
-
-              when 'address'
-                value_pairs[pdf_field.name] = process_address_attribute(report_field_config, business)
-
-              when 'registration'
-                value = process_registration_attribute(report_field_config, business, year)
-                value_pairs[pdf_field.name] = configure_field_format(pdf_field, value)
-
-              when 'contact'
-                value = process_contact_attribute(report_field_config, business)
-                value_pairs[pdf_field.name] = configure_field_format(pdf_field, value)
-            end
+            assign_value_pairs(business, pdf_field, report_field_config, value_pairs, year)
           rescue => e
             logger.error "process_report() pdf-field: #{pdf_field.name} ERROR: #{e.message}"
           end
@@ -88,12 +73,31 @@ module Reporting
         value_pairs
       end
 
+      def assign_value_pairs(business, pdf_field, report_field_config, value_pairs, year)
+        case report_field_config['model_name']
+        when 'business'
+          value = process_business_attribute(report_field_config, business)
+          value_pairs[pdf_field.name] = configure_field_format(pdf_field, value)
+
+        when 'address'
+          value_pairs[pdf_field.name] = process_address_attribute(report_field_config, business)
+
+        when 'registration'
+          value = process_registration_attribute(report_field_config, business, year)
+          value_pairs[pdf_field.name] = configure_field_format(pdf_field, value)
+
+        when 'contact'
+          value = process_contact_attribute(report_field_config, business)
+          value_pairs[pdf_field.name] = configure_field_format(pdf_field, value)
+        end
+      end
+
       def configure_field_format(pdf_field, value)
         case pdf_field.type
-          when 'Text'
-            value
-          when 'Button'
-            checkbox_compatible_value(value)
+        when 'Text'
+          value
+        when 'Button'
+          checkbox_compatible_value(value)
         end
       end
 

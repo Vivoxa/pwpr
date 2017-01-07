@@ -20,7 +20,7 @@ class SchemeOperatorsController < BaseController
   end
 
   # GET /scheme_operators/1/edit
-  def edit;
+  def edit
   end
 
   # PATCH/PUT /scheme_operators/:id
@@ -60,11 +60,22 @@ class SchemeOperatorsController < BaseController
     query = 'invitation_sent_at IS NOT NULL AND invitation_accepted_at IS NULL'
     @schemes = {}
     current_user.schemes.each do |scheme|
-      @schemes[scheme.id] = {users: (scheme.scheme_operators.where(query)), name: scheme.name}
+      @schemes[scheme.id] = {users: scheme.scheme_operators.where(query), name: scheme.name}
     end
   end
 
   private
+
+  def pending_operators(schemes)
+    schemes.each do |_scheme_id, details|
+      details[:users].each do |user|
+        pending_operators = []
+        pending_operators << user if user.confirmed_at.present?
+        details[:users] = pending_operators
+      end
+    end
+    schemes
+  end
 
   def scheme_operators_by_approved(approved = true)
     if current_scheme_operator || current_admin

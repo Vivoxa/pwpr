@@ -2,7 +2,6 @@ require 'prawn'
 
 module Pdf
   class RegistrationFormEmailedBusinesses
-
     def self.pdf(businesses, year)
       filename = file_path(businesses.first.scheme, year)
 

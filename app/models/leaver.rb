@@ -9,6 +9,6 @@ class Leaver < ActiveRecord::Base
   before_destroy :delete_parents
 
   def delete_parents
-    self.leaving_business.delete if self.leaving_business
+    leaving_business&.delete
   end
 end

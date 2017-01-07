@@ -24,7 +24,7 @@ module SpreadsheetWorker
 
         def process_registered_address(row)
           return if empty_row?(row)
-          return if existing_address( 'Registered', @business)
+          return if existing_address('Registered', @business)
 
           address = Address.new
           address.address_line_1 = column_value(row, map['registered']['address_1']['field'])
@@ -39,7 +39,7 @@ module SpreadsheetWorker
 
         def process_contact_address(row)
           return if empty_row?(row)
-          return if existing_address( 'Contact', @business)
+          return if existing_address('Contact', @business)
 
           address = Address.new
           address.address_line_1 = column_value(row, map['contact']['address_1']['field'])

@@ -7,7 +7,7 @@ class SchemeMailer < ApplicationMailer
     @url = ENV['APP_CO_SIGN_IN_URL']
 
     email_settings = LookupValues::Email::EmailSettings.for('registration_email')
-    subject = email_settings['subject'] % { year: year }
+    subject = email_settings['subject'] % {year: year}
 
     mail(to: recipient_email, subject: subject)
   rescue => e
@@ -24,8 +24,8 @@ class SchemeMailer < ApplicationMailer
 
     email_settings = LookupValues::Email::EmailSettings.for('scheme_director_info')
 
-    subject = email_settings['subject'] % { year: year }
-    report_name = email_settings['report_name'] % { scheme_id: scheme.id, year: year }
+    subject = email_settings['subject'] % {year: year}
+    report_name = email_settings['report_name'] % {scheme_id: scheme.id, year: year}
 
     attachments[report_name] = File.read(file_path)
 

@@ -61,6 +61,14 @@ class CompanyOperatorsController < BaseController
 
   private
 
+  def pending_operators(unapproved_operators)
+    pending_operators = []
+    unapproved_operators.each do |op|
+      pending_operators << op if op.confirmed_at.present?
+    end
+    pending_operators
+  end
+
   def company_operators_by_approved(approved = true)
     if current_scheme_operator || current_admin
       company_operators = []

@@ -37,22 +37,26 @@ class AgencyTemplateUploadsController < ApplicationController
 
       destroy_existing_agency_template
 
-      if upload.save
-        transfer_file_to_server
+      upload(upload)
+    end
+  end
 
-        if File.exist?(path_to_save_file)
-          assign_upload_filename!(upload)
-          upload_to_s3(upload)
-          upload.save!
-          publish_uploaded_notification(upload.id)
-        end
+  def upload(upload)
+    if upload.save
+      transfer_file_to_server
 
-        redirect_to action: :index, notice: "#{upload.class} was successfully uploaded."
-      else
-        @scheme = Scheme.find_by_id(params[:scheme_id])
-        @upload = upload
-        render 'agency_template_uploads/new'
+      if File.exist?(path_to_save_file)
+        assign_upload_filename!(upload)
+        upload_to_s3(upload)
+        upload.save!
+        publish_uploaded_notification(upload.id)
       end
+
+      redirect_to action: :index, notice: "#{upload.class} was successfully uploaded."
+    else
+      @scheme = Scheme.find_by_id(params[:scheme_id])
+      @upload = upload
+      render 'agency_template_uploads/new'
     end
   end
 
@@ -60,9 +64,7 @@ class AgencyTemplateUploadsController < ApplicationController
     existing_upload = AgencyTemplateUpload.where(scheme_id: params[:scheme_id], year: params[:year])
     @show_confirmation_field = false
 
-    if existing_upload.any?
-      @show_confirmation_field = true
-    end
+    @show_confirmation_field = true if existing_upload.any?
 
     respond_to do |format|
       format.js
@@ -74,16 +76,16 @@ class AgencyTemplateUploadsController < ApplicationController
   def destroy_existing_agency_template
     if params[:upload_exists].present? && params[:confirm_replace].to_i == 1
       existing_upload = AgencyTemplateUpload.where(scheme_id: params[:scheme_id].to_i,
-                                                   year: params[:agency_template_upload][:year])
+                                                   year:      params[:agency_template_upload][:year])
 
-      existing_upload.each{ |upload| upload.destroy } if existing_upload.any?
+      existing_upload.each(&:destroy) if existing_upload.any?
     end
   end
 
   def build_upload
-    attributes = {uploaded_by_id: current_user.id,
+    attributes = {uploaded_by_id:   current_user.id,
                   uploaded_by_type: current_user.class.name,
-                  scheme_id: params['scheme_id']}
+                  scheme_id:        params['scheme_id']}
 
     params_to_sym = Hash[upload_params.map { |k, v| [k.to_sym, v] }]
     attributes = attributes.merge(params_to_sym)

@@ -71,8 +71,7 @@ module SpreadsheetWorker
 
         def process_registered_address(row)
           return if empty_row?(row)
-          return if existing_address( 'Registered', @business)
-
+          return if existing_address('Registered', @business)
           address = Address.new
           address.address_line_1 = column_value(row, map['registered']['address_1']['field'])
           address.address_line_2 = column_value(row, map['registered']['address_2']['field'])
@@ -104,7 +103,6 @@ module SpreadsheetWorker
           @contact.address_type_id = correspondence_address_type_id
           @contact.save!
         end
-
 
         def process_small_producer(row)
           return if empty_row?(row)

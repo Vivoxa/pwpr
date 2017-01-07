@@ -12,7 +12,7 @@
                             id: "#{@scheme.id}-invite_scheme_operator" %>
             <% end %>
             <% if can? :new, CompanyOperators::InvitationsController %>
-                <%= link_to 'Invite new Company Operator',
+                <%= link_to 'Invite new Member Contact',
                             new_company_operator_invitation_path,
                             class: ['btn btn-sm btn-primary', 'devise-btn'],
                             id: "#{@scheme.id}-invite_company_operator" %>
@@ -23,7 +23,7 @@
           <div class="col-lg-6">
             <div class="row">
               <% if can? :new, Business %>
-                  <%= link_to 'Businesses', businesses_path(scheme_id: @scheme.id), class: ['btn btn-sm btn-secondary', 'devise-btn'] %>
+                  <%= link_to 'Members', businesses_path(scheme_id: @scheme.id), class: ['btn btn-sm btn-secondary', 'devise-btn'] %>
               <% end %>
               <% if can? :destroy, @scheme %>
                   <%= link_to 'Destroy', @scheme, {method: :delete, class: ['btn btn-sm btn-danger', 'devise-btn'], data: {confirm: 'Are you sure?'}} %>

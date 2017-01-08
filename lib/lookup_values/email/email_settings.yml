@@ -3,3 +3,4 @@ registration_email:
 scheme_director_info:
   subject: '[INFO]: Registration forms emailed for %{year}'
   report_name: 'recipients_registration_form_%{scheme_id}_%{year}.pdf'
+domain_name: 'app-pwpr.com'

@@ -1,7 +1,9 @@
 <% if current_company_operator %>
     <li class="nav-item">
       <div class="btn-group">
-        <%= link_to 'My Business', business_path(current_company_operator.business.id), class: ['btn btn-sm btn-outline-secondary'] %>
+        <% if can? :read, Business %>
+            <%= link_to 'My Business', business_path(current_company_operator.business.id), class: ['btn btn-sm btn-outline-secondary'] %>
+        <% end %>
       </div>
     </li>
 <% end %>

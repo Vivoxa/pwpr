@@ -1,5 +1,4 @@
-<% unless @current_user.is_a?(CompanyOperator) %>
-    <ul class="nav nav-tabs card-header-tabs pull-xs-left">
+<ul class="nav nav-tabs card-header-tabs pull-xs-left">
   <li class="nav-item">
     <a class="nav-link" href=<%= company_operators_path %>>Active</a>
   </li>
@@ -7,7 +6,6 @@
     <a class="nav-link" href=<%= pending_company_operators_path %>>Pending Approval</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href=<%= company_operator_invitations_path  %>>Invitations</a>
+    <a class="nav-link active" href=<%= company_operator_invitations_path %>>Invitations</a>
   </li>
 </ul>
-<% end %>

@@ -1,7 +1,7 @@
 <% if current_company_operator %>
     <li class="nav-item">
       <div class="btn-group">
-        <%= link_to 'My Member', business_path(current_company_operator.business.id), class: ['btn btn-sm btn-outline-secondary'] %>
+        <%= link_to 'My Business', business_path(current_company_operator.business.id), class: ['btn btn-sm btn-outline-secondary'] %>
       </div>
     </li>
 <% end %>

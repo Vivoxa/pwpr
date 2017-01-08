@@ -1,0 +1,11 @@
+<h1 class="centre-wide">Editing Contact</h1>
+
+<%= render 'form' %>
+
+<div class="centre">
+
+  <% if can? :read, Contact %>
+      <%= link_to 'Show', business_contact_path(id: @contact.id), class: ['btn btn-info devise-btn'] %>
+      <%= link_to 'Back', business_contacts_path(business_id: @contact.business_id), class: ['btn btn-success devise-btn'] %>
+  <% end %>
+</div>

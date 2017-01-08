@@ -24,7 +24,13 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'visitors#index'
 
-  resources :schemes, :businesses
+  resources :schemes
+
+  resources :businesses do
+    resources :contacts
+    match '/contacts/create', to: 'contacts#create', via: :post
+    match '/contacts/:id/create', to: 'contacts#update', via: :patch
+  end
   resources :scheme_operator_invitations, only: :index
 
   resources :admins, :scheme_operators, :company_operators do

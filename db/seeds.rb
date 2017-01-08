@@ -79,42 +79,9 @@ businesses = Business.create([{name: 'dans pack business',
                                scheme_status_code_id: 1,
                                registration_status_code_id: 1}])
 
-agency_templates = AgencyTemplateUpload.create([{year: '2015',
-                                                 filename: ActionDispatch::Http::UploadedFile.new(tempfile: 'public/favicon.ico', filename: 'favicon.ico'),
-                                                 uploaded_at: DateTime.parse('2001-03-30T04:05:06+07:00'),
-                                                 uploaded_by_type: 'SchemeOperator',
-                                                 uploaded_by_id: 1},
-                                                {year: '2015',
-                                                 filename: ActionDispatch::Http::UploadedFile.new(tempfile: 'public/favicon.ico', filename: 'favicon.ico'),
-                                                 uploaded_at: DateTime.parse('2015-11-23T04:05:06+07:00'),
-                                                 uploaded_by_type: 'SchemeOperator',
-                                                 uploaded_by_id: 1},
-                                                {year: '2015',
-                                                 filename: ActionDispatch::Http::UploadedFile.new(tempfile: 'public/favicon.ico', filename: 'favicon.ico'),
-                                                 uploaded_at: DateTime.parse('2002-06-22T04:05:06+07:00'),
-                                                 uploaded_by_type: 'SchemeOperator',
-                                                 uploaded_by_id: 1},
-                                                {year: '2015',
-                                                 filename: ActionDispatch::Http::UploadedFile.new(tempfile: 'public/favicon.ico', filename: 'favicon.ico'),
-                                                 uploaded_at: DateTime.parse('2004-04-14T04:05:06+07:00'),
-                                                 uploaded_by_type: 'Admin',
-                                                 uploaded_by_id: 1},
-                                                {year: '2015',
-                                                 filename: ActionDispatch::Http::UploadedFile.new(tempfile: 'public/favicon.ico', filename: 'favicon.ico'),
-                                                 uploaded_at: DateTime.parse('2010-02-11T04:05:06+07:00'),
-                                                 uploaded_by_type: 'Admin',
-                                                 uploaded_by_id: 1},
-                                                {year: '2015',
-                                                 filename: ActionDispatch::Http::UploadedFile.new(tempfile: 'public/favicon.ico', filename: 'favicon.ico'),
-                                                 uploaded_at: DateTime.parse('2010-02-11T04:05:06+07:00'),
-                                                 uploaded_by_type: 'Admin',
-                                                 uploaded_by_id: 1}
-                                               ])
 schemes.each_with_index do |scheme, index|
   businesses[index].scheme = scheme
   businesses[index].save!
-  agency_templates[index].scheme_id = scheme.id
-  agency_templates[index].save!
 end
 
 registration_address = Address.new(address_type_id: 2,

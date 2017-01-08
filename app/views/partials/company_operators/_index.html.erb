@@ -19,15 +19,21 @@
                   <div class="col-md-4">
                     <strong>Email</strong>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <strong>Member</strong>
                   </div>
+                  <div class="col-md-2"></div>
                 </div>
                 <div class="row">
                   <div class="col-md-3"><%= user.first_name.to_s if user.first_name %></div>
-                  <div class="col-md-5"><%= user.email.to_s %></div>
-                  <div class="col-md-4">
+                  <div class="col-md-4"><%= user.email.to_s %></div>
+                  <div class="col-md-3">
                     <%= current_admin ? 'N/A for Admin' : user.business.name %>
+                  </div>
+                  <div class="col-md-2">
+                    <% if tab_partial.include?('pending') && user.approved? == false  && (can? :approve, CompanyOperator) %>
+                        <%= link_to 'Approve', company_operator_approve_path(company_operator_id: user.id), class: ['btn btn-sm btn-success', 'show-btn-md'] %>
+                    <% end %>
                   </div>
                 </div>
               </div>

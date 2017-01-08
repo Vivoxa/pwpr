@@ -15,7 +15,7 @@ class BaseController < ApplicationController
 
   def approve
     object = SchemeOperator.find(params['scheme_operator_id'].to_i) if params['scheme_operator_id']
-    object = SchemeOperator.find(params['company_operator_id'].to_i) if params['company_operator_id']
+    object = CompanyOperator.find(params['company_operator_id'].to_i) if params['company_operator_id']
     object.approved = true
 
     respond_to do |format|

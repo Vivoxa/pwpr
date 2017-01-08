@@ -19,37 +19,37 @@ module PermissionsForRole
 
     def co_director
       {
-        co_users_r:   {checked: true, locked: true},
-        co_users_w:   {checked: true, locked: true},
-        co_users_e:   {checked: true, locked: true},
-        co_users_d:   {checked: true, locked: true},
-
-        businesses_r: {checked: true, locked: true},
-        businesses_e: {checked: true, locked: true}
+        #co_users_r:   {checked: true, locked: true}
+        # co_users_w:   {checked: true, locked: true},
+        # co_users_e:   {checked: true, locked: true},
+        # co_users_d:   {checked: true, locked: true},
+        #
+        # businesses_r: {checked: true, locked: true},
+        # businesses_e: {checked: true, locked: true}
       }
     end
 
     def co_super_user
       {
-        co_users_r:   {checked: true, locked: true},
-        co_users_w:   {checked: true, locked: true},
-        co_users_e:   {checked: true, locked: true},
-        co_users_d:   {checked: false, locked: false},
-
-        businesses_r: {checked: false, locked: false},
-        businesses_e: {checked: false, locked: false}
+        #co_users_r:   {checked: true, locked: true}
+        # co_users_w:   {checked: true, locked: true},
+        # co_users_e:   {checked: true, locked: true},
+        # co_users_d:   {checked: false, locked: false},
+        #
+        # businesses_r: {checked: false, locked: false},
+        # businesses_e: {checked: false, locked: false}
       }
     end
 
     def co_user
       {
-        co_users_r:   {checked: true, locked: true},
-        co_users_w:   {checked: false, locked: false},
-        co_users_e:   {checked: false, locked: false},
-        co_users_d:   {checked: false, locked: false},
-
-        businesses_r: {checked: false, locked: false},
-        businesses_e: {checked: false, locked: true}
+        #co_users_r:   {checked: true, locked: true}
+        # co_users_w:   {checked: false, locked: false},
+        # co_users_e:   {checked: false, locked: false},
+        # co_users_d:   {checked: false, locked: false},
+        #
+        # businesses_r: {checked: false, locked: false},
+        # businesses_e: {checked: false, locked: true}
       }
     end
   end

@@ -9,7 +9,9 @@ class SchemeMailer < ApplicationMailer
     email_settings = LookupValues::Email::EmailSettings.for('registration_email')
     subject = email_settings['subject'] % {year: year}
 
-    mail(to: recipient_email, subject: subject)
+    from_address = @scheme.email_friendly_name
+
+    mail(to: recipient_email, from: from_address, subject: subject)
   rescue => e
     Rails.logger.warn("SchemeMailer::registration_email() ERROR: #{e.message}")
   end

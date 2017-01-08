@@ -6,7 +6,11 @@
 
   <% resource.class.invite_key_fields.each do |field| -%>
     <div class="field centre">
-      <%= f.text_field field, placeholder: field, class: "devise-lgn form-control"%></p>
+      <% if field.to_s.downcase.include?('email') %>
+          <%= f.email_field field, placeholder: field, class: "devise-lgn form-control" %></p>
+      <% else %>
+          <%= f.text_field field, placeholder: field, class: "devise-lgn form-control" %></p>
+      <% end %>
     </div>
   <% end -%>
   <div class="field centre">

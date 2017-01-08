@@ -16,7 +16,14 @@ module PermissionsForRole
 
         can %i(read new create update destroy), Admins::RegistrationsController if user.super_admin?
       end
-      
+
+      def contact_permissions(user)
+        can :read, Contact if user.contacts_r?
+        can %i(new create), Contact if user.contacts_w?
+        can %i(edit update), Contact if user.contacts_e?
+        can :destroy, Contact if user.contacts_d?
+      end
+
       def scheme_permissions(user)
         can :read, Scheme, id: user.scheme_ids if user.schemes_r?
         can %i(new create), Scheme if user.schemes_w?

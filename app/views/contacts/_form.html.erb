@@ -1,0 +1,54 @@
+<%= form_for(@contact, :url => 'create') do |f| %>
+    <% if @contact.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@contact.errors.count, 'error') %> prohibited this contact from being saved:</h2>
+
+          <ul>
+            <% @contact.errors.full_messages.each do |message| %>
+                <% message.gsub!('Address type', 'Contact type') if message.include?('Address type') %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field centre">
+      <%= f.hidden_field :business_id, value: @business.id if @business %>
+    </div>
+
+    <div class="field centre">
+      <%= f.collection_select :address_type_id, AddressType.all, :id, :title, {include_blank: 'Select an Contact Type'}, {class: 'devise-lgn form-control'} %>
+    </div>
+
+    <div class="field centre">
+      <%= f.select :title, options_for_select(LookupValues::FormLookups.for('salutations')), {prompt: true, prompt: 'Select a Title'}, class: 'devise-lgn form-control' %>
+    </div>
+
+    <div class="field centre">
+      <%= f.text_field :first_name, placeholder: 'First Name', class: 'devise-lgn form-control' %>
+    </div>
+
+    <div class="field centre">
+      <%= f.text_field :last_name, placeholder: 'Last Name', class: 'devise-lgn form-control' %>
+    </div>
+
+    <div class="field centre">
+      <%= f.email_field :email, placeholder: 'Email', class: 'devise-lgn form-control' %>
+    </div>
+
+    <div class="field centre">
+      <%= f.text_field :telephone_1, placeholder: 'Telephone 1', class: 'devise-lgn form-control' %>
+    </div>
+
+    <div class="field centre">
+      <%= f.text_field :telephone_2, placeholder: 'Telephone 2', class: 'devise-lgn form-control' %>
+    </div>
+
+    <div class="field centre">
+      <%= f.text_field :fax, placeholder: 'Fax', class: 'devise-lgn form-control' %>
+    </div>
+
+    <div class="actions centre">
+      <%= f.submit 'Save', class: 'btn btn-primary devise-btn' %>
+    </div>
+<% end %>

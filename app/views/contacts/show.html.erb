@@ -1,0 +1,60 @@
+<div class="container" style='margin-top:30px'>
+  <div class="row">
+    <h1>Contact for <%= @contact.business.name %></h1>
+
+    <div class="card">
+
+      <div class="card-block">
+
+        <div class="col-xs-12 col-md-2 col-lg-12">
+          <div class="card">
+            <div class="card-block">
+              <div class="row">
+                <div class="col-xs-12 col-md-2 col-lg-2"><strong>Contact Type</strong></div>
+                <div class="col-xs-12 col-md-2 col-lg-1"><strong>Title</strong></div>
+                <div class="col-xs-12 col-md-2 col-lg-2"><strong>First Name</strong></div>
+                <div class="col-xs-12 col-md-2 col-lg-2"><strong>Last Name</strong></div>
+                <div class="col-xs-12 col-md-2 col-lg-3"><strong>Email</strong></div>
+                <div class="col-xs-12 col-md-2 col-lg-2"></div>
+
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-2 col-lg-2"><%= @contact.address_type.title %></div>
+                <div class="col-xs-12 col-md-2 col-lg-1"><%= @contact.title %></div>
+                <div class="col-xs-12 col-md-2 col-lg-2"><%= @contact.first_name %></div>
+                <div class="col-xs-12 col-md-2 col-lg-2"><%= @contact.last_name %></div>
+                <div class="col-xs-12 col-md-2 col-lg-3"><%= @contact.email %></div>
+                <div class="col-xs-12 col-md-2 col-lg-2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-2 col-lg-12">
+          <div class="card">
+            <div class="card-block">
+              <div class="row">
+                <div class="col-xs-12 col-md-4 col-lg-3"><strong>Telephone 1</strong></div>
+                <div class="col-xs-12 col-md-4 col-lg-3"><strong>Telephone 2</strong></div>
+                <div class="col-xs-12 col-md-4 col-lg-3"><strong>Fax</strong></div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-4 col-lg-3"><%= @contact.telephone_1 %></div>
+                <div class="col-xs-12 col-md-4 col-lg-3"><%= @contact.telephone_2 %></div>
+                <div class="col-xs-12 col-md-4 col-lg-3"><%= @contact.fax %></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <% if can? :update, @contact %>
+            <%= link_to 'Edit', edit_business_contact_path(id: @contact.id), class: ['btn btn-sm btn-warning'] %>
+        <% end %>
+        <% if can? :read, Contact %>
+            <%= link_to 'Back', business_contacts_path(business_id: @contact.business_id), class: ['btn btn-sm btn-primary'] %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>

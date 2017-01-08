@@ -17,10 +17,7 @@
                     <div class="col-xs-12 col-md-4 col-lg-1"></div>
                     <div class="col-xs-12 col-md-4 col-lg-5">
                       <div class="row">
-                        <%= link_to 'Details', business, class: ['btn btn-sm btn-info', 'show-btn-md'] %>
-                        <% if can? :destroy, business %>
-                            <%= link_to 'Destroy', business, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
-                        <% end %>
+                        <%= link_to 'Business Details', business, class: ['btn btn-info', 'devise-btn'] %>
                       </div>
                     </div>
                     <div class="col-xs-12 col-md-4 col-lg-5">
@@ -28,7 +25,7 @@
                         <% if can? :new, CompanyOperators::InvitationsController %>
                             <%= link_to 'Invite new Member Contact',
                                         new_company_operator_invitation_path,
-                                        class: ['btn btn-sm btn-primary', 'devise-btn'],
+                                        class: ['btn btn-primary', 'devise-btn'],
                                         id: "#{business.id}-invite_company_operator" %>
                         <% end %>
                       </div>
@@ -37,6 +34,9 @@
                   </div>
                   </p>
                   <div class="card-footer">
+                    <% if can? :destroy, business %>
+                        <%= link_to 'Destroy', business, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
+                    <% end %>
                   </div>
                 </div>
             <% end %>

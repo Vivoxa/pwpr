@@ -21,6 +21,15 @@ module PermissionsForRole
         company_operator_associated_ids.flatten
       end
 
+      def associated_contact_ids_for_user(user)
+        business_ids = associated_business_ids_for_associated_schemes(user)
+        contact_ids = []
+        Business.where(id: business_ids ).each do |business|
+          contact_ids << business.contact_ids
+        end
+        contact_ids.flatten
+      end
+
       def associated_business_ids_for_associated_schemes(user)
         business_ids = []
         user.schemes.each do |scheme|

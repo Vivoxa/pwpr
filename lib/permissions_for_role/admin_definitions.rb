@@ -43,7 +43,12 @@ module PermissionsForRole
         businesses_w: {checked: true, locked: true},
         businesses_d: {checked: true, locked: true},
         uploads_r:    {checked: true, locked: true},
-        uploads_w:    {checked: true, locked: true}
+        uploads_w:    {checked: true, locked: true},
+
+        contacts_r:   {checked: true, locked: true},
+        contacts_w:   {checked: true, locked: true},
+        contacts_e:   {checked: true, locked: true},
+        contacts_d:   {checked: true, locked: true}
       }
     end
 
@@ -68,8 +73,14 @@ module PermissionsForRole
         businesses_e: {checked: true, locked: true},
         businesses_w: {checked: true, locked: true},
         businesses_d: {checked: false, locked: false},
+
         uploads_r:    {checked: true, locked: true},
-        uploads_w:    {checked: false, locked: false}
+        uploads_w:    {checked: false, locked: false},
+
+        contacts_r:   {checked: true, locked: true},
+        contacts_w:   {checked: true, locked: true},
+        contacts_e:   {checked: true, locked: true},
+        contacts_d:   {checked: false, locked: false}
       }
     end
 
@@ -95,7 +106,12 @@ module PermissionsForRole
         businesses_w: {checked: false, locked: true},
         businesses_d: {checked: false, locked: true},
         uploads_r:    {checked: false, locked: false},
-        uploads_w:    {checked: false, locked: true}
+        uploads_w:    {checked: false, locked: true},
+
+        contacts_r:   {checked: true, locked: true},
+        contacts_w:   {checked: false, locked: false},
+        contacts_e:   {checked: false, locked: false},
+        contacts_d:   {checked: false, locked: true}
       }
     end
   end

@@ -30,6 +30,9 @@ module PermissionsForRole
 
         # permissions for Scheme
         scheme_permissions(user)
+
+        # permissions for Contact
+        contact_permissions(user)
       end
 
       def scheme_permissions(user)
@@ -40,6 +43,12 @@ module PermissionsForRole
         can :read, Scheme, id: active_schemes if user.schemes_r?
       end
 
+      def contact_permissions(user)
+        can :read, Contact, id: associated_contact_ids_for_user(user) if user.contacts_r?
+        can %i(new create), Contact if user.contacts_w?
+        can %i(edit update), Contact, id: associated_contact_ids_for_user(user) if user.contacts_e?
+        can :destroy, Contact, id: associated_business_ids_for_associated_schemes(user) if user.contacts_d?
+      end
 
       def business_permissions(user)
         can :read, Business, id: associated_business_ids_for_associated_schemes(user) if user.businesses_r?
@@ -53,7 +62,6 @@ module PermissionsForRole
         can %i(read new create update_permissions edit update update_businesses), CompanyOperators::InvitationsController
         can %i(read new create update_permissions edit update update_businesses), CompanyOperators::RegistrationsController
         can %i(new create permissions update_permissions update_businesses approve), CompanyOperator
-
       end
 
       def co_users_r(user)

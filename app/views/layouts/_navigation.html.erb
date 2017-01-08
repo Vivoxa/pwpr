@@ -34,7 +34,7 @@
         <% end %>
       </div>
     </li>
-    <% if @current_user %>
+    <% if @current_user && @current_user.is_a?(CompanyOperator) == false %>
         <%= render partial: 'partials/users/users_dropdown' %>
     <% end %>
     <%= render partial: 'partials/schemes_dropdown' %>

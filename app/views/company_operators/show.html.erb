@@ -1,3 +1,4 @@
+<% unless @current_user.is_a?(CompanyOperator) %>
 <div id="main-container" class="container">
   <%= render partial: './partials/users/show', locals: {user: @company_operator} %>
   <% if can? :permissions, @company_operator %>
@@ -11,3 +12,4 @@
   <% end %>
   <%= link_to 'Back', company_operators_path, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
 </div>
+<% end %>

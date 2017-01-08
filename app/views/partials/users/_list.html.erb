@@ -1,3 +1,4 @@
+<% unless @current_user.is_a?(CompanyOperator) %>
 <% @enabled = user_type == CompanyOperator ? '' : 'disabled' %>
 <% @active_is_active = active ? 'active' : '' %>
 <% @pending_is_active = pending ? 'active' : '' %>
@@ -78,3 +79,4 @@
     </div>
   </div>
 </div>
+<% end %>

@@ -2,11 +2,11 @@
 
 <div class="container" style='margin-top:30px'>
   <% if can? :new, Scheme %>
-      <%= link_to 'New Scheme', new_scheme_path, class: ['btn btn-sm btn-primary', 'devise-btn'] %>
+      <%= link_to 'New Scheme', new_scheme_path, class: ['btn btn-sm btn-primary'], style: 'margin-bottom:5px' %>
   <% end %>
   <% if can? :new, SchemeOperators::InvitationsController %>
       <%= link_to 'Invite Scheme Operator(Multiple Schemes)', new_scheme_operator_invitation_path,
-                  class: ['btn btn-sm btn-primary'], style: 'margin-bottom:5px' %>
+                  class: ['btn btn-sm btn-success'], style: 'margin-bottom:5px' %>
   <% end %>
   <% if @schemes.any? %>
       <% @schemes.each do |scheme| %>

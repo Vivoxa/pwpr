@@ -7,7 +7,7 @@
       <%= link_to 'Permissions', scheme_operator_permissions_path(scheme_operator_id: params[:id]), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
   <% end %>
   <% if can? :destroy, @scheme_operator %>
-    <%= link_to 'Destroy', @scheme_operator,{ method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: { confirm: 'Are you sure?' }} %>
+    <%= link_to 'Delete', @scheme_operator,{ method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: { confirm: 'Are you sure?' }} %>
   <% end %>
   <%= link_to 'Back', scheme_operators_path, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
 </div>

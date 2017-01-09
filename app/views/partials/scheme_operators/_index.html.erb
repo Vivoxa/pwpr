@@ -54,7 +54,7 @@
                           <%= link_to 'Details', user, class: ['btn btn-sm btn-info', 'show-btn-md'] %>
                       <% end %>
                       <% if can? :destroy, user %>
-                          <%= link_to 'Destroy', user, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
+                          <%= link_to 'Delete', user, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
                       <% end %>
                     </div>
                   </div>

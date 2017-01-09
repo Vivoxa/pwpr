@@ -28,7 +28,7 @@
 
             <div class="col-xs-4 col-md-4"></div>
             <div class="col-xs-4 col-md-4">
-              <%= f.select :year, options_for_select(AgencyTemplateUpload::VALID_YEARS_FOR_UPLOAD), {prompt: true, prompt: 'Select a year'}, {id: 'select_year', onchange: "return selectedYearChanged(this);", class: "devise-lgn form-control"} %>
+              <%= f.select :year, options_for_select(LookupValues::ValidYears.for('reports')), {prompt: true, prompt: 'Select a year'}, {id: 'select_year', onchange: "return selectedYearChanged(this);", class: "devise-lgn form-control"} %>
             </div>
 
             <div class="col-xs-4 col-md-4"></div>

@@ -67,8 +67,8 @@ class ContactsController < ApplicationController
   private
 
   def deactivate_existing_contacts_of_type(contact)
-    existing_contacts = Contact.active.where(business_id: contact.business_id,
-                                             address_type_id: contact.address_type_id).where('id != ?', contact.id )
+    existing_contacts = Contact.active.where(business_id:     contact.business_id,
+                                             address_type_id: contact.address_type_id).where('id != ?', contact.id)
     existing_contacts.update_all(active: false) if existing_contacts.any?
   end
 

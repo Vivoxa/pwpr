@@ -54,7 +54,7 @@ module PermissionsForRole
         can :read, Business, id: associated_business_ids_for_associated_schemes(user) if user.businesses_r?
         can %i(new create), Business if user.businesses_w?
         can %i(edit update), Business, id: associated_business_ids_for_associated_schemes(user) if user.businesses_e?
-        can :destroy, Business, id: associated_business_ids_for_associated_schemes(user) if user.businesses_d?
+        #can :destroy, Business, id: associated_business_ids_for_associated_schemes(user) if user.businesses_d?
       end
 
       def co_users_w(user)

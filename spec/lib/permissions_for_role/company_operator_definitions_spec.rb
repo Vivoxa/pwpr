@@ -16,13 +16,13 @@ RSpec.describe PermissionsForRole::CompanyOperatorDefinitions do
     let(:role) { :co_director }
     let(:definitions) do
       {
-        co_users_r:   {checked: true, locked: true},
-        co_users_w:   {checked: true, locked: true},
-        co_users_e:   {checked: true, locked: true},
-        co_users_d:   {checked: true, locked: true},
-
-        businesses_r: {checked: true, locked: true},
-        businesses_e: {checked: true, locked: true}
+        # co_users_r:   {checked: true, locked: true},
+        # co_users_w:   {checked: true, locked: true},
+        # co_users_e:   {checked: true, locked: true},
+        # co_users_d:   {checked: true, locked: true},
+        #
+        # businesses_r: {checked: true, locked: true},
+        # businesses_e: {checked: true, locked: true}
       }
     end
 
@@ -35,13 +35,13 @@ RSpec.describe PermissionsForRole::CompanyOperatorDefinitions do
     let(:role) { :co_super_user }
     let(:definitions) do
       {
-        co_users_r:   {checked: true, locked: true},
-        co_users_w:   {checked: true, locked: true},
-        co_users_e:   {checked: true, locked: true},
-        co_users_d:   {checked: false, locked: false},
-
-        businesses_r: {checked: false, locked: false},
-        businesses_e: {checked: false, locked: false}
+        # co_users_r:   {checked: true, locked: true},
+        # co_users_w:   {checked: true, locked: true},
+        # co_users_e:   {checked: true, locked: true},
+        # co_users_d:   {checked: false, locked: false},
+        #
+        # businesses_r: {checked: false, locked: false},
+        # businesses_e: {checked: false, locked: false}
       }
     end
 
@@ -54,13 +54,13 @@ RSpec.describe PermissionsForRole::CompanyOperatorDefinitions do
     let(:role) { :co_user }
     let(:definitions) do
       {
-        co_users_r:   {checked: true, locked: true},
-        co_users_w:   {checked: false, locked: false},
-        co_users_e:   {checked: false, locked: false},
-        co_users_d:   {checked: false, locked: false},
-
-        businesses_r: {checked: false, locked: false},
-        businesses_e: {checked: false, locked: true}
+        # co_users_r:   {checked: true, locked: true},
+        # co_users_w:   {checked: false, locked: false},
+        # co_users_e:   {checked: false, locked: false},
+        # co_users_d:   {checked: false, locked: false},
+        #
+        # businesses_r: {checked: false, locked: false},
+        # businesses_e: {checked: false, locked: true}
       }
     end
 

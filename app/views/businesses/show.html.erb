@@ -66,7 +66,7 @@
           <%= link_to 'Edit', edit_business_path(@business), class: ['btn btn-sm btn-warning', 'show-btn-md'] %>
       <% end %>
       <% if can? :destroy, @business %>
-          <%= link_to 'Destroy', @business, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
+          <%= link_to 'Delete', @business, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
       <% end %>
     </div>
   </div>

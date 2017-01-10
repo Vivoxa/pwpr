@@ -33,7 +33,6 @@ module Reporting
       def cleanup(year, business)
         path_to_save_file = tmp_filename(year, business)
         FileUtils.rm [path_to_save_file], force: true
-        ReportTemplateHelper.cleanup
       end
 
       def report_type

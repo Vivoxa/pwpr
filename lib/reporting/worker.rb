@@ -10,10 +10,15 @@ module Reporting
         business_ids = []
 
         logger.info('Iterating over businesses, processing registration forms')
+        template = report_template(event_data)
+
         event_data.retrieve_business_ids.each do |business_id|
-          success = report_instance.process_report(business_id, event_data.year, current_user(event_data))
+          logger.info("processing report for business with id: #{business_id}")
+          success = report_instance.process_report(business_id, event_data.year, current_user(event_data), template)
           business_ids << business_id if success
         end
+        logger.info('Cleaning up tmp report template files')
+        ReportTemplateHelper.cleanup
 
         logger.info("Successfully processed the following businesses: #{business_ids.inspect}")
         @queue_manager.log(:info, " [x] Event '#{event}' has been processed!")
@@ -23,6 +28,16 @@ module Reporting
         logger.info('Emailing report to SchemeOperator')
         email_scheme_operator(businesses, businesses.first.scheme, event_data.year, current_user(event_data))
       end
+    end
+
+    private
+
+    def report_template(event_data)
+      ReportTemplateHelper.get_default_template(report_type(event_data))
+    end
+
+    def report_type(event_data)
+      event_data.report_type.demodulize.underscore.freeze
     end
 
     def current_user(event)

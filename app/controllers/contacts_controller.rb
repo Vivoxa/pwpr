@@ -1,5 +1,6 @@
 class ContactsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :business
+  load_and_authorize_resource :contact, through: :business
 
   before_action :set_contact, only: %i(show edit update destroy)
 

@@ -18,8 +18,7 @@
         <% report_form_data.each do |report_form| %>
             <%= fields_for "businesses[#{report_form.business_id}]", report_form do |rf| %>
                 <tr>
-
-                  <td><%= rf.label report_form.business_name %></td>
+                  <td><%= rf.label :business_name, report_form.business_name %></td>
                   <td><%= label_tag report_form.emailed_report ? report_form.emailed_report.date_last_sent : 'Report not yet sent' %></td>
                   <td><%= label_tag report_form.emailed_report ? EmailedStatus.where(id: report_form.emailed_report.emailed_status_id).first.status  : 'N/A' %></td>
                   <td><%= label_tag report_form.emailed_report ? report_form.emailed_report.error_notices : 'N/A' %></td>

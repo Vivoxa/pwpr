@@ -1,5 +1,6 @@
 <div class="centre-wide">
-  <h2>Invite new Scheme Operator</h2>
+  <% @scheme_name = @scheme ? @scheme.name : '' %>
+  <h2><%= "Invite new Scheme Operator: #{@scheme_name}" %></h2>
 </div>
 <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
     <%= devise_error_messages! %>

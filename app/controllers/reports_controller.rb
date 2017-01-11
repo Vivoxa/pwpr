@@ -1,19 +1,22 @@
 class ReportsController < ApplicationController
-  authorize_resource class: ReportsController
+  load_and_authorize_resource :scheme
+  authorize_resource class: ReportsController, through: :scheme
 
-  YEARS = %w(2013 2014 2015 2016).freeze
+  YEARS = LookupValues::ValidYears.for('reports')
   REPORTS = LookupValues::Reports::ValidReports.for('scheme')
 
   def index
     @reports = REPORTS
     @years = YEARS
     @report_form_data = []
+    @scheme = Scheme.find(params[:scheme_id].to_i)
   end
 
   def report_data
     report = params['report']
-    year = params['year']
-    scheme_uid = params[:scheme_id]
+    year = params['year'].to_i
+
+    scheme_uid = params[:scheme_id].to_i
     @report_form_data = []
 
     @errors = []
@@ -31,7 +34,7 @@ class ReportsController < ApplicationController
   def build_report_form_data(report, scheme_uid, year)
     @report_form_data = if can_process_report?(year, report)
                           scheme_id = scheme_uid
-                          businesses = Scheme.find(scheme_id).businesses
+                          businesses = Scheme.find(scheme_id).businesses.for_registration
                           get_report_data(businesses, report.delete(' ').demodulize.underscore.freeze, year)
                         else
                           []

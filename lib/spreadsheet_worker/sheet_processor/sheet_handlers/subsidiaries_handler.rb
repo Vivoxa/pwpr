@@ -17,6 +17,7 @@ module SpreadsheetWorker
 
             @business = business
             @business.small_producer = column_value(row_array, map['allocation']['method_used']['field'])
+            @business.business_subtype_id = BusinessSubtype.id_from_setting('Subsidiary Co')
             @business.save!
 
             process_contact(row_array)

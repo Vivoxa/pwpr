@@ -8,6 +8,7 @@ class BusinessesController < BaseController
   def index
     raise 'Must have a scheme id to view businesses' if params['scheme_id'].nil?
     @businesses = current_user.schemes.find(params['scheme_id']).businesses
+    @scheme = Scheme.find(params['scheme_id'].to_i)
   end
 
   # GET /businesses/1

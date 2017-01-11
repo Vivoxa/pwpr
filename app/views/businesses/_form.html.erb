@@ -1,62 +1,55 @@
 <div id="main-container" class="container">
-  <div class="card">
-    <h3 class="card-header"><strong>Editing:</strong> <%= @business.name %></h3>
+  <div class="row">
+    <%= form_for(@business) do |f| %>
+        <% if @business.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@business.errors.count, "error") %> prohibited this business from being saved:</h2>
 
-    <div class="card-block">
-      <!--	<h4 class="card-title">Administration</h4>-->
-      <div class="row">
-        <%= form_for(@business) do |f| %>
-            <% if @business.errors.any? %>
-                <div id="error_explanation">
-                  <h2><%= pluralize(@business.errors.count, "error") %> prohibited this business from being saved:</h2>
-
-                  <ul>
-                    <% @business.errors.full_messages.each do |message| %>
-                        <li><%= message %></li>
-                    <% end %>
-                  </ul>
-                </div>
-            <% end %>
-
-            <% if @schemes %>
-                <div class="field centre">
-                  <%= f.label 'Active Schemes', class: "devise-lgn" %>
-                  <%= f.collection_select :scheme_id, @schemes.where(active: true).order(:name), :id, :name, {include_blank: 'Select a Scheme'}, {id: 'scheme_id_select', class: "devise-lgn form-control"} %>
-                </div>
-            <% end %>
-
-            <div class="field centre">
-              <%= f.text_field :name, placeholder: 'Name', class: "devise-lgn form-control" %>
-            </div>
-
-            <div class="field centre">
-              <%= f.text_field :company_number, placeholder: 'Company number', class: "devise-lgn form-control" %>
-            </div>
-
-            <div class="field centre">
-              <%= f.text_field :scheme_ref, placeholder: 'Scheme Ref', class: "devise-lgn form-control" %>
-            </div>
-
-            <div class="field centre">
-              <%= f.text_field :NPWD, placeholder: 'NPWD', class: "devise-lgn form-control" %>
-            </div>
-
-            <div class="field centre">
-              <%= f.collection_select :sic_code_id, SicCode.all, :id, :code, {include_blank: 'Select a Sic Code'}, {class: "devise-lgn form-control"} %>
-            </div>
-
-            <div class="field centre">
-              <%= f.select :year_first_reg, options_for_select(LookupValues::ValidYears.for('first_registered')), {prompt: true, prompt: 'First year registered?'},  class: "devise-lgn form-control" %>
-            </div>
-
-            <div class="actions centre">
-              <%= f.submit 'Save', class: ["btn", "btn-primary", "devise-btn"] %>
+              <ul>
+                <% @business.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+              </ul>
             </div>
         <% end %>
-      </div>
-    </div>
-    <div class="card-footer">
-      <%= link_to 'Back', :back, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
-    </div>
+
+        <% if @schemes %>
+            <div class="field centre">
+              <%= f.label 'Active Schemes', class: "devise-lgn" %>
+              <%= f.collection_select :scheme_id, @schemes.where(active: true).order(:name), :id, :name, {include_blank: 'Select a Scheme'}, {id: 'scheme_id_select', class: "devise-lgn form-control"} %>
+            </div>
+        <% end %>
+
+        <div class="field centre">
+          <%= f.text_field :name, placeholder: 'Name', class: "devise-lgn form-control" %>
+        </div>
+
+        <div class="field centre">
+          <%= f.text_field :company_number, placeholder: 'Company number', class: "devise-lgn form-control" %>
+        </div>
+
+        <div class="field centre">
+          <%= f.text_field :scheme_ref, placeholder: 'Scheme Ref', class: "devise-lgn form-control" %>
+        </div>
+
+        <div class="field centre">
+          <%= f.text_field :NPWD, placeholder: 'NPWD', class: "devise-lgn form-control" %>
+        </div>
+
+        <div class="field centre">
+          <%= f.collection_select :sic_code_id, SicCode.all, :id, :code, {include_blank: 'Select a Sic Code'}, {class: "devise-lgn form-control"} %>
+        </div>
+
+        <div class="field centre">
+          <%= f.select :year_first_reg, options_for_select(LookupValues::ValidYears.for('first_registered')), {prompt: true, prompt: 'First year registered?'}, class: "devise-lgn form-control" %>
+        </div>
+
+        <div class="actions centre">
+          <%= f.submit 'Save', class: ["btn", "btn-primary", "devise-btn"] %>
+        </div>
+    <% end %>
   </div>
+</div>
+<div class="centre">
+  <%= link_to 'Back', :back, class: 'btn btn-success devise-btn' %>
 </div>

@@ -1,6 +1,6 @@
 <div id="main-container" class="container">
   <div class="card">
-    <h3 class="card-header">Agency Template Upload</h3>
+    <h3 class="card-header"><%= "Agency Template Upload for #{@scheme.name}" %></h3>
     <%= form_for [@scheme, @upload] do |f| %>
         <div class="card-block">
           <% if @upload.errors.any? %>

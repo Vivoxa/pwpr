@@ -1,11 +1,13 @@
 class AgencyTemplateUploadsController < ApplicationController
-  authorize_resource
+  load_and_authorize_resource :scheme
+  authorize_resource :agency_template_upload, through: :scheme
+
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   # GET schemes/:scheme_id/agency_template_uploads
   def index
-    scheme = Scheme.find_by_id(params[:scheme_id])
-    @uploads = scheme.agency_template_uploads
+    @scheme = Scheme.find_by_id(params[:scheme_id])
+    @uploads = @scheme.agency_template_uploads
   end
 
   # GET schemes/:scheme_id/agency_template_uploads/:id
@@ -89,6 +91,7 @@ class AgencyTemplateUploadsController < ApplicationController
 
     params_to_sym = Hash[upload_params.map { |k, v| [k.to_sym, v] }]
     attributes = attributes.merge(params_to_sym)
+
     AgencyTemplateUpload.new(attributes)
   end
 

@@ -26,6 +26,12 @@ class Business < ActiveRecord::Base
   #:business_type_id, :business_subtype_id, :country_of_business_registration
   validate :year_first_reg_format, if: 'year_first_reg.present?'
 
+  scope :for_registration, -> {
+    where('(business_subtype_id != ? OR business_subtype_id IS NULL) AND business_type_id IN (?)',
+          BusinessSubtype.id_from_setting('Subsidiary Co'),
+          BusinessType.all.map(&:id))
+  }
+
   def correspondence_contact
     contact = contacts.where(address_type_id: AddressType.id_from_setting('Correspondence'))
     return contact.first if contact.any?

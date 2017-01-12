@@ -10,6 +10,6 @@ class ReportFormData
   end
 
   def email_contact_present?
-    email_contact_present
+    email_contact_present.present?
   end
 end

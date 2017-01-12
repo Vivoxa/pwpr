@@ -7,8 +7,6 @@ module SpreadsheetWorker
         end
 
         def process
-          # @sheet_filename = './public/template_sheet.xls'
-
           leavers.drop(3).each do |row_array|
             @leaver = Leaver.new
             @business = get_business(row_array, column_value(row_array, map['npwd']['field']))

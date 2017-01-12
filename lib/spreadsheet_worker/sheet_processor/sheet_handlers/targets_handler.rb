@@ -7,15 +7,13 @@ module SpreadsheetWorker
         end
 
         def process
-          # @sheet_filename = './public/template_sheet.xls'
-
           targets.drop(3).each do |row_array|
             @target = Target.new
             @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
             break unless @business
 
             materials.each do |material|
-              process_material_details(row_array, material)
+              process_material_details(row_array, material) unless material == 'glassremelt'
               process_material_totals(row_array, material) unless material == 'other'
             end
 
@@ -81,7 +79,7 @@ module SpreadsheetWorker
         end
 
         def materials
-          %w(paper glass aluminium steel plastic wood other)
+          %w(paper glass aluminium steel plastic wood glassremelt other)
         end
       end
     end

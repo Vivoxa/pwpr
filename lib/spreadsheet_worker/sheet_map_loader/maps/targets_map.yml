@@ -19,36 +19,22 @@ targets:
       field: H
     wood:
       field: I
+    glassremelt:
+      field: J
 
   total_obligation:
     material_specific:
-      field: J
-    recycling:
       field: K
-    nintytwo_min:
+    recycling:
       field: L
-    adjusted_recovery:
+    nintytwo_min:
       field: M
-    recovery:
+    adjusted_recovery:
       field: N
+    recovery:
+      field: O
 
   t1man:
-    paper:
-      field: O
-    glass:
-      field: AF
-    aluminium:
-      field: AW
-    steel:
-      field: BN
-    plastic:
-      field: CE
-    wood:
-      field: CV
-    other:
-      field: DM
-
-  t1conv:
     paper:
       field: P
     glass:
@@ -64,7 +50,7 @@ targets:
     other:
       field: DN
 
-  t1pf:
+  t1conv:
     paper:
       field: Q
     glass:
@@ -80,7 +66,7 @@ targets:
     other:
       field: DO
 
-  t1sell:
+  t1pf:
     paper:
       field: R
     glass:
@@ -96,7 +82,7 @@ targets:
     other:
       field: DP
 
-  t2aman:
+  t1sell:
     paper:
       field: S
     glass:
@@ -112,7 +98,7 @@ targets:
     other:
       field: DQ
 
-  t2aconv:
+  t2aman:
     paper:
       field: T
     glass:
@@ -128,7 +114,7 @@ targets:
     other:
       field: DR
 
-  t2apf:
+  t2aconv:
     paper:
       field: U
     glass:
@@ -144,7 +130,7 @@ targets:
     other:
       field: DS
 
-  t2asell:
+  t2apf:
     paper:
       field: V
     glass:
@@ -160,7 +146,7 @@ targets:
     other:
       field: DT
 
-  t2bman:
+  t2asell:
     paper:
       field: W
     glass:
@@ -176,7 +162,7 @@ targets:
     other:
       field: DU
 
-  t2bconv:
+  t2bman:
     paper:
       field: X
     glass:
@@ -192,7 +178,7 @@ targets:
     other:
       field: DV
 
-  t2bpf:
+  t2bconv:
     paper:
       field: Y
     glass:
@@ -208,7 +194,7 @@ targets:
     other:
       field: DW
 
-  t2bsell:
+  t2bpf:
     paper:
       field: Z
     glass:
@@ -224,7 +210,7 @@ targets:
     other:
       field: DX
 
-  t3aconv:
+  t2bsell:
     paper:
       field: AA
     glass:
@@ -240,7 +226,7 @@ targets:
     other:
       field: DY
 
-  t3apf:
+  t3aconv:
     paper:
       field: AB
     glass:
@@ -256,7 +242,7 @@ targets:
     other:
       field: DZ
 
-  t3asell:
+  t3apf:
     paper:
       field: AC
     glass:
@@ -272,7 +258,7 @@ targets:
     other:
       field: EA
 
-  t3b:
+  t3asell:
     paper:
       field: AD
     glass:
@@ -288,7 +274,7 @@ targets:
     other:
       field: EB
 
-  t3c:
+  t3b:
     paper:
       field: AE
     glass:
@@ -303,3 +289,19 @@ targets:
       field: DL
     other:
       field: EC
+
+  t3c:
+    paper:
+      field: AF
+    glass:
+      field: AW
+    aluminium:
+      field: BN
+    steel:
+      field: CE
+    plastic:
+      field: CV
+    wood:
+      field: DM
+    other:
+      field: ED

@@ -7,8 +7,6 @@ module SpreadsheetWorker
         end
 
         def process
-          # @sheet_filename = './public/template_sheet.xls'
-
           registrations.drop(1).each do |row_array|
             @registration = Registration.new
 

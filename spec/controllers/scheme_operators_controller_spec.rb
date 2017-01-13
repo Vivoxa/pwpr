@@ -242,7 +242,7 @@ RSpec.describe SchemeOperatorsController, type: :controller do
       end
 
       it 'expects the sc_director NOT to have access to the show page' do
-        get :show, id: sc_marti.id
+        expect(get(:show, id: sc_marti.id)).to redirect_to 'http://test.host/'
         expect(response.status).to eq 302
       end
 

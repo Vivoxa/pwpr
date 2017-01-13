@@ -220,7 +220,7 @@ RSpec.describe SchemeOperatorsController, type: :controller do
         end
         context 'when trying to update own permissions' do
           it 'expects the permissions NOT to be updated' do
-            put :update_permissions, scheme_operator_id: sc_marti.id
+            expect(put(:update_permissions, scheme_operator_id: sc_marti.id)).to redirect_to 'http://test.host/'
             expect(flash[:alert]).to eq 'You are not authorized to access this page.'
             expect(response.status).to eq 302
           end

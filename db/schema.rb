@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 20161225080451) do
     t.integer  "business_type_id",                    limit: 4
     t.integer  "business_subtype_id",                 limit: 4
     t.integer  "sic_code_id",                         limit: 4,   null: false
-    t.string   "year_first_reg",                      limit: 255, null: false
+    t.string   "year_first_reg",                      limit: 255
     t.string   "year_last_reg",                       limit: 255
     t.integer  "scheme_status_code_id",               limit: 4
     t.integer  "registration_status_code_id",         limit: 4

@@ -8,6 +8,8 @@ module SpreadsheetWorker
 
         def process
           subleavers.drop(3).each do |row_array|
+            next if empty_row?(row_array)
+
             @subleaver = Leaver.new
             @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
 
@@ -18,7 +20,6 @@ module SpreadsheetWorker
         private
 
         def process_subleaver(row)
-          return if empty_row?(row)
           @subleaver.leaving_date = Date.parse(column_value(row, map['date_left']['field']).to_s)
           @subleaver.leaving_code = LeavingCode.where(code: column_value(row, map['leaving_reason']['field'])).first
           @subleaver.sub_leaver = true

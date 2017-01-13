@@ -174,6 +174,19 @@ RSpec.describe SchemeOperatorsController, type: :controller do
     end
 
     context 'when SchemeOperator has sc_director role' do
+      let(:scheme_operator) do
+        SchemeOperator.create(first_name: 'rspec owner',
+                              last_name: 'last',
+                              email: 'invited@pwpr.com',
+                              password: 'my_password',
+                              scheme_ids: [sc_marti.schemes.first.id],
+                              invitation_sent_at: DateTime.now - 5.days,
+                              invitation_accepted_at: DateTime.now,
+                              confirmation_sent_at: DateTime.now - 5.days,
+                              confirmed_at: DateTime.now,
+                              approved: false)
+      end
+
       before do
         sign_out sc_marti
         sc_marti.add_role :sc_director
@@ -191,16 +204,6 @@ RSpec.describe SchemeOperatorsController, type: :controller do
 
       context 'when an invitation HAS been accepted but not approved' do
         it 'expects a scheme operator' do
-          scheme_operator = SchemeOperator.create(first_name: 'rspec owner',
-                                                  last_name: 'last',
-                                                  email: 'invited@pwpr.com',
-                                                  password: 'my_password',
-                                                  scheme_ids: [Scheme.last.id],
-                                                  invitation_sent_at: DateTime.now - 5.days,
-                                                  invitation_accepted_at: DateTime.now,
-                                                  confirmation_sent_at: DateTime.now - 5.days,
-                                                  confirmed_at: DateTime.now,
-                                                  approved: false)
           get 'pending'
           object = assigns(:scheme_operators).where(id: scheme_operator.id).first
           expect(object).to be_a SchemeOperator
@@ -208,10 +211,19 @@ RSpec.describe SchemeOperatorsController, type: :controller do
       end
 
       context 'when calling update_permissions' do
-        it 'expects the permissions to be updated' do
-          put :update_permissions, scheme_operator_id: SchemeOperator.last.id
-          expect(flash[:notice]).to eq 'Permissions updated successfully!'
-          expect(response.status).to eq 302
+        context 'when trying to update own permissions' do
+          it 'expects the permissions to be updated' do
+            put :update_permissions, scheme_operator_id: scheme_operator.id
+            expect(flash[:notice]).to eq 'Permissions updated successfully!'
+            expect(response.status).to eq 302
+          end
+        end
+        context 'when trying to update own permissions' do
+          it 'expects the permissions NOT to be updated' do
+            expect(put(:update_permissions, scheme_operator_id: sc_marti.id)).to redirect_to 'http://test.host/'
+            expect(flash[:alert]).to eq 'You are not authorized to access this page.'
+            expect(response.status).to eq 302
+          end
         end
       end
 
@@ -229,69 +241,70 @@ RSpec.describe SchemeOperatorsController, type: :controller do
         end
       end
 
-      it 'expects the sc_director to have access to the show action' do
-        get :show, id: sc_marti.id
-        expect(response.status).to eq 200
+      it 'expects the sc_director NOT to have access to the show page' do
+        expect(get(:show, id: sc_marti.id)).to redirect_to 'http://test.host/'
+        expect(response.status).to eq 302
       end
 
       context 'when calling update' do
         it 'expects the scheme operator to be updated' do
-          get :update, id: sc_marti.id, scheme_operator: {id: sc_marti.id}
+          get :update, id: sc_marti.id, scheme_operator: {id: scheme_operator.id}
           expect(response.status).to eq 302
         end
       end
 
       context 'when calling destroy' do
         it 'expects the scheme operator to be destroyed' do
-          get :destroy, id: sc_marti.id
+          get :destroy, id: scheme_operator
           expect(response.status).to eq 302
-          sc = SchemeOperator.where(id: sc_marti.id)
+
+          sc = SchemeOperator.where(id: scheme_operator.id)
           expect(sc).to be_empty
         end
       end
 
       context 'when calling permissions' do
         it 'expects the sc_director to have access to the permissions action' do
-          get :permissions, scheme_operator_id: sc_marti.id
+          get :permissions, scheme_operator_id: scheme_operator
           expect(response.status).to eq 200
         end
 
         it 'sets the correct user instance' do
-          get :permissions, scheme_operator_id: sc_marti.id
+          get :permissions, scheme_operator_id: scheme_operator.id
           expect(assigns(:user)).to eq(SchemeOperator.last)
         end
 
         it 'sets the correct available_roles' do
-          get :permissions, scheme_operator_id: sc_marti.id
+          get :permissions, scheme_operator_id: scheme_operator.id
           expect(assigns(:available_roles)).to eq(PermissionsForRole::SchemeOperatorDefinitions::ROLES)
         end
 
         it 'sets the correct available_permissions' do
-          get :permissions, scheme_operator_id: sc_marti.id
+          get :permissions, scheme_operator_id: scheme_operator.id
           expect(assigns(:available_permissions)).to eq(PermissionsForRole::SchemeOperatorDefinitions::PERMISSIONS)
         end
 
         it 'sets the correct permissions_definitions' do
-          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          get :permissions, scheme_operator_id: scheme_operator.id
           expect(assigns(:permissions_definitions)).to be_a(PermissionsForRole::SchemeOperatorDefinitions)
         end
 
         it 'sets the allowed_permissions' do
-          get :permissions, scheme_operator_id: SchemeOperator.last.id
+          get :permissions, scheme_operator_id: scheme_operator.id
           expect(assigns(:allowed_permissions)).not_to be_nil
         end
       end
 
       context 'when calling update_permissions' do
-        let(:params) { {scheme_operator_id: sc_marti.id, role: 'sc_director', permissions: ['sc_user_e']} }
+        let(:params) { {scheme_operator_id: scheme_operator.id, role: 'sc_director', permissions: ['sc_user_e']} }
 
         it 'expects the scheme operator permissions to be updated' do
           put :update_permissions, params
           expect(response.status).to eq 302
         end
 
-        context 'when assinging allowed role/permissions' do
-          let(:no_role) { sc_marti }
+        context 'when assigning allowed role/permissions' do
+          let(:no_role) { scheme_operator }
           let(:definitions) do
             {
                 schemes_r: {checked: false, locked: true},

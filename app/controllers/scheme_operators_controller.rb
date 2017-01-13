@@ -1,5 +1,7 @@
 class SchemeOperatorsController < BaseController
   before_filter :authenticate_scheme_operator
+  before_filter :authorize_permissions, only: :permissions
+  before_filter :authorize_update_permissions, only: :update_permissions
   load_and_authorize_resource
 
   # GET /scheme_operators
@@ -65,6 +67,14 @@ class SchemeOperatorsController < BaseController
   end
 
   private
+
+  def authorize_permissions
+    authorize! :permissions, SchemeOperator.find(params['scheme_operator_id'].to_i)
+  end
+
+  def authorize_update_permissions
+    authorize! :update_permissions, SchemeOperator.find(params['scheme_operator_id'].to_i)
+  end
 
   def pending_operators(schemes)
     schemes.each do |_scheme_id, details|

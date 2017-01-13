@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ReportFormData, type: :model do
-
   subject(:report_form_data) { described_class.new }
 
   context 'expects attributes to be present' do

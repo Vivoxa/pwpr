@@ -31,6 +31,9 @@ class SchemeMailer < ApplicationMailer
 
     attachments[report_name] = File.read(file_path)
 
-    mail(to: recipient.email, subject: subject)
+    result = mail(to: recipient.email, subject: subject)
+    Pdf::RegistrationFormEmailedBusinesses.cleanup(@scheme, year)
+
+    result
   end
 end

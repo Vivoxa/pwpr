@@ -8,7 +8,9 @@ module PermissionsForRole
       end
 
       def scheme_operator_ids_for_associated_schemes(user)
-        user.schemes.where(active: true).each.map(&:scheme_operator_ids).flatten
+        ids = user.schemes.where(active: true).each.map(&:scheme_operator_ids).flatten
+        ids.reject!{ |id| id == user.id } if user.is_a?(SchemeOperator)
+        ids
       end
 
       def company_operator_ids_for_associated_schemes(user)
@@ -28,6 +30,8 @@ module PermissionsForRole
           contact_ids << business.contact_ids
         end
         contact_ids.flatten
+        contact_ids.reject!{ |id| id == user.id } if user.is_a?(CompanyOperator)
+        contact_ids
       end
 
       def associated_business_ids_for_associated_schemes(user)

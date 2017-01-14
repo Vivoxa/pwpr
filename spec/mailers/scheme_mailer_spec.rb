@@ -4,6 +4,7 @@ RSpec.describe SchemeMailer, type: :mailer do
   subject(:mailer) { described_class }
   let(:email) { 'test@email.com' }
   let(:tmp_filename) { 'tmp_file_path' }
+  let(:business) { Business.first }
   describe '#registration_email' do
     let(:registration_email) do
       mailer.registration_email(business,
@@ -13,7 +14,7 @@ RSpec.describe SchemeMailer, type: :mailer do
                                 email)
     end
     let(:email_subject) { '[RESPONSE REQUIRED]: Registration form 2015' }
-    let(:business) { Business.first }
+
     let(:from_address) { 'dans_pack_scheme@app-pwpr.com' }
 
     before do
@@ -37,6 +38,20 @@ RSpec.describe SchemeMailer, type: :mailer do
 
     it 'expects the email to have an attachment' do
       assert_equal tmp_filename, registration_email.attachments[0].filename
+    end
+  end
+
+  context 'when an exception occurs' do
+    it 'expects an error to be logged' do
+      allow(LookupValues::Email::EmailSettings).to receive(:for).and_raise('Scheme not found')
+      expect(Rails.logger).to receive(:warn).with('SchemeMailer::registration_email() ERROR: Scheme not found')
+      allow(File).to receive(:read).and_return('attachment')
+      error_email = mailer.registration_email(business,
+                                              tmp_filename,
+                                              'tmp_file_path',
+                                              2015,
+                                              email)
+      error_email.deliver_now
     end
   end
 

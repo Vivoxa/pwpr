@@ -53,7 +53,7 @@ module SpreadsheetWorker
         def empty_row?(row)
           is_empty = true
           row.each do |field|
-            is_empty = false if field.blank?
+            is_empty = false if field.present?
           end
           is_empty
         end

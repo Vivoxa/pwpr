@@ -2,6 +2,8 @@ module SpreadsheetWorker
   module SheetProcessor
     module SheetHandlers
       class SubleaversHandler < BaseHandler
+        include Logging
+
         def initialize(agency_template_id)
           super
         end
@@ -25,7 +27,7 @@ module SpreadsheetWorker
           @subleaver.sub_leaver = true
           @subleaver.scheme_comments = column_value(row, map['scheme_comments']['field'])
           @subleaver.business = @business
-          @subleaver.leaving_business = create_leaving_business(row) unless @business
+          @subleaver.leaving_business = create_leaving_business(row) unless @subleaver.business
           @subleaver.agency_template_upload = @agency_template
           @subleaver.save!
         end

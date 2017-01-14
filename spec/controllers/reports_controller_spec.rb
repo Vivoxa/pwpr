@@ -29,13 +29,9 @@ RSpec.describe ReportsController, type: :controller do
     # This should return the minimal set of attributes required to create a valid
     # Scheme. As you add validations to Scheme, be sure to
     # adjust the attributes here as well.
-    let(:valid_attributes) do
-      {scheme_id: 1}
-    end
+    let(:valid_attributes) { {scheme_id: 1} }
 
-    let(:invalid_attributes) do
-      {scheme_id: 10}
-    end
+    let(:invalid_attributes) { {scheme_id: 10} }
 
     # This should return the minimal set of values that should be in the session
     # in order to pass any filters (e.g. authentication) defined in
@@ -43,73 +39,70 @@ RSpec.describe ReportsController, type: :controller do
     let(:valid_session) { {} }
 
     describe 'GET #index' do
-      it 'assigns reports as @reports' do
+      before do
         get :index, valid_attributes, session: valid_session
+      end
+      it 'assigns reports as @reports' do
         expect(assigns(:years)).to eq(LookupValues::ValidYears.for('reports'))
       end
 
       it 'assigns years as @years' do
-        get :index, valid_attributes, session: valid_session
         expect(assigns(:reports)).to eq(LookupValues::Reports::ValidReports.for('scheme'))
       end
 
       it 'assigns scheme as @scheme' do
-        get :index, valid_attributes, session: valid_session
         expect(assigns(:scheme)).to eq(Scheme.find(1))
       end
 
       it 'assigns scheme as @scheme' do
-        get :index, valid_attributes, session: valid_session
         expect(assigns(:report_form_data)).to eq([])
       end
     end
 
     describe 'GET #report_data' do
       context 'when params are valid' do
-        it 'assigns a new report_form_data as @report_form_data' do
+        before do
           xhr :get, :report_data, {report: 'Registration Form', year: 2015, scheme_id: 1, format: 'js'}, session: valid_session
+        end
+        it 'assigns a new report_form_data as @report_form_data' do
           expect(assigns(:report_form_data).count).to eq 1
         end
 
         it 'expects the correct business id' do
-          xhr :get, :report_data, {report: 'Registration Form', year: 2015, scheme_id: 1, format: 'js'}, session: valid_session
           expect(assigns(:report_form_data).first.business_id).to eq 1
         end
 
         it 'expects the correct business name' do
-          xhr :get, :report_data, {report: 'Registration Form', year: 2015, scheme_id: 1, format: 'js'}, session: valid_session
           expect(assigns(:report_form_data).first.business_name).to eq 'dans pack business'
         end
 
         it 'expects the correct email value' do
-          xhr :get, :report_data, {report: 'Registration Form', year: 2015, scheme_id: 1, format: 'js'}, session: valid_session
           expect(assigns(:report_form_data).first.email).to eq false
         end
 
         it 'expects the correct email_contact_present value' do
-          xhr :get, :report_data, {report: 'Registration Form', year: 2015, scheme_id: 1, format: 'js'}, session: valid_session
           expect(assigns(:report_form_data).first.email_contact_present).to eq true
         end
 
         it 'expects the correct emailed_report value' do
-          xhr :get, :report_data, {report: 'Registration Form', year: 2015, scheme_id: 1, format: 'js'}, session: valid_session
           expect(assigns(:report_form_data).first.emailed_report).to be_nil
         end
 
         it 'expects no errors' do
-          xhr :get, :report_data, {report: 'Registration Form', year: 2015, scheme_id: 1, format: 'js'}, session: valid_session
           expect(assigns(:errors)).to be_empty
         end
       end
 
       context 'when year is not valid' do
-        it 'expects an error' do
+        before do
           xhr :get, :report_data, {report: 'Registration Form', year: 1979, scheme_id: 1, format: 'js'}, session: valid_session
+        end
+
+        it 'expects an error' do
           expect(assigns(:errors)).to eq(['Select a Year'])
         end
 
         it 'expects is not populated' do
-          xhr :get, :report_data, {report: 'Registration Form', year: 1979, scheme_id: 1, format: 'js'}, session: valid_session
           expect(assigns(:report_form_data)).to eq([])
         end
       end

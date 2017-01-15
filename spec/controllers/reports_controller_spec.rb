@@ -121,8 +121,10 @@ RSpec.describe ReportsController, type: :controller do
 
       describe 'POST #create' do
         context 'with valid params' do
+          let(:publisher) { double(publish: true) }
           it 'publishes an email report event' do
-            expect(subject).to receive(:publish_email_reports)
+            expect(QueueHelpers::RabbitMq::Publisher).to receive(:new).and_return(publisher)
+            expect(publisher).to receive(:publish).and_return(true)
             post :create, {scheme_id: 1, report: 'Registration Form', year: 2016, businesses: {'1' => {'email' => '1'}}}, session: valid_session
             expect(flash[:notice]).to eq '1 Registration Form queued to be emailed'
           end

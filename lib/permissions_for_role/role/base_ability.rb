@@ -31,7 +31,7 @@ module PermissionsForRole
         end
         contact_ids.flatten
         contact_ids.reject!{ |id| id == user.id } if user.is_a?(CompanyOperator)
-        contact_ids
+        contact_ids.flatten
       end
 
       def associated_business_ids_for_associated_schemes(user)

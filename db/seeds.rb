@@ -287,7 +287,6 @@ end
     co_super_user.add_role permission if has[:checked]
   end
 
-
   co_user = CompanyOperator.create({email: "co_user_#{index}@pwpr.com",
                                     last_name: 'surtees',
                                     password: @password,
@@ -300,7 +299,25 @@ end
                                     approved: true,
                                     business_id: businesses[2].id})
 
-  co_super_user.co_user!
+  co_user.co_user!
+
+  PermissionsForRole::CompanyOperatorDefinitions.new.permissions_for_role(:co_user).each do |permission, has|
+    co_user.add_role permission if has[:checked]
+  end
+
+  co_user = CompanyOperator.create({email: "co_user_#{index+1}@pwpr.com",
+                                    last_name: 'surtees',
+                                    password: @password,
+                                    confirmation_token: random_string(20),
+                                    invitation_sent_at: DateTime.now - 5.days,
+                                    invitation_accepted_at: DateTime.now,
+                                    confirmation_sent_at: DateTime.now - 5.days,
+                                    confirmed_at: DateTime.now,
+                                    first_name: "co_user_#{index}",
+                                    approved: false,
+                                    business_id: businesses[2].id})
+
+  co_user.co_user!
 
   PermissionsForRole::CompanyOperatorDefinitions.new.permissions_for_role(:co_user).each do |permission, has|
     co_user.add_role permission if has[:checked]

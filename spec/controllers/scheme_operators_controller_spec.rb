@@ -112,6 +112,39 @@ RSpec.describe SchemeOperatorsController, type: :controller do
       sign_out sc_marti
     end
 
+    describe '#approve' do
+      before do
+        sc_marti.add_role :sc_director
+        PermissionsForRole::SchemeOperatorDefinitions.new.permissions_for_role(:sc_director).each do |permission, has|
+          sc_marti.add_role permission if has[:checked]
+        end
+        sign_in sc_marti
+      end
+
+      after do
+        sign_out sc_marti
+      end
+      let(:scheme_operator) do
+        SchemeOperator.create(first_name: 'rspec owner',
+                              last_name: 'last',
+                              email: 'invited@pwpr.com',
+                              password: 'my_password',
+                              scheme_ids: [sc_marti.schemes.first.id],
+                              invitation_sent_at: DateTime.now - 5.days,
+                              invitation_accepted_at: DateTime.now,
+                              confirmation_sent_at: DateTime.now - 5.days,
+                              confirmed_at: DateTime.now,
+                              approved: false)
+      end
+      it 'expects the scheme operator to be approved' do
+        get :approve, scheme_operator_id: scheme_operator.id
+        expect(response.status).to eq 302
+        expect(flash['notice']).to eq('SchemeOperator was successfully approved.')
+        scheme_operator.reload
+        expect(scheme_operator.approved).to eq true
+      end
+    end
+
     context 'when SchemeOperator does NOT have a role' do
       before do
         sc_marti.roles.each do |role|

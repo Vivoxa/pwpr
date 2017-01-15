@@ -8,6 +8,8 @@ module SpreadsheetWorker
 
         def process
           licensors.drop(1).each do |row_array|
+            next if empty_row?(row_array)
+
             @licensor = Licensor.new
             @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
 
@@ -21,7 +23,6 @@ module SpreadsheetWorker
         private
 
         def process_registered_address(row)
-          return if empty_row?(row)
           return if existing_address('Registered', @business)
 
           address = Address.new
@@ -36,7 +37,6 @@ module SpreadsheetWorker
         end
 
         def process_contact_address(row)
-          return if empty_row?(row)
           return if existing_address('Contact', @business)
 
           address = Address.new
@@ -51,7 +51,6 @@ module SpreadsheetWorker
         end
 
         def process_contact(row)
-          return if empty_row?(row)
           @contact = existing_contact(column_value(row, map['contact']['email']['field']), correspondence_address_type_id)
           return if @contact
 

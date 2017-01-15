@@ -8,6 +8,8 @@ module SpreadsheetWorker
 
         def process
           joiners.drop(3).each do |row_array|
+            next if empty_row?(row_array)
+            
             @joiner = Joiner.new
             @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
 
@@ -18,7 +20,6 @@ module SpreadsheetWorker
         private
 
         def process_joiner(row)
-          return if empty_row?(row)
           @joiner.total_recovery = column_value(row, map['total_recovery']['field']).to_f
           @joiner.previously_registered_at = column_value(row, map['previously_registered_at']['field'])
           @joiner.joining_date = Date.parse(column_value(row, map['date_joined']['field']).to_s)

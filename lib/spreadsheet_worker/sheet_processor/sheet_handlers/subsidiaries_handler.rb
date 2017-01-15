@@ -8,6 +8,8 @@ module SpreadsheetWorker
 
         def process
           subsidiaries.drop(1).each do |row_array|
+            next if empty_row?(row_array)
+            
             @subsidiary = Subsidiary.new
 
             business = get_business(row_array, column_value(row_array, map['npwd']['field']))
@@ -29,7 +31,6 @@ module SpreadsheetWorker
         private
 
         def process_correspondence_address(row)
-          return if empty_row?(row)
           return if existing_address('Correspondence', @business)
 
           address = Address.new
@@ -46,7 +47,6 @@ module SpreadsheetWorker
         end
 
         def process_registered_address(row)
-          return if empty_row?(row)
           return if existing_address('Registered', @business)
 
           address = Address.new
@@ -63,7 +63,6 @@ module SpreadsheetWorker
         end
 
         def process_contact(row)
-          return if empty_row?(row)
           @contact = existing_contact(column_value(row, map['contact']['email']['field']), correspondence_address_type_id)
           return if @contact
 
@@ -79,7 +78,6 @@ module SpreadsheetWorker
         end
 
         def process_small_producer(row)
-          return if empty_row?(row)
           producer = SmallProducerDetail.new
           producer.allocation_method_obligation = column_value(row, map['allocation']['method_obligation']['field']).to_f
           producer.allocation_method_predominant_material = column_value(row, map['allocation']['predominant_material']['field'])
@@ -91,7 +89,6 @@ module SpreadsheetWorker
         end
 
         def process_subsidiary(row)
-          return if empty_row?(row)
           @subsidiary.allocation_method_used = column_value(row, map['allocation']['method_used']['field'])
           @subsidiary.change_detail = ChangeDetail.where(modification: column_value(row, map['change_to_subsidiary_data']['field'])).first
           @subsidiary.packaging_sector_main_activity = PackagingSectorMainActivity.where(material: column_value(row, map['packaging_sector_main_activity']['field'])).first

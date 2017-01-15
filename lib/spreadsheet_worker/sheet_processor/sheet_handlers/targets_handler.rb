@@ -8,6 +8,8 @@ module SpreadsheetWorker
 
         def process
           targets.drop(3).each do |row_array|
+            next if empty_row?(row_array)
+
             @target = Target.new
             @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
             break unless @business
@@ -24,7 +26,6 @@ module SpreadsheetWorker
         private
 
         def process_material_details(row, mat)
-          return if empty_row?(row)
           material = MaterialDetail.new
           material.regular_producer_detail = @business.registrations.last.regular_producer_detail
           material.packaging_material = PackagingMaterial.where(name: mat).first
@@ -50,7 +51,6 @@ module SpreadsheetWorker
         end
 
         def process_material_totals(row, mat)
-          return if empty_row?(row)
           material_total = MaterialTotal.new
           material_total.regular_producer_detail = @business.registrations.last.regular_producer_detail
           material_total.packaging_material = PackagingMaterial.where(name: mat).first
@@ -59,7 +59,6 @@ module SpreadsheetWorker
         end
 
         def process_target_totals(row)
-          return if empty_row?(row)
           target_total = TargetTotal.new
           target_total.regular_producer_detail = @business.registrations.last.regular_producer_detail
           target_total.total_recycling_obligation = column_value(row, map['total_obligation']['recycling']['field']).to_f

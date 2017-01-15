@@ -200,4 +200,30 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
       end
     end
   end
+
+  describe '#previous_upload_for_year' do
+    let(:scheme_id) { 1 }
+    let(:year) { 2015 }
+    let(:params) { {scheme_id: scheme_id, year: year} }
+
+    context 'when a previous upload DOES NOT exist for the year' do
+      it 'expects the user is NOT shown a confirmation checkbox' do
+        xhr :get, :previous_upload_for_year, params
+        expect(assigns(:show_confirmation_field)).to eq false
+      end
+    end
+
+    context 'when a previous upload DOES exist for the year' do
+      it 'expects the user IS shown a confirmation checkbox' do
+        AgencyTemplateUpload.create!(scheme_id:        scheme_id,
+                                     year:             year,
+                                     uploaded_at:      DateTime.now,
+                                     uploaded_by_id:   co_marti.id,
+                                     uploaded_by_type: SchemeOperator,
+                                     filename:         double(original_filename: 'MyFileName'))
+        xhr :get, :previous_upload_for_year, params
+        expect(assigns(:show_confirmation_field)).to eq true
+      end
+    end
+  end
 end

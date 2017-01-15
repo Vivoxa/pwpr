@@ -36,7 +36,7 @@ class BusinessesController < BaseController
   # PATCH/PUT /businesses/1
   # PATCH/PUT /businesses/1.json
   def update
-    update_object(@business, businesses_url, business_params)
+    update_object(@business, "#{businesses_url}?scheme_id=#{@business.scheme_id}", business_params)
   end
 
   # DELETE /businesses/1

@@ -29,7 +29,9 @@ RSpec.describe ApplicationController, type: :controller do
   end
 
   after do
+    sign_out sc_operator
   end
+
   context 'when an ActiveRecord::RecordNotFound exception is raised' do
     it 'expects the user is displayed an error' do
       get :index, missing_record: true

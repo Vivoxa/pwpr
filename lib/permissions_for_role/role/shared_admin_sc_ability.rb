@@ -47,7 +47,7 @@ module PermissionsForRole
         can :read, Contact, id: associated_contact_ids_for_user(user) if user.contacts_r?
         can %i(new create), Contact if user.contacts_w?
         can %i(edit update), Contact, id: associated_contact_ids_for_user(user) if user.contacts_e?
-        can :destroy, Contact, id: associated_business_ids_for_associated_schemes(user) if user.contacts_d?
+        can :destroy, Contact, id: associated_contact_ids_for_user(user) if user.contacts_d?
       end
 
       def business_permissions(user)

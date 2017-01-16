@@ -19,7 +19,7 @@ Lint/UselessAccessModifier:
 
 # Offense count: 45
 Metrics/AbcSize:
-  Max: 112
+  Max: 111
 
 # Offense count: 27
 RSpec/AnyInstance:
@@ -74,6 +74,7 @@ RSpec/MessageChain:
 # SupportedStyles: allow, expect
 RSpec/MessageExpectation:
   Exclude:
+    - 'spec/controllers/application_contoller_spec.rb'
     - 'spec/controllers/company_operators/invitations_controller_spec.rb'
     - 'spec/controllers/reports_controller_spec.rb'
     - 'spec/controllers/scheme_operators/invitations_controller_spec.rb'
@@ -152,12 +153,13 @@ Style/EmptyLinesAroundClassBody:
   Exclude:
     - 'lib/lookup_values/valid_years.rb'
 
-# Offense count: 2
+# Offense count: 3
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
   Exclude:
     - 'app/controllers/agency_template_uploads_controller.rb'
     - 'app/controllers/scheme_operators_controller.rb'
+    - 'spec/controllers/application_contoller_spec.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.

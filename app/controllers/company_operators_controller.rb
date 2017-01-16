@@ -1,11 +1,12 @@
 class CompanyOperatorsController < BaseController
   before_action :authenticate_company_operator
+  before_filter :authorize_permissions, only: :permissions
+  before_filter :authorize_update_permissions, only: :update_permissions
   load_and_authorize_resource
   include CommonHelpers::BusinessDropdownHelper
   respond_to :js
 
   # GET /company_operators
-  # TODO: requires scoping
   def index
     @company_operators = company_operators_by_approved(true) - [current_user]
   end
@@ -60,6 +61,14 @@ class CompanyOperatorsController < BaseController
   end
 
   private
+
+  def authorize_permissions
+    authorize! :permissions, CompanyOperator.find(params['company_operator_id'].to_i)
+  end
+
+  def authorize_update_permissions
+    authorize! :update_permissions, CompanyOperator.find(params['company_operator_id'].to_i)
+  end
 
   def pending_operators(unapproved_operators)
     pending_operators = []

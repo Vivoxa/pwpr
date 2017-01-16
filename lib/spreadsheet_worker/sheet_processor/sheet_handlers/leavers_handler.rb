@@ -9,7 +9,7 @@ module SpreadsheetWorker
         def process
           leavers.drop(3).each do |row_array|
             next if empty_row?(row_array)
-            
+
             @leaver = Leaver.new
             @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
 

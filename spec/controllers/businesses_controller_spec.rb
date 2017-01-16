@@ -157,7 +157,7 @@ RSpec.describe BusinessesController, type: :controller do
         it 'redirects to the business' do
           business = Business.create! valid_attributes
           put :update, {id: business.to_param, business: valid_attributes}, session: valid_session
-          expect(response).to redirect_to(businesses_url)
+          expect(response).to redirect_to("#{businesses_url}?scheme_id=#{business.scheme_id}")
         end
       end
 

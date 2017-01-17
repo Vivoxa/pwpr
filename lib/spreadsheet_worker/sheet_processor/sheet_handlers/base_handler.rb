@@ -121,8 +121,6 @@ module SpreadsheetWorker
           business.country_of_business_registration = CountryOfBusinessRegistration.where(country: column_value(row, map['registered']['country']['field'])).first
           business.sic_code = SicCode.where(code: column_value(row, map['sic_code']['field'])).first
           business.scheme_ref = column_value(row, map['scheme_ref']['field'])
-          business.year_first_reg = Date.today.year
-          business.year_last_reg = Date.today.year
           business
         end
       end

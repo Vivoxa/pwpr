@@ -20,10 +20,12 @@ class ContactsController < ApplicationController
   def new
     @contact = Contact.new
     @business = Business.where(id: params[:business_id]).first
+    contact_titles
   end
 
   # GET /contacts/1/edit
   def edit
+    contact_titles
   end
 
   # POST /contacts
@@ -66,6 +68,10 @@ class ContactsController < ApplicationController
   end
 
   private
+
+  def contact_titles
+    @contact_titles ||= AddressType.all - AddressType.where(title: 'Contact')
+  end
 
   def deactivate_existing_contacts_of_type(contact)
     existing_contacts = Contact.active.where(business_id:     contact.business_id,

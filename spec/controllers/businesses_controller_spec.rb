@@ -40,6 +40,10 @@ RSpec.describe BusinessesController, type: :controller do
       end
       sign_in co_marti
     end
+    after do
+      sign_out co_marti
+    end
+
     let(:valid_attributes) do
       {scheme_id:                   co_marti.schemes.last.id,
        NPWD:                        'kgkgk',
@@ -176,18 +180,26 @@ RSpec.describe BusinessesController, type: :controller do
       end
     end
 
-    describe 'DELETE #destroy' do
-      xit 'destroys the requested business' do
-        business = Business.create! valid_attributes
-        expect do
-          delete :destroy, {id: business.to_param}, session: valid_session
-        end.to change(Business, :count).by(-1)
+    context 'when Admin is signed in' do
+      let(:super_admin) { Admin.first }
+
+      before do
+        sign_in super_admin
       end
 
-      xit 'redirects to the businesses list' do
-        business = Business.create! valid_attributes
-        delete :destroy, {id: business.to_param}, session: valid_session
-        expect(response).to redirect_to(businesses_url)
+      describe 'DELETE #destroy' do
+        it 'destroys the requested business' do
+          business = Business.create! valid_attributes
+          expect do
+            delete :destroy, {id: business.to_param}, session: valid_session
+          end.to change(Business, :count).by(-1)
+        end
+
+        it 'redirects to the businesses list' do
+          business = Business.create! valid_attributes
+          delete :destroy, {id: business.to_param}, session: valid_session
+          expect(response).to redirect_to(businesses_url)
+        end
       end
     end
   end

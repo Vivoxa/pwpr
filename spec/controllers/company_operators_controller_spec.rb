@@ -4,14 +4,14 @@ RSpec.describe CompanyOperatorsController, type: :controller do
   context 'when a scheme operator is signed in' do
     let(:scheme_operator) { SchemeOperator.new }
     let(:business) do
-      Business.create(scheme_id:                   scheme_operator.schemes.first.id,
-                      NPWD:                        'kgkgk',
-                      sic_code_id:                 SicCode.first.id,
-                      name:                        'business 1',
-                      company_number:              '123456789',
-                      scheme_ref:                  'scheme_ref 1',
-                      year_first_reg:              '2010',
-                      scheme_status_code_id:       1,
+      Business.create(scheme_id: scheme_operator.schemes.first.id,
+                      NPWD: 'kgkgk',
+                      sic_code_id: SicCode.first.id,
+                      name: 'business 1',
+                      company_number: '123456789',
+                      scheme_ref: 'scheme_ref 1',
+                      year_first_reg: '2010',
+                      scheme_status_code_id: 1,
                       registration_status_code_id: 1)
     end
     before do
@@ -46,9 +46,9 @@ RSpec.describe CompanyOperatorsController, type: :controller do
       it 'expects a collection of scheme operators' do
         company_operator = CompanyOperator.create(first_name: 'Nigel',
                                                   last_name: 'surtees',
-                                                  email:              'invited@pwpr.com',
-                                                  password:           'my_password',
-                                                  business_id:        business.id,
+                                                  email: 'invited@pwpr.com',
+                                                  password: 'my_password',
+                                                  business_id: business.id,
                                                   invitation_sent_at: DateTime.now)
         get 'invited_not_accepted'
         object = assigns(:company_operators).first
@@ -61,14 +61,14 @@ RSpec.describe CompanyOperatorsController, type: :controller do
       it 'expects a collection of scheme operators' do
         company_operator = CompanyOperator.create(first_name: 'Nigel',
                                                   last_name: 'surtees',
-                                                  email:                  'invited@pwpr.com',
-                                                  password:               'my_password',
-                                                  business_id:            business.id,
-                                                  invitation_sent_at:     DateTime.now - 5.days,
+                                                  email: 'invited@pwpr.com',
+                                                  password: 'my_password',
+                                                  business_id: business.id,
+                                                  invitation_sent_at: DateTime.now - 5.days,
                                                   invitation_accepted_at: DateTime.now,
-                                                  confirmation_sent_at:   DateTime.now - 5.days,
-                                                  confirmed_at:           DateTime.now,
-                                                  approved:               false)
+                                                  confirmation_sent_at: DateTime.now - 5.days,
+                                                  confirmed_at: DateTime.now,
+                                                  approved: false)
         get 'pending'
         object = assigns(:company_operators).first
         expect(object).to be_a CompanyOperator
@@ -79,6 +79,54 @@ RSpec.describe CompanyOperatorsController, type: :controller do
     it 'expects the admin to have access to the index action' do
       get 'index'
       expect(response.status).to eq 200
+    end
+
+    describe '#approve' do
+      before do
+        scheme_operator.add_role :sc_director
+        PermissionsForRole::SchemeOperatorDefinitions.new.permissions_for_role(:sc_director).each do |permission, has|
+          scheme_operator.add_role permission if has[:checked]
+        end
+        sign_in scheme_operator
+      end
+
+      after do
+        sign_out scheme_operator
+      end
+      context 'when all values are correct' do
+        let(:company_operator) do
+          CompanyOperator.create(first_name: 'Nigel',
+                                 last_name: 'surtees',
+                                 email: 'invited@pwpr.com',
+                                 password: 'my_password',
+                                 business_id: business.id,
+                                 invitation_sent_at: DateTime.now - 5.days,
+                                 invitation_accepted_at: DateTime.now,
+                                 confirmation_sent_at: DateTime.now - 5.days,
+                                 confirmed_at: DateTime.now,
+                                 approved: false)
+        end
+        it 'expects the company operator to be approved' do
+          get :approve, company_operator_id: company_operator.id
+          expect(response.status).to eq 302
+          expect(flash['notice']).to eq('CompanyOperator was successfully approved.')
+          company_operator.reload
+          expect(company_operator.approved).to eq true
+        end
+      end
+
+      context 'when an error occurs' do
+        let(:company_operator) { CompanyOperator.last }
+
+        it 'expects the company operator to be approved' do
+          allow_any_instance_of(CompanyOperator).to receive(:save).and_return false
+          get :approve, company_operator_id: company_operator.id
+          expect(response.status).to eq 200
+          expect(subject).to render_template(:edit)
+          company_operator.reload
+          expect(company_operator.approved).to eq false
+        end
+      end
     end
   end
 
@@ -293,13 +341,13 @@ RSpec.describe CompanyOperatorsController, type: :controller do
           let(:no_role) { FactoryGirl.create(:company_operator_no_role) }
           let(:definitions) do
             {
-              co_users_r:   {checked: true, locked: true},
-              co_users_w:   {checked: false, locked: false},
-              co_users_e:   {checked: false, locked: false},
-              co_users_d:   {checked: false, locked: false},
+              co_users_r: {checked: true, locked: true},
+                co_users_w: {checked: false, locked: false},
+                co_users_e: {checked: false, locked: false},
+                co_users_d: {checked: false, locked: false},
 
-              businesses_r: {checked: false, locked: false},
-              businesses_e: {checked: false, locked: true}
+                businesses_r: {checked: false, locked: false},
+                businesses_e: {checked: false, locked: true}
             }
           end
 

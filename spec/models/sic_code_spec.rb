@@ -13,5 +13,11 @@ RSpec.describe SicCode, type: :model do
       it { is_expected.to validate_presence_of(:year_introduced) }
       it { is_expected.to validate_presence_of(:code) }
     end
+
+    describe '#id_from_setting' do
+      it 'expects an id for a valid setting' do
+        expect(described_class.id_from_setting('01.23')).to eq 10
+      end
+    end
   end
 end

@@ -16,6 +16,22 @@ RSpec.describe Business, type: :model do
       it { is_expected.to have_many(:company_operators) }
       it { is_expected.to have_many(:addresses) }
     end
+
+    describe '#correspondence_contact' do
+      it 'expects the correspondence contact to be returned' do
+        business = Business.first
+
+        contact = business.correspondence_contact
+        expect(contact.address_type_id).to eq(AddressType.id_from_setting('Correspondence'))
+      end
+    end
+
+    describe '#scope for_registration' do
+      it 'expects only businesses from the registration tab to be returned' do
+        businesses = Scheme.first.businesses.for_registration
+        expect(businesses.count).to eq(1)
+      end
+    end
   end
 
   # context 'Validations' do

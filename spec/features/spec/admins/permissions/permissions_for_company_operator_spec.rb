@@ -126,13 +126,13 @@ RSpec.describe 'Admin', js: true do
         visit '/company_operators/6/permissions'
       end
 
-      it 'assigns the allowed permissions' do
+      xit 'assigns the allowed permissions' do
         permissions.each do |key, permission|
           expect(page).to have_checked_field(key.to_s) if permission[:checked]
         end
       end
 
-      it 'DOES NOT assign the allowed permissions' do
+      xit 'DOES NOT assign the allowed permissions' do
         permissions.each do |key, permission|
           expect(page).to have_unchecked_field(key.to_s) if !permission[:checked] && permission[:locked]
         end

@@ -17,6 +17,13 @@ module PermissionsForRole
         can %i(read new create update destroy), Admins::RegistrationsController if user.super_admin?
       end
 
+      def business_permissions(user)
+        can :read, Business if user.businesses_r?
+        can %i(new create), Business if user.businesses_w?
+        can %i(edit update), Business if user.businesses_e?
+        can :destroy, Business if user.businesses_d?
+      end
+
       def contact_permissions(user)
         can :read, Contact if user.contacts_r?
         can %i(new create), Contact if user.contacts_w?

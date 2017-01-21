@@ -17,8 +17,8 @@ seeder.populate_lookup_tables
 sic = SicCode.first
 
 schemes = Scheme.create([{name: 'dans pack scheme', active: true, scheme_country_code_id: 1},
-                         {name: 'mypack scheme', scheme_country_code_id: 1},
-                         {name: 'pack one', scheme_country_code_id: 1},
+                         {name: 'mypack scheme', active: true, scheme_country_code_id: 1},
+                         {name: 'pack one', active: true, scheme_country_code_id: 1},
                          {name: 'Test scheme', active: true, scheme_country_code_id: 1},
                          {name: 'Synergy', scheme_country_code_id: 1},
                          {name: 'Packaging for you', active: true, scheme_country_code_id: 1}
@@ -32,6 +32,7 @@ businesses = Business.create([{name: 'dans pack business',
                                country_of_business_registration_id: 1,
                                year_first_reg: '2007',
                                scheme_status_code_id: 1,
+                               business_type_id: 1,
                                registration_status_code_id: 1},
                               {name: 'my pack business',
                                NPWD: 'NPWD-1',
@@ -286,7 +287,6 @@ end
     co_super_user.add_role permission if has[:checked]
   end
 
-
   co_user = CompanyOperator.create({email: "co_user_#{index}@pwpr.com",
                                     last_name: 'surtees',
                                     password: @password,
@@ -299,7 +299,25 @@ end
                                     approved: true,
                                     business_id: businesses[2].id})
 
-  co_super_user.co_user!
+  co_user.co_user!
+
+  PermissionsForRole::CompanyOperatorDefinitions.new.permissions_for_role(:co_user).each do |permission, has|
+    co_user.add_role permission if has[:checked]
+  end
+
+  co_user = CompanyOperator.create({email: "co_user_#{index+1}@pwpr.com",
+                                    last_name: 'surtees',
+                                    password: @password,
+                                    confirmation_token: random_string(20),
+                                    invitation_sent_at: DateTime.now - 5.days,
+                                    invitation_accepted_at: DateTime.now,
+                                    confirmation_sent_at: DateTime.now - 5.days,
+                                    confirmed_at: DateTime.now,
+                                    first_name: "co_user_#{index}",
+                                    approved: false,
+                                    business_id: businesses[2].id})
+
+  co_user.co_user!
 
   PermissionsForRole::CompanyOperatorDefinitions.new.permissions_for_role(:co_user).each do |permission, has|
     co_user.add_role permission if has[:checked]

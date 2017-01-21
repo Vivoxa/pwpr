@@ -20,10 +20,12 @@ class ContactsController < ApplicationController
   def new
     @contact = Contact.new
     @business = Business.where(id: params[:business_id]).first
+    contact_titles
   end
 
   # GET /contacts/1/edit
   def edit
+    contact_titles
   end
 
   # POST /contacts
@@ -60,12 +62,16 @@ class ContactsController < ApplicationController
   def destroy
     @contact.destroy
     respond_to do |format|
-      format.html { redirect_to contacts_url, notice: 'Contact was successfully destroyed.' }
+      format.html { redirect_to business_contacts_path(business_id: params[:business_id]), notice: 'Contact was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
+
+  def contact_titles
+    @contact_titles ||= AddressType.all - AddressType.where(title: 'Contact')
+  end
 
   def deactivate_existing_contacts_of_type(contact)
     existing_contacts = Contact.active.where(business_id:     contact.business_id,

@@ -17,8 +17,8 @@ seeder.populate_lookup_tables
 sic = SicCode.first
 
 schemes = Scheme.create([{name: 'dans pack scheme', active: true, scheme_country_code_id: 1},
-                         {name: 'mypack scheme', scheme_country_code_id: 1},
-                         {name: 'pack one', scheme_country_code_id: 1},
+                         {name: 'mypack scheme', active: true, scheme_country_code_id: 1},
+                         {name: 'pack one', active: true, scheme_country_code_id: 1},
                          {name: 'Test scheme', active: true, scheme_country_code_id: 1},
                          {name: 'Synergy', scheme_country_code_id: 1},
                          {name: 'Packaging for you', active: true, scheme_country_code_id: 1}

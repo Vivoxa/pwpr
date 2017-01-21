@@ -5,7 +5,7 @@ Capybara.app_host = ENV.fetch('APP_HOST')
 Capybara.save_path = '/desktop/screenshots'
 Capybara.run_server = false # don't start Rack
 Capybara.default_driver = :selenium
-Capybara.default_max_wait_time = 15
+Capybara.default_max_wait_time = 25
 Capybara.always_include_port = true
 
 Capybara.configure do |config|
@@ -33,7 +33,7 @@ Capybara.configure do |config|
     config.around(:all) do |example|
       @_session = Capybara::Session.new(:selenium_hub)
       example.run
-      #      @_session.driver.browser.quit
+      @_session.driver.browser.quit
     end
   end
 end

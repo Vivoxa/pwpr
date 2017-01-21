@@ -7,22 +7,32 @@ RSpec.describe '[Scheme Operator] Company Operator Invitations', js: true do
           it 'expects an invitation to be sent' do
             sign_in('SchemeOperator', email, 'min700si')
             click_link('Schemes')
-            find_by_id('1-invite_company_operator').click
-            expect(page).to have_content('Send invitation')
+            wait_for_page_load('a', 'Invite Scheme Operator(Multiple Schemes)')
+
+            hf = first(:css, '.card-block')
+            within(hf) do
+              click_on 'Scheme details'
+            end
+            wait_for_page_load('a', 'Invite new Member Contact')
+
+            click_on('Invite new Member Contact')
+
+            wait_for_page_load('h2','Invite Member Contact: dans pack scheme')
+
             id = SecureRandom.uuid
-            fill_in 'Email', with: "#{id}@pwpr_test.com"
+            fill_in 'Email', with: "#{id}@pwpr-test.com"
             fill_in 'First name', with: 'Doc'
             fill_in 'Last name', with: 'Brown'
 
-            within '#schemes_select' do
-              find("option[value='1']").click
-            end
-
-            within '#business_select' do
-              find("option[value='1']").click
-            end
+            # within '#schemes_select' do
+            #   find("option[value='1']").click
+            # end
+            #
+            # within '#business_select' do
+            #   find("option[value='1']").click
+            # end
             click_on 'Send an invitation'
-            expect(page).to have_content("An invitation email has been sent to #{id}@pwpr_test.com.")
+            expect(page).to have_content("An invitation email has been sent to #{id}@pwpr-test.com.")
             click_link('Sign Out')
             expect(page).to have_content('Signed out successfully.')
           end
@@ -32,19 +42,28 @@ RSpec.describe '[Scheme Operator] Company Operator Invitations', js: true do
           it 'expects an error message' do
             sign_in('SchemeOperator', email, 'min700si')
             click_link('Schemes')
-            find_by_id('1-invite_company_operator').click
-            expect(page).to have_content('Send invitation')
+            wait_for_page_load('a', 'Invite Scheme Operator(Multiple Schemes)')
+
+            hf = first(:css, '.card-block')
+            within(hf) do
+              click_on 'Scheme details'
+            end
+            wait_for_page_load('a', 'Invite new Member Contact')
+
+            click_on('Invite new Member Contact')
+
+            wait_for_page_load('h2','Invite Member Contact: dans pack scheme')
 
             fill_in 'First name', with: 'Doc'
             fill_in 'Last name', with: 'Brown'
 
-            within '#schemes_select' do
-              find("option[value='1']").click
-            end
-
-            within '#business_select' do
-              find("option[value='1']").click
-            end
+            # within '#schemes_select' do
+            #   find("option[value='1']").click
+            # end
+            #
+            # within '#business_select' do
+            #   find("option[value='1']").click
+            # end
             click_on 'Send an invitation'
             expect(page).to have_content('1 error prohibited this company operator from being saved:')
             expect(page).to have_content("Email can't be blank")
@@ -56,10 +75,20 @@ RSpec.describe '[Scheme Operator] Company Operator Invitations', js: true do
           it 'expects an invitation to be sent' do
             sign_in('SchemeOperator', email, 'min700si')
             click_link('Schemes')
-            find_by_id('1-invite_company_operator').click
-            expect(page).to have_content('Send invitation')
+            wait_for_page_load('a', 'Invite Scheme Operator(Multiple Schemes)')
+
+            hf = first(:css, '.card-block')
+            within(hf) do
+              click_on 'Scheme details'
+            end
+            wait_for_page_load('a', 'Invite new Member Contact')
+
+            click_on('Invite new Member Contact')
+
+            wait_for_page_load('h2','Invite Member Contact: dans pack scheme')
+
             id = SecureRandom.uuid
-            fill_in 'Email', with: "#{id}@pwpr_test.com"
+            fill_in 'Email', with: "#{id}@pwpr-test.com"
 
             within '#schemes_select' do
               find("option[value='1']").click

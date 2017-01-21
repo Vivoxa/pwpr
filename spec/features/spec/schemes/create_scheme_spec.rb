@@ -1,6 +1,9 @@
 RSpec.describe 'Create Scheme', js: true do
   describe '#index' do
     context 'when viewing all schemes' do
+      after do
+        click_link('Sign Out')
+      end
       context 'when the user has permissions to create a scheme' do
         it 'expects a link to create a new scheme to be present' do
           sign_in('Admin', 'super_admin@pwpr.com', 'min700si')

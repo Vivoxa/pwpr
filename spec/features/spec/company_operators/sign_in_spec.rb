@@ -15,6 +15,9 @@ RSpec.describe 'CompanyOperator', js: true do
       before do
         sign_in('CompanyOperator', 'co_director_0@pwpr.com', 'min700si')
       end
+      after do
+        click_link('Sign Out')
+      end
 
       it 'expects to find a button for sign out' do
         expect(sign_out_btn).not_to be_nil

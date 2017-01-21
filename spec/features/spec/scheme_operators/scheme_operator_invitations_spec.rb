@@ -10,18 +10,25 @@ RSpec.describe '[Scheme Operator] Scheme Operator Invitations', js: true do
           it 'expects an invitation to be sent' do
             sign_in('SchemeOperator', email, 'min700si')
             click_link('Schemes')
-            find_by_id("#{user[:scheme_id]}-invite_scheme_operator").click
-            expect(page).to have_content('Send invitation')
+            wait_for_page_load('a', 'Invite Scheme Operator(Multiple Schemes)')
+            hf = first(:css, '.card-block')
+            within(hf) do
+              click_on 'Scheme details'
+            end
+            wait_for_page_load('a', 'Invite new Scheme Operator')
+
+            click_on('Invite new Scheme Operator')
+
             id = SecureRandom.uuid
-            fill_in 'Email', with: "#{id}@pwpr_test.com"
+            fill_in 'Email', with: "#{id}@pwpr-test.com"
             fill_in 'First name', with: 'Doc'
             fill_in 'Last name', with: 'Brown'
 
-            within '#scheme_operator_scheme_ids' do
-              find("option[value='#{user[:scheme_id]}']").click
-            end
+            # within '#scheme_operator_scheme_ids' do
+            #   find("option[value='#{user[:scheme_id]}']").click
+            # end
             click_on 'Send an invitation'
-            expect(page).to have_content("An invitation email has been sent to #{id}@pwpr_test.com.")
+            expect(page).to have_content("An invitation email has been sent to #{id}@pwpr-test.com.")
             click_link('Sign Out')
             expect(page).to have_content('Signed out successfully.')
           end
@@ -31,15 +38,21 @@ RSpec.describe '[Scheme Operator] Scheme Operator Invitations', js: true do
           it 'expects an error message' do
             sign_in('SchemeOperator', email, 'min700si')
             click_link('Schemes')
-            find_by_id("#{user[:scheme_id]}-invite_scheme_operator").click
-            expect(page).to have_content('Send invitation')
+            wait_for_page_load('a', 'Invite Scheme Operator(Multiple Schemes)')
+            hf = first(:css, '.card-block')
+            within(hf) do
+              click_on 'Scheme details'
+            end
+            wait_for_page_load('a', 'Invite new Scheme Operator')
+
+            click_on('Invite new Scheme Operator')
 
             fill_in 'First name', with: 'Doc'
             fill_in 'Last name', with: 'Brown'
 
-            within '#scheme_operator_scheme_ids' do
-              find("option[value='#{user[:scheme_id]}']").click
-            end
+            # within '#scheme_operator_scheme_ids' do
+            #   find("option[value='#{user[:scheme_id]}']").click
+            # end
             click_on 'Send an invitation'
             expect(page).to have_content('1 error prohibited this scheme operator from being saved:')
             expect(page).to have_content("Email can't be blank")
@@ -51,14 +64,21 @@ RSpec.describe '[Scheme Operator] Scheme Operator Invitations', js: true do
           it 'expects an invitation to be sent' do
             sign_in('SchemeOperator', email, 'min700si')
             click_link('Schemes')
-            find_by_id("#{user[:scheme_id]}-invite_scheme_operator").click
-            expect(page).to have_content('Send invitation')
-            id = SecureRandom.uuid
-            fill_in 'Email', with: "#{id}@pwpr_test.com"
-
-            within '#scheme_operator_scheme_ids' do
-              find("option[value='#{user[:scheme_id]}']").click
+            wait_for_page_load('a', 'Invite Scheme Operator(Multiple Schemes)')
+            hf = first(:css, '.card-block')
+            within(hf) do
+              click_on 'Scheme details'
             end
+            wait_for_page_load('a', 'Invite new Scheme Operator')
+
+            click_on('Invite new Scheme Operator')
+
+            id = SecureRandom.uuid
+            fill_in 'Email', with: "#{id}@pwpr-test.com"
+
+            # within '#scheme_operator_scheme_ids' do
+            #   find("option[value='#{user[:scheme_id]}']").click
+            # end
             click_on 'Send an invitation'
             expect(page).to have_content('2 errors prohibited this scheme operator from being saved:')
             expect(page).to have_content("First name can't be blank")
@@ -68,13 +88,21 @@ RSpec.describe '[Scheme Operator] Scheme Operator Invitations', js: true do
         end
 
         context 'when scheme is not selected' do
-          it 'expects an error message' do
+          xit 'expects an error message' do
             sign_in('SchemeOperator', email, 'min700si')
             click_link('Schemes')
-            find_by_id("#{user[:scheme_id]}-invite_scheme_operator").click
-            expect(page).to have_content('Send invitation')
+
+            wait_for_page_load('a', 'Invite Scheme Operator(Multiple Schemes)')
+            hf = first(:css, '.card-block')
+            within(hf) do
+              click_on 'Scheme details'
+            end
+            wait_for_page_load('a', 'Invite new Scheme Operator')
+
+            click_on('Invite new Scheme Operator')
+
             id = SecureRandom.uuid
-            fill_in 'Email', with: "#{id}@pwpr_test.com"
+            fill_in 'Email', with: "#{id}@pwpr-test.com"
             fill_in 'First name', with: 'Doc'
             fill_in 'Last name', with: 'Brown'
 
@@ -88,11 +116,20 @@ RSpec.describe '[Scheme Operator] Scheme Operator Invitations', js: true do
     end
   end
   context 'when user is a SchemeOperator with user role' do
-    it 'expects the invite button NOT to be there' do
+    it 'expects not to be able to view schemes' do
       sign_in('SchemeOperator', 'sc_user_0@pwpr.com', 'min700si')
       click_link('Schemes')
-      expect(page).not_to have_content('4-invite_scheme_operator')
-      visit '/scheme_operators/invitation/new'
+      # wait_for_page_load('a', 'Invite Scheme Operator(Multiple Schemes)')
+      # hf = first(:css, '.card-block')
+      # within(hf) do
+      #   click_on 'Scheme details'
+      # end
+      # wait_for_page_load('a', 'Invite new Scheme Operator')
+      #
+      # click_on('Invite new Scheme Operator')
+      #
+      # expect(page).not_to have_content('4-invite_scheme_operator')
+      # visit '/scheme_operators/invitation/new'
       expect(page).to have_content('You are not authorized to access this page.')
       click_link('Sign Out')
       expect(page).to have_content('Signed out successfully.')

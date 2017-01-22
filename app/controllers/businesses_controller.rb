@@ -17,6 +17,8 @@ class BusinessesController < BaseController
 
   # GET /businesses/new
   def new
+    @scheme_id = params[:scheme_id].to_i if params[:scheme_id]
+
     @business = Business.new
     @schemes = current_user.schemes
     raise 'The currently logged in Scheme Operator must have at least one Scheme to create a business' if @schemes.empty?

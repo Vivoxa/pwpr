@@ -8,7 +8,7 @@ class SchemeMailerPreview < ActionMailer::Preview
                                     'nigel.surtees@hotmail.co.uk')
   end
 
-  def  scheme_director_info
+  def scheme_director_info
     scheme = Scheme.first
     SchemeMailer.scheme_director_info(scheme.businesses, scheme, '2015', SchemeOperator.first)
   end

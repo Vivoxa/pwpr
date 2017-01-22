@@ -12,8 +12,9 @@
               </ul>
             </div>
         <% end %>
-
-        <% if @schemes %>
+        <% if @scheme_id %>
+            <%= f.collection_select :scheme_id, Scheme.where(id: @scheme_id), :id, :name, {}, {class: "devise-lgn form-control", style: "display:none"} %>
+        <% elsif @schemes %>
             <div class="field centre">
               <%= f.label 'Active Schemes', class: "devise-lgn" %>
               <%= f.collection_select :scheme_id, @schemes.where(active: true).order(:name), :id, :name, {include_blank: 'Select a Scheme'}, {id: 'scheme_id_select', class: "devise-lgn form-control"} %>

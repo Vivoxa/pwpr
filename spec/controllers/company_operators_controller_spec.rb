@@ -298,9 +298,19 @@ RSpec.describe CompanyOperatorsController, type: :controller do
       end
 
       context 'when calling permissions' do
-        it 'expects the co_director to have access to the permissions action' do
-          get :permissions, company_operator_id: CompanyOperator.last.id
-          expect(response.status).to eq 200
+        context 'when the company operator belongs to the business' do
+          it 'expects the co_director to have access to the permissions action' do
+            get :permissions, company_operator_id: CompanyOperator.last.id
+            expect(response.status).to eq 200
+          end
+        end
+        context 'when the company operator DOES NOT belong to the business' do
+          it 'expects the co_director NOT to have access to the permissions action' do
+            get :permissions, company_operator_id: CompanyOperator.first.id
+            expect(response.status).to eq 302
+            expect(flash[:alert]).to be_present
+            expect(flash[:alert]).to eq 'You are not authorized to access this page.'
+          end
         end
 
         it 'sets the correct user instance' do
@@ -341,7 +351,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
           let(:no_role) { FactoryGirl.create(:company_operator_no_role) }
           let(:definitions) do
             {
-              co_users_r: {checked: true, locked: true},
+                co_users_r: {checked: true, locked: true},
                 co_users_w: {checked: false, locked: false},
                 co_users_e: {checked: false, locked: false},
                 co_users_d: {checked: false, locked: false},

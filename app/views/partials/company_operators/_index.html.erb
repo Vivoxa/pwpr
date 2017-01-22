@@ -13,21 +13,25 @@
               <div class="card-header"></div>
               <div class="card-block" style='height:150px'>
                 <div class="row">
-                  <div class="col-md-3">
-                    <strong>Name</strong>
+                  <div class="col-md-2">
+                    <strong>Firstname</strong>
+                  </div>
+                  <div class="col-md-2">
+                    <strong>Lastname</strong>
                   </div>
                   <div class="col-md-4">
                     <strong>Email</strong>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-2">
                     <strong>Member</strong>
                   </div>
                   <div class="col-md-2"></div>
                 </div>
                 <div class="row">
-                  <div class="col-md-3"><%= user.first_name.to_s if user.first_name %></div>
+                  <div class="col-md-2"><%= user.first_name.to_s if user.first_name %></div>
+                  <div class="col-md-2"><%= user.last_name.to_s if user.last_name %></div>
                   <div class="col-md-4"><%= user.email.to_s %></div>
-                  <div class="col-md-3">
+                  <div class="col-md-2">
                     <%= current_admin ? 'N/A for Admin' : user.business.name %>
                   </div>
                   <div class="col-md-2">

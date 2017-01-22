@@ -41,8 +41,9 @@
 
     <%= render partial: 'partials/businesses_link' %>
   </ul>
-
-  <div class="form-inline pull-xs-right">
-    <button class="btn btn-sm btn-outline-info" style="margin-top:5px" type="submit"><%= @current_user.email if @current_user %></button>
-  </div>
+  <% if @current_user %>
+      <div class="form-inline pull-xs-right">
+        <button class="btn btn-sm btn-outline-info" style="margin-top:5px" type="submit"><%= @current_user.email %></button>
+      </div>
+  <% end %>
 </nav>

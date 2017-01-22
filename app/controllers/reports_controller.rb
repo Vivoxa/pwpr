@@ -25,6 +25,7 @@ class ReportsController < ApplicationController
 
     @errors << 'Select a Year' unless YEARS.include?(year)
     build_report_form_data(report, scheme_uid, year)
+    @stop_spinner = true if @report_form_data.empty?
 
     respond_to do |format|
       format.js

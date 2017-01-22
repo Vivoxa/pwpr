@@ -351,13 +351,12 @@ RSpec.describe CompanyOperatorsController, type: :controller do
           let(:no_role) { FactoryGirl.create(:company_operator_no_role) }
           let(:definitions) do
             {
-                co_users_r: {checked: true, locked: true},
-                co_users_w: {checked: false, locked: false},
-                co_users_e: {checked: false, locked: false},
-                co_users_d: {checked: false, locked: false},
-
-                businesses_r: {checked: false, locked: false},
-                businesses_e: {checked: false, locked: true}
+              co_users_r: {checked: true, locked: true},
+              co_users_w: {checked: false, locked: false},
+              co_users_e: {checked: false, locked: false},
+              co_users_d: {checked: false, locked: false},
+              businesses_r: {checked: false, locked: false},
+              businesses_e: {checked: false, locked: true}
             }
           end
 
@@ -366,7 +365,9 @@ RSpec.describe CompanyOperatorsController, type: :controller do
             controller.instance_variable_set(:@available_permissions, PermissionsForRole::CompanyOperatorDefinitions::PERMISSIONS)
             controller.instance_variable_set(:@permissions_definitions, PermissionsForRole::CompanyOperatorDefinitions.new)
             allow_any_instance_of(PermissionsForRole::CompanyOperatorDefinitions).to receive(:permissions_for_role).and_return(definitions)
-
+            no_role.business_id = co_director.business.id
+            no_role.save!
+            co_director.business.reload
             no_role.role_list.each { |r| no_role.remove_role r }
           end
 

@@ -298,9 +298,19 @@ RSpec.describe CompanyOperatorsController, type: :controller do
       end
 
       context 'when calling permissions' do
-        it 'expects the co_director to have access to the permissions action' do
-          get :permissions, company_operator_id: CompanyOperator.last.id
-          expect(response.status).to eq 200
+        context 'when the company operator belongs to the business' do
+          it 'expects the co_director to have access to the permissions action' do
+            get :permissions, company_operator_id: CompanyOperator.last.id
+            expect(response.status).to eq 200
+          end
+        end
+        context 'when the company operator DOES NOT belong to the business' do
+          it 'expects the co_director NOT to have access to the permissions action' do
+            get :permissions, company_operator_id: CompanyOperator.first.id
+            expect(response.status).to eq 302
+            expect(flash[:alert]).to be_present
+            expect(flash[:alert]).to eq 'You are not authorized to access this page.'
+          end
         end
 
         it 'sets the correct user instance' do
@@ -342,12 +352,11 @@ RSpec.describe CompanyOperatorsController, type: :controller do
           let(:definitions) do
             {
               co_users_r: {checked: true, locked: true},
-                co_users_w: {checked: false, locked: false},
-                co_users_e: {checked: false, locked: false},
-                co_users_d: {checked: false, locked: false},
-
-                businesses_r: {checked: false, locked: false},
-                businesses_e: {checked: false, locked: true}
+              co_users_w: {checked: false, locked: false},
+              co_users_e: {checked: false, locked: false},
+              co_users_d: {checked: false, locked: false},
+              businesses_r: {checked: false, locked: false},
+              businesses_e: {checked: false, locked: true}
             }
           end
 
@@ -356,7 +365,9 @@ RSpec.describe CompanyOperatorsController, type: :controller do
             controller.instance_variable_set(:@available_permissions, PermissionsForRole::CompanyOperatorDefinitions::PERMISSIONS)
             controller.instance_variable_set(:@permissions_definitions, PermissionsForRole::CompanyOperatorDefinitions.new)
             allow_any_instance_of(PermissionsForRole::CompanyOperatorDefinitions).to receive(:permissions_for_role).and_return(definitions)
-
+            no_role.business_id = co_director.business.id
+            no_role.save!
+            co_director.business.reload
             no_role.role_list.each { |r| no_role.remove_role r }
           end
 

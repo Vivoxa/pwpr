@@ -10,7 +10,6 @@ module SpreadsheetWorker
           targets.drop(3).each do |row_array|
             next if empty_row?(row_array)
 
-            @target = Target.new
             @business = get_business(row_array, column_value(row_array, map['npwd']['field']))
             break unless @business
 

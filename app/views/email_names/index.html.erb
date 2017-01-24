@@ -1,0 +1,43 @@
+<div class="container" style='margin-top:30px'>
+  <h1>Listing Email Names</h1>
+
+  <div class="row">
+    <div class="card">
+      <div class="card-block">
+        <div class="card-title">
+          <% if can? :create, EmailName %>
+              <%= link_to 'New Email Name', new_email_name_path, class: ['btn btn-sm btn-primary'] %>
+          <% end %>
+        </div>
+      </div>
+      <% @email_names.each do |email_name| %>
+          <div class="card-block">
+
+            <div class="col-xs-12 col-md-2 col-lg-12">
+              <div class="card">
+                <div class="card-block">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-2 col-lg-7"><strong>Email Name</strong></div>
+
+                    <div class="col-xs-12 col-md-2 col-lg-5"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-2 col-lg-7"><%= email_name.name%></div>
+
+                    <div class="col-xs-12 col-md-2 col-lg-5">
+                      <% if can? :read, EmailName %>
+                          <%= link_to 'Show', email_name_path(id: email_name.id), class: ['btn btn-sm btn-primary'] %>
+                      <% end %>
+                      <% if can? :update, EmailName %>
+                          <%= link_to 'Edit', edit_email_name_path(id: email_name.id), class: ['btn btn-sm btn-warning'] %></div>
+                      <% end %>
+                      </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<h1 class="centre-wide">Editing Email Name</h1>
+
+<%= render 'form' %>
+<% if can? :read, EmailName %>
+    <div class="centre">
+      <%= link_to 'Show', @email_name, class: ['btn btn-info devise-btn'] %>
+      <%= link_to 'Back', email_names_path, class: ['btn btn-success devise-btn'] %>
+    </div>
+<% end %>

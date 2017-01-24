@@ -1,0 +1,20 @@
+<%= form_for(@email_name) do |f| %>
+    <% if @email_name.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@email_name.errors.count, "error") %> prohibited this email_name from being saved:</h2>
+
+          <ul>
+            <% @email_name.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field centre">
+      <%= f.text_field :name, placeholder: 'Email Name', class: 'devise-lgn form-control' %>
+    </div>
+    <div class="actions centre">
+      <%= f.submit class: 'btn btn-primary devise-btn' %>
+    </div>
+<% end %>

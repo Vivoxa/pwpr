@@ -1,3 +1,11 @@
+email_names:
+  no_columns: 1
+  column_1:
+    title: name
+    data_type: string
+    values:
+    - "registration_email"
+    - "scheme_operator_info"
 emailed_statuses:
   no_columns: 1
   column_1:

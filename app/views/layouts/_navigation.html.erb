@@ -40,6 +40,9 @@
     <%= render partial: 'partials/schemes_dropdown' %>
 
     <%= render partial: 'partials/businesses_link' %>
+    <% if can? :read, EmailName %>
+        <%= render partial: 'partials/admin_dropdown' %>
+    <% end %>
   </ul>
   <% if @current_user %>
       <div class="form-inline pull-xs-right">

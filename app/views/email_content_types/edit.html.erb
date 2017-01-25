@@ -1,0 +1,9 @@
+<h1 class="centre-wide">Editing Email Content Type</h1>
+
+<%= render 'form' %>
+<% if can? :read, EmailContentType %>
+    <div class="centre">
+      <%= link_to 'Show', @email_content_type, class: ['btn btn-info devise-btn'] %>
+      <%= link_to 'Back', email_content_types_path, class: ['btn btn-success devise-btn'] %>
+    </div>
+<% end %>

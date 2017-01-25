@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124194550) do
+ActiveRecord::Schema.define(version: 20170124215703) do
 
   create_table "address_types", force: :cascade do |t|
     t.string   "title",       limit: 255, null: false
@@ -202,6 +202,12 @@ ActiveRecord::Schema.define(version: 20170124194550) do
 
   create_table "country_of_business_registrations", force: :cascade do |t|
     t.string   "country",    limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "email_content_types", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end

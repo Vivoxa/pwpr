@@ -1,7 +1,9 @@
 module PermissionsForRole
   class AdminDefinitions < BaseDefinitions
     ROLES = %w(super_admin normal_admin restricted_admin).freeze
-    PERMISSIONS = %w(admins_r admins_w admins_e admins_d email_names_r email_names_w email_names_e email_names_d).freeze + PermissionsForRole::SharedDefinitions::SHARED_PERMISSIONS
+    PERMISSIONS = %w(admins_r admins_w admins_e admins_d
+                     email_names_r email_names_w email_names_e email_names_d
+                     email_content_types_r email_content_types_w email_content_types_e email_content_types_d).freeze + PermissionsForRole::SharedDefinitions::SHARED_PERMISSIONS
 
     def permissions_for_role(role)
       logger.tagged('AdminDefinitions') do
@@ -53,7 +55,12 @@ module PermissionsForRole
         email_names_r:   {checked: true, locked: true},
         email_names_w:   {checked: true, locked: true},
         email_names_e:   {checked: true, locked: true},
-        email_names_d:   {checked: true, locked: true}
+        email_names_d:   {checked: true, locked: true},
+
+        email_content_types_r: {checked: true, locked: true},
+        email_content_types_w: {checked: true, locked: true},
+        email_content_types_e: {checked: true, locked: true},
+        email_content_types_d: {checked: true, locked: true}
       }
     end
 
@@ -90,7 +97,12 @@ module PermissionsForRole
         email_names_r:   {checked: true, locked: true},
         email_names_w:   {checked: true, locked: true},
         email_names_e:   {checked: true, locked: true},
-        email_names_d:   {checked: true, locked: true}
+        email_names_d:   {checked: true, locked: true},
+
+        email_content_types_r: {checked: true, locked: true},
+        email_content_types_w: {checked: true, locked: true},
+        email_content_types_e: {checked: true, locked: true},
+        email_content_types_d: {checked: true, locked: true}
       }
     end
 
@@ -126,7 +138,12 @@ module PermissionsForRole
         email_names_r:   {checked: true, locked: true},
         email_names_w:   {checked: false, locked: false},
         email_names_e:   {checked: false, locked: false},
-        email_names_d:   {checked: false, locked: true}
+        email_names_d:   {checked: false, locked: true},
+
+        email_content_types_r: {checked: true, locked: true},
+        email_content_types_w: {checked: false, locked: false},
+        email_content_types_e: {checked: false, locked: false},
+        email_content_types_d: {checked: false, locked: true}
       }
     end
   end

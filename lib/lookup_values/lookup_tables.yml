@@ -1,3 +1,11 @@
+email_content_types:
+  no_columns: 1
+  column_1:
+    title: name
+    data_type: string
+    values:
+    - "scheme"
+    - "default"
 email_names:
   no_columns: 1
   column_1:

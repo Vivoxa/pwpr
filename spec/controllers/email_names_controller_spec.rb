@@ -23,11 +23,11 @@ RSpec.describe EmailNamesController, type: :controller do
   # EmailName. As you add validations to EmailName, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    {name: 'test_email'}
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    {name: nil}
   end
 
   # This should return the minimal set of values that should be in the session
@@ -39,21 +39,21 @@ RSpec.describe EmailNamesController, type: :controller do
     it 'assigns all email_names as @email_names' do
       email_name = EmailName.create! valid_attributes
       get :index, params: {}, session: valid_session
-      expect(assigns(:email_names)).to eq([email_name])
+      expect(assigns(:email_names).map(&:id)).to include(email_name.id)
     end
   end
 
   describe 'GET #show' do
     it 'assigns the requested email_name as @email_name' do
       email_name = EmailName.create! valid_attributes
-      get :show, params: {id: email_name.to_param}, session: valid_session
+      get :show, {id: email_name.to_param}, session: valid_session
       expect(assigns(:email_name)).to eq(email_name)
     end
   end
 
   describe 'GET #new' do
     it 'assigns a new email_name as @email_name' do
-      get :new, params: {}, session: valid_session
+      get :new, {}, session: valid_session
       expect(assigns(:email_name)).to be_a_new(EmailName)
     end
   end
@@ -61,7 +61,7 @@ RSpec.describe EmailNamesController, type: :controller do
   describe 'GET #edit' do
     it 'assigns the requested email_name as @email_name' do
       email_name = EmailName.create! valid_attributes
-      get :edit, params: {id: email_name.to_param}, session: valid_session
+      get :edit, {id: email_name.to_param}, session: valid_session
       expect(assigns(:email_name)).to eq(email_name)
     end
   end
@@ -70,30 +70,30 @@ RSpec.describe EmailNamesController, type: :controller do
     context 'with valid params' do
       it 'creates a new EmailName' do
         expect do
-          post :create, params: {email_name: valid_attributes}, session: valid_session
+          post :create, email_name: valid_attributes, session: valid_session
         end.to change(EmailName, :count).by(1)
       end
 
       it 'assigns a newly created email_name as @email_name' do
-        post :create, params: {email_name: valid_attributes}, session: valid_session
+        post :create, email_name: valid_attributes, session: valid_session
         expect(assigns(:email_name)).to be_a(EmailName)
         expect(assigns(:email_name)).to be_persisted
       end
 
       it 'redirects to the created email_name' do
-        post :create, params: {email_name: valid_attributes}, session: valid_session
+        post :create, email_name: valid_attributes, session: valid_session
         expect(response).to redirect_to(EmailName.last)
       end
     end
 
     context 'with invalid params' do
       it 'assigns a newly created but unsaved email_name as @email_name' do
-        post :create, params: {email_name: invalid_attributes}, session: valid_session
+        post :create, email_name: invalid_attributes, session: valid_session
         expect(assigns(:email_name)).to be_a_new(EmailName)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {email_name: invalid_attributes}, session: valid_session
+        post :create, email_name: invalid_attributes, session: valid_session
         expect(response).to render_template('new')
       end
     end
@@ -107,20 +107,20 @@ RSpec.describe EmailNamesController, type: :controller do
 
       it 'updates the requested email_name' do
         email_name = EmailName.create! valid_attributes
-        put :update, params: {id: email_name.to_param, email_name: new_attributes}, session: valid_session
+        put :update, {id: email_name.to_param, email_name: new_attributes}, session: valid_session
         email_name.reload
         skip('Add assertions for updated state')
       end
 
       it 'assigns the requested email_name as @email_name' do
         email_name = EmailName.create! valid_attributes
-        put :update, params: {id: email_name.to_param, email_name: valid_attributes}, session: valid_session
+        put :update, {id: email_name.to_param, email_name: valid_attributes}, session: valid_session
         expect(assigns(:email_name)).to eq(email_name)
       end
 
       it 'redirects to the email_name' do
         email_name = EmailName.create! valid_attributes
-        put :update, params: {id: email_name.to_param, email_name: valid_attributes}, session: valid_session
+        put :update, {id: email_name.to_param, email_name: valid_attributes}, session: valid_session
         expect(response).to redirect_to(email_name)
       end
     end
@@ -128,13 +128,13 @@ RSpec.describe EmailNamesController, type: :controller do
     context 'with invalid params' do
       it 'assigns the email_name as @email_name' do
         email_name = EmailName.create! valid_attributes
-        put :update, params: {id: email_name.to_param, email_name: invalid_attributes}, session: valid_session
+        put :update, {id: email_name.to_param, email_name: invalid_attributes}, session: valid_session
         expect(assigns(:email_name)).to eq(email_name)
       end
 
       it "re-renders the 'edit' template" do
         email_name = EmailName.create! valid_attributes
-        put :update, params: {id: email_name.to_param, email_name: invalid_attributes}, session: valid_session
+        put :update, {id: email_name.to_param, email_name: invalid_attributes}, session: valid_session
         expect(response).to render_template('edit')
       end
     end
@@ -144,13 +144,13 @@ RSpec.describe EmailNamesController, type: :controller do
     it 'destroys the requested email_name' do
       email_name = EmailName.create! valid_attributes
       expect do
-        delete :destroy, params: {id: email_name.to_param}, session: valid_session
+        delete :destroy, {id: email_name.to_param}, session: valid_session
       end.to change(EmailName, :count).by(-1)
     end
 
     it 'redirects to the email_names list' do
       email_name = EmailName.create! valid_attributes
-      delete :destroy, params: {id: email_name.to_param}, session: valid_session
+      delete :destroy, {id: email_name.to_param}, session: valid_session
       expect(response).to redirect_to(email_names_url)
     end
   end

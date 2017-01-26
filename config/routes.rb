@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :email_contents
   resources :email_content_types
   resources :email_names
   devise_for :company_operators, controllers: {registrations: 'company_operators/registrations', :invitations => 'company_operators/invitations'}

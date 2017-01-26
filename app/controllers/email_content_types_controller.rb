@@ -1,5 +1,6 @@
 class EmailContentTypesController < ApplicationController
   before_action :set_email_content_type, only: %i(show edit update destroy)
+  load_and_authorize_resource
 
   # GET /email_content_types
   # GET /email_content_types.json

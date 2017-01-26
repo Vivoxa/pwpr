@@ -17,6 +17,7 @@ module PermissionsForRole
         can %i(read new create update destroy), Admins::RegistrationsController if user.super_admin?
         email_name_permissions(user)
         email_content_type_permissions(user)
+        email_content_permissions(user)
       end
 
       def business_permissions(user)
@@ -52,6 +53,13 @@ module PermissionsForRole
         can %i(new create), EmailContentType if user.email_content_types_w?
         can %i(edit update), EmailContentType if user.email_content_types_e?
         can :destroy, EmailContentType if user.email_content_types_d?
+      end
+
+      def email_content_permissions(user)
+        can :read, EmailContent if user.email_contents_r?
+        can %i(new create), EmailContent if user.email_contents_w?
+        can %i(edit update), EmailContent if user.email_contents_e?
+        can :destroy, EmailContent if user.email_contents_d?
       end
     end
   end

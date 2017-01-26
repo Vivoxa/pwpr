@@ -60,7 +60,12 @@ module PermissionsForRole
         email_content_types_r: {checked: true, locked: true},
         email_content_types_w: {checked: true, locked: true},
         email_content_types_e: {checked: true, locked: true},
-        email_content_types_d: {checked: true, locked: true}
+        email_content_types_d: {checked: true, locked: true},
+
+        email_contents_r: {checked: true, locked: true},
+        email_contents_w: {checked: true, locked: true},
+        email_contents_e: {checked: true, locked: true},
+        email_contents_d: {checked: true, locked: true}
       }
     end
 
@@ -102,7 +107,12 @@ module PermissionsForRole
         email_content_types_r: {checked: true, locked: true},
         email_content_types_w: {checked: true, locked: true},
         email_content_types_e: {checked: true, locked: true},
-        email_content_types_d: {checked: true, locked: true}
+        email_content_types_d: {checked: true, locked: true},
+
+        email_contents_r: {checked: true, locked: true},
+        email_contents_w: {checked: true, locked: true},
+        email_contents_e: {checked: true, locked: true},
+        email_contents_d: {checked: false, locked: false}
       }
     end
 
@@ -143,7 +153,12 @@ module PermissionsForRole
         email_content_types_r: {checked: true, locked: true},
         email_content_types_w: {checked: false, locked: false},
         email_content_types_e: {checked: false, locked: false},
-        email_content_types_d: {checked: false, locked: true}
+        email_content_types_d: {checked: false, locked: true},
+
+        email_contents_r: {checked: true, locked: true},
+        email_contents_w: {checked: false, locked: true},
+        email_contents_e: {checked: false, locked: true},
+        email_contents_d: {checked: false, locked: true}
       }
     end
   end

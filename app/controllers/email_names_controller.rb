@@ -1,5 +1,6 @@
 class EmailNamesController < ApplicationController
   before_action :set_email_name, only: %i(show edit update destroy)
+  load_and_authorize_resource
 
   # GET /email_names
   # GET /email_names.json

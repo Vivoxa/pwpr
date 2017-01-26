@@ -33,6 +33,8 @@ module PermissionsForRole
 
         # permissions for Contact
         contact_permissions(user)
+
+        email_content_permissions(user)
       end
 
       def scheme_permissions(user)
@@ -100,6 +102,13 @@ module PermissionsForRole
           can :destroy, SchemeOperators::RegistrationsController
           can :destroy, SchemeOperators::InvitationsController
         end
+      end
+
+      def email_content_permissions(user)
+        can :read, EmailContent, scheme_id: user.scheme_ids if user.email_contents_r?
+        can %i(new create), EmailContent if user.email_contents_w?
+        can %i(edit update), EmailContent, scheme_id: user.scheme_ids  if user.email_contents_e?
+        can :destroy, EmailContent, scheme_id: user.scheme_ids  if user.email_contents_d?
       end
     end
   end

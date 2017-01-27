@@ -1,17 +1,18 @@
 class SchemeMailer < ApplicationMailer
-  def registration_email(business, filename, file_path, year, recipient_email)
+  def registration_email(business, filename, file_path, year, contact)
     attachments[filename] = File.read(file_path)
     @business = business
     @scheme = business.scheme
     @year = year
     @url = ENV['APP_CO_SIGN_IN_URL']
+    @contact = contact
 
     email_settings = LookupValues::Email::EmailSettings.for('registration_email')
     subject = email_settings['subject'] % {year: year}
 
     from_address = @scheme.email_friendly_name
 
-    mail(to: recipient_email, from: from_address, subject: subject)
+    mail(to: contact.email, from: from_address, subject: subject)
   rescue => e
     Rails.logger.warn("SchemeMailer::registration_email() ERROR: #{e.message}")
   end

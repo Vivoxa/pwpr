@@ -40,7 +40,7 @@ module Reporting
       private
 
       def email_business(business, filename, file_path, year, current_user)
-        success = SchemeMailer.registration_email(business, filename, file_path, year, business.correspondence_contact.email).deliver_now
+        success = SchemeMailer.registration_email(business, filename, file_path, year, business.correspondence_contact).deliver_now
 
         status_id = success ? EmailedStatus.id_from_setting('SUCCESS') : EmailedStatus.id_from_setting('FAILED')
 

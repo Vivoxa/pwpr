@@ -40,7 +40,7 @@
     <% if stop_spinner %>
         <div class='field centre'> <h3>No Members to show</h3></div>
     <% else %>
-        <div class='field centre'> <%= image_tag('ajax-loader.gif', :alt => 'spinner', id: 'loadingSpinner', style: 'margin-left: 110px') %></div>
+        <div class='field centre'></div>
         <% if errors.any? %>
             <% errors.each do |error| %>
                 <div class="devise-lgn bg-danger centre"> <%= error %>*</div><br/>

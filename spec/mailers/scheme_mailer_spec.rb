@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SchemeMailer, type: :mailer do
   subject(:mailer) { described_class }
-  let(:email) { 'test@email.com' }
+  let(:email) { 'sc_director_0@pwpr.com' }
   let(:tmp_filename) { 'tmp_file_path' }
   let(:business) { Business.first }
   describe '#registration_email' do
@@ -11,11 +11,11 @@ RSpec.describe SchemeMailer, type: :mailer do
                                 tmp_filename,
                                 'tmp_file_path',
                                 2015,
-                                email)
+                                SchemeOperator.first)
     end
     let(:email_subject) { '[RESPONSE REQUIRED]: Registration form 2015' }
 
-    let(:from_address) { 'dans_pack_scheme@app-pwpr.com' }
+    let(:from_address) { 'danspackscheme@app-pwpr.com' }
 
     before do
       allow(File).to receive(:read).and_return('attachment')

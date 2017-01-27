@@ -5,7 +5,7 @@ class SchemeMailerPreview < ActionMailer::Preview
                                     'registration_form_2015_NPWD-1.pdf',
                                     'public/registration_form_2015_NPWD-1.pdf',
                                     '2015',
-                                    'nigel.surtees@hotmail.co.uk')
+                                    SchemeOperator.first)
   end
 
   def scheme_director_info

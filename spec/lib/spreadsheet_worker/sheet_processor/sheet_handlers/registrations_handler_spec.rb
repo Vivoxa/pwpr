@@ -21,12 +21,9 @@ RSpec.describe SpreadsheetWorker::SheetProcessor::SheetHandlers::RegistrationsHa
                         ]}
   let(:empty_row) { [] }
   let(:valid_business) { Business.new(id: 1, sic_code: sic_code) }
-  let(:new_business) { Business.new(id: 2, sic_code: sic_code) }
   let(:sic_code) { SicCode.new(id: 1) }
   let(:packaging_sector) { PackagingSectorMainActivity.new(id: 1) }
-  let(:invalid_business) { Business.new }
   let(:valid_agency_template) { AgencyTemplateUpload.new(id: 1) }
-  let(:invalid_agency_template) { AgencyTemplateUpload.new }
   let(:server_file_path) { double('server/file/test.xls')}
   let(:filename) { 'test.xls' }
   let(:registration) { subject.instance_variable_get(:@registration) }
@@ -43,7 +40,6 @@ RSpec.describe SpreadsheetWorker::SheetProcessor::SheetHandlers::RegistrationsHa
   before do
     allow(InputOutput::ServerFileHandler).to receive(:server_file_path_for).and_return server_file_path
     allow(valid_agency_template).to receive(:filename).and_return filename
-    allow(invalid_agency_template).to receive(:filename).and_return filename
     allow(Roo::Spreadsheet).to receive(:open).and_return speadsheet
     allow_any_instance_of(Registration).to receive(:save!).and_return true
     allow_any_instance_of(Business).to receive(:save!).and_return true
@@ -66,7 +62,6 @@ RSpec.describe SpreadsheetWorker::SheetProcessor::SheetHandlers::RegistrationsHa
       allow(Business).to receive(:where).and_return [valid_business]
       allow(AgencyTemplateUpload).to receive(:find_by_id).and_return valid_agency_template
       allow(speadsheet).to receive_message_chain(:sheet, :drop).and_return [valid_row_array]
-      allow(new_business).to receive(:sic_code).and_return sic_code
       allow(PackagingSectorMainActivity).to receive(:where).and_return [packaging_sector]
       allow(valid_business.addresses).to receive(:where).and_return []
       subject.process

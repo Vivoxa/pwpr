@@ -23,7 +23,7 @@ class BaseController < ApplicationController
         format.html { redirect_to object, notice: "#{object.class} was successfully approved." }
         format.json { render :show, status: :ok, location: object }
       else
-        format.html { render :new }
+        format.html { render :edit }
         format.json { render json: object.errors, status: :unprocessable_entity }
       end
     end

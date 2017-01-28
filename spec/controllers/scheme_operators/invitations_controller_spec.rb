@@ -91,6 +91,11 @@ RSpec.describe SchemeOperators::InvitationsController, type: :controller do
             get :new
             expect(response.status).to eq 200
           end
+
+          it 'expects a new invitation to be created' do
+            get :new, scheme_id: 1
+            expect(response.status).to eq 200
+          end
         end
       end
     end

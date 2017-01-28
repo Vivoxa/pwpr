@@ -8,10 +8,20 @@ RSpec.describe '[Admin] Company Operator Invitations', js: true do
           it 'expects an invitation to be sent' do
             sign_in('Admin', email, 'min700si')
             click_link('Schemes')
-            find_by_id('2-invite_company_operator').click
-            expect(page).to have_content('Send invitation')
+            wait_for_page_load('a', 'Invite Scheme Operator(Multiple Schemes)')
+
+            hf = first(:css, '.card-block')
+            within(hf) do
+              click_on 'Scheme details'
+            end
+            wait_for_page_load('a', 'Invite new Member Contact')
+
+            click_on('Invite new Member Contact')
+
+            wait_for_page_load('h2','Invite Member Contact: dans pack scheme')
+
             id = SecureRandom.uuid
-            fill_in 'Email', with: "#{id}@pwpr_test.com"
+            fill_in 'Email', with: "#{id}@pwpr-test.com"
             fill_in 'First name', with: 'Doc'
             fill_in 'Last name', with: 'Brown'
             within '#schemes_select' do
@@ -22,7 +32,7 @@ RSpec.describe '[Admin] Company Operator Invitations', js: true do
               find("option[value='2']").click
             end
             click_on 'Send an invitation'
-            expect(page).to have_content("An invitation email has been sent to #{id}@pwpr_test.com.")
+            expect(page).to have_content("An invitation email has been sent to #{id}@pwpr-test.com.")
             click_link('Sign Out')
             expect(page).to have_content('Signed out successfully.')
           end
@@ -32,8 +42,16 @@ RSpec.describe '[Admin] Company Operator Invitations', js: true do
           it 'expects an error message' do
             sign_in('Admin', email, 'min700si')
             click_link('Schemes')
-            find_by_id('2-invite_company_operator').click
-            expect(page).to have_content('Send invitation')
+            wait_for_page_load('a', 'Invite Scheme Operator(Multiple Schemes)')
+            hf = first(:css, '.card-block')
+            within(hf) do
+              click_on 'Scheme details'
+            end
+            wait_for_page_load('a', 'Invite new Member Contact')
+
+            click_on('Invite new Member Contact')
+
+            wait_for_page_load('h2','Invite Member Contact: dans pack scheme')
 
             fill_in 'First name', with: 'Doc'
             fill_in 'Last name', with: 'Brown'
@@ -56,10 +74,19 @@ RSpec.describe '[Admin] Company Operator Invitations', js: true do
           it 'expects an invitation to be sent' do
             sign_in('Admin', email, 'min700si')
             click_link('Schemes')
-            find_by_id('2-invite_company_operator').click
-            expect(page).to have_content('Send invitation')
+            wait_for_page_load('a', 'Invite Scheme Operator(Multiple Schemes)')
+
+            hf = first(:css, '.card-block')
+            within(hf) do
+              click_on 'Scheme details'
+            end
+            wait_for_page_load('a', 'Invite new Scheme Operator')
+            click_on('Invite new Member Contact')
+
+            wait_for_page_load('h2','Invite Member Contact: dans pack scheme')
+
             id = SecureRandom.uuid
-            fill_in 'Email', with: "#{id}@pwpr_test.com"
+            fill_in 'Email', with: "#{id}@pwpr-test.com"
 
             within '#schemes_select' do
               find("option[value='2']").click
@@ -84,10 +111,19 @@ RSpec.describe '[Admin] Company Operator Invitations', js: true do
         it 'expects the business dropdown to re-populate with the businesses associated with the chosen scheme' do
           sign_in('Admin', 'super_admin@pwpr.com', 'min700si')
           click_link('Schemes')
-          find_by_id('2-invite_company_operator').click
-          expect(page).to have_content('Send invitation')
+          wait_for_page_load('a', 'Invite Scheme Operator(Multiple Schemes)')
+
+          hf = first(:css, '.card-block')
+          within(hf) do
+            click_on 'Scheme details'
+          end
+          wait_for_page_load('a', 'Invite new Scheme Operator')
+          click_on('Invite new Member Contact')
+
+          wait_for_page_load('h2','Invite Member Contact: dans pack scheme')
+
           id = SecureRandom.uuid
-          fill_in 'Email', with: "#{id}@pwpr_test.com"
+          fill_in 'Email', with: "#{id}@pwpr-test.com"
           fill_in 'First name', with: 'Doc'
           fill_in 'Last name', with: 'Brown'
 
@@ -105,7 +141,7 @@ RSpec.describe '[Admin] Company Operator Invitations', js: true do
           expect(page).to have_select('business_select', :options => ['Synergy Business'])
 
           click_on 'Send an invitation'
-          expect(page).to have_content("An invitation email has been sent to #{id}@pwpr_test.com.")
+          expect(page).to have_content("An invitation email has been sent to #{id}@pwpr-test.com.")
         end
       end
     end
@@ -117,6 +153,12 @@ RSpec.describe '[Admin] Company Operator Invitations', js: true do
         it 'expects the invite button NOT to be there' do
           sign_in('Admin', email, 'min700si')
           click_link('Schemes')
+          wait_for_page_load('h3', 'dans pack scheme (active)')
+          hf = first(:css, '.card-block')
+          within(hf) do
+            click_on 'Scheme details'
+          end
+
           expect(page).not_to have_content('1-invite_company_operator')
           visit '/company_operators/invitation/new'
           expect(page).to have_content('You are not authorized to access this page.')

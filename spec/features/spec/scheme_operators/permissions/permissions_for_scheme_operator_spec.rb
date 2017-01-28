@@ -8,24 +8,25 @@ RSpec.describe 'SchemeOperator', js: true do
   end
 
   after :each do
-    visit '/scheme_operators/6/permissions'
+    visit '/scheme_operators/4/permissions'
     choose('role_sc_user')
     all_permissions.each do |key, permission|
       uncheck(key.to_s)
     end
     click_on 'Save Permissions'
+    click_link('Sign Out')
   end
 
   context 'for sc_director role' do
     context 'when setting allowed permissions' do
       before :each do
-        visit '/scheme_operators/6/permissions'
+        visit '/scheme_operators/4/permissions'
         choose('role_sc_director')
         all_permissions.each do |key, permission|
           check(key.to_s) if permission[:checked]
         end
         click_on 'Save Permissions'
-        visit '/scheme_operators/6/permissions'
+        visit '/scheme_operators/4/permissions'
       end
 
       it 'assigns the allowed permissions' do
@@ -41,13 +42,13 @@ RSpec.describe 'SchemeOperator', js: true do
 
     context 'when setting permissions that are allowed' do
       before :each do
-        visit '/scheme_operators/6/permissions'
+        visit '/scheme_operators/4/permissions'
         choose('role_sc_super_user')
         permissions.each do |key, permission|
           check(key.to_s) if permission[:checked]
         end
         click_on 'Save Permissions'
-        visit '/scheme_operators/6/permissions'
+        visit '/scheme_operators/4/permissions'
       end
 
       it 'assigns the allowed permissions' do
@@ -65,13 +66,13 @@ RSpec.describe 'SchemeOperator', js: true do
 
     context 'when setting permissions that are not allowed' do
       before :each do
-        visit '/scheme_operators/6/permissions'
+        visit '/scheme_operators/4/permissions'
         choose('role_sc_super_user')
         all_permissions.each do |key, permission|
           check(key.to_s) if permission[:checked]
         end
         click_on 'Save Permissions'
-        visit '/scheme_operators/6/permissions'
+        visit '/scheme_operators/4/permissions'
       end
 
       it 'assigns the allowed permissions' do
@@ -93,13 +94,13 @@ RSpec.describe 'SchemeOperator', js: true do
 
     context 'when setting permissions that are allowed' do
       before :each do
-        visit '/scheme_operators/6/permissions'
+        visit '/scheme_operators/4/permissions'
         choose('role_sc_user')
         permissions.each do |key, permission|
           check(key.to_s) if permission[:checked]
         end
         click_on 'Save Permissions'
-        visit '/scheme_operators/6/permissions'
+        visit '/scheme_operators/4/permissions'
       end
 
       it 'assigns the allowed permissions' do
@@ -117,13 +118,13 @@ RSpec.describe 'SchemeOperator', js: true do
 
     context 'when setting permissions that are not allowed' do
       before :each do
-        visit '/scheme_operators/6/permissions'
+        visit '/scheme_operators/4/permissions'
         choose('role_sc_user')
         all_permissions.each do |key, permission|
           check(key.to_s) if permission[:checked]
         end
         click_on 'Save Permissions'
-        visit '/scheme_operators/6/permissions'
+        visit '/scheme_operators/4/permissions'
       end
 
       it 'assigns the allowed permissions' do

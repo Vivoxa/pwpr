@@ -1,7 +1,7 @@
-<%= form_for(@contact, :url => 'create') do |f| %>
+<%= form_for [@business,@contact] do |f| %>
     <% if @contact.errors.any? %>
         <div id="error_explanation">
-          <h2><%= pluralize(@contact.errors.count, 'error') %> prohibited this contact from being saved:</h2>
+          <h2><%= pluralize(@contact.errors.count, 'error') %> need to be corrected:</h2>
 
           <ul>
             <% @contact.errors.full_messages.each do |message| %>
@@ -17,7 +17,7 @@
     </div>
 
     <div class="field centre">
-      <%= f.collection_select :address_type_id, AddressType.all, :id, :title, {include_blank: 'Select an Contact Type'}, {class: 'devise-lgn form-control'} %>
+      <%= f.collection_select :address_type_id, @contact_titles, :id, :title, {include_blank: 'Select an Contact Type'}, {class: 'devise-lgn form-control'} %>
     </div>
 
     <div class="field centre">

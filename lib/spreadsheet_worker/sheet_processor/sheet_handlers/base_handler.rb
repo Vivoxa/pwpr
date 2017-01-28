@@ -66,9 +66,10 @@ module SpreadsheetWorker
           value
         end
 
-        def existing_contact(email, address_type_id)
+        def existing_contact(email, address_type_id, business_id)
           contacts = Contact.where(email:           email,
-                                   address_type_id: address_type_id)
+                                   address_type_id: address_type_id,
+                                   business_id:     business_id)
           contacts.any? ? contacts.first : nil
         end
 

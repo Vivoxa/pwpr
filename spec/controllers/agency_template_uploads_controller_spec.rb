@@ -100,6 +100,28 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
       ENV['AWS_REGION'] = 'eu-west-1'
     end
 
+    context 'when a user is uploading for year that has an upload already' do
+      before do
+        @request.env['HTTP_REFERER'] = '/'
+        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename.xls').and_return(true)
+        allow(subject).to receive(:upload_params).and_return(year: 2015, filename: filename)
+      end
+      context 'when the user does NOT give permission to overwrite' do
+        let(:params) { {agency_template_upload: {year: 2015, filename: 'feef.xls'}, scheme_id: 1, upload_exists: true} }
+        it 'expects a flash error message to be displayed' do
+          expect { post :create, params }.not_to change { AgencyTemplateUpload.count }
+          expect(flash[:error]).to eq 'You are uploading a file for a year that already has an uploaded and processed template.'\
+      ' Please resubmit the upload and confirm you want to replace the existing file in the checkbox highlighted red.'
+        end
+      end
+      context 'when the user DOES give permission to overwrite' do
+        let(:params) { {agency_template_upload: {year: 2015, filename: 'feef.xls'}, scheme_id: 1, upload_exists: '1', confirm_replace: '1'} }
+        it 'expects a flash error message to be displayed' do
+          expect { post :create, params }.to change { AgencyTemplateUpload.count }.by(1)
+          expect(flash[:error]).to be_nil
+        end
+      end
+    end
     context 'when correct values are present' do
       before do
         allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename.xls').and_return(true)
@@ -157,7 +179,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
     context 'when a value is missing' do
       before do
         allow(subject).to receive(:upload_params).and_return(year: nil, filename: filename)
-        expect { post :create, agency_template_upload:  {year: 2015, filename: 'feef.xsl'}, scheme_id: 1 }.not_to change { AgencyTemplateUpload.count }
+        expect { post :create, agency_template_upload: {year: 2015, filename: 'feef.xsl'}, scheme_id: 1 }.not_to change { AgencyTemplateUpload.count }
       end
       it 'responds to be redirect' do
         expect(assigns(:upload).errors[:year].first).to eq "can't be blank"
@@ -175,6 +197,32 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
       it 'expects the user to see a flash message' do
         post :create, agency_template_upload: {year: 2015, filename: 'feef.abc'}, scheme_id: 1
         expect(flash[:alert]).to eq "ERROR: Unsupported file type!'my original filename.abc'' was not uploaded!"
+      end
+    end
+  end
+
+  describe '#previous_upload_for_year' do
+    let(:scheme_id) { 1 }
+    let(:year) { 2015 }
+    let(:params) { {scheme_id: scheme_id, year: year} }
+
+    context 'when a previous upload DOES NOT exist for the year' do
+      it 'expects the user is NOT shown a confirmation checkbox' do
+        xhr :get, :previous_upload_for_year, params
+        expect(assigns(:show_confirmation_field)).to eq false
+      end
+    end
+
+    context 'when a previous upload DOES exist for the year' do
+      it 'expects the user IS shown a confirmation checkbox' do
+        AgencyTemplateUpload.create!(scheme_id:        scheme_id,
+                                     year:             year,
+                                     uploaded_at:      DateTime.now,
+                                     uploaded_by_id:   co_marti.id,
+                                     uploaded_by_type: SchemeOperator,
+                                     filename:         double(original_filename: 'MyFileName'))
+        xhr :get, :previous_upload_for_year, params
+        expect(assigns(:show_confirmation_field)).to eq true
       end
     end
   end

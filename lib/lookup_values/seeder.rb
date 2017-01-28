@@ -10,7 +10,6 @@ module LookupValues
         values = get_values(columns, lookup_tables, table_name)
 
         puts
-
         puts 'Removing existing records from ' + table_name
         truncate_table(table_name)
 
@@ -43,12 +42,12 @@ module LookupValues
         values << '('
         columns.each do |column|
           case column['data_type']
-          when 'integer'
-            values << "#{column['values'][index]},"
-          when 'string'
-            values << "'#{column['values'][index]}',"
-          when 'decimal'
-            values << "#{column['values'][index]},"
+            when 'integer'
+              values << "#{column['values'][index]},"
+            when 'string'
+              values << "'#{column['values'][index]}',"
+            when 'decimal'
+              values << "#{column['values'][index]},"
           end
         end
         values << "'#{timestamp}','#{timestamp}')"

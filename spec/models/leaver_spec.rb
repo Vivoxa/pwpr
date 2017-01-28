@@ -17,4 +17,21 @@ RSpec.describe Leaver, type: :model do
       xit { is_expected.to validate_presence_of(:scheme_registration_date) }
     end
   end
+
+  describe '#delete_parents' do
+    let(:leaving_business) do
+      LeavingBusiness.create!(scheme_ref:          'ref 1',
+                              npwd:                'NPWD123',
+                              company_name:        'Company 1',
+                              company_number:      '123456789',
+                              subsidiaries_number: 0)
+    end
+
+    let(:leaver) { Leaver.create(leaving_business: leaving_business) }
+    it 'expects the leaving_business to be destroyed' do
+      leaving_business_id = leaving_business.id
+      leaver.destroy
+      expect(LeavingBusiness.where(id: leaving_business_id)).to be_empty
+    end
+  end
 end

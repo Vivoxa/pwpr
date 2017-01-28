@@ -9,7 +9,7 @@
       </div>
 
       <div id="report_data">
-        <%= render partial: 'report_data_grid', locals: {report_form_data: @report_form_data, errors: []} %>
+        <%= render partial: 'report_data_grid', locals: {report_form_data: @report_form_data, errors: [], stop_spinner: false} %>
       </div>
   <% end %>
 </div>

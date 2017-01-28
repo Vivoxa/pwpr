@@ -25,20 +25,11 @@ class ReportsController < ApplicationController
 
     @errors << 'Select a Year' unless YEARS.include?(year)
     build_report_form_data(report, scheme_uid, year)
+    @stop_spinner = true if @report_form_data.empty?
 
     respond_to do |format|
       format.js
     end
-  end
-
-  def build_report_form_data(report, scheme_uid, year)
-    @report_form_data = if can_process_report?(year, report)
-                          scheme_id = scheme_uid
-                          businesses = Scheme.find(scheme_id).businesses.for_registration
-                          get_report_data(businesses, report.delete(' ').demodulize.underscore.freeze, year)
-                        else
-                          []
-                        end
   end
 
   def create
@@ -69,6 +60,8 @@ class ReportsController < ApplicationController
     redirect_to :root
   end
 
+  private
+
   def report_type(report_type)
     case report_type
       when 'RegistrationForm'
@@ -76,7 +69,15 @@ class ReportsController < ApplicationController
     end
   end
 
-  private
+  def build_report_form_data(report, scheme_uid, year)
+    @report_form_data = if can_process_report?(year, report)
+                          scheme_id = scheme_uid
+                          businesses = Scheme.find(scheme_id).businesses.for_registration
+                          get_report_data(businesses, report.delete(' ').demodulize.underscore.freeze, year)
+                        else
+                          []
+                        end
+  end
 
   def publish_email_reports(event_data)
     publisher = QueueHelpers::RabbitMq::Publisher.new(ENV['REPORTS_QUEUE_NAME'],

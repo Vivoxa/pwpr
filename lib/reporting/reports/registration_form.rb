@@ -20,6 +20,7 @@ module Reporting
             local_file_path = tmp_filename(year, business)
 
             logger.info 'process_report() = Filling in RegistrationForm PDF with data'
+
             pdftk.fill_form(template, local_file_path, form_values_hash(template, year, business))
 
             logger.info 'process_report() = Uploading RegistrationForm PDF to S3'
@@ -30,7 +31,7 @@ module Reporting
             cleanup(year, business)
           rescue => e
             @errors << e.message
-            logger.warn "process_report() ERROR: #{e.message}"
+            logger.error "process_report() ERROR: #{e.message}"
             raise e
           end
         end
@@ -39,7 +40,7 @@ module Reporting
       private
 
       def email_business(business, filename, file_path, year, current_user)
-        success = SchemeMailer.registration_email(business, filename, file_path, year, business.correspondence_contact.email).deliver_now
+        success = SchemeMailer.registration_email(business, filename, file_path, year, business.correspondence_contact).deliver_now
 
         status_id = success ? EmailedStatus.id_from_setting('SUCCESS') : EmailedStatus.id_from_setting('FAILED')
 

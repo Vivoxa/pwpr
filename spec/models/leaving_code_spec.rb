@@ -13,4 +13,10 @@ RSpec.describe LeavingCode, type: :model do
       it { is_expected.to validate_presence_of(:reason) }
     end
   end
+
+  describe '#id_from_setting' do
+    it 'expects an id for a valid setting' do
+      expect(described_class.id_from_setting('H')).to eq 8
+    end
+  end
 end

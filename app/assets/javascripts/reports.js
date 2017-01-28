@@ -1,3 +1,7 @@
+window.onload = function() {
+    $('#loadingSpinner').hide();
+};
+
 function checkAll() {
     var $my_check = document.getElementById('selectAll')
     if ($my_check.checked) {
@@ -14,6 +18,7 @@ function checkAll() {
 }
 
 function yearChanged(year) {
+    $('#loadingSpinner').show();
     $.ajax({
         url: 'reports/report_data',
         data: {

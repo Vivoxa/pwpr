@@ -7,7 +7,7 @@ RSpec.describe SpreadsheetWorker::SheetProcessor::SheetHandlers::LicensorsHandle
   let(:empty_row) { [] }
   let(:valid_business) { Business.new(id: 1) }
   let(:valid_agency_template) { AgencyTemplateUpload.new(id: 1) }
-  let(:server_file_path) { double('server/file/test.xls')}
+  let(:server_file_path) { double('server/file/test.xls') }
   let(:filename) { 'test.xls' }
   let(:licensor) { subject.instance_variable_get(:@licensor) }
   let(:contact) { subject.instance_variable_get(:@contact) }

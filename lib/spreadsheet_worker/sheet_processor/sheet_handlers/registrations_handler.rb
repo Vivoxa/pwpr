@@ -6,6 +6,7 @@ module SpreadsheetWorker
           super
         end
 
+        # /Users/nigel/development/pwpr/lib/spreadsheet_worker/sheet_processor/sheet_handlers/registrations_handler.rb
         def process
           registrations.drop(1).each do |row_array|
             next if empty_row?(row_array)

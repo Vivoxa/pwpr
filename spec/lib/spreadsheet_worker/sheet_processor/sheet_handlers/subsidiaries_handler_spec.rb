@@ -3,17 +3,18 @@ require 'rails_helper'
 RSpec.describe SpreadsheetWorker::SheetProcessor::SheetHandlers::SubsidiariesHandler do
   subject { described_class.new(valid_agency_template.id) }
   let(:speadsheet) { double('RooSheet') }
-  let(:valid_row_array) {['',	'161',	'NPWD302870',	'Ulysses Leisure Ltd',	'161/3',	'NPWD210566',	'Sheridan Nightclubs Limited',
-                          'NI043767',	'56.30/1',	'Unit 1 Odyssey Pavillion',	"2 Queen's Quay",	'',	'',	'Belfast',	'BT3 9QQ',
-                          'Northern Ireland',	'2.05',	'Selling',	'Y',	'Paper',	'122',	'Unit 2 Hadrian House',	'Beaminster Way East',
-                          '',	'',	'Newcastle Upon Tyne',	'NE3 2ER',	'07894 388 923',	'garymx5@gmail.com',	'Gary',
-                          'Abernethy',	'Mr'
-                        ]}
+  let(:valid_row_array) do
+    ['',	'161',	'NPWD302870',	'Ulysses Leisure Ltd',	'161/3',	'NPWD210566',	'Sheridan Nightclubs Limited',
+     'NI043767',	'56.30/1',	'Unit 1 Odyssey Pavillion',	"2 Queen's Quay",	'',	'',	'Belfast',	'BT3 9QQ',
+     'Northern Ireland',	'2.05',	'Selling',	'Y',	'Paper',	'122',	'Unit 2 Hadrian House',	'Beaminster Way East',
+     '',	'',	'Newcastle Upon Tyne',	'NE3 2ER',	'07894 388 923',	'garymx5@gmail.com',	'Gary',
+     'Abernethy',	'Mr']
+  end
   let(:valid_business) { Business.new(id: 1, sic_code: sic_code) }
   let(:sic_code) { SicCode.new(id: 1) }
   let(:packaging_sector) { PackagingSectorMainActivity.new(id: 1) }
   let(:valid_agency_template) { AgencyTemplateUpload.new(id: 1) }
-  let(:server_file_path) { double('server/file/test.xls')}
+  let(:server_file_path) { double('server/file/test.xls') }
   let(:filename) { 'test.xls' }
   let(:subsidiary) { subject.instance_variable_get(:@subsidiary) }
   let(:registration) { Registration.new(id: 1) }

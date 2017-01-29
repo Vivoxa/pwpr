@@ -10,7 +10,7 @@ RSpec.describe SpreadsheetWorker::SheetProcessor::SheetHandlers::JoinersHandler 
   let(:invalid_business) { Business.new }
   let(:valid_agency_template) { AgencyTemplateUpload.new(id: 1) }
   let(:invalid_agency_template) { AgencyTemplateUpload.new }
-  let(:server_file_path) { double('server/file/test.xls')}
+  let(:server_file_path) { double('server/file/test.xls') }
   let(:filename) { 'test.xls' }
   let(:joiner) { subject.instance_variable_get(:@joiner) }
 

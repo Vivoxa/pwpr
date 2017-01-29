@@ -3,28 +3,32 @@ require 'rails_helper'
 RSpec.describe SpreadsheetWorker::SheetProcessor::SheetHandlers::RegistrationsHandler do
   subject { described_class.new(valid_agency_template.id) }
   let(:speadsheet) { double('RooSheet') }
-  let(:valid_row_array) {[
-                          '', '',	'056',	'NPWD106683',	'Peter Hogarth & Sons Ltd',	'Individual Co',	'N/A',	'01143352',	'36 High Street',
-                          'Cleethorpes', '',	'',	'South Humberside',	'DN35 8JN',	'England', '',	'',	'',	'47.52',	'SELLING',	'2.80',	'N',
-                          'Y',	'84',	'Paper',	'Y',	'Y',	'Y',	'N',	'',	'Y',	'',	'N', '',	'Estate Road Number 5',	'South Humberside Industrial Estate',
-                          '',	'',	'Grimsby',	'DN31 2UR',	'01472 345726',	'01472 250272',	'ian.hogarth@peterhogarth.co.uk',	'Ian',	'Hogarth',
-                          'Mr',	'Estate Road Number 5',	'South Humberside Industrial Estate',	'',	'',	'Grimsby',	'DN31 2UR',	'England',
-                          '01472 345726'
-                        ]}
-  let(:valid_row_array2) {[
-                          '', '',	'056',	'NPWD106683',	'Peter Hogarth & Sons Ltd',	'Individual Co',	'N/A',	'01143352',	'36 High Street',
-                          'Cleethorpes', '',	'',	'South Humberside',	'DN35 8JN',	'England', '',	'',	'',	'47.52',	'SELLING',	'2.80',	'N',
-                          'N',	'84',	'Paper',	'Y',	'Y',	'Y',	'N',	'',	'Y',	'',	'N', '',	'Estate Road Number 5',	'South Humberside Industrial Estate',
-                          '',	'',	'Grimsby',	'DN31 2UR',	'01472 345726',	'01472 250272',	'ian.hogarth@peterhogarth.co.uk',	'Ian',	'Hogarth',
-                          'Mr',	'Estate Road Number 5',	'South Humberside Industrial Estate',	'',	'',	'Grimsby',	'DN31 2UR',	'England',
-                          '01472 345726'
-                        ]}
+  let(:valid_row_array) do
+    [
+      '', '',	'056',	'NPWD106683',	'Peter Hogarth & Sons Ltd',	'Individual Co',	'N/A',	'01143352',	'36 High Street',
+      'Cleethorpes', '',	'',	'South Humberside',	'DN35 8JN',	'England', '',	'',	'',	'47.52',	'SELLING',	'2.80',	'N',
+      'Y',	'84',	'Paper',	'Y',	'Y',	'Y',	'N',	'',	'Y',	'',	'N', '',	'Estate Road Number 5',	'South Humberside Industrial Estate',
+      '',	'',	'Grimsby',	'DN31 2UR',	'01472 345726',	'01472 250272',	'ian.hogarth@peterhogarth.co.uk',	'Ian',	'Hogarth',
+      'Mr',	'Estate Road Number 5',	'South Humberside Industrial Estate',	'',	'',	'Grimsby',	'DN31 2UR',	'England',
+      '01472 345726'
+    ]
+  end
+  let(:valid_row_array2) do
+    [
+      '', '',	'056',	'NPWD106683',	'Peter Hogarth & Sons Ltd',	'Individual Co',	'N/A',	'01143352',	'36 High Street',
+      'Cleethorpes', '',	'',	'South Humberside',	'DN35 8JN',	'England', '',	'',	'',	'47.52',	'SELLING',	'2.80',	'N',
+      'N',	'84',	'Paper',	'Y',	'Y',	'Y',	'N',	'',	'Y',	'',	'N', '',	'Estate Road Number 5',	'South Humberside Industrial Estate',
+      '',	'',	'Grimsby',	'DN31 2UR',	'01472 345726',	'01472 250272',	'ian.hogarth@peterhogarth.co.uk',	'Ian',	'Hogarth',
+      'Mr',	'Estate Road Number 5',	'South Humberside Industrial Estate',	'',	'',	'Grimsby',	'DN31 2UR',	'England',
+      '01472 345726'
+    ]
+  end
   let(:empty_row) { [] }
   let(:valid_business) { Business.new(id: 1, sic_code: sic_code) }
   let(:sic_code) { SicCode.new(id: 1) }
   let(:packaging_sector) { PackagingSectorMainActivity.new(id: 1) }
   let(:valid_agency_template) { AgencyTemplateUpload.new(id: 1) }
-  let(:server_file_path) { double('server/file/test.xls')}
+  let(:server_file_path) { double('server/file/test.xls') }
   let(:filename) { 'test.xls' }
   let(:registration) { subject.instance_variable_get(:@registration) }
   let(:audit_address) { Address.new(id: 2) }

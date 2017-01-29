@@ -3,16 +3,17 @@ require 'rails_helper'
 RSpec.describe SpreadsheetWorker::SheetProcessor::SheetHandlers::TargetsHandler do
   subject { described_class.new(valid_agency_template.id) }
   let(:speadsheet) { double('RooSheet') }
-  let(:valid_row_array) {['004',	'NPWD107133',	'G I Hadfield & Son Ltd',	'0',	'0',	'0',	'0',	'42',	'1',	'0',	'43',
-                          '66',	'66',	'71',	'71',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',
-                          '0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',
-                          '0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',
-                          '0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',
-                          '0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'101',	'68',	'0',	'0',	'0',	'0',
-                          '0',	'0',	'0',	'0',	'0',	'101',	'0',	'1',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',
-                          '0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'5',	'0',	'0',	'0',	'0',	'0',	'0',	'0',
-                          '0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0'
-                        ]}
+  let(:valid_row_array) do
+    ['004',	'NPWD107133',	'G I Hadfield & Son Ltd',	'0',	'0',	'0',	'0',	'42',	'1',	'0',	'43',
+     '66',	'66',	'71',	'71',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',
+     '0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',
+     '0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',
+     '0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',
+     '0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'101',	'68',	'0',	'0',	'0',	'0',
+     '0',	'0',	'0',	'0',	'0',	'101',	'0',	'1',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',
+     '0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'5',	'0',	'0',	'0',	'0',	'0',	'0',	'0',
+     '0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0',	'0']
+  end
   let(:valid_business) { Business.new(id: 1) }
   let(:regular_producer) { RegularProducerDetail.new(id: 1) }
   let(:registration) { Registration.new(id: 1) }
@@ -20,7 +21,7 @@ RSpec.describe SpreadsheetWorker::SheetProcessor::SheetHandlers::TargetsHandler 
   let(:new_business) { Business.new(id: 2) }
   let(:invalid_business) { Business.new }
   let(:valid_agency_template) { AgencyTemplateUpload.new(id: 1) }
-  let(:server_file_path) { double('server/file/test.xls')}
+  let(:server_file_path) { double('server/file/test.xls') }
   let(:filename) { 'test.xls' }
   let(:target) { subject.instance_variable_get(:@target) }
   let(:material_detail) { MaterialDetail.new }

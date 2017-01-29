@@ -1,7 +1,7 @@
 <div id="main-container" class="container">
   <div class="card">
     <% @scheme_name = @scheme ? @scheme.name : '' %>
-    <h3 class="card-header"><center><%= "Invite new Scheme Operator: #{@scheme_name}" %></center></h3>
+    <h3 class="card-header"><center><%= "Invite Scheme Operator: #{@scheme_name}" %></center></h3>
 
     <div class="card-block">
       <p class="card-text">
@@ -34,7 +34,8 @@
       </p>
     </div>
     <div class="card-footer">
-      <%= link_to 'Back to Scheme', @scheme, class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
+      <% path = @scheme ? @scheme : schemes_path %>
+      <%= link_to 'Back', path, class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
     </div>
   </div>
 </div>

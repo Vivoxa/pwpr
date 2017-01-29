@@ -1,7 +1,7 @@
 <div id="main-container" class="container">
   <div class="card">
     <% @scheme_name = @scheme ? @scheme.name : '' %>
-    <h3 class="card-header"><center><%= "Invite Member Contact: #{@scheme_name}" %></center></h3>
+    <h3 class="card-header"><center><%= "Invite Contact Operator: #{@scheme_name}" %></center></h3>
 
     <div class="card-block">
       <p class="card-text">
@@ -31,7 +31,7 @@
     </div>
 
     <div class="card-footer">
-      <%= link_to 'Back to Scheme', :back, class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
+      <%= link_to 'Back', :back, class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
     </div>
   </div>
 </div>

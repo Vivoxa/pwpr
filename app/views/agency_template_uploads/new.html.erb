@@ -1,6 +1,6 @@
 <div id="main-container" class="container">
   <div class="card">
-    <h3 class="card-header"><%= "Agency Template Upload for #{@scheme.name}" %></h3>
+    <h3 class="card-header"><center><%= "Upload for: #{@scheme.name}" %></center></h3>
     <%= form_for [@scheme, @upload] do |f| %>
         <div class="card-block">
           <% if @upload.errors.any? %>
@@ -13,31 +13,17 @@
                 </ul>
               </div>
           <% end %>
-
           <div class='row'>
             <p class="card-text">
-
-            <div class="col-xs-4 col-md-4"></div>
-            <div class="col-xs-4 col-md-4"><strong>Upload for:</strong> <%= @scheme.name %></div>
-            <div class="col-xs-4 col-md-4"></div>
+              <div class="col-xs-4 col-md-4"></div>
+              <div class="col-xs-4 col-md-4">
+                <%= f.select :year, options_for_select(LookupValues::ValidYears.for('reports')), {prompt: true, prompt: 'Select a year'}, {id: 'select_year', onchange: "return selectedYearChanged(this);", class: "devise-lgn form-control"} %>
+              </div>
+              <div class="col-xs-4 col-md-4"></div>
             </p>
           </div>
-
           <div class='row'>
             <p class="card-text">
-
-            <div class="col-xs-4 col-md-4"></div>
-            <div class="col-xs-4 col-md-4">
-              <%= f.select :year, options_for_select(LookupValues::ValidYears.for('reports')), {prompt: true, prompt: 'Select a year'}, {id: 'select_year', onchange: "return selectedYearChanged(this);", class: "devise-lgn form-control"} %>
-            </div>
-
-            <div class="col-xs-4 col-md-4"></div>
-            </p>
-          </div>
-
-          <div class='row'>
-            <p class="card-text">
-
             <div class="col-xs-4 col-md-4"></div>
             <div class="col-xs-4 col-md-4"><%= f.file_field :filename %></div>
             <div class="col-xs-4 col-md-4"></div>
@@ -51,8 +37,8 @@
 
         </div>
         <div class="card-footer">
-          <%= f.submit 'Upload', class: ["btn btn-primary btn-sm", "devise-btn"] %>
-          <%= link_to 'Back', scheme_agency_template_uploads_path(@scheme), class: ['btn btn-sm btn-success', 'show-btn-md'] %>
+          <%= link_to 'Agency Templates List', scheme_agency_template_uploads_path, class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
+          <%= f.submit 'Upload', class: ["btn btn-primary btn-sm", "show-btn-lg"] %>
         </div>
     <% end %>
   </div>

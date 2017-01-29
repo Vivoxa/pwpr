@@ -99,7 +99,6 @@ ActiveRecord::Schema.define(version: 20161225080451) do
 
   create_table "businesses", force: :cascade do |t|
     t.integer  "scheme_id",                           limit: 4,   null: false
-    t.integer  "membership_id",                       limit: 4
     t.string   "NPWD",                                limit: 255
     t.string   "name",                                limit: 255
     t.boolean  "small_producer"

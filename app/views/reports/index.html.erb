@@ -19,6 +19,9 @@
     </div>
     <div class="card-footer">
       <%= link_to 'Back to Scheme', @scheme, class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
+      <% if can? :new, Business %>
+          <%= link_to 'Members', businesses_path(scheme_id: @scheme.id), class: ['btn btn-sm btn-outline-primary', 'show-btn-md'] %>
+      <% end %>
     </div>
   </div>
 </div>

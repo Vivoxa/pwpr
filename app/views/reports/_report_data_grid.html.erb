@@ -37,14 +37,10 @@
       <%= submit_tag 'Email Report', class: 'btn btn-primary devise-btn' %>
     </div>
 <% else %>
-    <% if stop_spinner %>
-        <div class='field centre'> <h3>No Members to show</h3></div>
-    <% else %>
-        <div class='field centre'></div>
-        <% if errors.any? %>
-            <% errors.each do |error| %>
-                <div class="devise-lgn bg-danger centre"> <%= error %>*</div><br/>
-            <% end %>
+    <div class='field centre'></div>
+    <% if errors.any? %>
+        <% errors.each do |error| %>
+            <div class="devise-lgn bg-danger centre"> <%= error %>*</div><br/>
         <% end %>
     <% end %>
 <% end %>

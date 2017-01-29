@@ -216,7 +216,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
     context 'when a previous upload DOES exist for the year' do
       it 'expects the user IS shown a confirmation checkbox' do
         AgencyTemplateUpload.create!(scheme_id:        scheme_id,
-                                     year:             year,
+                                     year:             year - 1,
                                      uploaded_at:      DateTime.now,
                                      uploaded_by_id:   co_marti.id,
                                      uploaded_by_type: SchemeOperator,

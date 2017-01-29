@@ -15,8 +15,8 @@ class ReportsController < ApplicationController
   def report_data
     report = params['report']
     year = params['year'].to_i
-
     scheme_uid = params[:scheme_id].to_i
+
     @report_form_data = []
 
     @errors = []
@@ -24,8 +24,11 @@ class ReportsController < ApplicationController
     @errors << 'Select a Report' unless REPORTS.include?(report)
 
     @errors << 'Select a Year' unless YEARS.include?(year)
-    build_report_form_data(report, scheme_uid, year)
-    @stop_spinner = true if @report_form_data.empty?
+
+    if YEARS.include?(year) == true
+      @errors << "No data found for year #{year.to_i - 1}" unless data_present_previous_year?
+      build_report_form_data(report, scheme_uid, year)
+    end
 
     respond_to do |format|
       format.js
@@ -87,7 +90,7 @@ class ReportsController < ApplicationController
   end
 
   def can_process_report?(year, report)
-    !year.blank? && YEARS.include?(year) && !report.blank? && REPORTS.include?(report)
+    data_present_previous_year? && !year.blank? && YEARS.include?(year) && !report.blank? && REPORTS.include?(report)
   end
 
   def get_report_data(businesses, report_name, year)
@@ -106,5 +109,9 @@ class ReportsController < ApplicationController
 
   def emailed_report(business, report_name, year)
     EmailedReport.where(business_id: business.id, report_name: report_name, year: year).first
+  end
+
+  def data_present_previous_year?
+    @data_present_previous_year ||= AgencyTemplateUpload.where(scheme_id: params[:scheme_id].to_i, year: (params['year'].to_i - 1)).any?
   end
 end

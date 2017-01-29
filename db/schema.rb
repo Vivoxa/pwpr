@@ -219,6 +219,7 @@ ActiveRecord::Schema.define(version: 20170125123110) do
     t.string   "intro",                 limit: 255
     t.string   "title",                 limit: 255
     t.text     "body",                  limit: 65535
+    t.text     "address",               limit: 65535
     t.string   "footer",                limit: 255
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false

@@ -9,6 +9,6 @@ class Scheme < ActiveRecord::Base
   validates_presence_of :scheme_country_code_id, :name
 
   def email_friendly_name
-    "#{name.downcase.tr(' ', '')}@#{LookupValues::Email::EmailSettings.for('domain_name')}"
+    "#{name.downcase.tr(' ', '')}@#{LookupValues::Email::Settings.for('domain_name')}"
   end
 end

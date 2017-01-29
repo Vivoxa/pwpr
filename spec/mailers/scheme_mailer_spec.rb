@@ -59,12 +59,12 @@ RSpec.describe SchemeMailer, type: :mailer do
     let(:business) { Business.first }
     let(:businesses) { business }
     let(:scheme) { business.scheme }
-    let(:recipient) { double(email: email, first_name: 'nigel', last_name: 'surtees') }
+    let(:contact) { double(email: email, first_name: 'nigel', last_name: 'surtees') }
     let(:scheme_director_email) do
       mailer.scheme_director_info(businesses,
                                   scheme,
                                   2015,
-                                  recipient)
+                                  contact)
     end
     let(:email_subject) { '[INFO]: Registration forms emailed for 2015' }
     let(:from_address) { 'notifications@app-pwpr.com' }

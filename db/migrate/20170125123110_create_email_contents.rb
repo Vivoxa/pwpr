@@ -7,6 +7,7 @@ class CreateEmailContents < ActiveRecord::Migration
       t.string :intro
       t.string :title
       t.text :body
+      t.text :address
       t.string :footer
 
       t.timestamps null: false

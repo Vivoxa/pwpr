@@ -15,8 +15,9 @@ class ReportsController < ApplicationController
   def report_data
     report = params['report']
     year = params['year'].to_i
-
     scheme_uid = params[:scheme_id].to_i
+    data_present = AgencyTemplateUpload.where(scheme_id: scheme_uid, year: year.to_i - 1).any?
+
     @report_form_data = []
 
     @errors = []
@@ -24,8 +25,11 @@ class ReportsController < ApplicationController
     @errors << 'Select a Report' unless REPORTS.include?(report)
 
     @errors << 'Select a Year' unless YEARS.include?(year)
-    build_report_form_data(report, scheme_uid, year)
-    @stop_spinner = true if @report_form_data.empty?
+
+    @errors << 'No data for this year' unless data_present
+
+    build_report_form_data(report, scheme_uid, year, data_present)
+    #@stop_spinner = true if @report_form_data.empty?
 
     respond_to do |format|
       format.js
@@ -69,8 +73,8 @@ class ReportsController < ApplicationController
     end
   end
 
-  def build_report_form_data(report, scheme_uid, year)
-    @report_form_data = if can_process_report?(year, report)
+  def build_report_form_data(report, scheme_uid, year, data_present)
+    @report_form_data = if can_process_report?(year, report, data_present)
                           scheme_id = scheme_uid
                           businesses = Scheme.find(scheme_id).businesses.for_registration
                           get_report_data(businesses, report.delete(' ').demodulize.underscore.freeze, year)
@@ -86,8 +90,8 @@ class ReportsController < ApplicationController
     publisher.publish(event_data)
   end
 
-  def can_process_report?(year, report)
-    !year.blank? && YEARS.include?(year) && !report.blank? && REPORTS.include?(report)
+  def can_process_report?(year, report, data_present)
+    data_present && !year.blank? && YEARS.include?(year) && !report.blank? && REPORTS.include?(report)
   end
 
   def get_report_data(businesses, report_name, year)

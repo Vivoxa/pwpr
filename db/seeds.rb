@@ -11,7 +11,7 @@ def random_string(length)
   (0...length).map { (65 + rand(26)).chr }.join
 end
 
-seeder = LookupValues::Seeder.new
+seeder = LookupValues::DbLookupTables::Seeder.new
 seeder.populate_lookup_tables
 
 sic = SicCode.first

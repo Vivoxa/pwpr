@@ -71,6 +71,6 @@ class EmailContentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def email_content_params
-    params.require(:email_content).permit(:scheme_id, :email_content_type_id, :email_name_id, :intro, :title, :body, :footer)
+    params.require(:email_content).permit(:scheme_id, :email_content_type_id, :email_name_id, :intro, :title, :body, :address, :footer)
   end
 end

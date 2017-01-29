@@ -1,13 +1,11 @@
 <div id="main-container" class="container">
   <div class="card">
-    <h3 class="card-header"><strong>Editing:</strong> <%= @scheme.name %></h3>
-
+    <h3 class="card-header"><center>Editing: <%= @scheme.name %></center></h3>
     <div class="card-block">
       <div class='col-md-4'></div>
-      <!--	<h4 class="card-title">Administration</h4>-->
       <div class='col-md-4'>
         <p class="card-text">
-          <% if can? :new, Scheme %>
+          <% if can? :edit, Scheme %>
               <%= render 'form' %>
           <% else %>
             <p class="card-title">Scheme requires activating, please contact Vivoxa Ltd</p>
@@ -18,7 +16,7 @@
     </div>
 
     <div class="card-footer">
-      <%= link_to 'Back to Scheme', @scheme, class: ['btn btn-sm btn-outline-primary', 'show-btn-md'] %>
+      <%= link_to 'Back to Scheme', @scheme, class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
     </div>
   </div>
 </div>

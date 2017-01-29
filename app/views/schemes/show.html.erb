@@ -6,28 +6,33 @@
           <p class="card-text">
           <div class="col-lg-6">
             <div class="row">
-              <% if can? :new, SchemeOperators::InvitationsController %>
-                  <%= link_to 'Invite Operator', new_scheme_operator_invitation_path({ scheme_id: @scheme.id }),
-                              class: ['btn btn-sm btn-primary btn-block btn-group', 'show-btn-lg'],
-                              id: "#{@scheme.id}-invite_scheme_operator" %>
+              <% if can? :new, Business %>
+                <%= link_to 'New Member', new_business_path(scheme_id: @scheme.id), class: ['btn btn-sm btn-primary btn-block btn-group', 'show-btn-lg']%>
               <% end %>
             </div>
             <div class="row">
               <% if can? :new, CompanyOperators::InvitationsController %>
-                  <%= link_to 'Invite Member',
+                  <%= link_to 'Invite Contact Operator',
                               new_company_operator_invitation_path({ scheme_id: @scheme.id }),
                               class: ['btn btn-sm btn-primary btn-block btn-group', 'show-btn-lg'],
                               id: "#{@scheme.id}-invite_company_operator" %>
               <% end %>
             </div>
             <div class="row">
+              <% if can? :new, SchemeOperators::InvitationsController %>
+                  <%= link_to 'Invite Scheme Operator', new_scheme_operator_invitation_path({ scheme_id: @scheme.id }),
+                              class: ['btn btn-sm btn-primary btn-block btn-group', 'show-btn-lg'],
+                              id: "#{@scheme.id}-invite_scheme_operator" %>
+              <% end %>
+            </div>
+            <div class="row">
               <% if can? :read, AgencyTemplateUpload %>
-                  <%= link_to 'Template Upload', scheme_agency_template_uploads_path(@scheme), class: ['btn btn-sm btn-primary btn-block btn-group', 'show-btn-lg'] %>
+                  <%= link_to 'Template Uploads', scheme_agency_template_uploads_path(@scheme), class: ['btn btn-sm btn-success btn-block btn-group', 'show-btn-lg'] %>
               <% end %>
             </div>
             <div class="row">
               <% if can? :create, ReportsController %>
-                  <%= link_to 'Reports', scheme_reports_path(@scheme.id), class: ['btn btn-sm btn-primary btn-block btn-group', 'show-btn-lg'] %>
+                  <%= link_to 'Reports', scheme_reports_path(@scheme.id), class: ['btn btn-sm btn-success btn-block btn-group', 'show-btn-lg'] %>
               <% end %>
             </div>
             <div class='row'>

@@ -15,9 +15,6 @@
                 <div><strong>Name: </strong><%= @business.name if @business.name %></div>
               </div>
               <div class="row">
-                <div><strong>Membership ID: </strong><%= @business.membership_id.to_s %></div>
-              </div>
-              <div class="row">
                 <div><strong>Company No: </strong><%= @business.company_number.to_s %></div>
               </div>
             </div>
@@ -30,6 +27,9 @@
               </div>
               <div class="row">
                 <div><strong>SIC: </strong><%= SicCode.find(@business.sic_code_id).code %></div>
+              </div>
+              <div class="row">
+                <div><strong>Membership ID: </strong><%= @business.scheme_ref.to_s %></div>
               </div>
               <div class="row">
                 <div><strong>Scheme: </strong><%= @business.scheme.name %></div>

@@ -62,6 +62,12 @@ RSpec.describe ReportsController, type: :controller do
     describe 'GET #report_data' do
       context 'when params are valid' do
         before do
+          AgencyTemplateUpload.create!(scheme_id:        1,
+                                       year:             2014,
+                                       uploaded_at:      DateTime.now,
+                                       uploaded_by_id:   admin.id,
+                                       uploaded_by_type: 'Admin',
+                                       filename:         double(original_filename: 'my file'))
           xhr :get, :report_data, {report: 'Registration Form', year: 2015, scheme_id: 1, format: 'js'}, session: valid_session
         end
         it 'assigns a new report_form_data as @report_form_data' do
@@ -93,6 +99,40 @@ RSpec.describe ReportsController, type: :controller do
         end
       end
 
+      context 'when data IS present for the previous year' do
+        before do
+          AgencyTemplateUpload.create!(scheme_id:        1,
+                                       year:             2016,
+                                       uploaded_at:      DateTime.now,
+                                       uploaded_by_id:   admin.id,
+                                       uploaded_by_type: 'Admin',
+                                       filename:         double(original_filename: 'my file'))
+          xhr :get, :report_data, {report: 'Registration Form', year: 2017, scheme_id: 1, format: 'js'}, session: valid_session
+        end
+
+        it 'expects no errors' do
+          expect(assigns(:errors)).to be_empty
+        end
+
+        it 'expects report_form_data is not populated' do
+          expect(assigns(:report_form_data).first.business_id).to eq 1
+        end
+      end
+
+      context 'when NO data present for the previous year' do
+        before do
+          xhr :get, :report_data, {report: 'Registration Form', year: 2017, scheme_id: 1, format: 'js'}, session: valid_session
+        end
+
+        it 'expects an error' do
+          expect(assigns(:errors)).to eq(['No data found for year 2016'])
+        end
+
+        it 'expects report_form_data is not populated' do
+          expect(assigns(:report_form_data)).to eq([])
+        end
+      end
+
       context 'when year is not valid' do
         before do
           xhr :get, :report_data, {report: 'Registration Form', year: 1979, scheme_id: 1, format: 'js'}, session: valid_session
@@ -110,7 +150,7 @@ RSpec.describe ReportsController, type: :controller do
       context 'when report is not valid' do
         it 'expects an error' do
           xhr :get, :report_data, {report: 'Dodgy Report', year: 2016, scheme_id: 1, format: 'js'}, session: valid_session
-          expect(assigns(:errors)).to eq(['Select a Report'])
+          expect(assigns(:errors)).to eq(['Select a Report', 'No data found for year 2015'])
         end
 
         it 'expects is not populated' do

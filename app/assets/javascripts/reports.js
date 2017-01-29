@@ -27,3 +27,7 @@ function yearChanged(year) {
         }
     });
 }
+
+function reportChanged(year) {
+  document.getElementById('year').selectedIndex = 0
+}

@@ -2,6 +2,7 @@ module SpreadsheetWorker
   module SheetProcessor
     class Processor
       include Logging
+      include SheetHandlers
 
       def initialize(template_id)
         @agency_template_id = template_id

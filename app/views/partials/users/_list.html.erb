@@ -67,6 +67,9 @@
                 <% if can? :read, user %>
                     <%= link_to 'Details', user, class: ['btn btn-sm btn-info', 'show-btn'] %>
                 <% end %>
+                <% if can? :edit, user %>
+                    <%= link_to 'Edit', "/#{user.class.to_s.downcase.pluralize}/#{user.id}/edit", class: ['btn btn-sm btn-warning', 'show-btn'] %>
+                <% end %>
                 <% if can? :destroy, user %>
                     <%= link_to 'Delete', user, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn'], data: {confirm: 'Are you sure?'}} %>
                 <% end %>

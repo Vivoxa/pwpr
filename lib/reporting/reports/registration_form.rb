@@ -112,15 +112,15 @@ module Reporting
       end
 
       def process_registration_attribute(report_field_config, business, year)
-        template = agency_template(business.scheme, year)
-        return if template.nil?
+        templates = agency_template(business.scheme, year)
+        return if templates.empty?
 
-        registrations = template.first.registrations.where(business_id: business.id)
+        registrations = templates.first.registrations.where(business_id: business.id)
         registrations.any? ? registrations.first.send(report_field_config['model_attribute']) : nil
       end
 
       def agency_template(scheme, year)
-        @template ||= AgencyTemplateUpload.where(scheme_id: scheme.id, year: year)
+        @template ||= AgencyTemplateUpload.for_previous_year(scheme.id, year)
       end
 
       def process_address_attribute(report_field_config, business)

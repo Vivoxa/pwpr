@@ -91,7 +91,7 @@ class SchemeOperatorsController < BaseController
     if current_scheme_operator || current_admin
       schemes = {}
       current_user.schemes.each do |scheme|
-        schemes[scheme.id] = {users: (scheme.scheme_operators.where(approved: approved) - [current_user]), name: scheme.name}
+        schemes[scheme.id] = {users: (scheme.scheme_operators.where(approved: approved).order(:last_name) - [current_user]), name: scheme.name}
       end
       return schemes
     end

@@ -7,7 +7,7 @@ class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
   def index
-    @contacts = Contact.active.where(business_id: params[:business_id])
+    @contacts = Contact.active.where(business_id: params[:business_id]).order(:last_name)
     @business = Business.where(id: params[:business_id]).first
   end
 

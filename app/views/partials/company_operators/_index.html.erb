@@ -1,5 +1,5 @@
 <div id="main-container" class="container">
-  <h3>Member Contacts</h3>
+  <h3>Contact Operators</h3>
 
   <div class="row">
     <div class="card">
@@ -20,13 +20,13 @@
               <div class="card-block" style='height:150px'>
                 <div class="row">
                   <div class="col-md-2">
-                    <strong>Firstname</strong>
+                    <strong>Last Name</strong>
                   </div>
                   <div class="col-md-2">
-                    <strong>Lastname</strong>
+                    <strong>First Name</strong>
                   </div>
                   <div class="col-md-4">
-                    <strong>Email</strong>
+                    <strong>E-mail</strong>
                   </div>
                   <div class="col-md-2">
                     <strong>Member</strong>
@@ -34,8 +34,8 @@
                   <div class="col-md-2"></div>
                 </div>
                 <div class="row">
-                  <div class="col-md-2"><%= user.first_name.to_s if user.first_name %></div>
                   <div class="col-md-2"><%= user.last_name.to_s if user.last_name %></div>
+                  <div class="col-md-2"><%= user.first_name.to_s if user.first_name %></div>
                   <div class="col-md-4"><%= user.email.to_s %></div>
                   <div class="col-md-2">
                     <%= current_admin ? 'N/A for Admin' : user.business.name %>

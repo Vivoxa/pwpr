@@ -5,6 +5,9 @@
     <div class="card">
       <div class="card-block">
         <div class="card-title">
+          <% if can? :read, Contact %>
+              <%= link_to 'Back to Member', @business, class: ['btn btn-sm btn-outline-primary'] %>
+          <% end %>
           <% if can? :create, Contact %>
               <%= link_to 'New Contact', new_business_contact_path, class: ['btn btn-sm btn-primary'] %>
           <% end %>
@@ -30,7 +33,7 @@
                     <div class="col-xs-12 col-md-2 col-lg-2"><%= contact.last_name %></div>
                     <div class="col-xs-12 col-md-2 col-lg-5">
                       <% if can? :read, Contact %>
-                          <%= link_to 'Show', business_contact_path(id: contact.id), class: ['btn btn-sm btn-primary'] %>
+                          <%= link_to 'Show', business_contact_path(id: contact.id), class: ['btn btn-sm btn-info'] %>
                       <% end %>
                       <% if can? :update, Contact %>
                           <%= link_to 'Edit', edit_business_contact_path(id: contact.id), class: ['btn btn-sm btn-warning'] %></div>

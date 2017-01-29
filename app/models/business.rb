@@ -22,8 +22,9 @@ class Business < ActiveRecord::Base
   has_many :businesses, class_name: 'Business', foreign_key: :holding_business_id
 
   validates_presence_of :NPWD, :scheme_id, :name, :company_number, :sic_code_id, :scheme_ref # , :scheme_status_code_id,
-  # :registration_status_code_id, :sic_code_id, :submission_type_id, :country_of_business_registration
+  # :registration_status_code_id, :submission_type_id, :country_of_business_registration
   validate :year_first_reg_format, if: 'year_first_reg.present?'
+  validate :subsidiary_company
 
   scope :for_registration, -> {
     where('(business_subtype_id != ? OR business_subtype_id IS NULL) AND business_type_id IN (?)',
@@ -42,5 +43,12 @@ class Business < ActiveRecord::Base
 
   def is_i?(value)
     !!(value =~ /\A[-+]?[0-9]+\z/)
+  end
+
+  def subsidiary_company
+    binding.pry
+    if business_subtype_id == BusinessSubtype.id_from_setting('Subsidiary Co')
+       return false unless holding_business_id
+    end
   end
 end

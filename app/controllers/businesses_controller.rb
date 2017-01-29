@@ -22,6 +22,8 @@ class BusinessesController < BaseController
     @business = Business.new
     @schemes = current_user.schemes
     raise 'The currently logged in Scheme Operator must have at least one Scheme to create a business' if @schemes.empty?
+    @business_types = BusinessType.all
+    @business_subtypes = BusinessSubtype.all
   end
 
   # GET /businesses/1/edit

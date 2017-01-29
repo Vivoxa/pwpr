@@ -22,8 +22,7 @@ class SchemeOperatorsController < BaseController
   end
 
   # GET /scheme_operators/1/edit
-  def edit
-  end
+  def edit; end
 
   # PATCH/PUT /scheme_operators/:id
   def update
@@ -93,7 +92,7 @@ class SchemeOperatorsController < BaseController
       current_user.schemes.each do |scheme|
         schemes[scheme.id] = {users: (scheme.scheme_operators.where(approved: approved).order(:last_name) - [current_user]), name: scheme.name}
       end
-      return schemes
+      schemes
     end
   end
 

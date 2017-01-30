@@ -46,9 +46,10 @@ class Business < ActiveRecord::Base
   end
 
   def subsidiary_company
-    binding.pry
     if business_subtype_id == BusinessSubtype.id_from_setting('Subsidiary Co')
-       return false unless holding_business_id
+      unless holding_business_id
+        errors.add(:holding_business_id, 'cannot be nil if Subsidiary Co')
+      end
     end
   end
 end

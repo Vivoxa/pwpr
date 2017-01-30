@@ -1,6 +1,8 @@
 class BusinessesController < BaseController
   before_action :set_business, only: %i(show edit update destroy)
   before_filter :authenticate_company_operator
+  before_action :form_dropdown_values, :scheme_id, only: %i(new create edit)
+
   load_and_authorize_resource
 
   # GET /businesses
@@ -17,13 +19,9 @@ class BusinessesController < BaseController
 
   # GET /businesses/new
   def new
-    @scheme_id = params[:scheme_id].to_i if params[:scheme_id]
-
     @business = Business.new
     @schemes = current_user.schemes
     raise 'The currently logged in Scheme Operator must have at least one Scheme to create a business' if @schemes.empty?
-    @business_types = BusinessType.all
-    @business_subtypes = BusinessSubtype.all
   end
 
   # GET /businesses/1/edit
@@ -34,6 +32,7 @@ class BusinessesController < BaseController
   def create
     @schemes = current_user.schemes
     @business = Business.new(business_params)
+    @business.holding_business_id = params[:holding_business_id].to_i
     create_business_or_scheme(@business)
   end
 
@@ -49,7 +48,30 @@ class BusinessesController < BaseController
     destroy_business_or_scheme(@business, businesses_url)
   end
 
+  def scheme_businesses
+    @businesses = Scheme.find(scheme_id).businesses.where(business_subtype_id: BusinessSubtype.id_from_setting('Holding Co'))
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
+
+  def scheme_id
+    @scheme_id ||= if params[:business] && params[:business][:scheme_id]
+                     params[:business][:scheme_id].to_i
+                   elsif params[:scheme_id]
+                     params[:scheme_id].to_i
+                   end
+  end
+
+  def form_dropdown_values
+    @business_types ||= BusinessType.all
+    @business_subtypes ||= BusinessSubtype.all
+    @country_of_business_registrations ||= CountryOfBusinessRegistration.all
+    @scheme_status_codes ||=  SchemeStatusCode.all
+    @registration_status_codes ||= RegistrationStatusCode.all
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_business
@@ -61,7 +83,8 @@ class BusinessesController < BaseController
     params.require(:business).permit(:name, :membership_no, :company_number,
                                      :NPWD, :sic_code_id, :scheme_id,
                                      :scheme_ref, :business_type_id,
-                                     :business_subtype_id, :year_first_reg)
+                                     :business_subtype_id, :year_first_reg,
+                                     :holding_business_id)
     #:scheme_status_code_id, :registration_status_code_id)
   end
 end

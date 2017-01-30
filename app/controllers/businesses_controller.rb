@@ -32,7 +32,7 @@ class BusinessesController < BaseController
   def create
     @schemes = current_user.schemes
     @business = Business.new(business_params)
-    @business.holding_business_id = params[:holding_business_id].to_i
+    @business.holding_business_id = params[:holding_business_id].to_i if params[:holding_business_id]
     create_business_or_scheme(@business)
   end
 

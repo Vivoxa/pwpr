@@ -48,7 +48,7 @@ module PermissionsForRole
         contacts_r:   {checked: true, locked: true},
         contacts_w:   {checked: true, locked: true},
         contacts_e:   {checked: true, locked: true},
-        contacts_d:   {checked: true, locked: true},
+        contacts_d:   {checked: true, locked: true}
       }
     end
 

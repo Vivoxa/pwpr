@@ -43,7 +43,7 @@
             <div class="card card-block" style='height:150px'>
               <!--	<h4 class="card-title">Administration</h4>-->
               <% if can? :new, CompanyOperators::InvitationsController && (current_admin || current_scheme_operator) %>
-                  <%= link_to 'Invite Contact Operator',
+                  <%= link_to 'Invite Member Contact',
                               new_company_operator_invitation_path,
                               class: ['btn btn-sm btn-primary', 'devise-btn'],
                               id: "#{@business.id}-invite_company_operator" %>

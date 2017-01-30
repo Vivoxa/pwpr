@@ -1,5 +1,4 @@
 class VisitorsController < ApplicationController
   authorize_resource class: VisitorsController
-  def index
-  end
+  def index; end
 end

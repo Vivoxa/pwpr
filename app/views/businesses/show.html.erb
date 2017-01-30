@@ -15,9 +15,6 @@
                 <div><strong>Name: </strong><%= @business.name if @business.name %></div>
               </div>
               <div class="row">
-                <div><strong>Membership ID: </strong><%= @business.membership_id.to_s %></div>
-              </div>
-              <div class="row">
                 <div><strong>Company No: </strong><%= @business.company_number.to_s %></div>
               </div>
             </div>
@@ -32,6 +29,9 @@
                 <div><strong>SIC: </strong><%= SicCode.find(@business.sic_code_id).code %></div>
               </div>
               <div class="row">
+                <div><strong>Membership ID: </strong><%= @business.scheme_ref.to_s %></div>
+              </div>
+              <div class="row">
                 <div><strong>Scheme: </strong><%= @business.scheme.name %></div>
               </div>
               <div class="row">
@@ -43,7 +43,7 @@
             <div class="card card-block" style='height:150px'>
               <!--	<h4 class="card-title">Administration</h4>-->
               <% if can? :new, CompanyOperators::InvitationsController && (current_admin || current_scheme_operator) %>
-                  <%= link_to 'Invite new Member Contact',
+                  <%= link_to 'Invite Member Contact',
                               new_company_operator_invitation_path,
                               class: ['btn btn-sm btn-primary', 'devise-btn'],
                               id: "#{@business.id}-invite_company_operator" %>
@@ -62,6 +62,7 @@
       <% end %>
     </div>
     <div class="card-footer">
+      <%= link_to 'Members List', businesses_path(scheme_id: @business.scheme.id), class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
       <% if can? :edit, @business %>
           <%= link_to 'Edit', edit_business_path(@business), class: ['btn btn-sm btn-warning', 'show-btn-md'] %>
       <% end %>

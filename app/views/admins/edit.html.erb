@@ -3,13 +3,12 @@
     <h3 class="card-header"><strong>Editing: </strong><%= @admin.first_name %></h3>
 
     <div class="card-block">
-      <!--	<h4 class="card-title">Administration</h4>-->
       <p class="card-text">
         <%= render 'form' %>
       </p>
     </div>
     <div class="card-footer">
-      <%= link_to 'Back', :back, class: ['btn btn-sm btn-success', 'show-btn-md'] %>
+      <%= link_to 'Back', @admin, class: ['btn btn-sm btn-outline-primary', 'show-btn-md'] %>
     </div>
   </div>
 </div>

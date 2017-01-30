@@ -2,96 +2,217 @@
   <div class="card">
     <h3 class="card-header"></h3>
 
-    <div class="row">
-      <%= form_for(@business) do |f| %>
-          <% if @business.errors.any? %>
-              <div id="error_explanation">
-                <h2><%= pluralize(@business.errors.count, "error") %> prohibited this business from being saved:</h2>
+    <div class="card-block">
+      <div class="row">
+        <%= form_for(@business) do |f| %>
+            <% if @business.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(@business.errors.count, "error") %> prohibited this business from being saved:</h2>
 
-                <ul>
-                  <% @business.errors.full_messages.each do |message| %>
-                      <li><%= message %></li>
+                  <ul>
+                    <% @business.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+            <% end %>
+            <div class='col-md-4 col-lg-6'>
+              <div class="row">
+                <div class='col-md-4 col-lg-6'></div>
+
+                <div class='col-md-4 col-lg-6'>
+                  <% if @scheme_id %>
+                      <%= f.collection_select :scheme_id, Scheme.where(id: @scheme_id), :id, :name, {}, {style: "display:none", class: "form-control"} %>
+                      <% f.hidden_field :scheme_id, value: @scheme_id %>
+                  <% elsif @schemes %>
+                      <div class="field centre">
+                        <%= f.label 'Active Schemes' %>
+                        <%= f.collection_select :scheme_id, @schemes.where(active: true).order(:name), :id, :name, {include_blank: 'Select a Scheme'}, {id: 'scheme_id_select', class: "form-control"} %>
+                      </div>
                   <% end %>
-                </ul>
+                </div>
               </div>
-          <% end %>
 
+              <div class="row">
+                <p>
 
-
-          <% if @scheme_id %>
-              <%= f.collection_select :scheme_id, Scheme.where(id: @scheme_id), :id, :name, {}, {class: "devise-lgn form-control", style: "display:none"} %>
-              <% f.hidden_field :scheme_id, value: @scheme_id %>
-          <% elsif @schemes %>
-              <div class="field centre">
-                <%= f.label 'Active Schemes', class: "devise-lgn" %>
-                <%= f.collection_select :scheme_id, @schemes.where(active: true).order(:name), :id, :name, {include_blank: 'Select a Scheme'}, {id: 'scheme_id_select', class: "devise-lgn form-control"} %>
+                <div class='col-md-4 col-lg-4'><%= f.label 'Membership ID' %></div>
+                <div class='col-md-4 col-lg-8'>
+                  <div class="field centre">
+                    <%= f.text_field :scheme_ref, placeholder: 'Scheme Membership ID', class: "form-control" %>
+                  </div>
+                </div>
+                </p>
               </div>
-          <% end %>
 
-          <div class="field centre">
-            <%= f.label 'Business Type', class: "devise-lgn" %>
-            <%= f.collection_select :business_type_id, @business_types, :id, :name, {include_blank: 'Select a Business Type'}, {id: 'business_type_select', class: "devise-lgn form-control"} %>
-          </div>
+              <div class="row">
+                <p>
 
-          <div class="field centre">
-            <%= f.label 'Business Subtype', class: "devise-lgn" %>
-            <%= f.collection_select :business_subtype_id, @business_subtypes, :id, :name, {include_blank: 'Select a Business Subtype'}, {id: 'business_subtype_select', onchange: "return subsidiaryCo(this);", class: "devise-lgn form-control"} %>
-          </div>
+                <div class='col-md-4 col-lg-4'><%= f.label 'NPWD' %></div>
+                <div class='col-md-4 col-lg-8'>
+                  <div class="field centre">
+                    <%= f.text_field :NPWD, placeholder: 'NPWD', class: "form-control" %>
+                  </div>
+                </div>
+                </p>
+              </div>
 
-          <div id='holding_companies'>
-          </div>
+              <div class="row">
+                <p>
 
-          <div class="field centre">
-            <%= f.text_field :name, placeholder: 'Name', class: "devise-lgn form-control" %>
-          </div>
+                <div class='col-md-4 col-lg-4'><%= f.label 'Business Type' %></div>
+                <div class='col-md-4 col-lg-8'>
+                  <div class="field centre">
+                    <%= f.collection_select :business_type_id, @business_types, :id, :name, {include_blank: 'Select a Business Type'}, {id: 'business_type_select', class: "form-control"} %>
+                  </div>
+                </div>
+                </p>
+              </div>
 
-          <div class="field centre">
-            <%= f.text_field :company_number, placeholder: 'Company number', class: "devise-lgn form-control" %>
-          </div>
+              <div class="row">
+                <p>
 
-          <div class="field centre">
-            <%= f.text_field :scheme_ref, placeholder: 'Scheme Ref', class: "devise-lgn form-control" %>
-          </div>
+                <div class='col-md-4 col-lg-4'><%= f.label 'Business Subtype' %></div>
+                <div class='col-md-4 col-lg-8'>
+                  <div class="field centre">
+                    <%= f.collection_select :business_subtype_id, @business_subtypes, :id, :name, {include_blank: 'Select a Business Subtype'}, {id: 'business_subtype_select', onchange: "return subsidiaryCo(this);", class: "form-control"} %>
+                  </div>
+                </div>
+                </p>
+              </div>
 
-          <div class="field centre">
-            <%= f.text_field :NPWD, placeholder: 'NPWD', class: "devise-lgn form-control" %>
-          </div>
+              <div id='holding_companies'>
+              </div>
 
-          <div class="field centre">
-            <%= f.collection_select :sic_code_id, SicCode.all, :id, :code, {include_blank: 'Select a Sic Code'}, {class: "devise-lgn form-control"} %>
-          </div>
+              <div class="row">
+                <p>
 
-          <div class="field centre">
-            <%= f.collection_select :scheme_status_code_id, @scheme_status_codes, :id, :code, {include_blank: 'Select Scheme Status'}, {class: "devise-lgn form-control"} %>
-          </div>
+                <div class='col-md-4 col-lg-4'><%= f.label 'Business name' %></div>
+                <div class='col-md-4 col-lg-8'>
+                  <div class="field centre">
+                    <%= f.text_field :name, placeholder: 'Name', class: "form-control" %>
+                  </div>
+                </div>
+                </p>
+              </div>
 
-          <div class="field centre">
-            <%= f.collection_select :registration_status_code_id, @registration_status_codes, :id, :code, {include_blank: 'Select Reg Status'}, {class: "devise-lgn form-control"} %>
-          </div>
+              <div class="row">
+                <p>
 
-          <div class="field centre">
-            <%= f.label 'Small producer', class: "devise-lgn" %>
-            <%= f.select :small_producer, options_for_select([['Yes', true], ['No', false]], @business.small_producer), {include_blank: 'Select Yes or No'}, {class: "devise-lgn form-control"} %>
-          </div>
+                <div class='col-md-4 col-lg-4'><%= f.label 'Company Number' %></div>
+                <div class='col-md-4 col-lg-8'>
+                  <div class="field centre">
+                    <%= f.text_field :company_number, placeholder: 'Company number', class: "form-control" %>
+                  </div>
+                </div>
+                </p>
+              </div>
 
-          <div class="field centre">
-            <%= f.label 'Country of business registration', class: "devise-lgn" %>
-            <%= f.collection_select :country_of_business_registration_id, @country_of_business_registrations, :id, :country, {include_blank: 'Select a Country'}, {id: 'business_country_select', class: "devise-lgn form-control"} %>
-          </div>
+            </div>
+            <div class='col-md-4 col-lg-6'>
 
-          <div class="field centre">
-            <%= f.select :year_first_reg, options_for_select(LookupValues::ValidYears.for('first_registered')), {prompt: true, prompt: 'First year registered?'}, class: "devise-lgn form-control" %>
-          </div>
+              <div class="row">
+                <p>
 
-          <div class="field centre">
-            <%= f.select :year_last_reg, options_for_select(LookupValues::ValidYears.for('first_registered')), {prompt: true, prompt: 'Last year registered?'}, class: "devise-lgn form-control" %>
-          </div>
+                <div class='col-md-4 col-lg-4'><%= f.label 'SIC' %></div>
+                <div class='col-md-4 col-lg-8'>
+                  <div class="field centre">
+                    <%= f.collection_select :sic_code_id, SicCode.all, :id, :code, {include_blank: 'Select a Sic Code'}, {class: "form-control"} %>
+                  </div>
+                </div>
+                </p>
+              </div>
 
-          </div>
-          <div class="card-footer">
-            <%= f.submit 'Save', class: 'btn btn-primary' %>
-            <%= link_to 'Back', :back, class: 'btn btn-success' %>
-      <% end %>
+              <div class="row">
+                <p>
+
+                <div class='col-md-4 col-lg-4'><%= f.label 'Scheme status' %></div>
+                <div class='col-md-4 col-lg-8'>
+                  <div class="field centre">
+                    <%= f.collection_select :scheme_status_code_id, @scheme_status_codes, :id, :code, {include_blank: 'Select Scheme Status'}, {class: "form-control"} %>
+                  </div>
+                </div>
+                </p>
+              </div>
+
+              <div class="row">
+                <p>
+
+                <div class='col-md-4 col-lg-4'><%= f.label 'Registration status' %></div>
+                <div class='col-md-4 col-lg-8'>
+                  <div class="field centre">
+                    <%= f.collection_select :registration_status_code_id, @registration_status_codes, :id, :code, {include_blank: 'Select Reg Status'}, {class: "form-control"} %>
+                  </div>
+                </div>
+                </p>
+              </div>
+
+              <div class="row">
+                <p>
+
+                <div class='col-md-4 col-lg-4'><%= f.label 'Small producer?' %></div>
+                <div class='col-md-4 col-lg-8'>
+                  <div class="field centre">
+                    <%= f.select :small_producer, options_for_select([['Yes', true], ['No', false]], @business.small_producer), {include_blank: 'Select Yes or No'}, {class: "form-control"} %>
+                  </div>
+                </div>
+                </p>
+              </div>
+
+              <div class="row">
+                <p>
+
+                <div class='col-md-4 col-lg-4'><%= f.label 'Country of registration' %></div>
+                <div class='col-md-4 col-lg-8'>
+                  <div class="field centre">
+                    <%= f.collection_select :country_of_business_registration_id, @country_of_business_registrations, :id, :country, {include_blank: 'Select a Country'}, {id: 'business_country_select', class: "devise-lgn form-control"} %>
+                  </div>
+                </div>
+                </p>
+              </div>
+
+              <div class="row">
+                <p>
+
+                <div class='col-md-4 col-lg-4'><%= f.label 'Year of first reg' %></div>
+                <div class='col-md-4 col-lg-8'>
+                  <div class="field centre">
+                    <%= f.select :year_first_reg, options_for_select(LookupValues::ValidYears.for('first_registered')), {prompt: true, prompt: 'First year registered?'}, class: "form-control" %>
+                  </div>
+                </div>
+                </p>
+              </div>
+
+              <div class="row">
+                <p>
+
+                <div class='col-md-4 col-lg-4'><%= f.label 'Year last registered' %></div>
+                <div class='col-md-4 col-lg-8'>
+                  <div class="field centre">
+                    <%= f.select :year_last_reg, options_for_select(LookupValues::ValidYears.for('first_registered')), {prompt: true, prompt: 'Last year registered?'}, class: "form-control" %>
+                  </div>
+                </div>
+                </p>
+              </div>
+
+              <div class="row">
+                <p>
+
+                <div class='col-md-4 col-lg-4'></div>
+                <div class='col-md-4 col-lg-8'>
+                  <div class="field centre">
+                    <%= f.submit 'Save', class: 'btn btn-primary' %>
+                  </div>
+                </div>
+                </p>
+              </div>
+
+        <% end %>
+        </div>
       </div>
-      </div>
+    </div>
+    <div class="card-footer">
+      <%= link_to 'Back', :back, class: 'btn btn-success' %>
+    </div>
+  </div>
 </div>

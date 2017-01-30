@@ -69,7 +69,7 @@ class BusinessesController < BaseController
     @business_types ||= BusinessType.all
     @business_subtypes ||= BusinessSubtype.all
     @country_of_business_registrations ||= CountryOfBusinessRegistration.all
-    @scheme_status_codes ||=  SchemeStatusCode.all
+    @scheme_status_codes ||= SchemeStatusCode.all
     @registration_status_codes ||= RegistrationStatusCode.all
   end
 
@@ -84,7 +84,9 @@ class BusinessesController < BaseController
                                      :NPWD, :sic_code_id, :scheme_id,
                                      :scheme_ref, :business_type_id,
                                      :business_subtype_id, :year_first_reg,
-                                     :holding_business_id)
-    #:scheme_status_code_id, :registration_status_code_id)
+                                     :holding_business_id, :scheme_status_code_id,
+                                     :registration_status_code_id, :year_last_reg,
+                                     :scheme_status_code_id, :registration_status_code_id,
+                                     :small_producer, :country_of_business_registration_id)
   end
 end

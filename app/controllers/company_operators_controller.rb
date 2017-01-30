@@ -83,7 +83,7 @@ class CompanyOperatorsController < BaseController
       company_operators = []
       current_user.schemes.each do |scheme|
         scheme.businesses.each do |business|
-          company_operators << business.company_operators.where(approved: approved)
+          company_operators << business.company_operators.where(approved: approved).order(:last_name)
         end
       end
       company_operators.flatten

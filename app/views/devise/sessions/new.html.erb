@@ -1,4 +1,14 @@
 <% title "Sign in" %>
+<div style='display: none'>
+  <%= resource_text = resource_name.to_s.gsub!(/_/, ' ').split.map(&:capitalize).join(' ') unless resource_name.to_s == 'admin' %>
+  <%= resource_text ||= resource_name.to_s.capitalize %>
+  <%= resource_text = resource_text.sub! 'Company', 'Member' if resource_text.include? 'Company' %>
+</div>
+
+<h2 class="centre"><center><%= resource_text + 's' %></center></h3>
+<h2 class="header centre"><center>Log in</center></h3>
+</br></br>
+
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field centre">
     <%= f.email_field :email, class: "devise-lgn", autofocus: true, placeholder: "Email" %>

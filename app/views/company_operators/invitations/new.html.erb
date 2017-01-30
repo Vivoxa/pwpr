@@ -1,26 +1,37 @@
-<div class="centre-wide">
-  <% @scheme_name = @scheme ? @scheme.name : '' %>
-  <h2><%= "Invite Member Contact: #{@scheme_name}" %></h2>
-</div>
-<%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
-  <%= devise_error_messages! %>
+<div id="main-container" class="container">
+  <div class="card">
+    <% @scheme_name = @scheme ? @scheme.name : '' %>
+    <h3 class="card-header"><center><%= "Invite Contact Operator: #{@scheme_name}" %></center></h3>
 
-  <% resource.class.invite_key_fields.each do |field| -%>
-    <div class="field centre">
-      <% if field.to_s.downcase.include?('email') %>
-          <%= f.email_field field, placeholder: field, class: "devise-lgn form-control" %></p>
-      <% else %>
-          <%= f.text_field field, placeholder: field, class: "devise-lgn form-control" %></p>
-      <% end %>
+    <div class="card-block">
+      <p class="card-text">
+        <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
+          <%= devise_error_messages! %>
+
+          <% resource.class.invite_key_fields.each do |field| -%>
+            <div class="field centre">
+              <% if field.to_s.downcase.include?('email') %>
+                  <%= f.email_field field, placeholder: field, class: "devise-lgn form-control" %></p>
+              <% else %>
+                  <%= f.text_field field, placeholder: field, class: "devise-lgn form-control" %></p>
+              <% end %>
+            </div>
+          <% end -%>
+          <div class="field centre">
+            <%= select_tag :scheme_id, options_from_collection_for_select(@schemes, :id, :name),{ class: "devise-lgn form-control", id: 'schemes_select' } %>
+          </div>
+          <div class="field centre">
+            <%= f.select :business_id, options_from_collection_for_select(@businesses, :id, :name),{}, { class: "devise-lgn form-control", id: 'business_select' } %>
+          </div>
+          <div class="action centre">
+            <p><%= f.submit t("devise.invitations.new.submit_button"), class: ["btn", "btn-success", "devise-btn"]  %></p>
+          </div>
+        <% end %>
+      </p>
     </div>
-  <% end -%>
-  <div class="field centre">
-    <%= select_tag :scheme_id, options_from_collection_for_select(@schemes, :id, :name),{ class: "devise-lgn form-control", id: 'schemes_select' } %>
+
+    <div class="card-footer">
+      <%= link_to 'Back', :back, class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
+    </div>
   </div>
-  <div class="field centre">
-    <%= f.select :business_id, options_from_collection_for_select(@businesses, :id, :name),{}, { class: "devise-lgn form-control", id: 'business_select' } %>
-  </div>
-  <div class="action centre">
-    <p><%= f.submit t("devise.invitations.new.submit_button"), class: ["btn", "btn-success", "devise-btn"]  %></p>
-  </div>
-<% end %>
+</div>

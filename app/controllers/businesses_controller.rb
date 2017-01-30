@@ -9,7 +9,7 @@ class BusinessesController < BaseController
   # GET /businesses.json
   def index
     raise 'Must have a scheme id to view businesses' if params['scheme_id'].nil?
-    @businesses = current_user.schemes.find(params['scheme_id']).businesses
+    @businesses = current_user.schemes.find(params['scheme_id']).businesses.order(:name)
     @scheme = Scheme.find(params['scheme_id'].to_i)
   end
 

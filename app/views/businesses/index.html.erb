@@ -1,59 +1,56 @@
-<h1 class='centre-wide'><%= "Members of #{@scheme.name}" %></h1>
+<h1><center><%= "Members of #{@scheme.name}" %></center></h1>
 <div class="container" style='margin-top:30px'>
   <% if can? :new, Business %>
-      <%= link_to 'New Member', new_business_path(scheme_id: @scheme.id), class: ['btn btn-sm btn-primary', 'devise-btn'] %>
+    <%= link_to 'New Member', new_business_path(scheme_id: @scheme.id), class: ['btn btn-sm btn-primary', 'show-btn-lg'], style: 'margin-bottom: 5px' %>
   <% end %>
   <% if @businesses.any? %>
-      <% @businesses.each do |business| %>
-          <div class="row">
-            <% if can? :read, business %>
-                <div class="card">
-                  <h3 class="card-header"><%= business.name %></h3>
-
-                  <div class="card-block">
-                    <!--	<h4 class="card-title">Administration</h4>-->
-                    <p class="card-text">
-
-                    <div class="col-xs-12 col-md-4 col-lg-1"></div>
-                    <div class="col-xs-12 col-md-4 col-lg-5">
-                      <div class="row">
-                        <%= link_to 'Business Details', business, class: ['btn btn-info', 'devise-btn'] %>
-                      </div>
-                    </div>
-                    <div class="col-xs-12 col-md-4 col-lg-5">
-                      <div class="row">
-                        <% if can? :new, CompanyOperators::InvitationsController %>
-                            <%= link_to 'Invite new Member Contact',
-                                        new_company_operator_invitation_path,
-                                        class: ['btn btn-primary', 'devise-btn'],
-                                        id: "#{business.id}-invite_company_operator" %>
-                        <% end %>
-                      </div>
-                    </div>
-                    <div class="col-xs-12 col-md-4 col-lg-1"></div>
+    <% @businesses.each do |business| %>
+      <div class="row">
+        <% if can? :read, business %>
+          <div class="card">
+            <h3 class="card-header"><%= business.name %></h3>
+            <div class="card-block">
+              <p class="card-text">
+                <div class="col-lg-4">
+                  <div class="row">
+                    <% if can? :new, CompanyOperators::InvitationsController %>
+                      <%= link_to 'Invite Contact Operator', new_company_operator_invitation_path, class: ['btn btn-group btn-block btn-sm btn-primary', 'show-btn-lg'], id: "#{business.id}-invite_company_operator" %>
+                    <% end %>
                   </div>
-                  </p>
-                  <div class="card-footer">
-                    <% if can? :destroy, business %>
-                        <%= link_to 'Delete', business, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
+                  <div class="row">
+                    <% if can? :read, Contact %>
+                        <%= link_to 'Contacts',
+                                    business_contacts_path(business_id: business.id),
+                                    class: ['btn btn-group btn-block btn-sm btn-primary', 'show-btn-lg'] %>
                     <% end %>
                   </div>
                 </div>
-            <% end %>
+              </p>
+            </div>
+            <div class="card-footer">
+              <%= link_to 'Back to Scheme', @scheme, class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
+              <% if can? :read, business %>
+                <%= link_to 'Details', business, class: ['btn btn-sm btn-info', 'show-btn-lg'] %>
+              <% end %>
+              <% if can? :destroy, business %>
+                <%= link_to 'Delete', business, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
+              <% end %>
+            </div>
           </div>
-      <% end %>
-  <% else %>
-      <div class="row">
-        <div class="card">
-          <h4 class="card-header"></h4>
-
-          <div class="card-block">
-            <p class="card-text">No Members to show</p>
-          </div>
-
-          <div class="card-footer">
-          </div>
-        </div>
+        <% end %>
       </div>
+    <% end %>
+  <% else %>
+    <div class="row">
+      <div class="card">
+        <h4 class="card-header"></h4>
+
+        <div class="card-block">
+          <p class="card-text">No Members to show</p>
+        </div>
+
+        <div class="card-footer"></div>
+      </div>
+    </div>
   <% end %>
 </div>

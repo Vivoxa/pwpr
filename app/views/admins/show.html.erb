@@ -1,10 +1,14 @@
 <div id="main-container" class="container">
   <%= render partial: './partials/users/show', locals: {user: @admin} %>
-  <% if can? :edit, @admin %>
-      <%= link_to 'Edit', edit_admin_path(params[:id]), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
-  <% end %>
-  <%= link_to 'Back', admins_path, class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
-  <% if can? :permissions, @admin %>
-      <%= link_to 'Permissions', admin_permissions_path(admin_id: params[:id]), class: ['btn btn-sm btn-success', 'show-btn-md'] %>
-  <% end %>
+
+    <div class="card-footer">
+      <%= link_to 'Admins List', admins_path, class: ['btn btn-sm btn-outline-primary', 'show-btn-md'] %>
+      <% if can? :edit, @admin %>
+          <%= link_to 'Edit', edit_admin_path(params[:id]), class: ['btn btn-sm btn-warning', 'show-btn-md'] %>
+      <% end %>
+      <% if can? :permissions, @admin %>
+          <%= link_to 'Permissions', admin_permissions_path(admin_id: params[:id]), class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+      <% end %>
+    </div>
+  </div>
 </div>

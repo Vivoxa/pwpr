@@ -49,6 +49,7 @@ class BusinessesController < BaseController
   end
 
   def scheme_businesses
+    @display_holding_co_dropdown = params[:company_subtype] == 'Subsidiary Co'
     @businesses = Scheme.find(scheme_id).businesses.where(business_subtype_id: BusinessSubtype.id_from_setting('Holding Co'))
     respond_to do |format|
       format.js
@@ -81,7 +82,7 @@ class BusinessesController < BaseController
   # Never trust parameters from the scary internet, only allow the white list through.
   def business_params
     params.require(:business).permit(:name, :membership_no, :company_number,
-                                     :NPWD, :sic_code_id, :scheme_id,
+                                     :NPWD, :sic_code_id, :scheme_id, :company_subtype,
                                      :scheme_ref, :business_type_id,
                                      :business_subtype_id, :year_first_reg,
                                      :holding_business_id, :scheme_status_code_id,

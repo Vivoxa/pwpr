@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   resources :businesses do
     resources :contacts
     get 'scheme_businesses', action: :scheme_businesses
+    get 'businesses/scheme_businesses', action: :scheme_businesses
   end
   resources :scheme_operator_invitations, only: :index
 

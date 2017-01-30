@@ -1,1 +1,2 @@
-$("#holding_companies").html("<%= escape_javascript(render partial: 'scheme_businesses_dropdown.html', locals: { businesses: @businesses } ) %>");
+$("#holding_companies").html("<%= escape_javascript(render partial: 'scheme_businesses_dropdown.html', locals: { businesses: @businesses,
+                                                                                                                 display_holding_co_dropdown: @display_holding_co_dropdown } ) %>");

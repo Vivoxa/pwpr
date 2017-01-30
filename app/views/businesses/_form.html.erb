@@ -14,11 +14,23 @@
         <% end %>
         <div class='col-md-4 col-lg-6'>
           <div class="row">
+            <p>
+
+            <div class='col-md-4 col-lg-4'><%= f.label 'Business name' %></div>
+            <div class='col-md-4 col-lg-8'>
+              <div class="field centre">
+                <%= f.text_field :name, placeholder: 'Name', class: "form-control" %>
+              </div>
+            </div>
+            </p>
+          </div>
+
+          <div class="row">
             <div class='col-md-4 col-lg-6'></div>
 
             <div class='col-md-4 col-lg-6'>
               <% if @scheme_id %>
-                  <%= f.collection_select :scheme_id, Scheme.where(id: @scheme_id), :id, :name, {}, {style: "display:none", class: "form-control"} %>
+                  <%= f.collection_select :scheme_id, Scheme.where(id: @scheme_id), :id, :name, {}, {style: "display:none", class: "form-control", id: "business_scheme_id"} %>
                   <% f.hidden_field :scheme_id, value: @scheme_id %>
               <% elsif @schemes %>
                   <div class="field centre">
@@ -78,18 +90,6 @@
           </div>
 
           <div id='holding_companies'>
-          </div>
-
-          <div class="row">
-            <p>
-
-            <div class='col-md-4 col-lg-4'><%= f.label 'Business name' %></div>
-            <div class='col-md-4 col-lg-8'>
-              <div class="field centre">
-                <%= f.text_field :name, placeholder: 'Name', class: "form-control" %>
-              </div>
-            </div>
-            </p>
           </div>
 
           <div class="row">

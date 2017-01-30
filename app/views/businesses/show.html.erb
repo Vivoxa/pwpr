@@ -121,7 +121,7 @@
     <div class="card-footer">
       <%= link_to 'Members List', businesses_path(scheme_id: @business.scheme.id), class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
       <% if can? :edit, @business %>
-          <%= link_to 'Edit', edit_business_path(@business), class: ['btn btn-sm btn-warning', 'show-btn-md'] %>
+          <%= link_to 'Edit', edit_business_path(@business, scheme_id: @business.scheme.id), class: ['btn btn-sm btn-warning', 'show-btn-md'] %>
       <% end %>
       <% if can? :destroy, @business %>
           <%= link_to 'Delete', @business, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>

@@ -3,47 +3,50 @@
     <% @login_path = '/company_operators/sign_out' if current_company_operator %>
     <% @login_path = '/admins/sign_out' if current_admin %>
     <% @login_btn_text = 'Sign Out' %>
-    <% @login_btn_style = 'btn-outline-secondary' %>
+    <% @login_btn_style = 'btn-danger' %>
 <% else %>
     <% @login_path = "/scheme_operators/sign_in" %>
     <% @login_btn_text = "Sign In" %>
     <% @admins_sign_path = '/admins/sign_in' %>
     <% @so_sign_path = '/scheme_operators/sign_in' %>
     <% @co_sign_path = '/company_operators/sign_in' %>
-    <% @login_btn_style = 'btn-outline-secondary' %>
+    <% @login_btn_style = 'btn-success' %>
 <% end %>
 
 <nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
-  <a class="navbar-brand"><%= image_tag("leaf1.png", size: "28x28", :alt => "company logo") %></a>
+  <div class="container" style="margin-left: 100px; margin-right: 100px">
+    <a class="navbar-brand"><%= image_tag("leaf1.png", size: "28x28", :alt => "company logo") %></a>
 
-  <ul class="nav navbar-nav">
-    <li class="nav-item active">
-      <a class="nav-link" href=<%= root_path %>>Home <span class="sr-only">(current)</span></a>
-    </li>
-    <li class="nav-item">
-      <div class="btn-group">
-        <a class="btn <%= @login_btn_style %> btn-sm" id='signing_btn' href=<%= @login_path %>><%= @login_btn_text %></a>
-        <% unless @current_user %>
-            <button type="button" class="btn <%= @login_btn_style %> btn-sm dropdown-toggle" id="sign_in_out" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <ul class="nav navbar-nav">
+      <li class="nav-item active">
+        <a class="btn btn-sm btn-outline-info" style="margin-top:5px" href=<%= root_path %>>Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item pull-xs-right">
+        <div class="btn-group" >
+          <a class="btn <%= @login_btn_style %> btn-sm" id='signing_btn' href=<%= @login_path %>><%= @login_btn_text %></a>
+          <% unless @current_user %>
+            <button type="button" class="btn <%= @login_btn_style %> btn-sm dropdown-toggle" id="sign_in_out" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href=<%= @login_path %>
+              <span class="caret"></span>
               <span class="sr-only">Toggle Dropdown</span>
             </button>
             <div class="dropdown-menu">
               <a class="dropdown-item" href=<%= @so_sign_path %> id="sc_login">Scheme Operators</a>
-              <a class="dropdown-item" href=<%= @co_sign_path %> id="co_login">Contact Operators</a>
+              <a class="dropdown-item" href=<%= @co_sign_path %> id="co_login">Member Contacts</a>
             </div>
-        <% end %>
-      </div>
-    </li>
-    <% if @current_user && @current_user.is_a?(CompanyOperator) == false %>
-        <%= render partial: 'partials/users/users_dropdown' %>
-    <% end %>
-    <%= render partial: 'partials/schemes_dropdown' %>
+          <% end %>
+        </div>
+      </li>
+      <% if @current_user && @current_user.is_a?(CompanyOperator) == false %>
+          <%= render partial: 'partials/users/users_dropdown' %>
+      <% end %>
+      <%= render partial: 'partials/schemes_dropdown' %>
 
-    <%= render partial: 'partials/businesses_link' %>
-  </ul>
-  <% if @current_user %>
-      <div class="form-inline pull-xs-right">
-        <button class="btn btn-sm btn-outline-info" style="margin-top:5px" type="submit"><%= @current_user.email %></button>
-      </div>
-  <% end %>
+      <%= render partial: 'partials/businesses_link' %>
+    </ul>
+    <% if @current_user %>
+        <div class="form-inline pull-xs-right">
+          <button class="btn btn-sm btn-info" style="margin-top:5px"><%= @current_user.email %></button>
+        </div>
+    <% end %>
+  </div>
 </nav>

@@ -137,7 +137,7 @@
             <div class='col-md-4 col-lg-4'><%= f.label 'Registration status' %></div>
             <div class='col-md-4 col-lg-8'>
               <div class="field centre">
-                <%= f.collection_select :registration_status_code_id, @registration_status_codes, :id, :code, {include_blank: 'Select Reg Status'}, {class: "form-control"} %>
+                <%= f.collection_select :registration_status_code_id, @registration_status_codes, :id, :code, {include_blank: 'Select Registration Status'}, {class: "form-control"} %>
               </div>
             </div>
             </p>

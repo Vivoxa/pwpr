@@ -1,1 +1,0 @@
-Improvements: "archive migrations and use scheme:load. This causes issues with Foreign keys so db:drop db:create are also used"

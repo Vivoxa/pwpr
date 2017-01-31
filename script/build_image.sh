@@ -2,6 +2,13 @@
 set -e
 
     if [[ $@ == *"--production"* ]] ;then
+    shopt -s nullglob
+      files=(log/*)
+      if (( ${#files[*]} )); then
+        echo 'Removing log files....................'
+        rm -r log/*
+      fi
+      shopt -u nullglob
       echo ''
       echo '***********************************************************************'
       echo '####      Logging in to AWS with pwpr-production credentials      #####'
@@ -25,6 +32,13 @@ set -e
     fi
 
     if [[ $@ == *"--preprod"* ]] ;then
+      shopt -s nullglob
+      files=(log/*)
+      if (( ${#files[*]} )); then
+        echo 'Removing log files....................'
+        rm -r log/*
+      fi
+      shopt -u nullglob
       echo ''
       echo '***********************************************************************'
       echo '####      Logging in to AWS with pwpr-preprod credentials         #####'

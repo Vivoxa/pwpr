@@ -1,0 +1,13 @@
+<% if @display_holding_co_dropdown %>
+    <div class="row">
+      <p>
+
+      <div id="holding_co_label" class='col-md-4 col-lg-4'></div>
+      <div class='col-md-4 col-lg-8'>
+        <div class="field centre">
+          <%= select_tag :holding_business_id, options_from_collection_for_select(businesses, :id, :name), {class: "devise-lgn form-control", id: 'businesses_select', include_blank: 'Select a Holding Company'} %>
+        </div>
+      </div>
+      </p>
+    </div>
+<% end %>

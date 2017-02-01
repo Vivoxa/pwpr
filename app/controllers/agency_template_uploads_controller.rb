@@ -63,7 +63,7 @@ class AgencyTemplateUploadsController < ApplicationController
   end
 
   def previous_upload_for_year
-    existing_upload = AgencyTemplateUpload.where(scheme_id: params[:scheme_id], year: params[:year])
+    existing_upload = AgencyTemplateUpload.for_previous_year(params[:scheme_id], params[:year])
     @show_confirmation_field = false
 
     @show_confirmation_field = true if existing_upload.any?
@@ -77,8 +77,8 @@ class AgencyTemplateUploadsController < ApplicationController
 
   def destroy_existing_agency_template
     if params[:upload_exists].present? && params[:confirm_replace].to_i == 1
-      existing_upload = AgencyTemplateUpload.where(scheme_id: params[:scheme_id].to_i,
-                                                   year:      params[:agency_template_upload][:year])
+      existing_upload = AgencyTemplateUpload.for_previous_year(params[:scheme_id].to_i,
+                                                               params[:agency_template_upload][:year])
 
       existing_upload.each(&:destroy) if existing_upload.any?
     end

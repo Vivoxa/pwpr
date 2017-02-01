@@ -26,10 +26,10 @@ class ReportsController < ApplicationController
 
     @errors << 'Select a Year' unless YEARS.include?(year)
 
-    @errors << 'No data for this year' unless data_present
-
-    build_report_form_data(report, scheme_uid, year, data_present)
-    #@stop_spinner = true if @report_form_data.empty?
+    if YEARS.include?(year) == true
+      @errors << "No data found for year #{year.to_i - 1}" unless data_present_previous_year?
+      build_report_form_data(report, scheme_uid, year)
+    end
 
     respond_to do |format|
       format.js
@@ -73,8 +73,8 @@ class ReportsController < ApplicationController
     end
   end
 
-  def build_report_form_data(report, scheme_uid, year, data_present)
-    @report_form_data = if can_process_report?(year, report, data_present)
+  def build_report_form_data(report, scheme_uid, year)
+    @report_form_data = if can_process_report?(year, report)
                           scheme_id = scheme_uid
                           businesses = Scheme.find(scheme_id).businesses.for_registration
                           get_report_data(businesses, report.delete(' ').demodulize.underscore.freeze, year)
@@ -90,8 +90,8 @@ class ReportsController < ApplicationController
     publisher.publish(event_data)
   end
 
-  def can_process_report?(year, report, data_present)
-    data_present && !year.blank? && YEARS.include?(year) && !report.blank? && REPORTS.include?(report)
+  def can_process_report?(year, report)
+    data_present_previous_year? && !year.blank? && YEARS.include?(year) && !report.blank? && REPORTS.include?(report)
   end
 
   def get_report_data(businesses, report_name, year)
@@ -110,5 +110,9 @@ class ReportsController < ApplicationController
 
   def emailed_report(business, report_name, year)
     EmailedReport.where(business_id: business.id, report_name: report_name, year: year).first
+  end
+
+  def data_present_previous_year?
+    @data_present_previous_year ||= AgencyTemplateUpload.where(scheme_id: params[:scheme_id].to_i, year: (params['year'].to_i - 1)).any?
   end
 end

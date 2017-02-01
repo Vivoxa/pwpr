@@ -1,2 +1,17 @@
-<h3><strong>Edit</strong> <%= @business.name %></h3>
-<%= render 'form' %>
+<div id="main-container" class="container">
+  <div class="card">
+    <h3 class="card-header">
+      <center>Edit</strong> <%= @business.name %></center>
+    </h3>
+    <div class="card-block">
+      <p class="card-text">
+        <% if can? :edit, Business %>
+          <%= render 'form' %>
+        <% end %>
+      </p>
+    </div>
+    <div class="card-footer">
+      <%= link_to 'Back to Member', @business , class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
+    </div>
+  </div>
+</div>

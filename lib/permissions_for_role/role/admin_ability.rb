@@ -21,9 +21,9 @@ module PermissionsForRole
       end
 
       def business_permissions(user)
-        can :read, Business if user.businesses_r?
-        can %i(new create), Business if user.businesses_w?
-        can %i(edit update), Business if user.businesses_e?
+        can %i(read scheme_businesses), Business if user.businesses_r?
+        can %i(new create scheme_businesses), Business if user.businesses_w?
+        can %i(edit update scheme_businesses), Business if user.businesses_e?
         can :destroy, Business if user.businesses_d?
       end
 

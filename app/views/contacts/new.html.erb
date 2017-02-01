@@ -1,5 +1,17 @@
-<h4 class="centre-wide">New Contact</h4>
-
-<%= render 'form' %>
-
-<div class="centre"><%= link_to 'Back', business_contacts_path, class: ['btn btn-success devise-btn'] %></div>
+<div id="main-container" class="container">
+  <div class="card">
+    <h3 class="card-header">
+      <center>New Contact</center>
+    </h3>
+    <div class="card-block">
+      <p class="card-text">
+        <% if can? :new, Contact %>
+          <%= render 'form' %>
+        <% end %>
+      </p>
+    </div>
+    <div class="card-footer">
+      <%= link_to 'Contacts List', business_contacts_path, class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
+    </div>
+  </div>
+</div>

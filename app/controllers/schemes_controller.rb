@@ -6,7 +6,7 @@ class SchemesController < BaseController
   # GET /schemes
   # GET /schemes.json
   def index
-    @schemes = current_user.schemes
+    @schemes = current_user.schemes.order(:name)
   end
 
   # GET /schemes/1

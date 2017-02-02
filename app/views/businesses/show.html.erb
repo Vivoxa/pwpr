@@ -54,13 +54,10 @@
                   <div class="form_value_blank"><%= @business.sic_code&.code %></div>
                 </div>
               </div>
-
             </div>
           </div>
           <div class='col-md-4 col-lg-6'>
             <div class="card card-block" style='min-height:150px'>
-              <!--	<h4 class="card-title">Administration</h4>-->
-
               <div class='col-md-4 col-lg-6'>
                 <div class="row">
                   <div><strong>Year first reg: </strong></div>
@@ -110,6 +107,19 @@
               </div>
             </div>
           </div>
+
+          <div class='col-md-4 col-lg-4'></div>
+          <div class='col-md-4 col-lg-4'>
+            <center>
+              <div class='card card-block'>
+                <%= link_to 'Enter Registration Details', new_business_registration_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
+                <%= link_to 'Enter Regular Producer Details', new_business_regular_producer_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
+                <%= link_to 'Enter Small Producer Details', new_business_small_producer_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
+                <%= link_to 'Enter Material Details', new_business_material_detail_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
+              </div>
+            </center>
+          </div>
+          <div class='col-md-4 col-lg-4'></div>
 
           <div class='col-md-4'></div>
       <% else %>

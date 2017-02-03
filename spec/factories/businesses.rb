@@ -4,7 +4,7 @@ FactoryGirl.define do
     company_number 'MyString'
     sequence(:NPWD) { |n| "NPWD#{n}" }
     scheme_id 1
-    scheme_ref SecureRandom.uuid
+    sequence(:scheme_ref) { |n| "scheme_ref#{n}" }
     sic_code_id 1
     year_first_reg '2010'
     scheme_status_code_id 1

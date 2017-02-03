@@ -24,7 +24,7 @@ class Business < ActiveRecord::Base
   validates_presence_of :NPWD, :scheme_id, :name, :company_number, :sic_code_id, :scheme_ref # , :scheme_status_code_id,
   # :registration_status_code_id, :submission_type_id, :country_of_business_registration
   validate :year_first_reg_format, if: 'year_first_reg.present?'
-  # validate :subsidiary_company
+  validate :subsidiary_company
 
   scope :for_registration, -> {
     where('(business_subtype_id != ? OR business_subtype_id IS NULL) AND business_type_id IN (?)',

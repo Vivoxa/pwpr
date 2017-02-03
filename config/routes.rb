@@ -28,10 +28,10 @@ Rails.application.routes.draw do
 
   resources :businesses do
     resources :contacts
-    resources :registrations, only: [:new]
-    resources :regular_producers, only: [:new]
-    resources :small_producers, only: [:new]
-    resources :material_details, only: [:new]
+    resources :registrations
+    resources :regular_producers
+    resources :small_producers
+    resources :material_details
 
     get 'scheme_businesses', action: :scheme_businesses
     get 'businesses/scheme_businesses', action: :scheme_businesses

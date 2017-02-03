@@ -1,0 +1,23 @@
+<div id="main-container" class="container">
+  <div class="card">
+    <h3 class="card-header">
+      <center>Edit Small Producer Details for <%= @business.name %></center>
+    </h3>
+    <div class="card-block">
+      <%= form_for @small_producer, url: {action: 'update'}, html: { method: :put } do |f|%>
+        <div class='row'>
+          <div class='col-md-6' align='right'><strong>allocation_method_predominant_material</strong></div>
+          <div class='col-md-6'><%= f.text_field :allocation_method_predominant_material %></div>
+        </div>
+        <div class='row'>
+          <div class='col-md-6' align='right'><strong>allocation_method_obligation</strong></div>
+          <div class='col-md-6'><%= f.text_field :allocation_method_obligation %></div>
+        </div>
+        <center><%= f.submit 'Save', class: ["btn", "btn-primary", "devise-btn"] %></center>
+      <% end %>
+    </div>
+    <div class="card-footer">
+      <%= link_to 'Back to Member', @business , class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
+    </div>
+  </div>
+</div>

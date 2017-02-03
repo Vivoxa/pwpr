@@ -1,10 +1,10 @@
 <div id="main-container" class="container">
   <div class="card">
     <h3 class="card-header">
-      <center>small producer</center>
+      <center>Edit Registration For: <%= @business.name %></center>
     </h3>
     <div class="card-block">
-      <%= form_for @small_producer, url: {action: 'create'}, html: { method: :post } do |f|%>
+      <%= form_for @registration, url: {action: 'update'}, html: { method: :put } do |f|%>
         <div class='row'>
           <div class='col-md-6' align='right'><strong>sic_code</strong></div>
           <div class='col-md-6'><%= f.text_field :sic_code %></div>

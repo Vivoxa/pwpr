@@ -4,128 +4,177 @@
 
     <div class="card-block">
       <% if can? :read, @business %>
-          <div class='col-md-4 col-lg-6'>
-            <div class="card card-block" style='min-height:150px'>
-              <!--	<h4 class="card-title">Administration</h4>-->
-              <div class='col-md-4 col-lg-6'>
-                <div class="row">
-                  <div><strong>Name: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Company Type: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Company Subtype: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Membership ID: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Company No: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>NPWD: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>SIC: </strong></div>
-                </div>
+        <div class='col-md-4 col-lg-6'>
+          <div class="card card-block" style='min-height:150px'>
+            <div class='col-md-4 col-lg-6'>
+              <div class="row">
+                <div><strong>Name: </strong></div>
               </div>
+              <div class="row">
+                <div><strong>Company Type: </strong></div>
+              </div>
+              <div class="row">
+                <div><strong>Company Subtype: </strong></div>
+              </div>
+              <div class="row">
+                <div><strong>Membership ID: </strong></div>
+              </div>
+              <div class="row">
+                <div><strong>Company No: </strong></div>
+              </div>
+              <div class="row">
+                <div><strong>NPWD: </strong></div>
+              </div>
+              <div class="row">
+                <div><strong>SIC: </strong></div>
+              </div>
+            </div>
 
-              <div class='col-md-4 col-lg-6'>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.name if @business.name %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.business_type&.name %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.business_subtype&.name %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.scheme_ref&.to_s %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.company_number&.to_s %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.NPWD&.to_s %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.sic_code&.code %></div>
-                </div>
+            <div class='col-md-4 col-lg-6'>
+              <div class="row">
+                <div class="form_value_blank"><%= @business.name if @business.name %></div>
+              </div>
+              <div class="row">
+                <div class="form_value_blank"><%= @business.business_type&.name %></div>
+              </div>
+              <div class="row">
+                <div class="form_value_blank"><%= @business.business_subtype&.name %></div>
+              </div>
+              <div class="row">
+                <div class="form_value_blank"><%= @business.scheme_ref&.to_s %></div>
+              </div>
+              <div class="row">
+                <div class="form_value_blank"><%= @business.company_number&.to_s %></div>
+              </div>
+              <div class="row">
+                <div class="form_value_blank"><%= @business.NPWD&.to_s %></div>
+              </div>
+              <div class="row">
+                <div class="form_value_blank"><%= @business.sic_code&.code %></div>
               </div>
             </div>
           </div>
-          <div class='col-md-4 col-lg-6'>
-            <div class="card card-block" style='min-height:150px'>
+        </div>
+        <div class='col-md-4 col-lg-6'>
+          <div class="card card-block" style='min-height:150px'>
+            <div class='col-md-4 col-lg-6'>
+              <div class="row">
+                <div><strong>Year first reg: </strong></div>
+              </div>
+              <div class="row">
+                <div><strong>Year last reg: </strong></div>
+              </div>
+              <div class="row">
+                <div><strong>Scheme status code: </strong></div>
+              </div>
+              <div class="row">
+                <div><strong>Small Producer: </strong></div>
+              </div>
+              <div class="row">
+                <div><strong>Country of registration: </strong></div>
+              </div>
+              <div class="row">
+                <div><strong>Registration status code: </strong></div>
+              </div>
+              <div class="row">
+                <div><strong>Holding business: </strong></div>
+              </div>
+            </div>
+            <div class='col-md-4 col-lg-6'>
+              <div class="row">
+                <div class="form_value_blank"><%= @business.year_first_reg %></div>
+              </div>
+              <div class="row">
+                <div class="form_value_blank"><%= @business.year_last_reg %></div>
+              </div>
+              <div class="row">
+                <div class="form_value_blank"><%= @business.scheme_status_code&.code %></div>
+              </div>
+              <div class="row">
+                <div class="form_value_blank"><%= @business.small_producer %></div>
+              </div>
+              <div class="row">
+                <div class="form_value_blank"><%= @business.country_of_business_registration&.country %></div>
+              </div>
+              <div class="row">
+                <div class="form_value_blank"><%= @business.registration_status_code&.code %></div>
+              </div>
+              <div class="row">
+                <div class="form_value_blank"><%= @business.holding_business&.name %></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class='col-md-4 col-lg-6'>
+          <div class="card card-outline-success">
+            <h5 class="card-header">Registration</h5>
+            <div class=" card-block">
+                Panel content
+            </div>
+            <div class="card-footer">
               <div class='col-md-4 col-lg-6'>
-                <div class="row">
-                  <div><strong>Year first reg: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Year last reg: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Scheme status code: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Small Producer: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Country of registration: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Registration status code: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Holding business: </strong></div>
-                </div>
+                <%= link_to 'Enter Details', new_business_registration_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
               </div>
               <div class='col-md-4 col-lg-6'>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.year_first_reg %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.year_last_reg %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.scheme_status_code&.code %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.small_producer %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.country_of_business_registration&.country %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.registration_status_code&.code %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.holding_business&.name %></div>
-                </div>
-
+                <%= link_to 'Edit Details', edit_business_registration_path(business_id: @business.id), class: ['btn btn-sm btn-warning btn-block'] %>
               </div>
             </div>
           </div>
-
-          <div class='col-md-4 col-lg-4'></div>
-          <div class='col-md-4 col-lg-4'>
-            <center>
-              <div class='card card-block'>
-                <%= link_to 'Enter Registration Details', new_business_registration_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
-                <%= link_to 'Enter Regular Producer Details', new_business_regular_producer_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
-                <%= link_to 'Enter Small Producer Details', new_business_small_producer_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
-                <%= link_to 'Enter Material Details', new_business_material_detail_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
+        </div>
+        <div class='col-md-4 col-lg-6'>
+          <div class="card card-outline-success">
+            <h5 class="card-header">Material Totals</h5>
+            <div class=" card-block">
+                Panel content
+            </div>
+            <div class="card-footer">
+              <div class='col-md-4 col-lg-6'>
+                <%= link_to 'Enter Details', new_business_material_detail_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
               </div>
-            </center>
+              <div class='col-md-4 col-lg-6'>
+                <%= link_to 'Edit Details', new_business_material_detail_path(business_id: @business.id), class: ['btn btn-sm btn-warning btn-block'] %>
+              </div>
+            </div>
           </div>
-          <div class='col-md-4 col-lg-4'></div>
-
-          <div class='col-md-4'></div>
+        </div>
+        <div class='col-md-4 col-lg-6'>
+          <div class="card card-outline-success">
+            <h5 class="card-header">Small Producer</h5>
+            <div class=" card-block">
+                Panel content
+            </div>
+            <div class="card-footer">
+              <div class='col-md-4 col-lg-6'>
+                <%= link_to 'Enter Details', new_business_small_producer_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
+              </div>
+              <div class='col-md-4 col-lg-6'>
+                <%= link_to 'Edit Details', new_business_small_producer_path(business_id: @business.id), class: ['btn btn-sm btn-warning btn-block'] %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='col-md-4 col-lg-6'>
+          <div class="card card-outline-success text-center">
+            <h5 class="card-header">Regular Producer</h5>
+            <div class=" card-block">
+                Panel content
+            </div>
+            <div class="card-footer">
+              <div class='col-md-4 col-lg-6'>
+                <%= link_to 'Enter Details', new_business_regular_producer_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
+              </div>
+              <div class='col-md-4 col-lg-6'>
+                <%= link_to 'Edit Details', new_business_regular_producer_path(business_id: @business.id), class: ['btn btn-sm btn-warning btn-block'] %>
+              </div>
+            </div>
+          </div>
+        </div>
       <% else %>
-          <div class="card-block">
-            <p class="card-text">You are not authorised to view this Member</p>
-          </div>
+        <div class="card-block">
+          <p class="card-text">You are not authorised to view this Member</p>
+        </div>
       <% end %>
     </div>
     <div class="card-footer">

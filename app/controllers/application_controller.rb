@@ -27,6 +27,11 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def error_redirect(path, error_msg)
+    flash[:error] = error_msg
+    redirect_to path
+  end
+
   def current_ability
     user = @current_user || Visitor.new
     @current_ability ||= Abilities.ability_for(user)

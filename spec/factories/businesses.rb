@@ -2,9 +2,9 @@ FactoryGirl.define do
   factory :business do
     name 'MyString'
     company_number 'MyString'
-    NPWD 'MyString'
+    sequence(:NPWD) { |n| "NPWD#{n}" }
     scheme_id 1
-    scheme_ref 'scheme_ref'
+    scheme_ref SecureRandom.uuid
     sic_code_id 1
     year_first_reg '2010'
     scheme_status_code_id 1

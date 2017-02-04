@@ -10,4 +10,15 @@ class Registration < ActiveRecord::Base
   has_one :regular_producer_detail, dependent: :destroy
 
   validates_presence_of :agency_template_upload_id, :sic_code_id, :packaging_sector_main_activity, :turnover
+
+  def form_fields
+    [
+      :sic_code,
+      :packaging_sector_main_activity,
+      :submission_type,
+      :resubmission_reason,
+      :turnover,
+      :allocation_method_used
+    ]
+  end
 end

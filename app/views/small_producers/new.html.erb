@@ -5,30 +5,20 @@
     </h3>
     <div class="card-block">
       <%= form_for @small_producer, url: {action: 'create'}, html: { method: :post } do |f|%>
-        <div class='row'>
-          <div class='col-md-6' align='right'><strong>sic_code</strong></div>
-          <div class='col-md-6'><%= f.text_field :sic_code %></div>
-        </div>
-        <div class='row'>
-          <div class='col-md-6' align='right'><strong>packaging_sector_main_activity</strong></div>
-          <div class='col-md-6'><%= f.text_field :packaging_sector_main_activity %></div>
-        </div>
-        <div class='row'>
-          <div class='col-md-6' align='right'><strong>submission_type</strong></div>
-          <div class='col-md-6'><%= f.text_field :submission_type %></div>
-        </div>
-        <div class='row'>
-          <div class='col-md-6' align='right'><strong>resubmission_reason</strong></div>
-          <div class='col-md-6'><%= f.text_field :resubmission_reason %></div>
-        </div>
-        <div class='row'>
-          <div class='col-md-6' align='right'><strong>turnover</strong></div>
-          <div class='col-md-6'><%= f.text_field :turnover %></div>
-        </div>
-        <div class='row'>
-          <div class='col-md-6' align='right'><strong>allocation_method_used</strong></div>
-          <div class='col-md-6'><%= f.text_field :allocation_method_used %></div>
-        </div>
+        <% @small_producer.form_fields.each do |field| %>
+          <div class='row'>
+            <div class='col-md-6' align='right'>
+              <strong>
+                <% if field.to_s.gsub!(/_/, ' ') %>
+                  <%= field.to_s.gsub!(/_/, ' ').split.map(&:capitalize).join(' ') %>
+                <% else %>
+                  <%= field.to_s.capitalize %>
+                <% end %>
+              </strong>
+            </div>
+            <div class='col-md-6'><%= f.text_field field %></div>
+          </div>
+        <% end %>
         <center><%= f.submit 'Save', class: ["btn", "btn-primary", "devise-btn"] %></center>
       <% end %>
     </div>

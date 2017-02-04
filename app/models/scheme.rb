@@ -4,7 +4,8 @@ class Scheme < ActiveRecord::Base
   has_many :businesses
   has_many :agency_template_uploads, dependent: :destroy
 
-  has_and_belongs_to_many :scheme_operators
+  has_many :scheme_operators_schemes
+  has_many :scheme_operators, through: :scheme_operators_schemes
 
   validates_presence_of :scheme_country_code_id, :name
 

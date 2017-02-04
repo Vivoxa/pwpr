@@ -21,8 +21,9 @@ class Business < ActiveRecord::Base
   belongs_to :holding_business, class_name: 'Business'
   has_many :businesses, class_name: 'Business', foreign_key: :holding_business_id
 
-  validates_presence_of :NPWD, :scheme_id, :name, :company_number, :sic_code_id, :scheme_ref # , :scheme_status_code_id,
-  # :registration_status_code_id, :submission_type_id, :country_of_business_registration
+  validates_presence_of :NPWD, :scheme_id, :name, :company_number, :sic_code_id, :scheme_ref
+  validates_uniqueness_of :NPWD
+
   validate :year_first_reg_format, if: 'year_first_reg.present?'
   validate :subsidiary_company
 

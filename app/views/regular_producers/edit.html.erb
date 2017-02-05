@@ -5,18 +5,28 @@
     </h3>
     <div class="card-block">
       <%= form_for @regular_producer, url: {action: 'update'}, html: { method: :put } do |f|%>
-        <% @regular_producer.form_fields.each do |field| %>
+        <% @regular_producer.form_fields.each do |key, hsh| %>
           <div class='row'>
             <div class='col-md-6' align='right'>
               <strong>
-                <% if field.to_s.gsub!(/_/, ' ') %>
-                  <%= field.to_s.gsub!(/_/, ' ').split.map(&:capitalize).join(' ') %>
+                <% if key.to_s.gsub!(/_/, ' ') %>
+                  <%= key.to_s.gsub!(/_/, ' ').split.map(&:capitalize).join(' ') %>
                 <% else %>
-                  <%= field.to_s.capitalize %>
+                  <%= key.to_s.capitalize %>
                 <% end %>
               </strong>
             </div>
-            <div class='col-md-6'><%= f.text_field field %></div>
+            <div class='col-md-6'>
+              <% if hsh[:field_type] == 'number' %>
+                <%= f.number_field key, required: hsh[:required], placeholder: 0, step: :any %>
+              <% elsif hsh[:field_type] == 'text' %>
+                <%= f.text_field key, required: hsh[:required], value: @regular_producer.attributes[key.to_s] %>
+              <% elsif hsh[:field_type] == 'boolean' %>
+                <%= f.check_box key %>
+              <% elsif hsh[:field_type] == 'collection' %>
+                <%= f.collection_select key, hsh[:choices], hsh[:field], hsh[:field], include_blank: hsh[:required] %>
+              <% end %>
+            </div>
           </div>
         <% end %>
         <center><%= f.submit 'Save', class: ["btn", "btn-primary", "devise-btn"] %></center>

@@ -202,9 +202,10 @@ end
                                        confirmation_sent_at: DateTime.now - 5.days,
                                        confirmed_at: DateTime.now,
                                        first_name: "sc_director_#{index}",
-                                       approved: true,
-                                       scheme_ids: schemes[0].id})
+                                       approved: true})
 
+
+  sc_director.schemes << schemes[0]
   sc_director.sc_director!
   sc_director.remove_role :sc_user
 
@@ -222,7 +223,9 @@ end
                                          confirmed_at: DateTime.now,
                                          first_name: "sc_super_user_#{index}",
                                          approved: true,
-                                         scheme_ids: [schemes[1].id, schemes[2].id]})
+                                         })
+
+  sc_super_user.schemes << [schemes[1], schemes[2]]
 
   sc_super_user.sc_super_user!
   sc_super_user.remove_role :sc_user
@@ -241,7 +244,9 @@ end
                                    confirmed_at: DateTime.now,
                                    first_name: "sc_user_#{index}",
                                    approved: true,
-                                   scheme_ids: [schemes[3].id, schemes[4].id]})
+                                   })
+
+  sc_user.schemes << [schemes[3], schemes[4]]
 
   PermissionsForRole::SchemeOperatorDefinitions.new.permissions_for_role(:sc_user).each do |permission, has|
     sc_user.add_role permission if has[:checked]

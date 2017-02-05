@@ -1,28 +1,15 @@
 require 'rails_helper'
 RSpec.describe SchemesController, type: :controller do
   context 'when scheme operator is signed in' do
-    let(:admin) { Admin.new }
-    let(:co_marti) { SchemeOperator.first }
+    let(:scheme_operator_with_director) { FactoryGirl.create(:scheme_operator_with_director) }
+    let(:scheme_id) { scheme_operator_with_director.schemes.first.id }
+    let(:admin) { FactoryGirl.create(:super_admin) }
+
     before do
-      admin.email = 'jennifer@back_to_the_future.com'
-      admin.name = 'Smith'
-      admin.password = 'mypassword'
-      admin.save
-      PermissionsForRole::AdminDefinitions.new.permissions_for_role(:super_admin).each do |permission, has|
-        admin.add_role permission if has[:checked]
-      end
-      admin.save!
-
-      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
-      co_marti.save!
-
       sign_in admin
     end
 
     after do
-      PermissionsForRole::AdminDefinitions.new.permissions_for_role(:super_admin).each do |permission, _has|
-        admin.remove_role permission
-      end
       sign_out admin
     end
 
@@ -45,7 +32,7 @@ RSpec.describe SchemesController, type: :controller do
     describe 'GET #index' do
       it 'assigns all schemes as @schemes' do
         scheme = Scheme.create! valid_attributes
-        co_marti.schemes << scheme
+        scheme_operator_with_director.schemes << scheme
         get :index, {}, session: valid_session
         scheme_ids = assigns(:schemes).map(&:id)
 
@@ -105,8 +92,8 @@ RSpec.describe SchemesController, type: :controller do
 
         it 'updates the requested scheme' do
           scheme = Scheme.create! valid_attributes
-          co_marti.scheme_ids << scheme.id
-          co_marti.save
+          scheme_operator_with_director.scheme_ids << scheme.id
+          scheme_operator_with_director.save
           put :update, {id: scheme.to_param, scheme: new_attributes}, session: valid_session
           scheme.reload
           skip('Add assertions for updated state')
@@ -114,16 +101,16 @@ RSpec.describe SchemesController, type: :controller do
 
         it 'assigns the requested scheme as @scheme' do
           scheme = Scheme.create! valid_attributes
-          co_marti.scheme_ids << scheme.id
-          co_marti.save
+          scheme_operator_with_director.scheme_ids << scheme.id
+          scheme_operator_with_director.save
           put :update, {id: scheme.to_param, scheme: valid_attributes}, session: valid_session
           expect(assigns(:scheme)).to eq(scheme)
         end
 
         it 'redirects to the scheme' do
           scheme = Scheme.create! valid_attributes
-          co_marti.schemes << scheme
-          co_marti.save
+          scheme_operator_with_director.schemes << scheme
+          scheme_operator_with_director.save
           put :update, {id: scheme.to_param, scheme: valid_attributes}, session: valid_session
           expect(response).to redirect_to(schemes_url)
         end
@@ -132,8 +119,8 @@ RSpec.describe SchemesController, type: :controller do
       context 'with invalid params' do
         it 'assigns the scheme as @scheme' do
           scheme = Scheme.create! valid_attributes
-          co_marti.schemes << scheme
-          co_marti.save
+          scheme_operator_with_director.schemes << scheme
+          scheme_operator_with_director.save
           put :update, {id: scheme.to_param, scheme: invalid_attributes}, session: valid_session
           expect(assigns(:scheme)).to eq(scheme)
         end
@@ -143,8 +130,8 @@ RSpec.describe SchemesController, type: :controller do
     describe 'DELETE #destroy' do
       it 'destroys the requested scheme' do
         scheme = Scheme.create! valid_attributes
-        co_marti.schemes << scheme
-        co_marti.save
+        scheme_operator_with_director.schemes << scheme
+        scheme_operator_with_director.save
         expect do
           delete :destroy, {id: scheme.to_param}, session: valid_session
         end.to change(Scheme, :count).by(-1)
@@ -152,26 +139,22 @@ RSpec.describe SchemesController, type: :controller do
 
       it 'redirects to the schemes list' do
         scheme = Scheme.create! valid_attributes
-        co_marti.schemes << scheme
-        co_marti.save
+        scheme_operator_with_director.schemes << scheme
+        scheme_operator_with_director.save
         delete :destroy, {id: scheme.to_param}, session: valid_session
         expect(response).to redirect_to(schemes_url)
       end
     end
 
     context 'when SchemeOperator does NOT have a role' do
+      let(:scheme_operator_no_roles) { FactoryGirl.create(:scheme_operator) }
       before do
         sign_out admin
-        sign_out co_marti
-        co_marti.roles.each do |role|
-          co_marti.remove_role role.name
-        end
-        co_marti.save
-        sign_in co_marti
+        sign_in scheme_operator_no_roles
       end
 
       after do
-        sign_out co_marti
+        sign_out scheme_operator_no_roles
       end
 
       context 'when calling index' do
@@ -209,15 +192,11 @@ RSpec.describe SchemesController, type: :controller do
 
     context 'when SchemeOperator has co_director role' do
       before do
-        sign_out co_marti
-        co_marti.add_role('sc_director')
-        co_marti.save
-        sign_in co_marti
+        sign_in scheme_operator_with_director
       end
 
       after do
-        co_marti.remove_role :sc_director
-        sign_out co_marti
+        sign_out scheme_operator_with_director
       end
 
       it 'expects the admin to have access to the index action' do

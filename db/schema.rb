@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170130190602) do
+ActiveRecord::Schema.define(version: 20170204113148) do
 
   create_table "address_types", force: :cascade do |t|
     t.string   "title",       limit: 255, null: false
@@ -478,7 +478,7 @@ ActiveRecord::Schema.define(version: 20170130190602) do
   add_index "scheme_operators", ["invited_by_id"], name: "index_scheme_operators_on_invited_by_id", using: :btree
   add_index "scheme_operators", ["reset_password_token"], name: "index_scheme_operators_on_reset_password_token", unique: true, using: :btree
 
-  create_table "scheme_operators_schemes", id: false, force: :cascade do |t|
+  create_table "scheme_operators_schemes", force: :cascade do |t|
     t.integer "scheme_operator_id", limit: 4, null: false
     t.integer "scheme_id",          limit: 4, null: false
   end

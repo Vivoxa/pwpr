@@ -1,0 +1,24 @@
+<div class="card-block" style='min-height:150px'>
+<%= form_for [@scheme, @scheme_operators_scheme] do |f| %>
+  <% if @scheme_operators_scheme.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@scheme_operators_scheme.errors.count, "error") %> prohibited this scheme_operators_scheme from being saved:</h2>
+
+      <ul>
+      <% @scheme_operators_scheme.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <%= f.hidden_field :scheme_id, value: params[:scheme_id] %>
+
+  <div class="field centre">
+    <%= f.collection_select :scheme_operator_id, @scheme_operators, :id, :email, {},{ class: "devise-lgn form-control" } %>
+  </div>
+  <div class="actions centre field">
+    <%= f.submit 'Link', class: ["btn", "btn-primary", "devise-btn"] %>
+  </div>
+<% end %>
+</div>

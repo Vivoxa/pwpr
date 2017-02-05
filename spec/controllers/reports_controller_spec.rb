@@ -1,28 +1,12 @@
 require 'rails_helper'
 RSpec.describe ReportsController, type: :controller do
   context 'when scheme operator is signed in' do
-    let(:admin) { Admin.new }
-    let(:co_marti) { SchemeOperator.first }
+    let(:admin) { FactoryGirl.create(:super_admin) }
     before do
-      admin.email = 'jennifer@back_to_the_future.com'
-      admin.name = 'Smith'
-      admin.password = 'mypassword'
-      admin.save
-      PermissionsForRole::AdminDefinitions.new.permissions_for_role(:super_admin).each do |permission, has|
-        admin.add_role permission if has[:checked]
-      end
-      admin.save!
-
-      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
-      co_marti.save!
-
       sign_in admin
     end
 
     after do
-      PermissionsForRole::AdminDefinitions.new.permissions_for_role(:super_admin).each do |permission, _has|
-        admin.remove_role permission
-      end
       sign_out admin
     end
 

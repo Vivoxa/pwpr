@@ -23,29 +23,17 @@ RSpec.describe BusinessesController, type: :controller do
   # Business. As you add validations to Business, be sure to
   # adjust the attributes here as well.
   context 'when scheme operator is signed in' do
-    let(:co_marti) { SchemeOperator.new }
+    let(:scheme_operator_with_director) { FactoryGirl.create(:scheme_operator_with_director) }
+
     before do
-      co_marti.email = 'jennifer@back_to_the_future.com'
-      co_marti.first_name = 'Jennifer'
-      co_marti.last_name = 'Smith'
-      co_marti.password = 'mypassword'
-      co_marti.confirmed_at = DateTime.now
-      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
-      co_marti.save
-      co_marti.add_role('sc_director')
-      co_marti.approved = true
-      co_marti.save
-      PermissionsForRole::SchemeOperatorDefinitions.new.permissions_for_role(:sc_director).each do |permission, has|
-        co_marti.add_role permission if has[:checked]
-      end
-      sign_in co_marti
+      sign_in scheme_operator_with_director
     end
     after do
-      sign_out co_marti
+      sign_out scheme_operator_with_director
     end
 
     let(:valid_attributes) do
-      {scheme_id:                   co_marti.schemes.last.id,
+      {scheme_id:                   scheme_operator_with_director.schemes.last.id,
        NPWD:                        'kgkgk',
        sic_code_id:                 SicCode.first.id,
        name:                        'business 1',
@@ -57,7 +45,7 @@ RSpec.describe BusinessesController, type: :controller do
     end
 
     let(:invalid_attributes) do
-      {scheme_id:                   co_marti.schemes.last.id,
+      {scheme_id:                   scheme_operator_with_director.schemes.last.id,
        NPWD:                        nil,
        sic_code_id:                 nil,
        name:                        'business 1',
@@ -76,7 +64,7 @@ RSpec.describe BusinessesController, type: :controller do
     describe 'GET #index' do
       it 'assigns all businesses as @businesses' do
         business = Business.create! valid_attributes
-        get :index, scheme_id: co_marti.schemes.last.id, session: valid_session
+        get :index, scheme_id: scheme_operator_with_director.schemes.last.id, session: valid_session
         business_ids = assigns(:businesses).map(&:id)
         expect(business_ids).to include(business.id)
       end

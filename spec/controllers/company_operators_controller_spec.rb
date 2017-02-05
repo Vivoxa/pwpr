@@ -98,7 +98,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
       end
 
       context 'when an error occurs' do
-        let(:company_operator) { CompanyOperator.last }
+        let(:company_operator) { FactoryGirl.create(:company_operator_unapproved) }
 
         it 'expects the company operator to be approved' do
           allow_any_instance_of(CompanyOperator).to receive(:save).and_return false

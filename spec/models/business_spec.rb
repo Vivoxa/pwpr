@@ -66,5 +66,9 @@ RSpec.describe Business, type: :model do
       #   it {is_expected.to validate_presence_of(:registration_status_code_id)}
       #   it {is_expected.to validate_presence_of(:country_of_business_registration)}
     end
+
+    describe '#validates_uniqueness_of' do
+      it { is_expected.to validate_uniqueness_of(:NPWD) }
+    end
   end
 end

@@ -8,15 +8,28 @@ class RegularProducerDetail < ActiveRecord::Base
   validates_presence_of :registration_id
 
   def form_fields
-    [
-      :calculation_method_supplier_data,
-      :calculation_method_or_other_method_used,
-      :calculation_method_sample_weighing,
-      :calculation_method_sales_records,
-      :calculation_method_trade_association_method_details,
-      :consultant_system_used,
-      :other_method_details,
-      :data_system_used
-    ]
+    {
+      calculation_method_supplier_data:                     {
+                                                              field_type: 'boolean'
+                                                            },
+      calculation_method_sample_weighing:                   {
+                                                              field_type: 'boolean'
+                                                            },
+      calculation_method_sales_records:                     {
+                                                              field_type: 'boolean'
+                                                            },
+      calculation_method_trade_association_method_details:  {
+                                                              field_type: 'text',
+                                                              required: false
+                                                            },
+      other_method_details:                                 {
+                                                              field_type: 'text',
+                                                              required: false
+                                                            },
+      data_system_used:                                     {
+                                                              field_type: 'text',
+                                                              required: false
+                                                            }
+    }
   end
 end

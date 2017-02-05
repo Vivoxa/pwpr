@@ -10,7 +10,7 @@ class SchemeOperator < ActiveRecord::Base
   has_many :scheme_operators_schemes
   has_many :schemes, through: :scheme_operators_schemes
 
-  validates_presence_of :schemes, :first_name, :last_name
+  validates_presence_of :first_name, :last_name
 
   scope :company_operators, ->(scheme) { scheme.company_operators }
   scope :pending_scheme_operators, -> { where('confirmed_at <= NOW()') }

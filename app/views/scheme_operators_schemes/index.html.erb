@@ -1,0 +1,28 @@
+<div class="container" style='margin-top:30px'>
+  <%= link_to 'Link an existing Scheme Operator to this scheme', new_scheme_scheme_operators_scheme_path, class: ['btn btn-sm btn-primary', 'show-btn-lg'], style: 'margin-bottom: 5px' %>
+  <div class="row">
+    <div class="card">
+      <h3 class="card-header">Listing Scheme Operators for <%= @scheme.name %></h3>
+      <div class="card-block">
+
+      <% @scheme_operators_schemes.each do |scheme_operators_scheme| %>
+            <div class="row">
+
+            <div class="col-lg-1">
+              <p><%= link_to 'De-link', scheme_scheme_operators_scheme_path(id: scheme_operators_scheme.id), method: :delete, data: {confirm: 'Are you sure?'}, class: ['btn btn-sm btn-danger', 'show-btn-lg'] %></p>
+            </div>
+
+            <div class="col-lg-6">
+              <p><%= scheme_operators_scheme.scheme_operator.email %></p>
+            </div>
+
+            <div class="col-lg-5"></div>
+            </div>
+
+      <% end %>
+      </div>
+      <div class="card-footer">
+      </div>
+    </div>
+  </div>
+</div>

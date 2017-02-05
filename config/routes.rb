@@ -43,11 +43,15 @@ Rails.application.routes.draw do
   end
 
   resources :schemes do
+    resources :scheme_operators_schemes, only: [:index, :new, :create, :destroy]
+    #delete 'scheme_operators_schemes/' => 'scheme_operators_schemes#destroy', as: :delink_scheme_operators_schemes
     get '/agency_template_uploads/previous_upload_for_year' => 'agency_template_uploads/previous_upload_for_year', as: 'previous_upload_for_year'
     resources :agency_template_uploads, only: [:index, :show, :new, :create]
     resources :reports, only: [:index, :create]
     get '/reports/report_data' => 'reports/report_data', as: 'report_data'
   end
+
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

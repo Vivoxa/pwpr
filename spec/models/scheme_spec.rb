@@ -11,8 +11,8 @@ RSpec.describe Scheme, type: :model do
       it { is_expected.to have_many(:agency_template_uploads) }
     end
 
-    describe '#has_and_belongs_to_many' do
-      it { is_expected.to have_and_belong_to_many(:scheme_operators) }
+    describe '#has_many through' do
+      it { is_expected.to have_many(:scheme_operators).through(:scheme_operators_schemes) }
     end
   end
 

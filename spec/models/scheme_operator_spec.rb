@@ -49,6 +49,17 @@ RSpec.describe SchemeOperator, type: :model do
   # end
   # nd
 
+  context 'validations' do
+    describe '#has_many through' do
+      it { is_expected.to have_many(:schemes).through(:scheme_operators_schemes) }
+    end
+
+    describe '#validates_presence_of' do
+      it { is_expected.to validate_presence_of(:first_name) }
+      it { is_expected.to validate_presence_of(:last_name) }
+    end
+  end
+
   context 'Roles' do
     it 'expects the correct role to be available' do
       expect(SchemeOperator.available_role_names).to eq expected_roles + expected_permissions

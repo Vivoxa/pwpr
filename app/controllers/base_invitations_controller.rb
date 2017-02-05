@@ -20,6 +20,11 @@ class BaseInvitationsController < Devise::InvitationsController
   def create
     populate_schemes_and_businesses
     super
+
+    if params[:scheme_operator] && params[:scheme_operator][:scheme_id]
+      resource.schemes << Scheme.find(params[:scheme_operator][:scheme_id].to_i)
+      resource.save!
+    end
   end
 
   def current_inviter

@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe CompanyOperatorsController, type: :controller do
   context 'when a scheme operator is signed in' do
-    let(:scheme_operator) { SchemeOperator.new }
+    let(:scheme_operator_with_director) { FactoryGirl.create(:scheme_operator_with_director) }
     let(:business) do
-      Business.create(scheme_id: scheme_operator.schemes.first.id,
+      Business.create(scheme_id: scheme_operator_with_director.schemes.first.id,
                       NPWD: 'kgkgk',
                       sic_code_id: SicCode.first.id,
                       name: 'business 1',
@@ -15,21 +15,7 @@ RSpec.describe CompanyOperatorsController, type: :controller do
                       registration_status_code_id: 1)
     end
     before do
-      scheme_operator.email = 'jennifer@back_to_the_future.com'
-      scheme_operator.first_name = 'Jennifer'
-      scheme_operator.last_name = 'Smith'
-      scheme_operator.password = 'mypassword'
-      scheme_operator.confirmed_at = DateTime.now
-      scheme_operator.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
-      scheme_operator.add_role :sc_director
-      # TODO: these will have to be tweaked when roles are finished
-      scheme_operator.add_role :co_users_r
-      scheme_operator.add_role :co_users_e
-      scheme_operator.add_role :co_users_w
-      scheme_operator.add_role :co_users_d
-      scheme_operator.approved = true
-      scheme_operator.save
-      sign_in scheme_operator
+      sign_in scheme_operator_with_director
     end
 
     it 'expects the co_director to have access to the index action' do
@@ -83,15 +69,11 @@ RSpec.describe CompanyOperatorsController, type: :controller do
 
     describe '#approve' do
       before do
-        scheme_operator.add_role :sc_director
-        PermissionsForRole::SchemeOperatorDefinitions.new.permissions_for_role(:sc_director).each do |permission, has|
-          scheme_operator.add_role permission if has[:checked]
-        end
-        sign_in scheme_operator
+        sign_in scheme_operator_with_director
       end
 
       after do
-        sign_out scheme_operator
+        sign_out scheme_operator_with_director
       end
       context 'when all values are correct' do
         let(:company_operator) do

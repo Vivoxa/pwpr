@@ -54,6 +54,14 @@ RSpec.describe SpreadsheetWorker::SheetProcessor::Processor do
         processor.process_spreadsheet
       end
 
+      context 'when an error is raised' do
+        it 'expects an exception to be raised' do
+          allow(SpreadsheetWorker::SheetProcessor::SheetHandlers::RegistrationsHandler).to receive(:new).with(a_t_id).and_raise(SpreadsheetWorker::Exceptions::InvalidEventError)
+          expect_any_instance_of(Logger).to receive(:error).with('AgencyTemplate processing failed for 1 with ERROR: Invalid Event.')
+          processor.process_spreadsheet
+        end
+      end
+
       it 'calls process on the registration handler object' do
         expect(registration_handler).to receive(:process)
         processor.process_spreadsheet

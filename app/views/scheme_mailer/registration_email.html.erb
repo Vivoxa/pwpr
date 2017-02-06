@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
-</head>
-<body>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  </head>
+  <body>
 
-<p><%= @intro %></p>
+    <p><%= @intro %></p>
 
-<h3><%= @title %></h3>
+    <h3><%= @title %></h3>
 
-<% @body_lines.each do |line| %>
-    <p><%= line %></p>
-<% end %>
+    <% @body_lines.each do |line| %>
+      <p><%= line %></p>
+    <% end %>
 
-<p>
-<% @address_lines.each do |line| %>
-    <%= line %></br>
-<% end %>
-</p>
+    <p>
+    <% @address_lines.each do |line| %>
+      <%= line %></br>
+    <% end %>
+    </p>
 
-<p><%= @footer %></p>
-
-</body>
+    <p><%= @footer %></p>
+  </body>
 </html>

@@ -1,0 +1,16 @@
+<div class='col-md-4 col-lg-6'>
+  <div class="row">
+    <% @business.registrations.last&.regular_producer_detail&.material_totals.last(7).each do |total| %>
+      <div><strong><%= "#{total&.packaging_material&.name.to_s}: "%></strong></div>
+    <% end %>
+  </div>
+</div>
+<div class='col-md-4 col-lg-6'>
+    <div class=row>
+      <div class="form_value_blank">
+        <% @business.registrations.last&.regular_producer_detail&.material_totals.last(7).each do |total| %>
+          <%= total&.recycling_obligation.to_s %>
+        <% end %>
+      </div>
+    </div>
+</div>

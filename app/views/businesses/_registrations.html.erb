@@ -1,0 +1,61 @@
+<div class='col-md-4 col-lg-6'>
+  <div class="row">
+    <div><strong>SIC: </strong></div>
+  </div>
+  <div class="row">
+    <div><strong>Sector Main Activity: </strong></div>
+  </div>
+  <div class="row">
+    <div><strong>Submission Type: </strong></div>
+  </div>
+  <div class="row">
+    <div><strong>Resubmission Reason: </strong></div>
+  </div>
+  <div class="row">
+    <div><strong>Turnover: </strong></div>
+  </div>
+  <div class="row">
+    <div><strong>Licensor: </strong></div>
+  </div>
+  <div class="row">
+    <div><strong>Small Producer: </strong></div>
+  </div>
+</div>
+
+<div class='col-md-4 col-lg-6'>
+  <div class="row">
+    <div class="form_value_blank">
+      <%= @business.registrations.last&.sic_code&.code&.to_s %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form_value_blank">
+      <%= @business.registrations.last&.packaging_sector_main_activity&.material&.to_s %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form_value_blank">
+      <%= @business.registrations.last&.submission_type&.code&.to_s %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form_value_blank">
+      <%= @business.registrations.last&.resubmission_reason&.reason&.to_s %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form_value_blank">
+      <%= @business.registrations.last&.turnover&.to_s %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form_value_blank">
+      <%= @business.registrations.last&.licensor&.to_s %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form_value_blank">
+      <%= @business.registrations.last&.allocation_method_used&.to_s %>
+    </div>
+  </div>
+</div>

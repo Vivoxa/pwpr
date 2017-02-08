@@ -25,9 +25,6 @@
               <div class="row">
                 <div><strong>NPWD: </strong></div>
               </div>
-              <div class="row">
-                <div><strong>SIC: </strong></div>
-              </div>
             </div>
 
             <div class='col-md-4 col-lg-6'>
@@ -49,9 +46,6 @@
               <div class="row">
                 <div class="form_value_blank"><%= @business.NPWD&.to_s %></div>
               </div>
-              <div class="row">
-                <div class="form_value_blank"><%= @business.sic_code&.code %></div>
-              </div>
             </div>
           </div>
         </div>
@@ -66,9 +60,6 @@
               </div>
               <div class="row">
                 <div><strong>Scheme status code: </strong></div>
-              </div>
-              <div class="row">
-                <div><strong>Small Producer: </strong></div>
               </div>
               <div class="row">
                 <div><strong>Country of registration: </strong></div>
@@ -91,9 +82,6 @@
                 <div class="form_value_blank"><%= @business.scheme_status_code&.code %></div>
               </div>
               <div class="row">
-                <div class="form_value_blank"><%= @business.small_producer %></div>
-              </div>
-              <div class="row">
                 <div class="form_value_blank"><%= @business.country_of_business_registration&.country %></div>
               </div>
               <div class="row">
@@ -102,16 +90,15 @@
               <div class="row">
                 <div class="form_value_blank"><%= @business.holding_business&.name %></div>
               </div>
-
             </div>
           </div>
         </div>
 
         <div class='col-md-4 col-lg-6'>
           <div class="card card-outline-success">
-            <h5 class="card-header">Registration</h5>
+            <h5 class="card-header"><center>Registration</center></h5>
             <div class=" card-block">
-                Panel content
+              <%= render 'registrations' %>
             </div>
             <div class="card-footer">
               <div class='col-md-4 col-lg-6'>
@@ -123,54 +110,63 @@
             </div>
           </div>
         </div>
-        <div class='col-md-4 col-lg-6'>
-          <div class="card card-outline-success">
-            <h5 class="card-header">Material Totals</h5>
-            <div class=" card-block">
-                Panel content
-            </div>
-            <div class="card-footer">
-              <div class='col-md-4 col-lg-6'>
-                <%= link_to 'Enter Details', new_business_material_detail_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
+        <% unless @business.registrations.last&.allocation_method_used %>
+          <div class='col-md-4 col-lg-6'>
+            <div class="card card-outline-success text-center">
+              <h5 class="card-header"><center>Regular Producer</center></h5>
+              <div class=" card-block">
+                <%= render 'regular_producer' %>
               </div>
-              <div class='col-md-4 col-lg-6'>
-                <%= link_to 'Edit Details', edit_business_material_detail_path(business_id: @business.id), class: ['btn btn-sm btn-warning btn-block'] %>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class='col-md-4 col-lg-6'>
-          <div class="card card-outline-success">
-            <h5 class="card-header">Small Producer</h5>
-            <div class=" card-block">
-                Panel content
-            </div>
-            <div class="card-footer">
-              <div class='col-md-4 col-lg-6'>
-                <%= link_to 'Enter Details', new_business_small_producer_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
-              </div>
-              <div class='col-md-4 col-lg-6'>
-                <%= link_to 'Edit Details', edit_business_small_producer_path(business_id: @business.id), class: ['btn btn-sm btn-warning btn-block'] %>
+              <div class="card-footer">
+                <div class='col-md-4 col-lg-6'>
+                  <% if @business.registrations.last&.regular_producer_detail %>
+                    <%= link_to 'Edit Details', edit_business_regular_producer_path(business_id: @business.id), class: ['btn btn-sm btn-warning btn-block'] %>
+                  <% else %>
+                    <%= link_to 'Enter Details', new_business_regular_producer_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
+                  <% end %>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class='col-md-4 col-lg-6'>
-          <div class="card card-outline-success text-center">
-            <h5 class="card-header">Regular Producer</h5>
-            <div class=" card-block">
-                Panel content
-            </div>
-            <div class="card-footer">
-              <div class='col-md-4 col-lg-6'>
-                <%= link_to 'Enter Details', new_business_regular_producer_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
+        <% end %>
+        <% if @business.registrations.last&.allocation_method_used %>
+          <div class='col-md-4 col-lg-6'>
+            <div class="card card-outline-success">
+              <h5 class="card-header"><center>Small Producer</center></h5>
+              <div class=" card-block">
+                  <%= render 'small_producer' %>
               </div>
-              <div class='col-md-4 col-lg-6'>
-                <%= link_to 'Edit Details', edit_business_regular_producer_path(business_id: @business.id), class: ['btn btn-sm btn-warning btn-block'] %>
+              <div class="card-footer">
+                <div class='col-md-4 col-lg-6'>
+                  <% if @business.registrations.last&.small_producer_detail %>
+                    <%= link_to 'Edit Details', edit_business_small_producer_path(business_id: @business.id), class: ['btn btn-sm btn-warning btn-block'] %>
+                  <% else %>
+                    <%= link_to 'Enter Details', new_business_small_producer_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
+                  <% end %>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        <% end %>
+        <% if @business.registrations.last&.regular_producer_detail&.material_totals&.last(7)&.any? %>
+          <div class='col-md-4 col-lg-6'>
+            <div class="card card-outline-success">
+              <h5 class="card-header"><center>Material Totals</center></h5>
+              <div class=" card-block">
+                <%= render 'material_details' %>
+              </div>
+              <div class="card-footer">
+                <div class='col-md-4 col-lg-6'>
+                  <% if @business.registrations.last&.regular_producer_detail&.material_totals.any? %>
+                    <%= link_to 'Edit Details', edit_business_material_detail_path(business_id: @business.id), class: ['btn btn-sm btn-warning btn-block'] %>
+                  <% else %>
+                    <%= link_to 'Enter Details', new_business_material_detail_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
       <% else %>
         <div class="card-block">
           <p class="card-text">You are not authorised to view this Member</p>

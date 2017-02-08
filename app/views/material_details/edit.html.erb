@@ -25,8 +25,7 @@
             <div class='col-md-1' style='margin-right: 30px'>
               <% detail.form_fields.each do |key, hsh| %>
                 <div class='row'>
-                  <% detail_value = detail.attributes[key.to_s] ? detail.attributes[key.to_s] : 0 %>
-                  <%= number_field_tag "[material_detail]" + "[#{detail.packaging_material.name}]" + key.to_s, nil, {required: hsh[:required], step: :any, value: detail_value} %>
+                  <%= number_field_tag "[material_detail]" + "[#{detail.packaging_material.name}]" + key.to_s, nil, {required: hsh[:required], step: :any, value: detail.attributes[key.to_s]} %>
                 </div>
               <% end %>
             </div>

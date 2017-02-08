@@ -25,7 +25,7 @@
             <div class='col-md-1' style='margin-right: 30px'>
               <% detail.form_fields.each do |key, hsh| %>
                 <div class='row'>
-                  <%= number_field_tag "[material_detail]" + "[#{detail.packaging_material.name}]" + key.to_s, nil, {required: hsh[:required], step: :any, placeholder: key.to_s} %>
+                  <%= number_field_tag "[material_detail]" + "[#{detail.packaging_material.name}]" + key.to_s, nil, {required: hsh[:required], step: :any, value: 0} %>
                 </div>
               <% end %>
             </div>

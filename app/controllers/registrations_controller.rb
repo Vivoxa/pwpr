@@ -16,7 +16,11 @@ class RegistrationsController < ApplicationController
     registration.business = @business
     registration.save!
 
-    redirect_to @business, notice: "Registration Details for #{@business.name} were successfully saved!"
+    if registration.allocation_method_used
+      redirect_to new_business_small_producer_path(business_id: @business.id), notice: "Registration Details for #{@business.name} were successfully saved!"
+    else
+      redirect_to new_business_regular_producer_path(business_id: @business.id), notice: "Registration Details for #{@business.name} were successfully saved!"
+    end
   end
 
   # GET business/:id/registrations/1/edit

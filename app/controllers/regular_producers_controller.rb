@@ -15,7 +15,7 @@ class RegularProducersController < ApplicationController
     regular_producer.registration = @business.registrations.last
     regular_producer.save!
 
-    redirect_to @business, notice: "Regular Producer Details for #{@business.name} were successfully saved!"
+    redirect_to new_business_material_detail_path(business_id: @business.id), notice: "Regular Producer Details for #{@business.name} were successfully saved!"
   end
 
   # GET business/:id/regular_producer_detail/1/edit

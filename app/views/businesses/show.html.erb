@@ -157,7 +157,7 @@
               </div>
               <div class="card-footer">
                 <div class='col-md-4 col-lg-6'>
-                  <% if @business.registrations.last&.regular_producer_detail&.material_totals.any? %>
+                  <% if @business.registrations.last&.regular_producer_detail&.material_details.any? %>
                     <%= link_to 'Edit Details', edit_business_material_detail_path(business_id: @business.id), class: ['btn btn-sm btn-warning btn-block'] %>
                   <% else %>
                     <%= link_to 'Enter Details', new_business_material_detail_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>

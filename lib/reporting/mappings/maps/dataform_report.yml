@@ -1,0 +1,469 @@
+title: DataForm
+fields:
+  tb_company_name:
+    control_type: text_box
+    model_name: business
+    model_attribute: name
+    data_type: string
+  tb_npwdcode:
+    control_type: text_box
+    model_name: business
+    model_attribute:
+    data_type: string
+  cb_doc_data_collection:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_supplier_data:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_check_weighing:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_sales_records:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_ta_method:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  tb_ta_method_details:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  cb_other_method:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  tb_other_method_details:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  cb_data_system:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  tb_data_system_details:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_business_nature:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_data_changed:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  cb_first_submission:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_resubmission:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  tb_resubmission_reason:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  cb_manufacturing_main:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_manufacturing_other_act:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_conversion_main:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_conversion_other:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_pack_fill_main:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_pack_fill_other:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_selling_main:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_selling_other:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_importing_main:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_importing_other:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_service_provider_main:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  cb_service_provider_other:
+    control_type: check_box
+    model_name:
+    model_attribute:
+    data_type: boolean
+  tb_help_telephone:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_help_telephone:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_help_telephone:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+
+  tb_raw_man_paper_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_raw_man_glass_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_raw_man_aluminium_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_raw_man_steel_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_raw_man_plastic_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_raw_man_other_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_paper_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_glass_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_aluminium_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_steel_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_plastic_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_other_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_pack_filling_paper_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_pack_filling_glass_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_pack_filling_aluminium_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_pack_filling_steel_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_pack_filling_plastic_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_pack_filling_other_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_selling_paper_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_selling_glass_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_selling_aluminium_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_selling_steel_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_plastic_plastic_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_selling_other_tb1:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+
+  tb_raw_man_paper_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_raw_man_glass_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_raw_man_aluminium_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_raw_man_steel_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_raw_man_plastic_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_raw_man_other_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+
+  tb_conversion_paper_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_glass_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_aluminium_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_steel_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_plastic_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_other_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+
+  tb_pack_filling_paper_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_pack_filling_glass_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_pack_filling_aluminium_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_steel_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_plastic_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_other_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+
+  tb_pack_filling_paper_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_conversion_glass_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_pack_filling_aluminium_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_pack_filling_steel_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_pack_filling_plastic_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_pack_filling_other_tb2:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+
+  tb_selling_paper_tb2a:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_selling_glass_tb2a:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_selling_aluminium_tb2a:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_selling_steel_tb2a:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_plastic_plastic_tb2a:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_selling_other_tb2a:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+
+  tb_selling_paper_tb2b:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_selling_glass_tb2b:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_selling_aluminium_tb2b:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_selling_steel_tb2b:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_plastic_plastic_tb2b:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string
+  tb_selling_other_tb2b:
+    control_type: text_box
+    model_name:
+    model_attribute:
+    data_type: string

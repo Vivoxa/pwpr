@@ -1,4 +1,4 @@
-title: Report Title
+title: Registration Report
 fields:
   tb_company_name:
     control_type: text_box

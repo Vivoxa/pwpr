@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Reporting::Mappings::Mappers::RegistrationReportMapper do
+RSpec.describe Reporting::Mappings::Mappers::DataformReportMapper do
   subject(:mapper) { described_class.new }
   let(:maps) { mapper.load_maps }
 

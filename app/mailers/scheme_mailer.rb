@@ -47,36 +47,36 @@ class SchemeMailer < ApplicationMailer
     Rails.logger.warn("SchemeMailer::registration_email() ERROR: #{e.message}")
   end
 
+  private
+
   def setup_email_contents(contact, email_type, scheme, year)
     Rails.logger.info('Setting intro')
-    @intro = substitute_values_registration_email(intro(scheme, email_type), contact, scheme, year)
+    @intro = substitute_placeholder_values(intro(scheme, email_type), contact, scheme, year, email_type)
 
     Rails.logger.info('Setting title')
-    @title = substitute_values_registration_email(title(scheme, email_type), contact, scheme, year)
+    @title = substitute_placeholder_values(title(scheme, email_type), contact, scheme, year, email_type)
 
     Rails.logger.info('Setting body lines')
     body_details = body_lines(scheme, email_type)
     @body_lines = []
     body_details.each do |body_detail|
-      @body_lines << substitute_values_registration_email(body_detail, contact, scheme, year)
+      @body_lines << substitute_placeholder_values(body_detail, contact, scheme, year, email_type)
     end
     Rails.logger.info('Setting address lines')
     address_details = address_lines(scheme, email_type)
     @address_details = []
 
     address_details.each do |addy_detail|
-      @address_details << substitute_values_registration_email(addy_detail, contact, scheme, year)
+      @address_details << substitute_placeholder_values(addy_detail, contact, scheme, year, email_type)
     end
     Rails.logger.info('Setting footer')
     @footer = footer(scheme, email_type)
   end
 
-  private
-
-  def substitute_values_registration_email(line, contact, scheme, year)
+  def substitute_placeholder_values(line, contact, scheme, year, email_type)
     Rails.logger.info("LINE: #{line}")
 
-    variable_mappings('registration_email').each do |var|
+    variable_mappings(email_type).each do |var|
       line = case var
              when 'first_name'
                line.gsub('<first_name>', contact.first_name)

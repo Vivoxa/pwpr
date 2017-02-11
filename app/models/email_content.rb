@@ -22,10 +22,10 @@ class EmailContent < ActiveRecord::Base
   end
 
   def body_lines
-    body.split(/\r\n/)
+    body.split(/\r\n|\n/)
   end
 
   def address_lines
-    address.split(/\r\n/)
+    address.split(/\r\n|\n/)
   end
 end

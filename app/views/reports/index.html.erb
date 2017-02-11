@@ -5,7 +5,7 @@
       <p class="card-text">
         <%= form_tag controller: :reports, action: :create do %>
           <div class="field centre">
-            <%= select_tag "report", options_for_select(@reports), {:class => 'devise-lgn form-control', :prompt => 'Select Report'} %>
+            <%= select_tag "report", options_for_select(@reports), {:class => 'devise-lgn form-control', onchange: "return reportChanged(this);", :prompt => 'Select Report'} %>
           </div>
           <div class="field centre">
             <%= select_tag "year", options_for_select(@years), {:class => 'devise-lgn form-control', onchange: "return yearChanged(this);", :prompt => 'Select Year'} %>

@@ -25,7 +25,7 @@ class Business < ActiveRecord::Base
   validates_uniqueness_of :NPWD
 
   validate :year_first_reg_format, if: 'year_first_reg.present?'
-  #validate :subsidiary_company
+  validate :subsidiary_company
 
   scope :for_registration, -> {
     where('(business_subtype_id != ? OR business_subtype_id IS NULL) AND business_type_id IN (?)',

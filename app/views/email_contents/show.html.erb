@@ -45,8 +45,9 @@
         </p>
 
         <div class="centre">
+          <%= link_to 'All Email Contents', email_contents_path, class: ['btn btn-sm btn-outline-primary'] %>
           <%= link_to 'Edit', edit_email_content_path(@email_content), class: ['btn btn-sm btn-primary'] %>
-          <%= link_to 'Back', email_contents_path, class: ['btn btn-sm btn-primary'] %>
+
         </div>
       </div>
     </div>

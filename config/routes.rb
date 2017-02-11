@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  resources :email_contents
-  resources :email_content_types
-  resources :email_names
   devise_for :company_operators, controllers: {registrations: 'company_operators/registrations', :invitations => 'company_operators/invitations'}
   devise_scope :company_operator do
     get '/company_operators/invitation/update_businesses' => 'company_operators/invitations#update_businesses', as: 'update_businesses'
@@ -51,6 +48,10 @@ Rails.application.routes.draw do
     resources :reports, only: [:index, :create]
     get '/reports/report_data' => 'reports/report_data', as: 'report_data'
   end
+
+  resources :email_contents
+  resources :email_content_types
+  resources :email_names
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

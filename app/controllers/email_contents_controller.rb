@@ -5,7 +5,11 @@ class EmailContentsController < ApplicationController
   # GET /email_contents
   # GET /email_contents.json
   def index
-    @email_contents = EmailContent.where(scheme_id: current_user.scheme_ids)
+    @email_contents = if current_admin
+                        EmailContent.all
+                      else
+                        EmailContent.where(scheme_id: current_user.scheme_ids)
+                      end
   end
 
   # GET /email_contents/1

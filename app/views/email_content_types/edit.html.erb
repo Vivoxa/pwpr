@@ -3,7 +3,7 @@
 <%= render 'form' %>
 <% if can? :read, EmailContentType %>
     <div class="centre">
-      <%= link_to 'Show', @email_content_type, class: ['btn btn-info devise-btn'] %>
-      <%= link_to 'Back', email_content_types_path, class: ['btn btn-success devise-btn'] %>
+      <%= link_to 'Show', @email_content_type, class: ['btn btn-info btn-show-lg'] %>
+      <%= link_to 'All Email Content Types', email_content_types_path, class: ['btn-outline-primary btn-show-lg'] %>
     </div>
 <% end %>

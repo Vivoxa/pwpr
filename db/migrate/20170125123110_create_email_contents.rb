@@ -4,11 +4,11 @@ class CreateEmailContents < ActiveRecord::Migration
       t.integer :scheme_id
       t.references :email_content_type, index: true, foreign_key: true
       t.references :email_name, index: true, foreign_key: true
-      t.string :intro
-      t.string :title
-      t.text :body
-      t.text :address
-      t.string :footer
+      t.string :intro, null: false
+      t.string :title, null: false
+      t.text :body, null: false
+      t.text :address, null: false
+      t.string :footer, null: false
 
       t.timestamps null: false
     end

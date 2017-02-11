@@ -35,7 +35,7 @@ class SchemeMailer < ApplicationMailer
     @intro = substitute_values_registration_email(intro(scheme, email_type), contact, scheme, year)
 
     Rails.logger.info('Setting title')
-    @title = title(scheme, email_type)
+    @title = substitute_values_registration_email(title(scheme, email_type), contact, scheme, year)
 
     Rails.logger.info('Setting body lines')
     body_details = body_lines(scheme, email_type)
@@ -72,14 +72,15 @@ class SchemeMailer < ApplicationMailer
 
   def substitute_values_registration_email(line, contact, scheme, year)
     Rails.logger.info("LINE: #{line}")
-    email_content(scheme, 'registration_email').each do |var|
+
+    variable_mappings('registration_email').each do |var|
       line = case var
                when 'first_name'
-                 line.gsub('<first_name>', "<%= #{contact.first_name} %>")
+                 line.gsub('<first_name>', contact.first_name)
                when 'scheme_name'
-                 line.gsub('<scheme_name>', "<%= #{scheme.name} %>")
+                 line.gsub('<scheme_name>', scheme.name)
                when 'year'
-                 line.gsub('<year>', "<%= #{year} %>")
+                 line.gsub('<year>', year)
              end
     end
     line

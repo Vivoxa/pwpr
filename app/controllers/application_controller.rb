@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
     redirect_to main_app.root_url, alert: exception.message
   end
 
-  if Rails.env == 'production'
+  unless Rails.env == 'development'
     rescue_from ActiveRecord::RecordNotFound do |exception|
       Rails.logger.error "ActiveRecord::RecordNotFound - Params: #{params}. Error: #{exception.message}"
       redirect_to main_app.root_url, alert: 'You are not authorized to access this page.'

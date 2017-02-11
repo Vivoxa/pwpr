@@ -4,6 +4,16 @@ RSpec.describe EmailNamesController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # EmailName. As you add validations to EmailName, be sure to
   # adjust the attributes here as well.
+
+  let(:super_admin) { FactoryGirl.create(:super_admin) }
+  before do
+    sign_in super_admin
+  end
+
+  after do
+    sign_out super_admin
+  end
+
   let(:valid_attributes) do
     {name: 'test_email'}
   end

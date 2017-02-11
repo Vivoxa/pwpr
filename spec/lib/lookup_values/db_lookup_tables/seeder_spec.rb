@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LookupValues::Seeder do
+RSpec.describe LookupValues::DbLookupTables::Seeder do
   subject(:seeder) { described_class.new }
 
   before do

@@ -15,7 +15,8 @@ RSpec.describe PermissionsForRole::AdminDefinitions do
                                                   businesses_r businesses_w businesses_d businesses_e
                                                   schemes_r schemes_w schemes_d schemes_e
                                                   uploads_r uploads_w scheme_businesses
-                                                  contacts_r contacts_w contacts_d contacts_e).freeze
+                                                  contacts_r contacts_w contacts_d contacts_e
+                                                  email_contents_r email_contents_w email_contents_e email_contents_d).freeze
     end
   end
 
@@ -64,7 +65,12 @@ RSpec.describe PermissionsForRole::AdminDefinitions do
         email_content_types_r: {checked: true, locked: true},
         email_content_types_w: {checked: true, locked: true},
         email_content_types_e: {checked: true, locked: true},
-        email_content_types_d: {checked: true, locked: true}
+        email_content_types_d: {checked: true, locked: true},
+
+        email_contents_r:      {checked: true, locked: true},
+        email_contents_w:      {checked: true, locked: true},
+        email_contents_e:      {checked: true, locked: true},
+        email_contents_d:      {checked: true, locked: true}
       }
     end
 
@@ -113,7 +119,12 @@ RSpec.describe PermissionsForRole::AdminDefinitions do
         email_content_types_r: {checked: true, locked: true},
         email_content_types_w: {checked: true, locked: true},
         email_content_types_e: {checked: true, locked: true},
-        email_content_types_d: {checked: true, locked: true}
+        email_content_types_d: {checked: true, locked: true},
+
+        email_contents_r:      {checked: true, locked: true},
+        email_contents_w:      {checked: true, locked: true},
+        email_contents_e:      {checked: true, locked: true},
+        email_contents_d:      {checked: false, locked: false}
       }
     end
 
@@ -162,7 +173,12 @@ RSpec.describe PermissionsForRole::AdminDefinitions do
         email_content_types_r: {checked: true, locked: true},
         email_content_types_w: {checked: false, locked: false},
         email_content_types_e: {checked: false, locked: false},
-        email_content_types_d: {checked: false, locked: true}
+        email_content_types_d: {checked: false, locked: true},
+
+        email_contents_r:      {checked: true, locked: true},
+        email_contents_w:      {checked: false, locked: true},
+        email_contents_e:      {checked: false, locked: true},
+        email_contents_d:      {checked: false, locked: true}
       }
     end
 

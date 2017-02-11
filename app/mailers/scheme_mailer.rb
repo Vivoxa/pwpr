@@ -1,5 +1,4 @@
 class SchemeMailer < ApplicationMailer
-
   def scheme_director_info(businesses, scheme, year, contact)
     @scheme = scheme
     @year = year
@@ -31,6 +30,24 @@ class SchemeMailer < ApplicationMailer
     business = business
     scheme = business.scheme
 
+    setup_email_contents(contact, email_type, scheme, year)
+
+    Rails.logger.info('Setting subject')
+    subject = set_subject(year, email_type)
+
+    Rails.logger.info('Setting from address')
+    from_address = scheme.email_friendly_name
+
+    Rails.logger.info('Setting email content')
+    email_content(scheme, email_type)
+
+    Rails.logger.info('Mailing')
+    mail(to: contact.email, from: from_address, subject: subject)
+  rescue => e
+    Rails.logger.warn("SchemeMailer::registration_email() ERROR: #{e.message}")
+  end
+
+  def setup_email_contents(contact, email_type, scheme, year)
     Rails.logger.info('Setting intro')
     @intro = substitute_values_registration_email(intro(scheme, email_type), contact, scheme, year)
 
@@ -52,20 +69,6 @@ class SchemeMailer < ApplicationMailer
     end
     Rails.logger.info('Setting footer')
     @footer = footer(scheme, email_type)
-
-    Rails.logger.info('Setting subject')
-    subject = set_subject(year, email_type)
-
-    Rails.logger.info('Setting from address')
-    from_address = scheme.email_friendly_name
-
-    Rails.logger.info('Setting email content')
-    email_content(scheme, email_type)
-
-    Rails.logger.info('Mailing')
-    mail(to: contact.email, from: from_address, subject: subject)
-  rescue => e
-    Rails.logger.warn("SchemeMailer::registration_email() ERROR: #{e.message}")
   end
 
   private
@@ -75,12 +78,12 @@ class SchemeMailer < ApplicationMailer
 
     variable_mappings('registration_email').each do |var|
       line = case var
-               when 'first_name'
-                 line.gsub('<first_name>', contact.first_name)
-               when 'scheme_name'
-                 line.gsub('<scheme_name>', scheme.name)
-               when 'year'
-                 line.gsub('<year>', year)
+             when 'first_name'
+               line.gsub('<first_name>', contact.first_name)
+             when 'scheme_name'
+               line.gsub('<scheme_name>', scheme.name)
+             when 'year'
+               line.gsub('<year>', year)
              end
     end
     line
@@ -118,5 +121,4 @@ class SchemeMailer < ApplicationMailer
     email_settings = LookupValues::Email::Settings.for(email_name)
     email_settings['subject'] % {year: year}
   end
-
 end

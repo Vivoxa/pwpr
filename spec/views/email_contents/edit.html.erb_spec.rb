@@ -1,19 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'email_contents/edit', type: :view do
-  before do
-    @email_content = assign(:email_content, EmailContent.create!(
-                                              scheme_id:          1,
-                                              email_content_type_id: 1,
-                                              email_name_id:         1,
-                                              intro:              'MyString',
-                                              title:              'MyString',
-                                              body:               'MyText',
-                                              footer:             'MyString'
-    ))
-  end
-
-  it 'renders the edit email_content form' do
+  xit 'renders the edit email_content form' do
     render
 
     assert_select 'form[action=?][method=?]', email_content_path(@email_content), 'post' do

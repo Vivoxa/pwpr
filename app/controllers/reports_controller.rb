@@ -16,7 +16,6 @@ class ReportsController < ApplicationController
     report = params['report']
     year = params['year'].to_i
     scheme_uid = params[:scheme_id].to_i
-    data_present = AgencyTemplateUpload.where(scheme_id: scheme_uid, year: year.to_i - 1).any?
 
     @report_form_data = []
 

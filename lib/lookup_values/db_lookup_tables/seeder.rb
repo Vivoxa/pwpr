@@ -5,8 +5,8 @@ module LookupValues
         lookup_tables = YAML.load_file(File.join(__dir__, './lookup_tables.yml'))
 
         lookup_tables.keys.each do |table_name|
-
-          columns = get_columns(lookup_tables, table_name)
+          columns = []
+          get_columns(columns, lookup_tables, table_name)
           values = get_values(columns, lookup_tables, table_name)
 
           puts
@@ -24,15 +24,13 @@ module LookupValues
 
       private
 
-      def get_columns(lookup_tables, table_name)
-        columns = []
+      def get_columns(columns, lookup_tables, table_name)
         %w(column_1 column_2 column_3 column_4).each do |column_name|
           if lookup_tables[table_name][column_name]
             column = lookup_tables[table_name][column_name]
             columns << column
           end
         end
-        columns
       end
 
       def get_values(columns, lookup_tables, table_name)
@@ -44,12 +42,12 @@ module LookupValues
           values << '('
           columns.each do |column|
             case column['data_type']
-              when 'integer'
-                values << "#{column['values'][index]},"
-              when 'string'
-                values << "'#{column['values'][index]}',"
-              when 'decimal'
-                values << "#{column['values'][index]},"
+            when 'integer'
+              values << "#{column['values'][index]},"
+            when 'string'
+              values << "'#{column['values'][index]}',"
+            when 'decimal'
+              values << "#{column['values'][index]},"
             end
           end
           values << "'#{timestamp}','#{timestamp}')"

@@ -10,7 +10,7 @@ RSpec.describe SchemeMailer, type: :mailer do
       mailer.registration_email(business,
                                 tmp_filename,
                                 'tmp_file_path',
-                                2015,
+                                '2015',
                                 SchemeOperator.first)
     end
     let(:email_subject) { '[RESPONSE REQUIRED]: Registration form 2015' }
@@ -43,14 +43,14 @@ RSpec.describe SchemeMailer, type: :mailer do
 
   context 'when an exception occurs' do
     it 'expects an error to be logged' do
-      allow(LookupValues::Email::EmailSettings).to receive(:for).and_raise('Scheme not found')
+      allow(LookupValues::Email::Settings).to receive(:for).and_raise('Scheme not found')
       expect(Rails.logger).to receive(:warn).with('SchemeMailer::registration_email() ERROR: Scheme not found')
       allow(File).to receive(:read).and_return('attachment')
       error_email = mailer.registration_email(business,
                                               tmp_filename,
                                               'tmp_file_path',
-                                              2015,
-                                              email)
+                                              '2015',
+                                              SchemeOperator.first)
       error_email.deliver_now
     end
   end
@@ -63,8 +63,8 @@ RSpec.describe SchemeMailer, type: :mailer do
     let(:scheme_director_email) do
       mailer.scheme_director_info(businesses,
                                   scheme,
-                                  2015,
-                                  contact)
+                                  '2015',
+                                  SchemeOperator.first)
     end
     let(:email_subject) { '[INFO]: Registration forms emailed for 2015' }
     let(:from_address) { 'notifications@app-pwpr.com' }

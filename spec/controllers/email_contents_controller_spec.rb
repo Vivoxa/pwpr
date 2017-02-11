@@ -30,9 +30,10 @@ RSpec.describe EmailContentsController, type: :controller do
   let(:valid_attributes) do
     {title:                 'TITLE',
      body:                  'BODY',
+     address:               'ADDRESS',
      email_content_type_id: 1,
      email_name_id:         1,
-     scheme_id:             1,
+     scheme_id:             sc_marti.schemes.first.id,
      intro:                 'INTRO',
      footer:                'FOOTER'}
   end
@@ -40,6 +41,7 @@ RSpec.describe EmailContentsController, type: :controller do
   let(:invalid_attributes) do
     {title:                 'TITLE',
      body:                  'BODY',
+     address:               'ADDRESS',
      email_content_type_id: nil,
      email_name_id:         nil,
      scheme_id:             nil,

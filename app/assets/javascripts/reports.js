@@ -28,6 +28,6 @@ function yearChanged(year) {
     });
 }
 
-function reportChanged(year) {
+function reportChanged(report) {
   document.getElementById('year').selectedIndex = 0
 }

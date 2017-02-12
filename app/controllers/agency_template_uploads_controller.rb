@@ -63,7 +63,7 @@ class AgencyTemplateUploadsController < ApplicationController
   end
 
   def previous_upload_for_year
-    existing_upload = AgencyTemplateUpload.for_previous_year(params[:scheme_id], params[:year])
+    existing_upload = AgencyTemplateUpload.for_current_year(params[:scheme_id], params[:year])
     @show_confirmation_field = false
 
     @show_confirmation_field = true if existing_upload.any?

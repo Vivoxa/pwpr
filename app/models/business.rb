@@ -39,7 +39,7 @@ class Business < ActiveRecord::Base
   end
 
   def year_first_reg_format
-    errors.add('Year must be in the format YYYY') unless is_i?(year_first_reg)
+    errors.add(:year_first_reg, 'Year must be in the format YYYY') unless is_i?(year_first_reg)
   end
 
   def is_i?(value)

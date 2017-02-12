@@ -1,53 +1,56 @@
 <div class="container" style='margin-top:30px'>
   <h1>Listing Email Contents</h1>
+  <% if can? :create, EmailContent %>
+      <%= link_to 'New Email Content', new_email_content_path, class: ['btn btn-sm btn-primary'] %>
+  <% end %>
+  <% @email_contents_hash.each do |scheme_name, email_contents| %>
 
-  <div class="row">
-    <div class="card">
-      <div class="card-block">
-        <div class="card-title">
-          <% if can? :create, EmailContent %>
-              <%= link_to 'New Email Content', new_email_content_path, class: ['btn btn-sm btn-primary'] %>
-          <% end %>
-        </div>
-      </div>
-      <% @email_contents.each do |email_content| %>
+      <div class="row">
+        <div class="card">
+
+          <h3 class="card-header"><%= scheme_name %></h3>
+
           <div class="card-block">
-
-            <div class="col-xs-12 col-md-2 col-lg-12">
-              <div class="card">
-                <div class="card-block">
-                  <div class="row">
-                    <div class="col-xs-12 col-md-2 col-lg-1"></div>
-                    <div class="col-xs-12 col-md-2 col-lg-2"><strong>Email Name</strong></div>
-                    <div class="col-xs-12 col-md-2 col-lg-3">Email Content Type</div>
-                    <div class="col-xs-12 col-md-2 col-lg-3">Scheme</div>
-                    <div class="col-xs-12 col-md-2 col-lg-3"></div>
-                  </div>
-                  <div class="row">
-                    <div class="col-xs-12 col-md-2 col-lg-1"></div>
-                    <div class="col-xs-12 col-md-2 col-lg-2"><%= email_content.email_name.name %></div>
-                    <div class="col-xs-12 col-md-2 col-lg-3"><%= email_content.email_content_type.name %></div>
-                    <div class="col-xs-12 col-md-2 col-lg-3"><%= email_content.scheme_id ? Scheme.find(email_content.scheme_id).name : 'N/A' %></div>
-                    <div class="col-xs-12 col-md-2 col-lg-3">
-                      <div class="row">
-                        <% if can? :read, EmailContent %>
-                            <%= link_to 'Show', email_content_path(id: email_content.id), class: ['btn btn-sm btn-primary'] %>
-                        <% end %>
-                        <% if can? :update, EmailContent %>
-                            <%= link_to 'Edit', edit_email_content_path(id: email_content.id), class: ['btn btn-sm btn-warning'] %>
-                        <% end %>
-                        <% if can? :destroy, EmailContent %>
-                            <%= link_to 'Destroy', email_content, method: :delete, data: {confirm: 'Are you sure?'}, class: ['btn btn-sm btn-danger'] %>
-                        <% end %>
+            <% email_contents.each do |email_content| %>
+                <div class="row">
+                  <div class="col-xs-12 col-md-2 col-lg-12">
+                    <div class="card">
+                      <div class="card-block">
+                        <div class="row">
+                          <div class="col-xs-12 col-md-2 col-lg-1"></div>
+                          <div class="col-xs-12 col-md-2 col-lg-2"><strong>Email Name</strong></div>
+                          <div class="col-xs-12 col-md-2 col-lg-3"><strong>Email Content Type</strong></div>
+                          <div class="col-xs-12 col-md-2 col-lg-3"><strong>Scheme</strong></div>
+                          <div class="col-xs-12 col-md-2 col-lg-3"></div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12 col-md-2 col-lg-1"></div>
+                          <div class="col-xs-12 col-md-2 col-lg-2"><%= email_content.email_name.name %></div>
+                          <div class="col-xs-12 col-md-2 col-lg-3"><%= email_content.email_content_type.name %></div>
+                          <div class="col-xs-12 col-md-2 col-lg-3"><%= email_content.scheme_id ? Scheme.find(email_content.scheme_id).name : 'N/A' %></div>
+                          <div class="col-xs-12 col-md-2 col-lg-3">
+                            <div class="row">
+                              <% if can? :read, EmailContent %>
+                                  <%= link_to 'Show', email_content_path(id: email_content.id), class: ['btn btn-sm btn-primary'] %>
+                              <% end %>
+                              <% if can? :update, EmailContent %>
+                                  <%= link_to 'Edit', edit_email_content_path(id: email_content.id), class: ['btn btn-sm btn-warning'] %>
+                              <% end %>
+                              <% if can? :destroy, EmailContent %>
+                                  <%= link_to 'Destroy', email_content, method: :delete, data: {confirm: 'Are you sure?'}, class: ['btn btn-sm btn-danger'] %>
+                              <% end %>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-
+            <% end %>
           </div>
-      <% end %>
-    </div>
-  </div>
+          <div class="card-footer">
+          </div>
+        </div>
+      </div>
+  <% end %>
 </div>

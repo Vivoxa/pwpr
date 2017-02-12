@@ -5,16 +5,23 @@ class EmailContentsController < ApplicationController
   # GET /email_contents
   # GET /email_contents.json
   def index
-    @email_contents = if current_admin
-                        EmailContent.all
-                      else
-                        EmailContent.where(scheme_id: current_user.scheme_ids)
-                      end
+    @email_contents_hash = email_content_to_scheme_hash
+  end
+
+  def email_content_to_scheme_hash
+    hash = {}
+    hash['System default'] =  EmailContent.where(email_content_type_id: EmailContentType.id_from_setting('default')) if current_admin
+    current_user.schemes.each do |scheme|
+      hash[scheme.name] = EmailContent.where(scheme_id: scheme.id)
+    end
+    hash
   end
 
   # GET /email_contents/1
   # GET /email_contents/1.json
   def show
+    schemes = Scheme.where(id: @email_content.scheme_id)
+    @scheme_name = schemes.any? ? schemes.first.name : nil
   end
 
   # GET /email_contents/new

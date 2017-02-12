@@ -3,11 +3,12 @@
     <div class="card">
 
       <div class="card-block">
-        <p>
-          <strong>Scheme:</strong>
-          <%= Scheme.find(@email_content.scheme_id).name %>
-        </p>
-
+        <% if @scheme_name %>
+            <p>
+              <strong>Scheme:</strong>
+              <%= @scheme_name %>
+            </p>
+        <% end %>
         <% unless @email_content.email_content_type_id == 1 %>
             <p>
               <strong>Email content type:</strong>

@@ -1,4 +1,6 @@
 class BusinessesController < BaseController
+  include Businesses
+  
   before_action :set_business, only: %i(show edit update destroy)
   before_filter :authenticate_company_operator
   before_action :form_dropdown_values, :scheme_id, only: %i(new create edit)
@@ -15,7 +17,9 @@ class BusinessesController < BaseController
 
   # GET /businesses/1
   # GET /businesses/1.json
-  def show; end
+  def show
+    @registration = @business.registrations.last ? @business.registrations.last : Registration.new(business: @business)
+  end
 
   # GET /businesses/new
   def new

@@ -109,7 +109,6 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
                                             first_name:   'confirmed',
                                             last_name:    'at last',
                                             password:     'my_password',
-                                            scheme_ids:   [Scheme.last.id],
                                             confirmed_at: DateTime.now}
           end
           it 'expects a SchemeOperator to be created' do

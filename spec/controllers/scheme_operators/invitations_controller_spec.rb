@@ -90,8 +90,7 @@ RSpec.describe SchemeOperators::InvitationsController, type: :controller do
                                       password:           'my_password',
                                       email:              'star@star.com',
                                       first_name:         'star',
-                                      last_name:          'gazer',
-                                      scheme_ids:         [1]}}
+                                      last_name:          'gazer'}}
           post :create, params
           expect(response.status).to eq 302
           user = SchemeOperator.find_by_email('star@star.com')

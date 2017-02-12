@@ -52,7 +52,7 @@ RSpec.describe SchemeOperatorsSchemesController, type: :controller do
       end
 
       it 'assigns a newly created scheme_operators_scheme as @scheme_operators_scheme' do
-        post :create, scheme_operators_scheme: valid_attributes, scheme_id: 1
+        post :create, scheme_operators_scheme: valid_attributes, scheme_id: scheme_id
         expect(assigns(:scheme_operators_scheme)).to be_a(SchemeOperatorsScheme)
         expect(assigns(:scheme_operators_scheme)).to be_persisted
       end

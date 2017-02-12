@@ -11,11 +11,11 @@
               <% end %>
             </div>
             <div class="row">
-
+              <% if can? :read, @scheme.scheme_operators_schemes.first  %>
                   <%= link_to 'Manage SchemeOperator to Scheme Links',
-                              scheme_scheme_operators_schemes_path({ scheme_id: @scheme.id }),
+                              scheme_scheme_operators_schemes_path({scheme_id: @scheme.id}),
                               class: ['btn btn-sm btn-primary btn-block btn-group', 'show-btn-lg'] %>
-
+              <% end %>
             </div>
             <div class="row">
               <% if can? :new, CompanyOperators::InvitationsController %>

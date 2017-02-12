@@ -7,6 +7,10 @@ module PermissionsForRole
         can :manage, VisitorsController
       end
 
+      def scheme_operator_schemes_ids(user)
+        SchemeOperatorsScheme.where(scheme_id: user.scheme_ids).map(&:id)
+      end
+
       def scheme_operator_ids_for_associated_schemes(user)
         ids = user.schemes.where(active: true).each.map(&:scheme_operator_ids).flatten
         ids.reject!{ |id| id == user.id } if user.is_a?(SchemeOperator)

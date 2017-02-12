@@ -1,11 +1,14 @@
 class SchemeOperatorsSchemesController < ApplicationController
+  load_and_authorize_resource :scheme
+  load_and_authorize_resource :scheme_operators_scheme, through: :scheme
+
   before_action :set_scheme_operators_scheme, only: %i(show destroy)
 
   # GET /scheme_operators_schemes
   # GET /scheme_operators_schemes.json
   def index
     @scheme = Scheme.find(params[:scheme_id].to_i)
-    @scheme_operators_schemes = SchemeOperatorsScheme.where(scheme_id: @scheme.id)
+    @scheme_operators_schemes = SchemeOperatorsScheme.where(scheme_id: @scheme.id).where('scheme_operator_id != ?', current_user.id)
   end
 
   # GET /scheme_operators_schemes/new

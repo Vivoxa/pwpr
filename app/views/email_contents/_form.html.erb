@@ -27,9 +27,15 @@
                     <% end %>
                   </div>
                   <div class="col-xs-12 col-md-2 col-lg-8">
-                    <div class="field">
-                      <%= f.collection_select :email_content_type_id, EmailContentType.all, :id, :name, {}, {onchange: "return emailContentTypeChanged(this)", class: "devise-lgn form-control"} %>
-                    </div>
+                    <% if current_admin %>
+                        <div class="field">
+                          <%= f.collection_select :email_content_type_id, EmailContentType.all, :id, :name, {}, {onchange: "return emailContentTypeChanged(this)", class: "devise-lgn form-control"} %>
+                        </div>
+                    <% else %>
+                        <div class="field">
+                          <%= f.hidden_field :email_content_type_id, value: EmailContentType.id_from_setting('scheme') %>
+                        </div>
+                    <% end %>
                   </div>
                 </div>
                 <div class="row">
@@ -39,15 +45,10 @@
                     </div>
                   </div>
                   <div class="col-xs-12 col-md-2 col-lg-8">
-                    <% if current_admin %>
-                        <div class="field">
-                          <%= f.collection_select :scheme_id, @current_user.schemes.where(active: true).order(:name), :id, :name, {prompt: true, prompt: 'Select a Scheme'}, {id: 'scheme_select', class: "devise-lgn form-control"} %>
-                        </div>
-                    <% else %>
-                        <div class="field">
-                          <%= f.hidden_field :email_content_type_id, value: EmailContentType.id_from_setting('scheme') %>
-                        </div>
-                    <% end %>
+
+                    <div class="field">
+                      <%= f.collection_select :scheme_id, @current_user.schemes.where(active: true).order(:name), :id, :name, {prompt: true, prompt: 'Select a Scheme'}, {id: 'scheme_select', class: "devise-lgn form-control"} %>
+                    </div>
                   </div>
                 </div>
                 <div class="row">

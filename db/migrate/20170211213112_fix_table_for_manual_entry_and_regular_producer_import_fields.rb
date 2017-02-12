@@ -5,6 +5,7 @@ class FixTableForManualEntryAndRegularProducerImportFields < ActiveRecord::Migra
 
     # Ensure columns cannot be null
     change_column :registrations, :agency_template_upload_id, :integer, null: true
+    change_column :registrations, :allocation_method_used, :boolean, null: false, default: false
     change_column :regular_producer_details, :registration_id, :integer, null: false
     change_column :regular_producer_details, :calculation_method_supplier_data, :boolean, null: false
     change_column :regular_producer_details, :calculation_method_sample_weighing, :boolean, null: false

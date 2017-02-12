@@ -15,21 +15,26 @@ Rails.application.routes.draw do
     get '/scheme_operators/invitations/', to: 'scheme_operators#invited_not_accepted', :as => 'scheme_operator_invitations'
     match 'scheme_operators/invitation', to: 'scheme_operators/invitations#new', via: :get
   end
-  
+
   root 'visitors#index'
 
   resources :schemes
 
+  resources :registrations, controller: 'businesses/registrations' do
+    resources :regular_producers, controller: 'businesses/registrations/regular_producers'
+    resources :small_producers, controller: 'businesses/registrations/small_producers'
+    resources :material_details, controller: 'businesses/registrations/material_details'
+  end
+
   resources :businesses do
     resources :contacts
-    resources :registrations
-    resources :regular_producers
-    resources :small_producers
-    resources :material_details
+
+    resources :registrations, controller: 'businesses/registrations', only: :index
 
     get 'scheme_businesses', action: :scheme_businesses
     get 'businesses/scheme_businesses', action: :scheme_businesses
   end
+
   resources :scheme_operator_invitations, only: :index
 
   resources :admins, :scheme_operators, :company_operators do

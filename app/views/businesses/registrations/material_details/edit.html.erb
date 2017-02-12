@@ -42,7 +42,7 @@
       <% end %>
     </div>
     <div class="card-footer">
-      <%= link_to 'Back to Member', @business , class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
+      <%= link_to 'Registrations List', business_registrations_path(business_id: @business.id), class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
     </div>
   </div>
 </div>

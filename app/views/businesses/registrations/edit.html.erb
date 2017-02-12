@@ -1,10 +1,11 @@
 <div id="main-container" class="container">
   <div class="card">
     <h3 class="card-header">
-      <center>Enter Registration For: <%= @business.name %></center>
+      <center>Edit Registration For: <%= @registration.business.name %></center>
     </h3>
     <div class="card-block">
-      <%= form_for @registration, url: {action: 'create'}, html: { method: :post } do |f|%>
+      <%= form_for @registration, url: {action: 'update'}, html: { method: :put } do |f|%>
+        <%= f.hidden_field :business_id, value: @registration.business.id %>
         <% @registration.form_fields.each do |key, hsh| %>
           <div class='row'>
             <div class='col-md-6' align='right'>
@@ -33,7 +34,7 @@
       <% end %>
     </div>
     <div class="card-footer">
-      <%= link_to 'Back to Member', @business , class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
+      <%= link_to 'Registrations List', business_registrations_path(business_id: @registration.business.id), class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
     </div>
   </div>
 </div>

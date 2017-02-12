@@ -4,7 +4,7 @@
       <center>Materials</center>
     </h3>
     <div class="card-block">
-      <%= form_tag business_material_details_path, method: :post do |f| %>
+      <%= form_tag registration_material_details_path, method: :post do |f| %>
         <div class='row' style="margin-bottom: 10px">
           <div class='col-md-2'></div>
           <% @material_details.each do |detail| %>
@@ -42,7 +42,7 @@
       <% end %>
     </div>
     <div class="card-footer">
-      <%= link_to 'Back to Member', @business , class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
+      <%= link_to 'Registrations List', business_registrations_path(business_id: @registration.business.id), class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
     </div>
   </div>
 </div>

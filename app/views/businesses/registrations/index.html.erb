@@ -1,0 +1,111 @@
+<h1><center><%= "Registrations for #{@business.name}" %></center></h1>
+<div class="container" style='margin-top:30px'>
+  <div class="row" style='margin-bottom:10px'>
+    <%= link_to 'Back to Member', @business, class: ['btn btn-sm btn-outline-primary show-btn-lg'] %>
+    <%= link_to 'Enter New Registration Details', new_registration_path(business_id: @business.id), class: ['btn btn-sm btn-primary show-btn-lg'] %>
+  </div>
+  <% if @registrations.any? %>
+    <% @registrations.each do |registration| %>
+      <div class="row">
+        <div class="card">
+          <h3 class="card-header"><center>Registration Year: <%= registration.business.year_last_reg %></center></h3>
+          <div class="card-block">
+            <div class='col-md-4 col-lg-6'>
+              <div class="card card-outline-success">
+                <h5 class="card-header"><center>Registration</center></h5>
+                <div class=" card-block">
+                  <%= render 'businesses/registrations/show' %>
+                </div>
+                <div class="card-footer">
+                  <% if registration.business.year_last_reg.to_i <= Date.today.year %>
+                    <div class='col-md-4 col-lg-6'>
+                      <%= link_to 'Enter Details', new_registration_path(business_id: @business.id), class: ['btn btn-sm btn-success btn-block'] %>
+                    </div>
+                    <div class='col-md-4 col-lg-6'>
+                      <%= link_to 'Edit Details', edit_registration_path(id: registration.id), class: ['btn btn-sm btn-warning btn-block'] %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <% unless registration.allocation_method_used %>
+              <div class='col-md-4 col-lg-6'>
+                <div class="card card-outline-success text-center">
+                  <h5 class="card-header"><center>Regular Producer</center></h5>
+                  <div class=" card-block">
+                    <%= render 'businesses/registrations/regular_producers/show' %>
+                  </div>
+                  <div class="card-footer">
+                    <div class='col-md-4 col-lg-6'>
+                      <% if registration.business.year_last_reg.to_i <= Date.today.year %>
+                        <% if registration.regular_producer_detail %>
+                          <%= link_to 'Edit Details', edit_registration_regular_producer_path(registration_id: registration.id, id: registration.regular_producer_detail.id), class: ['btn btn-sm btn-warning btn-block'] %>
+                        <% else %>
+                          <%= link_to 'Enter Details', new_registration_regular_producer_path(registration_id: registration.id), class: ['btn btn-sm btn-success btn-block'] %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <% if registration.allocation_method_used %>
+              <div class='col-md-4 col-lg-6'>
+                <div class="card card-outline-success">
+                  <h5 class="card-header"><center>Small Producer</center></h5>
+                  <div class=" card-block">
+                      <%= render 'businesses/registrations/small_producers/show' %>
+                  </div>
+                  <div class="card-footer">
+                    <div class='col-md-4 col-lg-6'>
+                      <% if registration.business.year_last_reg.to_i <= Date.today.year %>
+                        <% if registration.small_producer_detail %>
+                          <%= link_to 'Edit Details', edit_registration_small_producer_path(registration_id: registration.id, id: registration.small_producer_detail.id), class: ['btn btn-sm btn-warning btn-block'] %>
+                        <% else %>
+                          <%= link_to 'Enter Details', new_registration_small_producer_path(registration_id: registration.id), class: ['btn btn-sm btn-success btn-block'] %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <% if registration.regular_producer_detail&.material_totals&.last(7)&.any? %>
+              <div class='col-md-4 col-lg-6'>
+                <div class="card card-outline-success">
+                  <h5 class="card-header"><center>Material Totals</center></h5>
+                  <div class=" card-block">
+                    <%= render 'businesses/registrations/material_details/show' %>
+                  </div>
+                  <div class="card-footer">
+                    <div class='col-md-4 col-lg-6'>
+                      <% if registration.business.year_last_reg.to_i <= Date.today.year %>
+                        <% if registration.regular_producer_detail&.material_details.any? %>
+                          <%= link_to 'Edit Details', edit_registration_material_detail_path(registration_id: registration.id), class: ['btn btn-sm btn-warning btn-block'] %>
+                        <% else %>
+                          <%= link_to 'Enter Details', new_registration_material_detail_path(registration_id: registration.id), class: ['btn btn-sm btn-success btn-block'] %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <div class="card-footer">
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="row">
+      <div class="card">
+        <h4 class="card-header"></h4>
+        <div class="card-block">
+          <p class="card-text">No Registrations for this Member</p>
+        </div>
+        <div class="card-footer"></div>
+      </div>
+    </div>
+  <% end %>
+</div>

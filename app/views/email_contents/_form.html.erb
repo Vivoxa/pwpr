@@ -22,11 +22,7 @@
                   <div class="col-xs-12 col-md-2 col-lg-4">
                     <% if current_admin %>
                         <div class="field">
-                         <strong> <%= f.label :email_content_type_id, class: "devise-lgn form-control" %></strong>
-                        </div>
-                    <% else %>
-                        <div class="field">
-                          <%= f.hidden_field :email_content_type_id, value: EmailContentType.id_from_setting('scheme') %>
+                          <strong> <%= f.label :email_content_type_id, class: "devise-lgn form-control" %></strong>
                         </div>
                     <% end %>
                   </div>
@@ -39,19 +35,25 @@
                 <div class="row">
                   <div class="col-xs-12 col-md-2 col-lg-4">
                     <div class="field">
-                      <strong><%= f.label :scheme_id,class: "devise-lgn form-control" %></strong>
+                      <strong><%= f.label :scheme_id, class: "devise-lgn form-control" %></strong>
                     </div>
                   </div>
                   <div class="col-xs-12 col-md-2 col-lg-8">
-                    <div class="field">
-                      <%= f.collection_select :scheme_id, @current_user.schemes.where(active: true).order(:name), :id, :name, {prompt: true, prompt: 'Select a Scheme'}, {id: 'scheme_select', class: "devise-lgn form-control"} %>
-                    </div>
+                    <% if current_admin %>
+                        <div class="field">
+                          <%= f.collection_select :scheme_id, @current_user.schemes.where(active: true).order(:name), :id, :name, {prompt: true, prompt: 'Select a Scheme'}, {id: 'scheme_select', class: "devise-lgn form-control"} %>
+                        </div>
+                    <% else %>
+                        <div class="field">
+                          <%= f.hidden_field :email_content_type_id, value: EmailContentType.id_from_setting('scheme') %>
+                        </div>
+                    <% end %>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12 col-md-2 col-lg-4">
                     <div class="field">
-                      <strong><%= f.label :email_name_id,class: "devise-lgn form-control" %></strong>
+                      <strong><%= f.label :email_name_id, class: "devise-lgn form-control" %></strong>
                     </div>
                   </div>
                   <div class="col-xs-12 col-md-2 col-lg-8">

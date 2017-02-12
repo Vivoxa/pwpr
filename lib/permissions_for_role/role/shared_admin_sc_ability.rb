@@ -24,15 +24,10 @@ module PermissionsForRole
 
         co_users_r(user)
         co_users_w(user)
-
-        # permissions for Business
         business_permissions(user)
-
-        # permissions for Scheme
         scheme_permissions(user)
-
-        # permissions for Contact
         contact_permissions(user)
+        link_to_scheme_permissions(user)
       end
 
       def scheme_permissions(user)
@@ -48,6 +43,12 @@ module PermissionsForRole
         can %i(new create), Contact if user.contacts_w?
         can %i(edit update), Contact, id: associated_contact_ids_for_user(user) if user.contacts_e?
         can :destroy, Contact, id: associated_contact_ids_for_user(user) if user.contacts_d?
+      end
+
+      def link_to_scheme_permissions(user)
+        can :read, SchemeOperatorsScheme, id: scheme_operator_schemes_ids(user) if user.link_to_scheme_r?
+        can %i(new create), SchemeOperatorsScheme if user.link_to_scheme_w?
+        can :destroy, SchemeOperatorsScheme, id: scheme_operator_schemes_ids(user) if user.link_to_scheme_d?
       end
 
       def business_permissions(user)

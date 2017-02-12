@@ -7,7 +7,8 @@ RSpec.describe PermissionsForRole::SharedDefinitions do
                                                          co_users_r co_users_w co_users_d co_users_e
                                                          businesses_r businesses_w businesses_d businesses_e
                                                          schemes_r schemes_w schemes_d schemes_e uploads_r uploads_w
-                                                         scheme_businesses contacts_r contacts_w contacts_d contacts_e).freeze
+                                                         scheme_businesses contacts_r contacts_w contacts_d contacts_e
+                                                         link_to_scheme_r link_to_scheme_w link_to_scheme_d).freeze
     end
   end
 end

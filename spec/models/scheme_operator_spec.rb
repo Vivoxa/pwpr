@@ -11,8 +11,8 @@ RSpec.describe SchemeOperator, type: :model do
     subject.password = 'khgsdfgaskgfdkag'
     subject.first_name = 'Nigel'
     subject.last_name = 'Surtees'
-    subject.schemes << scheme
     subject.save
+    subject.schemes << Scheme.last
   end
 
   # context 'Scopes' do
@@ -97,8 +97,7 @@ RSpec.describe SchemeOperator, type: :model do
       scheme_operator = SchemeOperator.create(first_name: 'rspec owner',
                                               last_name:  'last',
                                               email:      'sc_operator101@pwpr.com',
-                                              password:   'my password',
-                                              schemes:    [Scheme.last])
+                                              password:   'my password')
 
       %i(sc_user businesses_r co_users_r).each do |permission|
         expect(scheme_operator.has_role?(permission)).to eq true
@@ -114,8 +113,7 @@ RSpec.describe SchemeOperator, type: :model do
                             password:             'my_password',
                             confirmation_token:   '12345678912345678912',
                             confirmation_sent_at: DateTime.now,
-                            confirmed_at:         DateTime.now,
-                            scheme_ids:           Scheme.last.id)
+                            confirmed_at:         DateTime.now)
     end
     context 'with NO Role' do
       let(:ability) { Abilities.ability_for(scheme_operator) }
@@ -144,6 +142,7 @@ RSpec.describe SchemeOperator, type: :model do
         scheme_operator.add_role :co_users_r
         scheme_operator.add_role :co_users_e
         scheme_operator.add_role :co_users_w
+        scheme_operator.schemes << Scheme.last
       end
 
       after do

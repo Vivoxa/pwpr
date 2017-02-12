@@ -80,8 +80,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
                                           invitation_sent_at:     DateTime.now,
                                           confirmed_at:           DateTime.now,
                                           invitation_accepted_at: DateTime.now,
-                                          approved:               true,
-                                          scheme_ids:             [Scheme.last]}
+                                          approved:               true}
           expect(response.status).to eq 302
           so_user = SchemeOperator.find_by_email('freddy@pwpr.com')
           expect(so_user).to be_a(SchemeOperator)
@@ -95,7 +94,6 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
                                           first_name:   'confirmed',
                                           last_name:    'Smith',
                                           password:     'my_password',
-                                          scheme_ids:   [Scheme.last.id],
                                           confirmed_at: DateTime.now}
           expect(response.status).to eq 302
           so_user = SchemeOperator.find_by_email('confirmed@pwpr.com')
@@ -124,7 +122,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
 
     context 'when calling create' do
       it 'expects a 200 response status' do
-        post :create, scheme_operator: {email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'Smith', password: 'my_password', scheme_ids: [Scheme.last.id]}
+        post :create, scheme_operator: {email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'Smith', password: 'my_password'}
         expect(response.status).to eq 302
       end
     end
@@ -147,45 +145,15 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
   end
 
   context 'when scheme operator is signed in' do
-    let(:scheme_operator_with_director) { SchemeOperator.new }
-    before do
-      scheme_operator_with_director.email = 'jennifer@back_to_the_future.com'
-      scheme_operator_with_director.first_name = 'Jennifer'
-      scheme_operator_with_director.last_name = 'Smith'
-      scheme_operator_with_director.password = 'mypassword'
-      scheme_operator_with_director.confirmed_at = DateTime.now
-      scheme_operator_with_director.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
-      scheme_operator_with_director.approved = true
-      scheme_operator_with_director.save
-    end
-    context 'when SchemeOperator has not been approved' do
-      before do
-        scheme_operator_with_director.approved = false
-        scheme_operator_with_director.save
-        sign_in scheme_operator_with_director
-      end
+    let(:scheme_operator_with_sc_user) { FactoryGirl.create(:scheme_operator_with_sc_user) }
 
-      after do
-        scheme_operator_with_director.approved = true
-        scheme_operator_with_director.save
-        sign_out scheme_operator_with_director
-      end
-
-      context 'when calling new' do
-        it 'expects an error to be raised' do
-          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'Smith', password: 'my_password', business: Business.last
-          expect(flash[:alert]).to be_present
-          expect(flash[:alert]).to eq 'Your account has not been approved by your administrator yet.'
-        end
-      end
-    end
     context 'when SchemeOperator does NOT have the director role' do
       before do
-        sign_in scheme_operator_with_director
+        sign_in scheme_operator_with_sc_user
       end
 
       after do
-        sign_out scheme_operator_with_director
+        sign_out scheme_operator_with_sc_user
       end
 
       context 'when calling new' do
@@ -198,19 +166,12 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
     end
 
     context 'when SchemeOperator has co_director role' do
+      let(:scheme_operator_with_director) { FactoryGirl.create(:scheme_operator_with_director) }
       before do
-        sign_out scheme_operator_with_director
-        scheme_operator_with_director.add_role :sc_director
-        scheme_operator_with_director.sc_users_w!
-        scheme_operator_with_director.co_users_w!
-        scheme_operator_with_director.save
         sign_in scheme_operator_with_director
       end
 
       after do
-        scheme_operator_with_director.remove_role :sc_director
-        scheme_operator_with_director.remove_role :sc_users_w
-        scheme_operator_with_director.remove_role :co_users_w
         sign_out scheme_operator_with_director
       end
 

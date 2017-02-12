@@ -17,6 +17,12 @@ module PermissionsForRole
         can %i(read new create update destroy), Admins::RegistrationsController if user.super_admin?
       end
 
+      def link_to_scheme_permissions(user)
+        can :read, SchemeOperatorsScheme if user.link_to_scheme_r?
+        can %i(new create), SchemeOperatorsScheme if user.link_to_scheme_w?
+        can :destroy, SchemeOperatorsScheme if user.link_to_scheme_d?
+      end
+
       def business_permissions(user)
         can %i(read scheme_businesses), Business if user.businesses_r?
         can %i(new create scheme_businesses), Business if user.businesses_w?

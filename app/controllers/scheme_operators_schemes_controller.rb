@@ -15,8 +15,7 @@ class SchemeOperatorsSchemesController < ApplicationController
   def new
     @scheme_operators_scheme = SchemeOperatorsScheme.new
     @scheme = Scheme.find(params[:scheme_id].to_i)
-    @scheme_operators = current_user.schemes.flat_map(&:scheme_operators) -
-        current_user.schemes.where(id: params[:scheme_id].to_i).first.scheme_operators
+    @scheme_operators = current_user.schemes.flat_map(&:scheme_operators) - [current_user]
   end
 
   # POST /scheme_operators_schemes

@@ -178,13 +178,19 @@
       <% if can? :new, CompanyOperators::InvitationsController && (current_admin || current_scheme_operator) %>
           <%= link_to 'Invite Member Contact',
                       new_company_operator_invitation_path,
-                      class: ['btn btn-sm btn-primary'],
+                      class: ['btn btn-sm btn-primary', 'show-btn-md'],
                       id: "#{@business.id}-invite_company_operator" %>
       <% end %>
       <% if can? :read, Contact %>
           <%= link_to 'Contacts',
                       business_contacts_path(business_id: @business.id),
-                      class: ['btn btn-sm btn-primary'] %>
+                      class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
+      <% end %>
+      <% if can? :edit, @business %>
+          <%= link_to 'Edit', edit_business_path(@business, scheme_id: @business.scheme.id), class: ['btn btn-sm btn-warning', 'show-btn-md'] %>
+      <% end %>
+      <% if can? :destroy, @business %>
+          <%= link_to 'Delete', @business, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
       <% end %>
       <% if can? :edit, @business %>
           <%= link_to 'Edit', edit_business_path(@business, scheme_id: @business.scheme.id), class: ['btn btn-sm btn-warning', 'show-btn-md'] %>

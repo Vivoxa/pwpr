@@ -13,6 +13,19 @@ FactoryGirl.define do
       instance.business_id = FactoryGirl.create(:business).id
     end
 
+    factory :company_operator_unapproved do |co|
+      email
+      first_name 'Jennifer'
+      last_name 'smith'
+      password 'mypassword'
+      confirmed_at DateTime.now
+      approved false
+
+      co.after :build do |instance|
+        instance.business_id = FactoryGirl.create(:business).id
+      end
+    end
+
     factory :company_operator_with_director do |co_d|
       co_d.after :build do |instance|
         instance.business_id = FactoryGirl.create(:business).id

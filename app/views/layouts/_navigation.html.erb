@@ -41,7 +41,7 @@
       <% end %>
       <%= render partial: 'partials/schemes_dropdown' %>
 
-    <% if current_admin %>
+    <% if current_admin || current_scheme_operator %>
         <%= render partial: 'partials/admin_dropdown' %>
     <% end %>
       <%= render partial: 'partials/businesses_link' %>

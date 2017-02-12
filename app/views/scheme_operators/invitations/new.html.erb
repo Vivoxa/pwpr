@@ -9,7 +9,6 @@
       <p class="card-text">
         <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
             <%= devise_error_messages! %>
-
             <% resource.class.invite_key_fields.each do |field| -%>
               <div class="field centre">
                 <% if field.to_s.downcase.include?('email') %>
@@ -36,5 +35,4 @@
     <% path = @scheme ? @scheme : schemes_path %>
     <%= link_to 'Back', path, class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
   </div>
-</div>
 </div>

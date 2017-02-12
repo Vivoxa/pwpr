@@ -23,7 +23,6 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
 
     context 'when scheme operator is signed in' do
       let(:so_marti) { FactoryGirl.create(:scheme_operator) }
-      # let(:so_marti) { SchemeOperator.first }
 
       before do
       end

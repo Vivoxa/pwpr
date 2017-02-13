@@ -59,7 +59,7 @@
                   </div>
                   <div class="col-xs-12 col-md-2 col-lg-8">
                     <div class="field">
-                      <%= f.collection_select :email_name_id, EmailName.all.order(:name), :id, :name, {}, {class: "devise-lgn form-control"} %>
+                      <%= f.collection_select :email_name_id, EmailName.all.order(:name), :id, :name, {prompt: true, prompt: 'Select an Email'}, {class: "devise-lgn form-control"} %>
                     </div>
                   </div>
                 </div>

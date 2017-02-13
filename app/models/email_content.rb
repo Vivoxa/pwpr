@@ -4,6 +4,7 @@ class EmailContent < ActiveRecord::Base
 
   validates_presence_of :email_content_type_id, :email_name_id, :intro, :title, :body, :address, :footer
   validate :default_email_type
+  validate :scheme_email_type
 
   scope :pro_scheme, -> (scheme, email_name) {
     where(email_content_type_id: EmailContentType.id_from_setting('scheme'),
@@ -24,7 +25,12 @@ class EmailContent < ActiveRecord::Base
 
   def default_email_type
     return unless email_content_type_id == EmailContentType.id_from_setting('default') && scheme_id.present?
-    errors.add(:email_content_type_id, 'is default, cannot set a scheme id')
+    errors.add(:email_content_type_id, 'is Default, cannot set a scheme id')
+  end
+
+  def scheme_email_type
+    return unless email_content_type_id == EmailContentType.id_from_setting('scheme') && scheme_id.nil?
+    errors.add(:scheme_id, 'is required')
   end
 
   def body_lines

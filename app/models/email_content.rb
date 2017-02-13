@@ -2,7 +2,7 @@ class EmailContent < ActiveRecord::Base
   belongs_to :email_content_type
   belongs_to :email_name
 
-  validates_presence_of :email_content_type, :email_name
+  validates_presence_of :email_content_type_id, :email_name_id, :intro, :title, :body, :address, :footer
   validate :default_email_type
 
   scope :pro_scheme, -> (scheme, email_name) {

@@ -31,7 +31,7 @@
                                   <%= link_to 'Show', email_content_path(id: email_content.id), class: ['btn btn-sm btn-primary'] %>
                               <% end %>
                               <% if can? :update, EmailContent %>
-                                  <%= link_to 'Edit', edit_email_content_path(id: email_content.id), class: ['btn btn-sm btn-warning'] %>
+                                  <%= link_to 'Edit', edit_email_content_path(id: email_content.id, scheme_id: scheme.id), class: ['btn btn-sm btn-warning'] %>
                               <% end %>
                               <% if can? :destroy, EmailContent %>
                                   <%= link_to 'Destroy', email_content, method: :delete, data: {confirm: 'Are you sure?'}, class: ['btn btn-sm btn-danger'] %>

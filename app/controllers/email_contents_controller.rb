@@ -27,6 +27,7 @@ class EmailContentsController < ApplicationController
 
   # GET /email_contents/1/edit
   def edit
+    @remaining_email_contents = remaining_email_contents(params[:scheme_id])
   end
 
   # POST /email_contents
@@ -48,6 +49,7 @@ class EmailContentsController < ApplicationController
   # PATCH/PUT /email_contents/1
   # PATCH/PUT /email_contents/1.json
   def update
+    @remaining_email_contents = remaining_email_contents(params[:scheme_id])
     respond_to do |format|
       if @email_content.update(email_content_params)
         format.html { redirect_to @email_content, notice: 'Email content was successfully updated.' }

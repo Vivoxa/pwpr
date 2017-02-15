@@ -6,15 +6,10 @@ class EmailContentsController < ApplicationController
   # GET /email_contents.json
   def index
     @email_contents_hash = email_content_to_scheme_hash
-  end
-
-  def email_content_to_scheme_hash
-    hash = {}
-    hash['System default'] =  EmailContent.where(email_content_type_id: EmailContentType.id_from_setting('default')) if current_admin
+    @scheme_with_remaining_email_contents = {}
     current_user.schemes.each do |scheme|
-      hash[scheme.name] = EmailContent.where(scheme_id: scheme.id)
+      @scheme_with_remaining_email_contents[scheme.id] = remaining_email_contents(scheme.id)
     end
-    hash
   end
 
   # GET /email_contents/1
@@ -27,6 +22,7 @@ class EmailContentsController < ApplicationController
   # GET /email_contents/new
   def new
     @email_content = EmailContent.new
+    @remaining_email_contents = remaining_email_contents(params[:scheme_id])
   end
 
   # GET /email_contents/1/edit
@@ -75,6 +71,27 @@ class EmailContentsController < ApplicationController
 
   private
 
+  def email_content_to_scheme_hash
+    hash = {}
+    hash[DummyScheme] = EmailContent.where(email_content_type_id: EmailContentType.id_from_setting('default')) if current_admin
+    current_user.schemes.each do |scheme|
+      hash[scheme] = EmailContent.where(scheme_id: scheme.id)
+    end
+    hash
+  end
+
+  def remaining_email_contents(scheme_id)
+    types = EmailContent.where(scheme_id: scheme_id).map(&:email_name_id)
+
+    remaining = if types.any?
+                  EmailName.where('id NOT IN (?)', types)
+                else
+                  EmailName.all
+                end
+
+    remaining
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_email_content
     @email_content = EmailContent.find(params[:id])
@@ -83,5 +100,15 @@ class EmailContentsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def email_content_params
     params.require(:email_content).permit(:scheme_id, :email_content_type_id, :email_name_id, :intro, :title, :body, :address, :footer)
+  end
+end
+
+class DummyScheme
+  def self.name
+    'System default'
+  end
+
+  def self.id
+    0
   end
 end

@@ -24,7 +24,7 @@ RSpec.describe EmailContent, type: :model do
                                          email_name_id:         1,
                                          scheme_id:             1)
         email_content.save
-        expect(email_content.errors.messages[:email_content_type_id]).to include('is default, cannot set a scheme id')
+        expect(email_content.errors.messages[:email_content_type_id]).to include('is Default, cannot set a scheme id')
       end
 
       it 'expects NO errors if default type and scheme id is NOT present' do
@@ -48,7 +48,7 @@ RSpec.describe EmailContent, type: :model do
                                          email_content_type_id: 1,
                                          email_name_id:         1)
         email_content.save
-        expect(email_content.errors.messages[:scheme_id]).to include('Scheme is required')
+        expect(email_content.errors.messages[:scheme_id]).to include('is required')
       end
 
       it 'expects NO errors if scheme type scheme id present' do

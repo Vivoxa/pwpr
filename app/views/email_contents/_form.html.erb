@@ -40,15 +40,22 @@
                 </div>
                 <div class="row">
                   <div class="col-xs-12 col-md-2 col-lg-4">
-                    <div class="field">
-                      <strong><%= f.label :scheme_id, class: "devise-lgn form-control" %></strong>
-                    </div>
+                    <% unless params[:scheme_id] %>
+                        <div class="field">
+                          <strong><%= f.label :scheme_id, class: "devise-lgn form-control" %></strong>
+                        </div>
+                    <% end %>
                   </div>
                   <div class="col-xs-12 col-md-2 col-lg-8">
-
-                    <div class="field">
-                      <%= f.collection_select :scheme_id, @current_user.schemes.where(active: true).order(:name), :id, :name, {prompt: true, prompt: 'Select a Scheme'}, {id: 'scheme_select', class: "devise-lgn form-control"} %>
-                    </div>
+                    <% if params[:scheme_id] %>
+                        <div class="field">
+                          <%= f.hidden_field :scheme_id, value: params[:scheme_id] %>
+                        </div>
+                    <% else %>
+                        <div class="field">
+                          <%= f.collection_select :scheme_id, @current_user.schemes.where(active: true).order(:name), :id, :name, {prompt: true, prompt: 'Select a Scheme'}, {id: 'scheme_select', class: "devise-lgn form-control"} %>
+                        </div>
+                    <% end %>
                   </div>
                 </div>
                 <div class="row">
@@ -59,7 +66,7 @@
                   </div>
                   <div class="col-xs-12 col-md-2 col-lg-8">
                     <div class="field">
-                      <%= f.collection_select :email_name_id, EmailName.all.order(:name), :id, :name, {prompt: true, prompt: 'Select an Email'}, {class: "devise-lgn form-control"} %>
+                      <%= f.collection_select :email_name_id, @remaining_email_contents, :id, :name, {prompt: true, prompt: 'Select an Email'}, {class: "devise-lgn form-control"} %>
                     </div>
                   </div>
                 </div>

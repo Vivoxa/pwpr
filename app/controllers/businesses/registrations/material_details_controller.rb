@@ -4,8 +4,8 @@ module Businesses
       def new
         @registration = Registration.where(id: params[:registration_id]).first
 
-        error_redirect(business_registrations_path(business_id: @registration.business.id), 'Member is a Small Producer!') and return if @registration.small_producer?
-        error_redirect(business_registrations_path(business_id: @registration.business.id), 'No Regular Producer Details found for this business!') and return unless @registration.regular_producer_detail
+        error_redirect(business_registrations_path(business_id: @registration.business.id), 'Member is a Small Producer!') && return if @registration.small_producer?
+        error_redirect(business_registrations_path(business_id: @registration.business.id), 'No Regular Producer Details found for this business!') && return unless @registration.regular_producer_detail
 
         @material_details = []
         PackagingMaterial.all.each do |material|
@@ -19,7 +19,7 @@ module Businesses
         registration = Registration.where(id: params[:registration_id]).first
 
         material_detail_params.each do |key, value|
-          value.each do |k,v|
+          value.each do |k, v|
             value[k] = v.to_f
           end
 
@@ -37,8 +37,8 @@ module Businesses
       def edit
         @registration = Registration.where(id: params[:registration_id]).first
 
-        error_redirect(business_registrations_path(business_id: @registration.business.id), 'Member is a Small Producer!') and return if @registration.small_producer?
-        error_redirect(business_registrations_path(business_id: @registration.business.id), 'No Regular Producer Details found for this business!') and return unless @registration.regular_producer_detail
+        error_redirect(business_registrations_path(business_id: @registration.business.id), 'Member is a Small Producer!') && return if @registration.small_producer?
+        error_redirect(business_registrations_path(business_id: @registration.business.id), 'No Regular Producer Details found for this business!') && return unless @registration.regular_producer_detail
 
         @material_details = MaterialDetail.where(regular_producer_detail: @registration.regular_producer_detail).last(7)
       end
@@ -49,7 +49,7 @@ module Businesses
         material_details = MaterialDetail.where(regular_producer_detail: registration.regular_producer_detail).last(7)
 
         material_detail_params.each do |key, value|
-          value.each do |k,v|
+          value.each do |k, v|
             value[k] = v.to_f
           end
           material = PackagingMaterial.where(name: key.to_s)
@@ -63,13 +63,13 @@ module Businesses
       end
 
       def material_detail_params
-        params.require(:material_detail).permit(paper: [:t1man, :t1conv, :t1pf, :t1sell, :t2aman, :t2aconv, :t2apf, :t2asell, :t2bman, :t2bconv, :t2bpf, :t2bsell, :t3aconv, :t3apf, :t3asell, :t3b, :t3c],
-                                                glass: [:t1man, :t1conv, :t1pf, :t1sell, :t2aman, :t2aconv, :t2apf, :t2asell, :t2bman, :t2bconv, :t2bpf, :t2bsell, :t3aconv, :t3apf, :t3asell, :t3b, :t3c],
-                                                aluminium: [:t1man, :t1conv, :t1pf, :t1sell, :t2aman, :t2aconv, :t2apf, :t2asell, :t2bman, :t2bconv, :t2bpf, :t2bsell, :t3aconv, :t3apf, :t3asell, :t3b, :t3c],
-                                                steel: [:t1man, :t1conv, :t1pf, :t1sell, :t2aman, :t2aconv, :t2apf, :t2asell, :t2bman, :t2bconv, :t2bpf, :t2bsell, :t3aconv, :t3apf, :t3asell, :t3b, :t3c],
-                                                plastic: [:t1man, :t1conv, :t1pf, :t1sell, :t2aman, :t2aconv, :t2apf, :t2asell, :t2bman, :t2bconv, :t2bpf, :t2bsell, :t3aconv, :t3apf, :t3asell, :t3b, :t3c],
-                                                wood: [:t1man, :t1conv, :t1pf, :t1sell, :t2aman, :t2aconv, :t2apf, :t2asell, :t2bman, :t2bconv, :t2bpf, :t2bsell, :t3aconv, :t3apf, :t3asell, :t3b, :t3c],
-                                                other: [:t1man, :t1conv, :t1pf, :t1sell, :t2aman, :t2aconv, :t2apf, :t2asell, :t2bman, :t2bconv, :t2bpf, :t2bsell, :t3aconv, :t3apf, :t3asell, :t3b, :t3c])
+        params.require(:material_detail).permit(paper:     %i(t1man t1conv t1pf t1sell t2aman t2aconv t2apf t2asell t2bman t2bconv t2bpf t2bsell t3aconv t3apf t3asell t3b t3c),
+                                                glass:     %i(t1man t1conv t1pf t1sell t2aman t2aconv t2apf t2asell t2bman t2bconv t2bpf t2bsell t3aconv t3apf t3asell t3b t3c),
+                                                aluminium: %i(t1man t1conv t1pf t1sell t2aman t2aconv t2apf t2asell t2bman t2bconv t2bpf t2bsell t3aconv t3apf t3asell t3b t3c),
+                                                steel:     %i(t1man t1conv t1pf t1sell t2aman t2aconv t2apf t2asell t2bman t2bconv t2bpf t2bsell t3aconv t3apf t3asell t3b t3c),
+                                                plastic:   %i(t1man t1conv t1pf t1sell t2aman t2aconv t2apf t2asell t2bman t2bconv t2bpf t2bsell t3aconv t3apf t3asell t3b t3c),
+                                                wood:      %i(t1man t1conv t1pf t1sell t2aman t2aconv t2apf t2asell t2bman t2bconv t2bpf t2bsell t3aconv t3apf t3asell t3b t3c),
+                                                other:     %i(t1man t1conv t1pf t1sell t2aman t2aconv t2apf t2asell t2bman t2bconv t2bpf t2bsell t3aconv t3apf t3asell t3b t3c))
       end
     end
   end

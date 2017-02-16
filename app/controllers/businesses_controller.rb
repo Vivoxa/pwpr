@@ -1,6 +1,6 @@
 class BusinessesController < BaseController
   include Businesses
-  
+
   before_action :set_business, only: %i(show edit update destroy)
   before_filter :authenticate_company_operator
   before_action :form_dropdown_values, :scheme_id, only: %i(new create edit)

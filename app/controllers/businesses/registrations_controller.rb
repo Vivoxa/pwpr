@@ -17,8 +17,8 @@ module Businesses
     def create
       business = Business.where(id: registration_params[:business_id]).first
 
-      error_redirect(business, 'Invalid Sic Code!') and return unless formated_params[:sic_code]
-      error_redirect(business, 'Packaging Sector no provided!') and return unless formated_params[:packaging_sector_main_activity]
+      error_redirect(business, 'Invalid Sic Code!') && return unless formated_params[:sic_code]
+      error_redirect(business, 'Packaging Sector no provided!') && return unless formated_params[:packaging_sector_main_activity]
 
       registration = Registration.new(formated_params)
       registration.business = business
@@ -40,8 +40,8 @@ module Businesses
     def update
       registration = Registration.where(id: params[:id]).first
 
-      error_redirect(registration.business, 'Invalid Sic Code!') and return unless formated_params[:sic_code]
-      error_redirect(registration.business, 'Packaging Sector no provided!') and return unless formated_params[:packaging_sector_main_activity]
+      error_redirect(registration.business, 'Invalid Sic Code!') && return unless formated_params[:sic_code]
+      error_redirect(registration.business, 'Packaging Sector no provided!') && return unless formated_params[:packaging_sector_main_activity]
 
       registration.attributes = formated_params
       registration.save!
@@ -51,7 +51,7 @@ module Businesses
 
     def registration_params
       params.require(:registration).permit(:business_id, :sic_code, :packaging_sector_main_activity, :submission_type,
-                                            :resubmission_reason, :turnover, :allocation_method_used)
+                                           :resubmission_reason, :turnover, :allocation_method_used)
     end
 
     private

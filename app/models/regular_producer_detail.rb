@@ -9,27 +9,27 @@ class RegularProducerDetail < ActiveRecord::Base
 
   def form_fields
     {
-      calculation_method_supplier_data:                     {
-                                                              field_type: 'boolean'
-                                                            },
-      calculation_method_sample_weighing:                   {
-                                                              field_type: 'boolean'
-                                                            },
-      calculation_method_sales_records:                     {
-                                                              field_type: 'boolean'
-                                                            },
-      calculation_method_trade_association_method_details:  {
-                                                              field_type: 'text',
-                                                              required: false
-                                                            },
-      other_method_details:                                 {
-                                                              field_type: 'text',
-                                                              required: false
-                                                            },
-      data_system_used:                                     {
-                                                              field_type: 'text',
-                                                              required: false
-                                                            }
+      calculation_method_supplier_data:                    {
+        field_type: 'boolean'
+      },
+      calculation_method_sample_weighing:                  {
+        field_type: 'boolean'
+      },
+      calculation_method_sales_records:                    {
+        field_type: 'boolean'
+      },
+      calculation_method_trade_association_method_details: {
+        field_type: 'text',
+        required:   false
+      },
+      other_method_details:                                {
+        field_type: 'text',
+        required:   false
+      },
+      data_system_used:                                    {
+        field_type: 'text',
+        required:   false
+      }
     }
   end
 end

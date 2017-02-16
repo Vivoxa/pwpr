@@ -6,8 +6,8 @@ module Businesses
         @small_producer = SmallProducerDetail.new
         @registration = @business.registrations.last
 
-        error_redirect(@business, 'No Registration Details where found for this business!') and return unless @registration
-        error_redirect(@business, 'Member is a Regular Producer!') and return unless @business.registrations.last.small_producer?
+        error_redirect(@business, 'No Registration Details where found for this business!') && return unless @registration
+        error_redirect(@business, 'Member is a Regular Producer!') && return unless @business.registrations.last.small_producer?
       end
 
       # POST business/:id/small_producers
@@ -27,8 +27,8 @@ module Businesses
         @business = Business.where(id: params[:business_id]).first
         @registration = @business.registrations.last
 
-        error_redirect(@business, 'No Registration Details where found for this business!') and return unless @registration
-        error_redirect(@business, 'Member is a Regular Producer!') and return unless @business.registrations.last.small_producer?
+        error_redirect(@business, 'No Registration Details where found for this business!') && return unless @registration
+        error_redirect(@business, 'Member is a Regular Producer!') && return unless @business.registrations.last.small_producer?
         @small_producer = @business.registrations.last.small_producer_detail
       end
 

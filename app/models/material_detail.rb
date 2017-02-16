@@ -8,74 +8,74 @@ class MaterialDetail < ActiveRecord::Base
 
   def form_fields
     {
-      t1man:    {
-                  field_type: 'number',
-                    required: true
-                },
-      t1conv:   {
-                  field_type: 'number',
-                  required: true
-                },
-      t1pf:     {
-                  field_type: 'number',
-                  required: true
-                },
-      t1sell:   {
-                  field_type: 'number',
-                  required: true
-                },
-      t2aman:   {
-                  field_type: 'number',
-                  required: true
-                },
-      t2aconv:  {
-                  field_type: 'number',
-                  required: true
-                },
-      t2apf:    {
-                  field_type: 'number',
-                  required: true
-                },
-      t2asell:  {
-                  field_type: 'number',
-                  required: true
-                },
-      t2bman:   {
-                  field_type: 'number',
-                  required: true
-                },
-      t2bconv:  {
-                  field_type: 'number',
-                  required: true
-                },
-      t2bpf:    {
-                  field_type: 'number',
-                  required: true
-                },
-      t2bsell:  {
-                  field_type: 'number',
-                  required: true
-                },
-      t3aconv:  {
-                  field_type: 'number',
-                  required: true
-                },
-      t3apf:    {
-                  field_type: 'number',
-                  required: true
-                },
-      t3asell:  {
-                  field_type: 'number',
-                  required: true
-                },
-      t3b:      {
-                  field_type: 'number',
-                  required: true
-                },
-      t3c:      {
-                  field_type: 'number',
-                  required: true
-                }
+      t1man:   {
+        field_type: 'number',
+        required:   true
+      },
+      t1conv:  {
+        field_type: 'number',
+        required:   true
+      },
+      t1pf:    {
+        field_type: 'number',
+        required:   true
+      },
+      t1sell:  {
+        field_type: 'number',
+        required:   true
+      },
+      t2aman:  {
+        field_type: 'number',
+        required:   true
+      },
+      t2aconv: {
+        field_type: 'number',
+        required:   true
+      },
+      t2apf:   {
+        field_type: 'number',
+        required:   true
+      },
+      t2asell: {
+        field_type: 'number',
+        required:   true
+      },
+      t2bman:  {
+        field_type: 'number',
+        required:   true
+      },
+      t2bconv: {
+        field_type: 'number',
+        required:   true
+      },
+      t2bpf:   {
+        field_type: 'number',
+        required:   true
+      },
+      t2bsell: {
+        field_type: 'number',
+        required:   true
+      },
+      t3aconv: {
+        field_type: 'number',
+        required:   true
+      },
+      t3apf:   {
+        field_type: 'number',
+        required:   true
+      },
+      t3asell: {
+        field_type: 'number',
+        required:   true
+      },
+      t3b:     {
+        field_type: 'number',
+        required:   true
+      },
+      t3c:     {
+        field_type: 'number',
+        required:   true
+      }
     }
   end
 end

@@ -14,6 +14,44 @@ class Registration < ActiveRecord::Base
   # attr_accessible :sic_code, :packaging_sector_main_activity, :submission_type, :resubmission_reason, :turnover,
   #                 :licensor, :allocation_method_used
 
+  def editable?
+    self.business.year_last_reg.to_i <= Date.today.year
+  end
+
+  def small_producer?
+    self.allocation_method_used
+  end
+
+  def material_totals_set
+    return [] if self.regular_producer_detail&.material_totals.empty?
+    self.regular_producer_detail&.material_totals.last(7)
+  end
+
+  def packaging_materials_set
+    return [] if self.regular_producer_detail&.material_details.empty?
+    self.regular_producer_detail&.material_details.last(7)
+  end
+
+  def year
+    self.business.year_last_reg
+  end
+
+  def sic_code_value
+    self.sic_code&.code&.to_s
+  end
+
+  def sector_main_activity_value
+    self.packaging_sector_main_activity&.material&.to_s
+  end
+
+  def submission_code_value
+    self.submission_type&.code&.to_s
+  end
+
+  def resubmission_code_value
+    self.resubmission_reason&.reason&.to_s
+  end
+
   def form_fields
     {
       sic_code:                       { field_type: 'collection',

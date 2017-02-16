@@ -4,6 +4,10 @@ class SmallProducerDetail < ActiveRecord::Base
 
   validates_presence_of :allocation_method_predominant_material, :allocation_method_obligation, :registration_id
 
+  def predominant_material_value
+    self.allocation_method_predominant_material&.capitalize
+  end
+
   def form_fields
     {
       allocation_method_predominant_material: {

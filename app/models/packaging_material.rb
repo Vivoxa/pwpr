@@ -4,4 +4,8 @@ class PackagingMaterial < ActiveRecord::Base
   has_many :material_targets
 
   validates_presence_of :name, :year_introduced
+
+  def excluded_materials
+    ['glassremelt']
+  end
 end

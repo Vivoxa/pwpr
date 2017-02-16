@@ -9,7 +9,6 @@ module Businesses
 
     # GET business/:id/registrations/new
     def new
-      binding.pry
       @business = Business.where(id: params[:business_id]).first
       @registration = Registration.new
     end

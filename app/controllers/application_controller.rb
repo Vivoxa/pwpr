@@ -25,17 +25,13 @@ class ApplicationController < ActionController::Base
     '/'
   end
 
-  def format_field(field)
-    return field.to_s.capitalize unless field.to_s.gsub!(/_/, ' ')
-    field.to_s.gsub!(/_/, ' ').split.map(&:capitalize).join(' ')
-  end
-
   protected
 
   def error_redirect(path, error_msg)
     flash[:error] = error_msg
     redirect_to path
   end
+
 
   def current_ability
     user = @current_user || Visitor.new

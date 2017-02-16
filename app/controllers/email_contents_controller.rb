@@ -27,7 +27,7 @@ class EmailContentsController < ApplicationController
 
   # GET /email_contents/1/edit
   def edit
-    @remaining_email_contents = remaining_email_contents(params[:scheme_id])
+    @remaining_email_contents = [@email_content.email_name]
   end
 
   # POST /email_contents
@@ -40,6 +40,7 @@ class EmailContentsController < ApplicationController
         format.html { redirect_to @email_content, notice: 'Email content was successfully created.' }
         format.json { render :show, status: :created, location: @email_content }
       else
+        @remaining_email_contents = remaining_email_contents(params[:scheme_id])
         format.html { render :new }
         format.json { render json: @email_content.errors, status: :unprocessable_entity }
       end

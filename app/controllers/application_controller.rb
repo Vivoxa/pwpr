@@ -32,6 +32,12 @@ class ApplicationController < ActionController::Base
     redirect_to path
   end
 
+  def format_field(field)
+    return field.to_s.capitalize unless field.to_s.gsub!(/_/, ' ')
+
+    field.to_s.gsub!(/_/, ' ').split.map(&:capitalize).join(' ')
+  end
+
   def current_ability
     user = @current_user || Visitor.new
     @current_ability ||= Abilities.ability_for(user)

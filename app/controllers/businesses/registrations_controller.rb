@@ -24,7 +24,7 @@ module Businesses
       registration.business = business
       registration.save!
 
-      if registration.allocation_method_used
+      if registration.small_producer?
         redirect_to new_registration_small_producer_path(registration_id: registration.id), notice: "Registration Details for #{business.name} were successfully saved!"
       else
         redirect_to new_registration_regular_producer_path(registration_id: registration.id), notice: "Registration Details for #{business.name} were successfully saved!"

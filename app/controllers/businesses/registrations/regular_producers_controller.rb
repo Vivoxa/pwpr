@@ -6,7 +6,7 @@ module Businesses
         @regular_producer = RegularProducerDetail.new
         @business = @registration.business
 
-        error_redirect(business_registrations_path(business_id: @registration.business.id), 'Member is a Small Producer!') and return if @registration.allocation_method_used
+        error_redirect(business_registrations_path(business_id: @registration.business.id), 'Member is a Small Producer!') and return if @registration.small_producer?
       end
 
       # POST business/:id/regular_producer_details
@@ -24,7 +24,7 @@ module Businesses
       def edit
         @registration = Registration.where(id: params[:registration_id]).first
 
-        error_redirect(business_registrations_path(business_id: @registration.business.id), 'Member is a Small Producer!') and return if @registration.allocation_method_used
+        error_redirect(business_registrations_path(business_id: @registration.business.id), 'Member is a Small Producer!') and return if @registration.small_producer?
         @regular_producer = @registration.regular_producer_detail
       end
 

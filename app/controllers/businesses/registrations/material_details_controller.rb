@@ -4,12 +4,12 @@ module Businesses
       def new
         @registration = Registration.where(id: params[:registration_id]).first
 
-        error_redirect(business_registrations_path(business_id: @registration.business.id), 'Member is a Small Producer!') and return if @registration.allocation_method_used
+        error_redirect(business_registrations_path(business_id: @registration.business.id), 'Member is a Small Producer!') and return if @registration.small_producer?
         error_redirect(business_registrations_path(business_id: @registration.business.id), 'No Regular Producer Details found for this business!') and return unless @registration.regular_producer_detail
 
         @material_details = []
         PackagingMaterial.all.each do |material|
-          next if material.name == 'glassremelt'
+          next if material.excluded_materials.include? material.name
           @material_details << MaterialDetail.new(packaging_material: material, regular_producer_detail: @registration.regular_producer_detail)
         end
       end
@@ -37,7 +37,7 @@ module Businesses
       def edit
         @registration = Registration.where(id: params[:registration_id]).first
 
-        error_redirect(business_registrations_path(business_id: @registration.business.id), 'Member is a Small Producer!') and return if @registration.allocation_method_used
+        error_redirect(business_registrations_path(business_id: @registration.business.id), 'Member is a Small Producer!') and return if @registration.small_producer?
         error_redirect(business_registrations_path(business_id: @registration.business.id), 'No Regular Producer Details found for this business!') and return unless @registration.regular_producer_detail
 
         @material_details = MaterialDetail.where(regular_producer_detail: @registration.regular_producer_detail).last(7)

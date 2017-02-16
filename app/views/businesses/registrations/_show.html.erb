@@ -18,29 +18,29 @@
     <div><strong>Licensor: </strong></div>
   </div>
   <div class="row">
-    <div><strong>Small Producer: </strong></div>
+    <div><strong>Alloc. Method: </strong></div>
   </div>
 </div>
 
 <div class='col-md-4 col-lg-6'>
   <div class="row">
     <div class="form_value_blank">
-      <%= @business.registrations.last&.sic_code&.code&.to_s %>
+      <%= @business.registrations.last&.sic_code_value %>
     </div>
   </div>
   <div class="row">
     <div class="form_value_blank">
-      <%= @business.registrations.last&.packaging_sector_main_activity&.material&.to_s %>
+      <%= @business.registrations.last&.sector_main_activity_value %>
     </div>
   </div>
   <div class="row">
     <div class="form_value_blank">
-      <%= @business.registrations.last&.submission_type&.code&.to_s %>
+      <%= @business.registrations.last&.submission_code_value %>
     </div>
   </div>
   <div class="row">
     <div class="form_value_blank">
-      <%= @business.registrations.last&.resubmission_reason&.reason&.to_s %>
+      <%= @business.registrations.last&.resubmission_code_value %>
     </div>
   </div>
   <div class="row">

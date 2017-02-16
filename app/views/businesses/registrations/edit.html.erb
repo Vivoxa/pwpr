@@ -9,13 +9,7 @@
         <% @registration.form_fields.each do |key, hsh| %>
           <div class='row'>
             <div class='col-md-6' align='right'>
-              <strong>
-                <% if key.to_s.gsub!(/_/, ' ') %>
-                  <%= key.to_s.gsub!(/_/, ' ').split.map(&:capitalize).join(' ') %>
-                <% else %>
-                  <%= key.to_s.capitalize %>
-                <% end %>
-              </strong>
+              <strong><%= format_field(key) %></strong>
             </div>
             <div class='col-md-6'>
               <% if hsh[:field_type] == 'number' %>

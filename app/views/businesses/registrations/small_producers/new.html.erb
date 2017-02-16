@@ -1,7 +1,7 @@
 <div id="main-container" class="container">
   <div class="card">
     <h3 class="card-header">
-      <center>small producer</center>
+      <center>New Small Producer Details for <%= @business.name %></center>
     </h3>
     <div class="card-block">
       <%= form_for @small_producer, url: {action: 'create'}, html: { method: :post } do |f|%>

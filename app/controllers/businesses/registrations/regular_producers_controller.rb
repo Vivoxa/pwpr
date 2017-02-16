@@ -43,6 +43,12 @@ module Businesses
                                                         :calculation_method_sales_records, :calculation_method_trade_association_method_details,
                                                         :other_method_details, :data_system_used)
       end
+
+      def format_field(field)
+        field = super
+        field.slice! 'Calculation Method '
+        field
+      end
     end
   end
 end

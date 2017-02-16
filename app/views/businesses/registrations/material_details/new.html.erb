@@ -1,7 +1,7 @@
 <div id="main-container" class="container">
   <div class="card">
     <h3 class="card-header">
-      <center>Materials</center>
+      <center>New Material Details</center>
     </h3>
     <div class="card-block">
       <%= form_tag registration_material_details_path, method: :post do |f| %>
@@ -19,6 +19,9 @@
               <div class='row' align='right' style='height: 30px; margin-right: 5px;'>
                 <strong><%= key.to_s.capitalize %></strong>
               </div>
+              <% if ['t1sell', 't2bsell'].include? key.to_s %>
+                </br>
+              <% end %>
             <% end %>
           </div>
           <% @material_details.each do |detail| %>
@@ -27,6 +30,9 @@
                 <div class='row'>
                   <%= number_field_tag "[material_detail]" + "[#{detail.packaging_material.name}]" + key.to_s, nil, {required: hsh[:required], step: :any, value: 0} %>
                 </div>
+                <% if ['t1sell', 't2bsell'].include? key.to_s %>
+                  </br>
+                <% end %>
               <% end %>
             </div>
           <% end %>

@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
 
   layout :layout_by_resource
 
+  helper_method :format_field
+
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to main_app.root_url, alert: exception.message
   end
@@ -25,13 +27,17 @@ class ApplicationController < ActionController::Base
     '/'
   end
 
+  def format_field(field)
+    return field.to_s.capitalize unless field.to_s.gsub!(/_/, ' ')
+    field.to_s.gsub!(/_/, ' ').split.map(&:capitalize).join(' ')
+  end
+
   protected
 
   def error_redirect(path, error_msg)
     flash[:error] = error_msg
     redirect_to path
   end
-
 
   def current_ability
     user = @current_user || Visitor.new

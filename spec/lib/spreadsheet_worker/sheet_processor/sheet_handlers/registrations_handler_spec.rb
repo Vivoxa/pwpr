@@ -40,6 +40,8 @@ RSpec.describe SpreadsheetWorker::SheetProcessor::SheetHandlers::RegistrationsHa
   let(:contact) { subject.instance_variable_get(:@contact) }
   let(:small_producer) { SmallProducerDetail.new(id: 1) }
   let(:regular_producer) { RegularProducerDetail.new(id: 1) }
+  let(:trade_association_method) { TradeAssociationMethod.new(id: 1) }
+  let(:data_system) { DataSystem.new(id: 1) }
 
   before do
     allow(InputOutput::ServerFileHandler).to receive(:server_file_path_for).and_return server_file_path
@@ -67,6 +69,8 @@ RSpec.describe SpreadsheetWorker::SheetProcessor::SheetHandlers::RegistrationsHa
       allow(AgencyTemplateUpload).to receive(:find_by_id).and_return valid_agency_template
       allow(speadsheet).to receive_message_chain(:sheet, :drop).and_return [valid_row_array]
       allow(PackagingSectorMainActivity).to receive(:where).and_return [packaging_sector]
+      allow(TradeAssociationMethod).to receive(:where).and_return [trade_association_method]
+      allow(DataSystem).to receive(:where).and_return [data_system]
       allow(valid_business.addresses).to receive(:where).and_return []
       subject.process
     end
@@ -314,10 +318,6 @@ RSpec.describe SpreadsheetWorker::SheetProcessor::SheetHandlers::RegistrationsHa
             expect(regular_producer.calculation_method_supplier_data).to eq true
           end
 
-          it 'sets the calculation_method_or_other_method_used' do
-            expect(regular_producer.calculation_method_or_other_method_used).to eq true
-          end
-
           it 'sets the calculation_method_sample_weighing' do
             expect(regular_producer.calculation_method_sample_weighing).to eq true
           end
@@ -326,16 +326,12 @@ RSpec.describe SpreadsheetWorker::SheetProcessor::SheetHandlers::RegistrationsHa
             expect(regular_producer.calculation_method_sales_records).to eq true
           end
 
-          it 'sets the calculation_method_trade_association_method_details' do
-            expect(regular_producer.calculation_method_trade_association_method_details).to eq false
+          it 'sets the trade_association_method' do
+            expect(regular_producer.trade_association_method).to eq trade_association_method
           end
 
-          it 'sets the consultant_system_used' do
-            expect(regular_producer.consultant_system_used).to eq false
-          end
-
-          it 'sets the data_system_used' do
-            expect(regular_producer.data_system_used).to eq ''
+          it 'sets the data_system' do
+            expect(regular_producer.data_system).to eq data_system
           end
 
           it 'sets the other_method_details' do

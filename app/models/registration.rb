@@ -23,12 +23,12 @@ class Registration < ActiveRecord::Base
   end
 
   def material_totals_set
-    return [] if regular_producer_detail&.material_totals.empty?
+    return [] if !regular_producer_detail || regular_producer_detail&.material_totals.empty?
     regular_producer_detail&.material_totals.last(7)
   end
 
   def packaging_materials_set
-    return [] if regular_producer_detail&.material_details.empty?
+    return [] if !regular_producer_detail || regular_producer_detail&.material_details.empty?
     regular_producer_detail&.material_details.last(7)
   end
 

@@ -1,5 +1,7 @@
 class RegularProducerDetail < ActiveRecord::Base
   belongs_to :registration
+  belongs_to :data_system
+  belongs_to :trade_association_method
 
   has_many :material_totals, dependent: :destroy
   has_many :material_details, dependent: :destroy
@@ -18,8 +20,10 @@ class RegularProducerDetail < ActiveRecord::Base
       calculation_method_sales_records:                    {
         field_type: 'boolean'
       },
-      calculation_method_trade_association_method_details: {
-        field_type: 'text',
+      trade_association_method_details:                    {
+        field_type: 'collection',
+        choices:    TradeAssociationMethod.all,
+        field:      :method,
         required:   false
       },
       other_method_details:                                {
@@ -27,7 +31,9 @@ class RegularProducerDetail < ActiveRecord::Base
         required:   false
       },
       data_system_used:                                    {
-        field_type: 'text',
+        field_type: 'collection',
+        choices:    DataSystem.all,
+        field:      :system,
         required:   false
       }
     }

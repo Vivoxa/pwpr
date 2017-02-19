@@ -1,53 +1,49 @@
-<div class='col-md-4 col-lg-6'>
-  <div class="row">
-    <div><strong>Calculation Supplier Data: </strong></div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Supplier Data: </strong></div>
   </div>
-  <div class="row">
-    <div><strong>Calculation Sample Weighing: </strong></div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.regular_producer_detail&.calculation_method_supplier_data&.to_s %>
   </div>
-  <div class="row">
-    <div><strong>Calculation Sales Records: </strong></div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Sample Weighing: </strong></div>
   </div>
-  <div class="row">
-    <div><strong>Calculation Trade Association Details: </strong></div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.regular_producer_detail&.calculation_method_sample_weighing&.to_s %>
   </div>
-  <div class="row">
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Sales Records: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.regular_producer_detail&.calculation_method_sales_records&.to_s %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Trade Association Method: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.regular_producer_detail&.trade_association_method_detail&.method.to_s %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
     <div><strong>Other Method Details: </strong></div>
   </div>
-  <div class="row">
-    <div><strong>Data System Details: </strong></div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.regular_producer_detail&.other_method_details&.to_s %>
   </div>
 </div>
-
-<div class='col-md-4 col-lg-6'>
-  <div class="row">
-    <div class="form_value_blank">
-      <%= @business.registrations.last&.regular_producer_detail&.calculation_method_supplier_data&.to_s %>
-    </div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Data System: </strong></div>
   </div>
-  <div class="row">
-    <div class="form_value_blank">
-      <%= @business.registrations.last&.regular_producer_detail&.calculation_method_sample_weighing&.to_s %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="form_value_blank">
-      <%= @business.registrations.last&.regular_producer_detail&.calculation_method_sales_records&.to_s %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="form_value_blank">
-      <%= @business.registrations.last&.regular_producer_detail&.calculation_method_trade_association_method_details&.to_s %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="form_value_blank">
-      <%= @business.registrations.last&.regular_producer_detail&.other_method_details&.to_s %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="form_value_blank">
-      <%= @business.registrations.last&.regular_producer_detail&.data_system_used&.to_s %>
-    </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.regular_producer_detail&.data_system&.system.to_s %>
   </div>
 </div>
+</br>

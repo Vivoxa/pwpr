@@ -1,61 +1,56 @@
-<div class='col-md-4 col-lg-6'>
-  <div class="row">
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
     <div><strong>SIC: </strong></div>
   </div>
-  <div class="row">
-    <div><strong>Sector Main Activity: </strong></div>
-  </div>
-  <div class="row">
-    <div><strong>Submission Type: </strong></div>
-  </div>
-  <div class="row">
-    <div><strong>Resubmission Reason: </strong></div>
-  </div>
-  <div class="row">
-    <div><strong>Turnover: </strong></div>
-  </div>
-  <div class="row">
-    <div><strong>Licensor: </strong></div>
-  </div>
-  <div class="row">
-    <div><strong>Alloc. Method: </strong></div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.sic_code_value %>
   </div>
 </div>
-
-<div class='col-md-4 col-lg-6'>
-  <div class="row">
-    <div class="form_value_blank">
-      <%= @business.registrations.last&.sic_code_value %>
-    </div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Sector Main Activity: </strong></div>
   </div>
-  <div class="row">
-    <div class="form_value_blank">
-      <%= @business.registrations.last&.sector_main_activity_value %>
-    </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.sector_main_activity_value %>
   </div>
-  <div class="row">
-    <div class="form_value_blank">
-      <%= @business.registrations.last&.submission_code_value %>
-    </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Submission Type: </strong></div>
   </div>
-  <div class="row">
-    <div class="form_value_blank">
-      <%= @business.registrations.last&.resubmission_code_value %>
-    </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.submission_code_value %>
   </div>
-  <div class="row">
-    <div class="form_value_blank">
-      <%= @business.registrations.last&.turnover&.to_s %>
-    </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Resubmission Reason: </strong></div>
   </div>
-  <div class="row">
-    <div class="form_value_blank">
-      <%= @business.registrations.last&.licensor&.to_s %>
-    </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.resubmission_code_value %>
   </div>
-  <div class="row">
-    <div class="form_value_blank">
-      <%= @business.registrations.last&.allocation_method_used&.to_s %>
-    </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Turnover: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.turnover&.to_s %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Licensor: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.licensor&.to_s %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Alloc. Method: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.allocation_method_used&.to_s %>
   </div>
 </div>

@@ -36,7 +36,7 @@
   </div>
   <div class="col-md-4 col-lg-6">
     <% turnover_value = @business.registrations.last&.turnover / 1000000 if @business.registrations.last&.turnover %>
-    £ <%= turnover_value.round(3).to_s || 'N\A' %> mil
+    £ <%= turnover_value.to_f.round(3).to_s || 'N\A' %> mil
   </div>
 </div>
 <div class="row">

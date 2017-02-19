@@ -18,7 +18,7 @@
               <% elsif hsh[:field_type] == 'boolean' %>
                 <%= f.check_box key %>
               <% elsif hsh[:field_type] == 'collection' %>
-                <%= f.collection_select key, hsh[:choices], hsh[:field], hsh[:field], include_blank: hsh[:required] %>
+                <%= f.collection_select key, hsh[:choices], hsh[:field], hsh[:field], include_blank: hsh[:required], selected: hsh[:value] %>
               <% end %>
             </div>
           </div>

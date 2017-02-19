@@ -20,20 +20,22 @@ class RegularProducerDetail < ActiveRecord::Base
       calculation_method_sales_records:                    {
         field_type: 'boolean'
       },
-      trade_association_method_details:                    {
+      trade_association_method:                    {
         field_type: 'collection',
         choices:    TradeAssociationMethod.all,
         field:      :method,
-        required:   false
+        required:   false,
+        value: self.trade_association_method&.name
       },
-      other_method_details:                                {
-        field_type: 'text',
-        required:   false
-      },
-      data_system_used:                                    {
+      data_system:                                    {
         field_type: 'collection',
         choices:    DataSystem.all,
         field:      :system,
+        required:   false,
+        value: self.data_system&.name
+      },
+      other_method_details:                                {
+        field_type: 'text',
         required:   false
       }
     }

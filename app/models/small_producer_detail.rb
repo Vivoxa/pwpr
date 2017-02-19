@@ -12,14 +12,21 @@ class SmallProducerDetail < ActiveRecord::Base
     {
       allocation_method_predominant_material: {
         field_type: 'collection',
-        choices:    PackagingMaterial.all,
+        choices:    PackagingMaterial.all - excluded_materials,
         field:      :name,
-        required:   true
+        required:   true,
+        value: self.allocation_method_predominant_material&.name
       },
       allocation_method_obligation:           {
         field_type: 'number',
         required:   true
       }
     }
+  end
+
+  private
+
+  def excluded_materials
+    ['glassremelt']
   end
 end

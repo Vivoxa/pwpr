@@ -24,14 +24,6 @@
 </div>
 <div class="row">
   <div class="col-md-4 col-lg-6" align="right">
-    <div><strong>Trade Association Method: </strong></div>
-  </div>
-  <div class="col-md-4 col-lg-6">
-    <%= @business.registrations.last&.regular_producer_detail&.trade_association_method_detail&.method&.to_s || 'N\A' %>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-4 col-lg-6" align="right">
     <div><strong>Other Method Details: </strong></div>
   </div>
   <div class="col-md-4 col-lg-6">
@@ -40,10 +32,18 @@
 </div>
 <div class="row">
   <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Trade Association Method: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.regular_producer_detail&.trade_association_method&.name&.to_s || 'N\A' %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
     <div><strong>Data System: </strong></div>
   </div>
   <div class="col-md-4 col-lg-6">
-    <%= @business.registrations.last&.regular_producer_detail&.data_system&.system&.to_s || 'N\A' %>
+    <%= @business.registrations.last&.regular_producer_detail&.data_system&.name&.to_s || 'N\A' %>
   </div>
 </div>
 </br>

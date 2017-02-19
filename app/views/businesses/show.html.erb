@@ -10,37 +10,37 @@
               <div class="col-md-4 col-lg-6" align="right">
                 <div><strong>Name: </strong></div>
               </div>
-              <div class="col-md-4 col-lg-6"><%= @business.name if @business.name %></div>
+              <div class="col-md-4 col-lg-6"><%= @business.name&.to_s || 'N\A' %></div>
             </div>
             <div class="row">
               <div class="col-md-4 col-lg-6" align="right">
                 <div><strong>Company Type: </strong></div>
               </div>
-              <div class="col-md-4 col-lg-6"><%= @business.business_type&.name %></div>
+              <div class="col-md-4 col-lg-6"><%= @business.business_type&.name || 'N\A' %></div>
             </div>
             <div class="row">
               <div class="col-md-4 col-lg-6" align="right">
                 <div><strong>Company Subtype: </strong></div>
               </div>
-              <div class="col-md-4 col-lg-6"><%= @business.business_subtype&.name %></div>
+              <div class="col-md-4 col-lg-6"><%= @business.business_subtype&.name || 'N\A' %></div>
             </div>
             <div class="row">
               <div class="col-md-4 col-lg-6" align="right">
                 <div><strong>Membership ID: </strong></div>
               </div>
-              <div class="col-md-4 col-lg-6"><%= @business.scheme_ref&.to_s %></div>
+              <div class="col-md-4 col-lg-6"><%= @business.scheme_ref&.to_s || 'N\A' %></div>
             </div>
             <div class="row">
               <div class="col-md-4 col-lg-6" align="right">
                 <div><strong>Company No: </strong></div>
               </div>
-              <div class="col-md-4 col-lg-6"><%= @business.company_number&.to_s %></div>
+              <div class="col-md-4 col-lg-6"><%= @business.company_number&.to_s || 'N\A' %></div>
             </div>
             <div class="row">
               <div class="col-md-4 col-lg-6" align="right">
                 <div><strong>NPWD: </strong></div>
               </div>
-              <div class="col-md-4 col-lg-6"><%= @business.NPWD&.to_s %></div>
+              <div class="col-md-4 col-lg-6"><%= @business.NPWD&.to_s || 'N\A' %></div>
             </div>
           </div>
         </div>
@@ -50,37 +50,37 @@
               <div class="col-md-4 col-lg-6" align="right">
                 <div><strong>Year first reg: </strong></div>
               </div>
-              <div class="col-md-4 col-lg-6"><%= @business.year_first_reg %></div>
+              <div class="col-md-4 col-lg-6"><%= @business.year_first_reg || 'N\A' %></div>
             </div>
             <div class="row">
               <div class="col-md-4 col-lg-6" align="right">
                 <div><strong>Year last reg: </strong></div>
               </div>
-              <div class="col-md-4 col-lg-6"><%= @business.year_last_reg %></div>
+              <div class="col-md-4 col-lg-6"><%= @business.year_last_reg || 'N\A' %></div>
             </div>
             <div class="row">
               <div class="col-md-4 col-lg-6" align="right">
                 <div><strong>Scheme status code: </strong></div>
               </div>
-              <div class="col-md-4 col-lg-6"><%= @business.scheme_status_code&.code %></div>
+              <div class="col-md-4 col-lg-6"><%= @business.scheme_status_code&.code || 'N\A' %></div>
             </div>
             <div class="row">
               <div class="col-md-4 col-lg-6" align="right">
                 <div><strong>Country of registration: </strong></div>
               </div>
-              <div class="col-md-4 col-lg-6"><%= @business.country_of_business_registration&.country %></div>
+              <div class="col-md-4 col-lg-6"><%= @business.country_of_business_registration&.country || 'N\A' %></div>
             </div>
             <div class="row">
               <div class="col-md-4 col-lg-6" align="right">
                 <div><strong>Registration status code: </strong></div>
               </div>
-              <div class="col-md-4 col-lg-6"><%= @business.registration_status_code&.code %></div>
+              <div class="col-md-4 col-lg-6"><%= @business.registration_status_code&.code || 'N\A' %></div>
             </div>
             <div class="row">
               <div class="col-md-4 col-lg-6" align="right">
                 <div><strong>Holding business: </strong></div>
               </div>
-              <div class="col-md-4 col-lg-6"><%= @business.holding_business&.name %></div>
+              <div class="col-md-4 col-lg-6"><%= @business.holding_business&.name || 'N\A' %></div>
             </div>
           </div>
         </div>

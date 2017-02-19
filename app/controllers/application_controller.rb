@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   layout :layout_by_resource
 
-  helper_method :format_field
+  helper_method :format_field, :format_boolean_value
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to main_app.root_url, alert: exception.message
@@ -27,12 +27,16 @@ class ApplicationController < ActionController::Base
     '/'
   end
 
+  protected
+
   def format_field(field)
     return field.to_s.capitalize unless field.to_s.gsub!(/_/, ' ')
     field.to_s.gsub!(/_/, ' ').split.map(&:capitalize).join(' ')
   end
 
-  protected
+  def format_boolean_value(value)
+    value ? 'Yes' : 'No'
+  end
 
   def error_redirect(path, error_msg)
     flash[:error] = error_msg

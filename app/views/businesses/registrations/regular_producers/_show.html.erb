@@ -3,7 +3,7 @@
     <div><strong>Supplier Data: </strong></div>
   </div>
   <div class="col-md-4 col-lg-6">
-    <%= @business.registrations.last&.regular_producer_detail&.calculation_method_supplier_data&.to_s %>
+    <%= format_boolean_value(@business.registrations.last&.regular_producer_detail&.calculation_method_supplier_data) %>
   </div>
 </div>
 <div class="row">
@@ -11,7 +11,7 @@
     <div><strong>Sample Weighing: </strong></div>
   </div>
   <div class="col-md-4 col-lg-6">
-    <%= @business.registrations.last&.regular_producer_detail&.calculation_method_sample_weighing&.to_s %>
+    <%= format_boolean_value(@business.registrations.last&.regular_producer_detail&.calculation_method_sample_weighing) %>
   </div>
 </div>
 <div class="row">
@@ -19,7 +19,7 @@
     <div><strong>Sales Records: </strong></div>
   </div>
   <div class="col-md-4 col-lg-6">
-    <%= @business.registrations.last&.regular_producer_detail&.calculation_method_sales_records&.to_s %>
+    <%= format_boolean_value(@business.registrations.last&.regular_producer_detail&.calculation_method_sales_records) %>
   </div>
 </div>
 <div class="row">
@@ -27,7 +27,7 @@
     <div><strong>Trade Association Method: </strong></div>
   </div>
   <div class="col-md-4 col-lg-6">
-    <%= @business.registrations.last&.regular_producer_detail&.trade_association_method_detail&.method.to_s %>
+    <%= @business.registrations.last&.regular_producer_detail&.trade_association_method_detail&.method&.to_s || 'N\A' %>
   </div>
 </div>
 <div class="row">
@@ -35,7 +35,7 @@
     <div><strong>Other Method Details: </strong></div>
   </div>
   <div class="col-md-4 col-lg-6">
-    <%= @business.registrations.last&.regular_producer_detail&.other_method_details&.to_s %>
+    <%= @business.registrations.last&.regular_producer_detail&.other_method_details&.to_s || 'N\A' %>
   </div>
 </div>
 <div class="row">
@@ -43,7 +43,7 @@
     <div><strong>Data System: </strong></div>
   </div>
   <div class="col-md-4 col-lg-6">
-    <%= @business.registrations.last&.regular_producer_detail&.data_system&.system.to_s %>
+    <%= @business.registrations.last&.regular_producer_detail&.data_system&.system&.to_s || 'N\A' %>
   </div>
 </div>
 </br>

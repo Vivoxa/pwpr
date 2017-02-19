@@ -19,7 +19,7 @@
     <div><strong>Submission Type: </strong></div>
   </div>
   <div class="col-md-4 col-lg-6">
-    <%= @business.registrations.last&.submission_code_value %>
+    <%= @business.registrations.last&.submission_code_value || 'N\A' %>
   </div>
 </div>
 <div class="row">
@@ -27,7 +27,7 @@
     <div><strong>Resubmission Reason: </strong></div>
   </div>
   <div class="col-md-4 col-lg-6">
-    <%= @business.registrations.last&.resubmission_code_value %>
+    <%= @business.registrations.last&.resubmission_code_value || 'N\A' %>
   </div>
 </div>
 <div class="row">
@@ -35,7 +35,8 @@
     <div><strong>Turnover: </strong></div>
   </div>
   <div class="col-md-4 col-lg-6">
-    <%= @business.registrations.last&.turnover&.to_s %>
+    <% turnover_value = @business.registrations.last&.turnover / 1000000 if @business.registrations.last&.turnover %>
+    £ <%= turnover_value.round(3).to_s || 'N\A' %> mil
   </div>
 </div>
 <div class="row">
@@ -43,7 +44,7 @@
     <div><strong>Licensor: </strong></div>
   </div>
   <div class="col-md-4 col-lg-6">
-    <%= @business.registrations.last&.licensor&.to_s %>
+    <%= format_boolean_value(@business.registrations.last&.licensor) %>
   </div>
 </div>
 <div class="row">
@@ -51,6 +52,6 @@
     <div><strong>Alloc. Method: </strong></div>
   </div>
   <div class="col-md-4 col-lg-6">
-    <%= @business.registrations.last&.allocation_method_used&.to_s %>
+    <%= format_boolean_value(@business.registrations.last&.allocation_method_used) %>
   </div>
 </div>

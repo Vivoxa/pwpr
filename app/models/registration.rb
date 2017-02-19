@@ -58,25 +58,25 @@ class Registration < ActiveRecord::Base
                                        choices:    SicCode.all,
                                        field:      :code,
                                        required:   false,
-                                       value: self.sic_code&.code},
+                                       value:      sic_code&.code},
       packaging_sector_main_activity: {field_type: 'collection',
                                        choices:    PackagingSectorMainActivity.all,
                                        field:      :material,
                                        required:   false,
-                                       value: self.packaging_sector_main_activity&.material},
+                                       value:      packaging_sector_main_activity&.material},
       submission_type:                {
         field_type: 'collection',
         choices:    SubmissionType.all,
         field:      :code,
         required:   true,
-        value: self.submission_type&.code
+        value:      submission_type&.code
       },
       resubmission_reason:            {
         field_type: 'collection',
         choices:    ResubmissionReason.all,
         field:      :reason,
         required:   true,
-        value: self.resubmission_reason&.reason
+        value:      resubmission_reason&.reason
       },
       turnover:                       {
         field_type: 'number',

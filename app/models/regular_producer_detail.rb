@@ -11,30 +11,30 @@ class RegularProducerDetail < ActiveRecord::Base
 
   def form_fields
     {
-      calculation_method_supplier_data:                    {
+      calculation_method_supplier_data:   {
         field_type: 'boolean'
       },
-      calculation_method_sample_weighing:                  {
+      calculation_method_sample_weighing: {
         field_type: 'boolean'
       },
-      calculation_method_sales_records:                    {
+      calculation_method_sales_records:   {
         field_type: 'boolean'
       },
-      trade_association_method:                    {
+      trade_association_method:           {
         field_type: 'collection',
         choices:    TradeAssociationMethod.all,
         field:      :method,
         required:   false,
-        value: self.trade_association_method&.name
+        value:      trade_association_method&.name
       },
-      data_system:                                    {
+      data_system:                        {
         field_type: 'collection',
         choices:    DataSystem.all,
         field:      :system,
         required:   false,
-        value: self.data_system&.name
+        value:      data_system&.name
       },
-      other_method_details:                                {
+      other_method_details:               {
         field_type: 'text',
         required:   false
       }

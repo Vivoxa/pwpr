@@ -15,7 +15,7 @@ class SmallProducerDetail < ActiveRecord::Base
         choices:    PackagingMaterial.all - excluded_materials,
         field:      :name,
         required:   true,
-        value: self.allocation_method_predominant_material&.name
+        value:      allocation_method_predominant_material&.name
       },
       allocation_method_obligation:           {
         field_type: 'number',

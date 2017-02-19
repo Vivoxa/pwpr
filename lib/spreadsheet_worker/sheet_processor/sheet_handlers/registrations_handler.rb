@@ -116,8 +116,8 @@ module SpreadsheetWorker
           producer.calculation_method_supplier_data = column_value(row, map['calculation_method']['suplier_data']['field'])
           producer.calculation_method_sample_weighing = column_value(row, map['calculation_method']['sample_weighing']['field'])
           producer.calculation_method_sales_records = column_value(row, map['calculation_method']['sales_records']['field'])
-          producer.trade_association_method = TradeAssociationMethod.where(method: column_value(row, map['trade_assoc_method_details']['field'])).first
-          producer.data_system = DataSystem.where(system: column_value(row, map['name_of_consultant_or_data_system']['field'])).first
+          producer.trade_association_method = TradeAssociationMethod.where(name: column_value(row, map['trade_assoc_method_details']['field'])).first
+          producer.data_system = DataSystem.where(name: column_value(row, map['name_of_consultant_or_data_system']['field'])).first
           producer.other_method_details = column_value(row, map['other_method_details']['field'])
           producer.registration = @registration
           producer.save!

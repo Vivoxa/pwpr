@@ -114,11 +114,9 @@ module SpreadsheetWorker
         def process_regular_producer(row)
           producer = RegularProducerDetail.new
           producer.calculation_method_supplier_data = column_value(row, map['calculation_method']['suplier_data']['field'])
-          producer.calculation_method_or_other_method_used = column_value(row, map['calculation_or_other_method']['field'])
           producer.calculation_method_sample_weighing = column_value(row, map['calculation_method']['sample_weighing']['field'])
           producer.calculation_method_sales_records = column_value(row, map['calculation_method']['sales_records']['field'])
           producer.calculation_method_trade_association_method_details = column_value(row, map['trade_assoc_method_details']['field'])
-          producer.consultant_system_used = column_value(row, map['consultant_or_data_system_used']['field'])
           producer.data_system_used = column_value(row, map['name_of_consultant_or_data_system']['field'])
           producer.other_method_details = column_value(row, map['other_method_details']['field'])
           producer.registration = @registration

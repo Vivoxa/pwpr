@@ -83,7 +83,7 @@ registrations:
       field: AB
 
   trade_assoc_method_details:
-    field: AC
+    field: AD
   consultant_or_data_system_used:
     field: AG
   name_of_consultant_or_data_system:
@@ -119,4 +119,3 @@ registrations:
         field: BA
       phone:
         field: BB
-

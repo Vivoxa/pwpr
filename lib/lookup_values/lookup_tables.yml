@@ -1,3 +1,75 @@
+trade_association_methods:
+  no_columns: 2
+  column_1:
+    title: name
+    data_type: string
+    values:
+    - "Biffpack"
+    - "British Glass"
+    - "Confederation of Paper Industries (CPI)"
+    - "DHL"
+    - "Ecoveritas Data Services"
+    - "Fresh Produce Consortium - FPC Guide"
+    - "Green Streets Environmental Resources - Grip"
+    - "Horticultural Trade Association (HTA) Workbook"
+    - "J Williams & Associates - JWA Automotive"
+    - "PAPCO - Papco Matrix"
+    - "Timber Trade Federation"
+    - "Valpak - Valpak Data Solutions"
+    - "Wastepack - Buildpack"
+  column_2:
+    title: description
+    data_type: string
+    values:
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+data_systems:
+  no_columns: 2
+  column_1:
+    title: name
+    data_type: string
+    values:
+    - "Biffpack"
+    - "British Glass"
+    - "Confederation of Paper Industries (CPI)"
+    - "DHL"
+    - "Ecoveritas Data Services"
+    - "Fresh Produce Consortium - FPC Guide"
+    - "Green Streets Environmental Resources - Grip"
+    - "Horticultural Trade Association (HTA) Workbook"
+    - "J Williams & Associates - JWA Automotive"
+    - "PAPCO - Papco Matrix"
+    - "Timber Trade Federation"
+    - "Valpak - Valpak Data Solutions"
+    - "Wastepack - Buildpack"
+  column_2:
+    title: description
+    data_type: string
+    values:
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
+    - "na"
 emailed_statuses:
   no_columns: 1
   column_1:

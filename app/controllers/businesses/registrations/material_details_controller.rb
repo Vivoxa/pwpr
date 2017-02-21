@@ -1,6 +1,9 @@
 module Businesses
   module Registrations
     class MaterialDetailsController < Businesses::RegistrationsController
+      load_and_authorize_resource :regular_producer
+      authorize_resource class: MaterialDetailsController, through: :regular_producer
+
       def new
         @registration = Registration.where(id: params[:registration_id]).first
 

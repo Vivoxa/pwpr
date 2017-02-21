@@ -1,5 +1,8 @@
 module Businesses
   class RegistrationsController < ApplicationController
+    load_and_authorize_resource :business
+    authorize_resource class: RegistrationsController, through: :business
+
     include Registrations
     # GET business/:id/registrations
     def index

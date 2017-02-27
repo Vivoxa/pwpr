@@ -14,6 +14,11 @@ AllCops:
     - 'spec/features/**/*'
     - 'lib/spreadsheet_worker/sheet_processor/processor.rb'
     - 'lib/permissions_for_role/admin_definitions.rb'
+    - 'app/models/material_detail.rb'
+    - 'app/models/registration.rb'
+    - 'app/models/regular_producer_detail.rb'
+    - 'lib/permissions_for_role/scheme_operator_definitions.rb'
+
   DefaultFormatter: fuubar
   DisplayCopNames: true
   DisplayStyleGuide: true

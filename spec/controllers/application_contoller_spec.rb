@@ -17,7 +17,6 @@ RSpec.describe ApplicationController, type: :controller do
     sc_operator.last_name = 'Smith'
     sc_operator.password = 'mypassword'
     sc_operator.confirmed_at = DateTime.now
-    sc_operator.schemes = [Scheme.first]
     sc_operator.save
     sc_operator.add_role('sc_director')
     sc_operator.approved = true

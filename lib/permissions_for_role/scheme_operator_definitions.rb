@@ -18,109 +18,109 @@ module PermissionsForRole
 
     def sc_director
       {
-        schemes_r:    {checked: true, locked: true},
-        schemes_w:    {checked: true, locked: true},
-        schemes_e:    {checked: true, locked: true},
-        schemes_d:    {checked: true, locked: true},
+        schemes_r:           {checked: true, locked: true},
+        schemes_w:           {checked: true, locked: true},
+        schemes_e:           {checked: true, locked: true},
+        schemes_d:           {checked: true, locked: true},
 
-        sc_users_r:   {checked: true, locked: true},
-        sc_users_w:   {checked: true, locked: true},
-        sc_users_e:   {checked: true, locked: true},
-        sc_users_d:   {checked: true, locked: true},
+        sc_users_r:          {checked: true, locked: true},
+        sc_users_w:          {checked: true, locked: true},
+        sc_users_e:          {checked: true, locked: true},
+        sc_users_d:          {checked: true, locked: true},
 
-        co_users_r:   {checked: true, locked: true},
-        co_users_w:   {checked: true, locked: true},
-        co_users_e:   {checked: true, locked: true},
-        co_users_d:   {checked: true, locked: true},
+        co_users_r:          {checked: true, locked: true},
+        co_users_w:          {checked: true, locked: true},
+        co_users_e:          {checked: true, locked: true},
+        co_users_d:          {checked: true, locked: true},
 
-        businesses_r: {checked: true, locked: true},
-        businesses_e: {checked: true, locked: true},
-        businesses_w: {checked: true, locked: true},
-        businesses_d: {checked: true, locked: true},
+        businesses_r:        {checked: true, locked: true},
+        businesses_e:        {checked: true, locked: true},
+        businesses_w:        {checked: true, locked: true},
+        businesses_d:        {checked: true, locked: true},
 
-        uploads_r:    {checked: true, locked: true},
-        uploads_w:    {checked: true, locked: true},
+        uploads_r:           {checked: true, locked: true},
+        uploads_w:           {checked: true, locked: true},
 
-        contacts_r:   {checked: true, locked: true},
-        contacts_w:   {checked: true, locked: true},
-        contacts_e:   {checked: true, locked: true},
-        contacts_d:   {checked: true, locked: true},
+        contacts_r:          {checked: true, locked: true},
+        contacts_w:          {checked: true, locked: true},
+        contacts_e:          {checked: true, locked: true},
+        contacts_d:          {checked: true, locked: true},
 
-        registration_data_r:   {checked: true, locked: true},
-        registration_data_w:   {checked: true, locked: false},
-        registration_data_e:   {checked: true, locked: false}
+        registration_data_r: {checked: true, locked: true},
+        registration_data_w: {checked: true, locked: false},
+        registration_data_e: {checked: true, locked: false}
       }
     end
 
     def sc_super_user
       {
-        schemes_r:    {checked: true, locked: true},
-        schemes_w:    {checked: false, locked: false},
-        schemes_e:    {checked: true, locked: true},
-        schemes_d:    {checked: false, locked: false},
+        schemes_r:           {checked: true, locked: true},
+        schemes_w:           {checked: false, locked: false},
+        schemes_e:           {checked: true, locked: true},
+        schemes_d:           {checked: false, locked: false},
 
-        sc_users_r:   {checked: true, locked: true},
-        sc_users_w:   {checked: true, locked: true},
-        sc_users_e:   {checked: true, locked: true},
-        sc_users_d:   {checked: false, locked: false},
+        sc_users_r:          {checked: true, locked: true},
+        sc_users_w:          {checked: true, locked: true},
+        sc_users_e:          {checked: true, locked: true},
+        sc_users_d:          {checked: false, locked: false},
 
-        co_users_r:   {checked: true, locked: true},
-        co_users_w:   {checked: false, locked: false},
-        co_users_e:   {checked: false, locked: false},
-        co_users_d:   {checked: false, locked: false},
+        co_users_r:          {checked: true, locked: true},
+        co_users_w:          {checked: false, locked: false},
+        co_users_e:          {checked: false, locked: false},
+        co_users_d:          {checked: false, locked: false},
 
-        businesses_r: {checked: true, locked: true},
-        businesses_e: {checked: true, locked: true},
-        businesses_w: {checked: true, locked: true},
-        businesses_d: {checked: false, locked: false},
+        businesses_r:        {checked: true, locked: true},
+        businesses_e:        {checked: true, locked: true},
+        businesses_w:        {checked: true, locked: true},
+        businesses_d:        {checked: false, locked: false},
 
-        uploads_r:    {checked: true, locked: true},
-        uploads_w:    {checked: false, locked: false},
+        uploads_r:           {checked: true, locked: true},
+        uploads_w:           {checked: false, locked: false},
 
-        contacts_r:   {checked: true, locked: true},
-        contacts_w:   {checked: true, locked: true},
-        contacts_e:   {checked: true, locked: true},
-        contacts_d:   {checked: false, locked: false},
+        contacts_r:          {checked: true, locked: true},
+        contacts_w:          {checked: true, locked: true},
+        contacts_e:          {checked: true, locked: true},
+        contacts_d:          {checked: false, locked: false},
 
-        registration_data_r:   {checked: true, locked: true},
-        registration_data_w:   {checked: true, locked: false},
-        registration_data_e:   {checked: true, locked: true}
+        registration_data_r: {checked: true, locked: true},
+        registration_data_w: {checked: true, locked: false},
+        registration_data_e: {checked: true, locked: true}
       }
     end
 
     def sc_user
       {
-        schemes_r:    {checked: false, locked: true},
-        schemes_w:    {checked: false, locked: true},
-        schemes_e:    {checked: false, locked: true},
-        schemes_d:    {checked: false, locked: true},
+        schemes_r:           {checked: false, locked: true},
+        schemes_w:           {checked: false, locked: true},
+        schemes_e:           {checked: false, locked: true},
+        schemes_d:           {checked: false, locked: true},
 
-        sc_users_r:   {checked: false, locked: true},
-        sc_users_w:   {checked: false, locked: true},
-        sc_users_e:   {checked: false, locked: true},
-        sc_users_d:   {checked: false, locked: true},
+        sc_users_r:          {checked: false, locked: true},
+        sc_users_w:          {checked: false, locked: true},
+        sc_users_e:          {checked: false, locked: true},
+        sc_users_d:          {checked: false, locked: true},
 
-        co_users_r:   {checked: true, locked: true},
-        co_users_w:   {checked: false, locked: false},
-        co_users_e:   {checked: false, locked: false},
-        co_users_d:   {checked: false, locked: false},
+        co_users_r:          {checked: true, locked: true},
+        co_users_w:          {checked: false, locked: false},
+        co_users_e:          {checked: false, locked: false},
+        co_users_d:          {checked: false, locked: false},
 
-        businesses_r: {checked: true, locked: true},
-        businesses_e: {checked: false, locked: false},
-        businesses_w: {checked: false, locked: true},
-        businesses_d: {checked: false, locked: true},
+        businesses_r:        {checked: true, locked: true},
+        businesses_e:        {checked: false, locked: false},
+        businesses_w:        {checked: false, locked: true},
+        businesses_d:        {checked: false, locked: true},
 
-        uploads_r:    {checked: false, locked: false},
-        uploads_w:    {checked: false, locked: false},
+        uploads_r:           {checked: false, locked: false},
+        uploads_w:           {checked: false, locked: false},
 
-        contacts_r:   {checked: true, locked: true},
-        contacts_w:   {checked: false, locked: false},
-        contacts_e:   {checked: false, locked: false},
-        contacts_d:   {checked: false, locked: true},
+        contacts_r:          {checked: true, locked: true},
+        contacts_w:          {checked: false, locked: false},
+        contacts_e:          {checked: false, locked: false},
+        contacts_d:          {checked: false, locked: true},
 
-        registration_data_r:   {checked: true, locked: false},
-        registration_data_w:   {checked: false, locked: false},
-        registration_data_e:   {checked: false, locked: false}
+        registration_data_r: {checked: true, locked: false},
+        registration_data_w: {checked: false, locked: false},
+        registration_data_e: {checked: false, locked: false}
       }
     end
   end

@@ -15,10 +15,10 @@ class ApplicationController < ActionController::Base
     redirect_to main_app.root_url, alert: exception.message
   end
 
-  # rescue_from ActiveRecord::RecordNotFound do |exception|
-  #   Rails.logger.error "ActiveRecord::RecordNotFound - Params: #{params}. Error: #{exception.message}"
-  #   redirect_to main_app.root_url, alert: 'You are not authorized to access this page.'
-  # end
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    Rails.logger.error "ActiveRecord::RecordNotFound - Params: #{params}. Error: #{exception.message}"
+    redirect_to main_app.root_url, alert: 'You are not authorized to access this page.'
+  end
 
   before_filter :current_user
   around_action :tag_logs

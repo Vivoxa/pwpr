@@ -48,7 +48,11 @@ module PermissionsForRole
         contacts_r:   {checked: true, locked: true},
         contacts_w:   {checked: true, locked: true},
         contacts_e:   {checked: true, locked: true},
-        contacts_d:   {checked: true, locked: true}
+        contacts_d:   {checked: true, locked: true},
+
+        registration_data_r:   {checked: true, locked: true},
+        registration_data_w:   {checked: true, locked: false},
+        registration_data_e:   {checked: false, locked: false}
       }
     end
 
@@ -80,7 +84,11 @@ module PermissionsForRole
         contacts_r:   {checked: true, locked: true},
         contacts_w:   {checked: true, locked: true},
         contacts_e:   {checked: true, locked: true},
-        contacts_d:   {checked: false, locked: false}
+        contacts_d:   {checked: false, locked: false},
+
+        registration_data_r:   {checked: true, locked: false},
+        registration_data_w:   {checked: true, locked: false},
+        registration_data_e:   {checked: false, locked: false}
       }
     end
 
@@ -111,7 +119,11 @@ module PermissionsForRole
         contacts_r:   {checked: true, locked: true},
         contacts_w:   {checked: false, locked: false},
         contacts_e:   {checked: false, locked: false},
-        contacts_d:   {checked: false, locked: true}
+        contacts_d:   {checked: false, locked: true},
+
+        registration_data_r:   {checked: true, locked: false},
+        registration_data_w:   {checked: false, locked: false},
+        registration_data_e:   {checked: false, locked: false}
       }
     end
   end

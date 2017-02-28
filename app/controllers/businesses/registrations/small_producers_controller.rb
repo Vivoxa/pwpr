@@ -1,8 +1,8 @@
 module Businesses
   module Registrations
     class SmallProducersController < ApplicationController
-      load_and_authorize_resource :registration
-      authorize_resource class: SmallProducersController, through: :registration
+      load_and_authorize_resource :business
+      load_and_authorize_resource :small_producer_detail, through: :business
 
       def new
         @business = Business.where(id: params[:business_id]).first

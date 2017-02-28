@@ -24,38 +24,8 @@ module PermissionsForRole
 
         co_users_r(user)
         co_users_w(user)
-
-        # permissions for Business
-        business_permissions(user)
-
-        # permissions for Scheme
-        scheme_permissions(user)
-
-        # permissions for Contact
-        contact_permissions(user)
       end
 
-      def scheme_permissions(user)
-        active_schemes = []
-        user.schemes.each do |scheme|
-          active_schemes << scheme.id if scheme.active
-        end
-        can :read, Scheme, id: active_schemes if user.schemes_r?
-      end
-
-      def contact_permissions(user)
-        can :read, Contact, id: associated_contact_ids_for_user(user) if user.contacts_r?
-        can %i(new create), Contact if user.contacts_w?
-        can %i(edit update), Contact, id: associated_contact_ids_for_user(user) if user.contacts_e?
-        can :destroy, Contact, id: associated_contact_ids_for_user(user) if user.contacts_d?
-      end
-
-      def business_permissions(user)
-        can :read, Business, id: associated_business_ids_for_associated_schemes(user) if user.businesses_r?
-        can %i(new create), Business if user.businesses_w?
-        can %i(edit update), Business, id: associated_business_ids_for_associated_schemes(user) if user.businesses_e?
-        #can :destroy, Business, id: associated_business_ids_for_associated_schemes(user) if user.businesses_d?
-      end
 
       def co_users_w(user)
         return unless user.co_users_w?

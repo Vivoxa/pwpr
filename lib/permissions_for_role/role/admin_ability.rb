@@ -5,16 +5,44 @@ module PermissionsForRole
 
       def initialize(user)
         super(user)
+        admin_permissions(user)
+        super_admin_permissions(user)
+        registration_data_permissions(user)
+        business_permissions(user)
+        scheme_permissions(user)
+        contact_permissions(user)
+      end
+
+      def super_admin_permissions(user)
+        can %i(read new create update destroy), Admins::RegistrationsController if user.super_admin?
+      end
+
+      def admin_permissions(user)
         can %i(read permissions), Admin if user.admins_r?
-        can %i(read new create permissions update_permissions approve), Admin if user.admins_w?
         can %i(read edit update permissions update_permissions approve), Admin if user.admins_e?
         can %i(read destroy permissions update_permissions approve), Admin if user.admins_d?
         if user.admins_w?
           can %i(read new create permissions update_permissions approve), Admin
-          can %i(new create edit update), Admins::RegistrationsController
+          can %i(read new create edit update), Admins::RegistrationsController
         end
+      end
 
-        can %i(read new create update destroy), Admins::RegistrationsController if user.super_admin?
+      def registration_data_permissions(user)
+        if user.registration_data_r?
+          can :read, MaterialDetail, id: associated_material_detail_ids_for_businesses(user)
+          can :read, RegularProducerDetail, id: associated_regular_producer_ids_for_businesses(user)
+          can :read, SmallProducerDetail, id: associated_regular_producer_ids_for_businesses(user)
+        end
+        if user.registration_data_w?
+          can %i(new create), MaterialDetail, id: associated_material_detail_ids_for_businesses(user)
+          can %i(new create), RegularProducerDetail, id: associated_regular_producer_ids_for_businesses(user)
+          can %i(new create), SmallProducerDetail, id: associated_regular_producer_ids_for_businesses(user)
+        end
+        if user.registration_data_e?
+          can %i(edit update), MaterialDetail, id: associated_material_detail_ids_for_businesses(user)
+          can %i(edit update), RegularProducerDetail, id: associated_regular_producer_ids_for_businesses(user)
+          can %i(edit update), SmallProducerDetail, id: associated_regular_producer_ids_for_businesses(user)
+        end
       end
 
       def business_permissions(user)

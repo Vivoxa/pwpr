@@ -5,6 +5,7 @@ module PermissionsForRole
                             businesses_r businesses_w businesses_d businesses_e
                             schemes_r schemes_w schemes_d schemes_e
                             uploads_r uploads_w scheme_businesses
-                            contacts_r contacts_w contacts_d contacts_e).freeze
+                            contacts_r contacts_w contacts_d contacts_e
+                            registration_data_r registration_data_w registration_data_e).freeze
   end
 end

@@ -1,8 +1,8 @@
 module Businesses
   module Registrations
     class RegularProducersController < ApplicationController
-      load_and_authorize_resource :registration
-      authorize_resource class: RegularProducersController, through: :registration
+      load_and_authorize_resource :business
+      load_and_authorize_resource :regular_producer_detail, through: :business
 
       def new
         @registration = Registration.where(id: params[:registration_id]).first

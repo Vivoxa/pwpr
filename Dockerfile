@@ -19,11 +19,9 @@ RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs ru
     rm -Rf /tmp/pdftk-*
 
 WORKDIR /$APP_DIR
-ADD Gemfile /$APP_DIR/Gemfile
-ADD Gemfile.lock /$APP_DIR/Gemfile.lock
-RUN bundle install
 
 ADD . /$APP_DIR
+RUN bundle install
 
 ARG COMMAND
 ENV COMMAND ${COMMAND}

@@ -20,13 +20,9 @@ RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs ru
 
 WORKDIR /$APP_DIR
 
-ADD . /$APP_DIR
-COPY Gemfile $APP_DIR
-COPY Gemfile.lock $APP_DIR
+COPY . /$APP_DIR
 
 RUN bundle install --system
-
-COPY . /$APP_DIR
 
 ARG COMMAND
 ENV COMMAND ${COMMAND}

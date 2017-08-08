@@ -20,8 +20,9 @@ RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs ru
 
 WORKDIR /$APP_DIR
 
-ADD . /$APP_DIR
-RUN bundle install
+COPY . /$APP_DIR
+
+RUN bundle install --system
 
 ARG COMMAND
 ENV COMMAND ${COMMAND}

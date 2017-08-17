@@ -3,7 +3,7 @@ module Reporting
     class BaseReport
       SERVER_TMP_FILE_DIR = 'public'.freeze
       DEFAULT_FILE_EXT = 'pdf'.freeze
-      PDFTK_LIB_LOCATION = '/usr/local/bin/pdftk'.freeze
+      PDFTK_LIB_LOCATION = ENV.fetch('PDFTK_LOCATION', '/usr/bin/pdftk')
 
       def report_bucket_name
         "#{Rails.env}-pwpr-reports"

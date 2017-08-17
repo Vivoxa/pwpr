@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Supplier Data: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= format_boolean_value(@business.registrations.last&.regular_producer_detail&.calculation_method_supplier_data) %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Sample Weighing: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= format_boolean_value(@business.registrations.last&.regular_producer_detail&.calculation_method_sample_weighing) %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Sales Records: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= format_boolean_value(@business.registrations.last&.regular_producer_detail&.calculation_method_sales_records) %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Other Method Details: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.regular_producer_detail&.other_method_details&.to_s || 'N\A' %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Trade Association Method: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.regular_producer_detail&.trade_association_method&.name&.to_s || 'N\A' %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Data System: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.regular_producer_detail&.data_system&.name&.to_s || 'N\A' %>
+  </div>
+</div>
+</br>

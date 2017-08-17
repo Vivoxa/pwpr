@@ -1,0 +1,34 @@
+<div id="main-container" class="container">
+  <div class="card">
+    <h3 class="card-header">
+      <center>Edit Registration For: <%= @registration.business.name %></center>
+    </h3>
+    <div class="card-block">
+      <%= form_for @registration, url: {action: 'update'}, html: { method: :put } do |f|%>
+        <%= f.hidden_field :business_id, value: @registration.business.id %>
+        <% @registration.form_fields.each do |key, hsh| %>
+          <div class='row'>
+            <div class='col-md-6' align='right'>
+              <strong><%= format_field(key) %></strong>
+            </div>
+            <div class='col-md-6'>
+              <% if hsh[:field_type] == 'number' %>
+                <%= f.number_field key, required: hsh[:required], placeholder: 0, step: :any %>
+              <% elsif hsh[:field_type] == 'text' %>
+                <%= f.text_field key, required: hsh[:required] %>
+              <% elsif hsh[:field_type] == 'boolean' %>
+                <%= f.check_box key %>
+              <% elsif hsh[:field_type] == 'collection' %>
+                <%= f.collection_select key, hsh[:choices], hsh[:field], hsh[:field], include_blank: hsh[:required], selected: hsh[:value] %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <center><%= f.submit 'Save', class: ["btn", "btn-primary", "devise-btn"] %></center>
+      <% end %>
+    </div>
+    <div class="card-footer">
+      <%= link_to 'Registrations List', business_registrations_path(business_id: @registration.business.id), class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
+    </div>
+  </div>
+</div>

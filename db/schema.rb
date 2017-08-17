@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170211213112) do
+ActiveRecord::Schema.define(version: 20170219175508) do
 
   create_table "address_types", force: :cascade do |t|
     t.string   "title",       limit: 255, null: false
@@ -205,6 +205,13 @@ ActiveRecord::Schema.define(version: 20170211213112) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "data_systems", force: :cascade do |t|
+    t.string   "name",        limit: 255, null: false
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
   create_table "emailed_reports", force: :cascade do |t|
     t.string   "report_name",       limit: 255
     t.string   "year",              limit: 255
@@ -366,7 +373,7 @@ ActiveRecord::Schema.define(version: 20170211213112) do
     t.integer  "submission_type_id",                limit: 4
     t.integer  "resubmission_reason_id",            limit: 4
     t.integer  "business_id",                       limit: 4,                                          null: false
-    t.decimal  "turnover",                                    precision: 10, scale: 2,                 null: false
+    t.decimal  "turnover",                                    precision: 15, scale: 3,                 null: false
     t.boolean  "licensor",                                                             default: false
     t.boolean  "allocation_method_used",                                               default: false, null: false
     t.datetime "created_at",                                                                           null: false
@@ -380,15 +387,15 @@ ActiveRecord::Schema.define(version: 20170211213112) do
   add_index "registrations", ["submission_type_id"], name: "fk_rails_7aa93260c0", using: :btree
 
   create_table "regular_producer_details", force: :cascade do |t|
-    t.integer  "registration_id",                                     limit: 4,   null: false
-    t.boolean  "calculation_method_supplier_data",                                null: false
-    t.boolean  "calculation_method_sample_weighing",                              null: false
-    t.boolean  "calculation_method_sales_records",                                null: false
-    t.string   "calculation_method_trade_association_method_details", limit: 255
-    t.string   "other_method_details",                                limit: 255
-    t.string   "data_system_used",                                    limit: 255
-    t.datetime "created_at",                                                      null: false
-    t.datetime "updated_at",                                                      null: false
+    t.integer  "registration_id",                    limit: 4,   null: false
+    t.boolean  "calculation_method_supplier_data",               null: false
+    t.boolean  "calculation_method_sample_weighing",             null: false
+    t.boolean  "calculation_method_sales_records",               null: false
+    t.string   "other_method_details",               limit: 255
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.integer  "trade_association_method_id",        limit: 4
+    t.integer  "data_system_id",                     limit: 4
   end
 
   add_index "regular_producer_details", ["registration_id"], name: "fk_rails_200684d40d", using: :btree
@@ -582,6 +589,13 @@ ActiveRecord::Schema.define(version: 20170211213112) do
 
   add_index "targets", ["annual_target_set_id"], name: "fk_rails_64aa8d93b5", using: :btree
   add_index "targets", ["target_field_id"], name: "fk_rails_2005fd91d8", using: :btree
+
+  create_table "trade_association_methods", force: :cascade do |t|
+    t.string   "name",        limit: 255, null: false
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   add_foreign_key "addresses", "address_types"
   add_foreign_key "addresses", "businesses"

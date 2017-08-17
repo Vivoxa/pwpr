@@ -1,0 +1,18 @@
+</br></br>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Predominant Material: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.small_producer_detail&.predominant_material_value || 'N\A' %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Obligation: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.small_producer_detail&.allocation_method_obligation&.to_s || 'N\A' %>
+  </div>
+</div>
+</br></br></br>

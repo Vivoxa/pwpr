@@ -1,0 +1,48 @@
+<div id="main-container" class="container">
+  <div class="card">
+    <h3 class="card-header">
+      <center>Edit Material Details</center>
+    </h3>
+    <div class="card-block">
+      <%= form_tag business_material_detail_path, method: :put do |f| %>
+        <div class='row' style="margin-bottom: 10px">
+          <div class='col-md-2'></div>
+          <% @material_details.each do |detail| %>
+            <div class='col-md-1' style='margin-right: 30px' align='left'>
+              <strong><%= detail.packaging_material.name.capitalize %></strong>
+            </div>
+          <% end %>
+        </div>
+        <div class='row'>
+          <div class='col-md-2'>
+            <% @material_details.first.form_fields.each do |key, v| %>
+              <div class='row' align='right' style='height: 30px; margin-right: 5px;'>
+                <strong><%= key.to_s.capitalize %></strong>
+              </div>
+            <% end %>
+          </div>
+          <% @material_details.each do |detail| %>
+            <div class='col-md-1' style='margin-right: 30px'>
+              <% detail.form_fields.each do |key, hsh| %>
+                <div class='row'>
+                  <%= number_field_tag "[material_detail]" + "[#{detail.packaging_material.name}]" + key.to_s, nil, {required: hsh[:required], step: :any, value: detail.attributes[key.to_s]} %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+        </br>
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <center><%= submit_tag 'Save', class: ["btn", "btn-md" ,"btn-primary", "show-btn-lg", "btn-block"] %></center>
+          </div>
+          <div class="col-md-3"></div>
+        </div>
+      <% end %>
+    </div>
+    <div class="card-footer">
+      <%= link_to 'Registrations List', business_registrations_path(business_id: @business.id), class: ['btn btn-sm btn-outline-primary', 'show-btn-lg'] %>
+    </div>
+  </div>
+</div>

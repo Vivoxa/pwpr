@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>SIC: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.sic_code_value %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Sector Main Activity: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.sector_main_activity_value %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Submission Type: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.submission_code_value || 'N\A' %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Resubmission Reason: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= @business.registrations.last&.resubmission_code_value || 'N\A' %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Turnover: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <% turnover_value = @business.registrations.last&.turnover / 1000000 if @business.registrations.last&.turnover %>
+    £ <%= turnover_value.to_f.round(3).to_s || 'N\A' %> mil
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Licensor: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= format_boolean_value(@business.registrations.last&.licensor) %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-lg-6" align="right">
+    <div><strong>Alloc. Method: </strong></div>
+  </div>
+  <div class="col-md-4 col-lg-6">
+    <%= format_boolean_value(@business.registrations.last&.allocation_method_used) %>
+  </div>
+</div>

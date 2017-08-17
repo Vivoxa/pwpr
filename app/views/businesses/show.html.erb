@@ -4,118 +4,90 @@
 
     <div class="card-block">
       <% if can? :read, @business %>
-          <div class='col-md-4 col-lg-6'>
-            <div class="card card-block" style='min-height:150px'>
-              <!--	<h4 class="card-title">Administration</h4>-->
-              <div class='col-md-4 col-lg-6'>
-                <div class="row">
-                  <div><strong>Name: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Company Type: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Company Subtype: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Membership ID: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Company No: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>NPWD: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>SIC: </strong></div>
-                </div>
+        <div class='col-md-4 col-lg-6'>
+          <div class="card card-block" style='min-height:150px'>
+            <div class="row">
+              <div class="col-md-4 col-lg-6" align="right">
+                <div><strong>Name: </strong></div>
               </div>
-
-              <div class='col-md-4 col-lg-6'>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.name if @business.name %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.business_type&.name %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.business_subtype&.name %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.scheme_ref&.to_s %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.company_number&.to_s %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.NPWD&.to_s %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.sic_code&.code %></div>
-                </div>
+              <div class="col-md-4 col-lg-6"><%= @business.name&.to_s || 'N\A' %></div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-lg-6" align="right">
+                <div><strong>Company Type: </strong></div>
               </div>
-
+              <div class="col-md-4 col-lg-6"><%= @business.business_type&.name || 'N\A' %></div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-lg-6" align="right">
+                <div><strong>Company Subtype: </strong></div>
+              </div>
+              <div class="col-md-4 col-lg-6"><%= @business.business_subtype&.name || 'N\A' %></div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-lg-6" align="right">
+                <div><strong>Membership ID: </strong></div>
+              </div>
+              <div class="col-md-4 col-lg-6"><%= @business.scheme_ref&.to_s || 'N\A' %></div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-lg-6" align="right">
+                <div><strong>Company No: </strong></div>
+              </div>
+              <div class="col-md-4 col-lg-6"><%= @business.company_number&.to_s || 'N\A' %></div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-lg-6" align="right">
+                <div><strong>NPWD: </strong></div>
+              </div>
+              <div class="col-md-4 col-lg-6"><%= @business.NPWD&.to_s || 'N\A' %></div>
             </div>
           </div>
-          <div class='col-md-4 col-lg-6'>
-            <div class="card card-block" style='min-height:150px'>
-              <!--	<h4 class="card-title">Administration</h4>-->
-
-              <div class='col-md-4 col-lg-6'>
-                <div class="row">
-                  <div><strong>Year first reg: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Year last reg: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Scheme status code: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Small Producer: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Country of registration: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Registration status code: </strong></div>
-                </div>
-                <div class="row">
-                  <div><strong>Holding business: </strong></div>
-                </div>
+        </div>
+        <div class='col-md-4 col-lg-6'>
+          <div class="card card-block" style='min-height:150px'>
+            <div class="row">
+              <div class="col-md-4 col-lg-6" align="right">
+                <div><strong>Year first reg: </strong></div>
               </div>
-              <div class='col-md-4 col-lg-6'>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.year_first_reg %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.year_last_reg %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.scheme_status_code&.code %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.small_producer %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.country_of_business_registration&.country %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.registration_status_code&.code %></div>
-                </div>
-                <div class="row">
-                  <div class="form_value_blank"><%= @business.holding_business&.name %></div>
-                </div>
-
+              <div class="col-md-4 col-lg-6"><%= @business.year_first_reg || 'N\A' %></div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-lg-6" align="right">
+                <div><strong>Year last reg: </strong></div>
               </div>
+              <div class="col-md-4 col-lg-6"><%= @business.year_last_reg || 'N\A' %></div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-lg-6" align="right">
+                <div><strong>Scheme status code: </strong></div>
+              </div>
+              <div class="col-md-4 col-lg-6"><%= @business.scheme_status_code&.code || 'N\A' %></div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-lg-6" align="right">
+                <div><strong>Country of registration: </strong></div>
+              </div>
+              <div class="col-md-4 col-lg-6"><%= @business.country_of_business_registration&.country || 'N\A' %></div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-lg-6" align="right">
+                <div><strong>Registration status code: </strong></div>
+              </div>
+              <div class="col-md-4 col-lg-6"><%= @business.registration_status_code&.code || 'N\A' %></div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-lg-6" align="right">
+                <div><strong>Holding business: </strong></div>
+              </div>
+              <div class="col-md-4 col-lg-6"><%= @business.holding_business&.name || 'N\A' %></div>
             </div>
           </div>
-
-          <div class='col-md-4'></div>
+        </div>
       <% else %>
-          <div class="card-block">
-            <p class="card-text">You are not authorised to view this Member</p>
-          </div>
+        <div class="card-block">
+          <p class="card-text">You are not authorised to view this Member</p>
+        </div>
       <% end %>
     </div>
     <div class="card-footer">
@@ -123,19 +95,14 @@
       <% if can? :new, CompanyOperators::InvitationsController && (current_admin || current_scheme_operator) %>
           <%= link_to 'Invite Member Contact',
                       new_company_operator_invitation_path,
-                      class: ['btn btn-sm btn-primary', 'show-btn-md'],
+                      class: ['btn btn-sm btn-primary', 'show-btn-lg'],
                       id: "#{@business.id}-invite_company_operator" %>
       <% end %>
+      <%= link_to 'Registrations', business_registrations_path(business_id: @business.id), class: ['btn btn-sm btn-primary', 'show-btn-lg'] %>
       <% if can? :read, Contact %>
           <%= link_to 'Contacts',
                       business_contacts_path(business_id: @business.id),
                       class: ['btn btn-sm btn-primary', 'show-btn-md'] %>
-      <% end %>
-      <% if can? :edit, @business %>
-          <%= link_to 'Edit', edit_business_path(@business, scheme_id: @business.scheme.id), class: ['btn btn-sm btn-warning', 'show-btn-md'] %>
-      <% end %>
-      <% if can? :destroy, @business %>
-          <%= link_to 'Delete', @business, {method: :delete, class: ['btn btn-sm btn-danger', 'show-btn-md'], data: {confirm: 'Are you sure?'}} %>
       <% end %>
       <% if can? :edit, @business %>
           <%= link_to 'Edit', edit_business_path(@business, scheme_id: @business.scheme.id), class: ['btn btn-sm btn-warning', 'show-btn-md'] %>

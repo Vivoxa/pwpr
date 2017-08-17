@@ -1,0 +1,16 @@
+<% if @business.registrations.last&.material_totals_set.any? %>
+  <% @business.registrations.last&.material_totals_set.each do |total| %>
+    <div class='row'>
+      <div class="col-md-4 col-lg-6" align="right">
+        <div><strong><%= "#{total&.packaging_material&.name.to_s}: "%></strong></div>
+      </div>
+      <div class="col-md-4 col-lg-6'">
+        <%= total&.recycling_obligation.to_s %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div class='row'>
+    <center>No totals available</center>
+  </div>
+<% end %>

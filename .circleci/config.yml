@@ -52,7 +52,7 @@ jobs:
       - run:
           name: Security
           command: |
-            brakeman --max 1
+            brakeman
 
       # Prepare for tests
       - run:

@@ -42,8 +42,40 @@ jobs:
             - ./venv
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
-      # run tests!
+      # Analysis
+      - run:
+          name: Run Code Analysis
+          command: |
+            renogen test
+            rubocop --require rubocop-rspec \
+                    --color
+            exclude = '^\.\/(config|spec|db|matchers)\/'
+            flay --exclude exclude
+            flog --exclude exclude
+
+      # Security
+      - run:
+          name: Security
+          command: |
+            brakeman --max 1
+
+      # Prepare for tests
+      - run:
+          name: Prepare For tests
+          command: |
+            ./script/prepare_for_test.sh
+
+      # Run tests
       - run:
           name: run tests
           command: |
-            bundle exec fudge build
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out /tmp/test-results/rspec.xml \
+                              --format progress \
+                              --exclude-pattern spec/features/**/*_spec.rb \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+
+      # Save artifacts
+      - type: store_test_results
+        path: /tmp/test-results

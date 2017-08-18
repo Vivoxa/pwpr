@@ -14,7 +14,7 @@ AllCops:
     - '**/Rakefile'
     - '**/Gemfile'
     - '**db/**/*'
-    - 'bin/**'
+    - 'bin/**/*'
     - 'config/**/*'
     - 'app/models/ability.rb'
     - 'lib/permissions_for_role/role/*'

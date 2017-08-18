@@ -47,9 +47,6 @@ jobs:
           name: Run Code Analysis
           command: |
             renogen test
-            rubocop --config .rubocop.yml
-                    --require rubocop-rspec \
-                    --color
             exclude = '^\.\/(config|spec|db|matchers)\/'
             flay --exclude exclude
             flog --exclude exclude

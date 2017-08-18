@@ -21,6 +21,7 @@ AllCops:
     - 'spec/features/**/*'
     - 'lib/spreadsheet_worker/sheet_processor/processor.rb'
     - 'lib/permissions_for_role/admin_definitions.rb'
+    - 'vendor/**'
 
 Documentation:
   Enabled: false

@@ -47,9 +47,8 @@ jobs:
           name: Run Code Analysis
           command: |
             renogen test
-            exclude = '^\.\/(config|spec|db|matchers)\/'
-            flay --exclude exclude
-            flog --exclude exclude
+            flay --exclude '^\.\/(config|spec|db|matchers)\/'
+            flog --exclude '^\.\/(config|spec|db|matchers)\/'
 
       # Security
       - run:

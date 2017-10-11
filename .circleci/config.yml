@@ -1,0 +1,76 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 2
+general:
+  branches:
+    only:
+      - master # list of branches to build
+      - /feature-.*/ # or regexes
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+       - image: circleci/ruby:2.3-node
+       - image: circleci/mysql:5.6.36
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      # Analysis
+      - run:
+          name: Run Code Analysis
+          command: |
+            renogen test
+
+      # Security
+      - run:
+          name: Security
+          command: |
+            brakeman
+
+      # Prepare for tests
+      - run:
+          name: Prepare For tests
+          command: |
+            ./script/prepare_for_test.sh
+
+      # Run tests
+      - run:
+          name: run tests
+          command: |
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out /tmp/test-results/rspec.xml \
+                              --format progress \
+                              --exclude-pattern spec/features/**/*_spec.rb \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+
+      # Save artifacts
+      - type: store_test_results
+        path: /tmp/test-results

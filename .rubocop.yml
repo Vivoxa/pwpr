@@ -14,13 +14,14 @@ AllCops:
     - '**/Rakefile'
     - '**/Gemfile'
     - '**db/**/*'
-    - 'bin/**'
+    - 'bin/**/*'
     - 'config/**/*'
     - 'app/models/ability.rb'
     - 'lib/permissions_for_role/role/*'
     - 'spec/features/**/*'
     - 'lib/spreadsheet_worker/sheet_processor/processor.rb'
     - 'lib/permissions_for_role/admin_definitions.rb'
+    - 'vendor/**'
 
 Documentation:
   Enabled: false

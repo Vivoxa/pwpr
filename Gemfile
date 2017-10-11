@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.7'
+gem 'rake'
 
 # UI gems
 gem 'bootstrap', '~> 4.0.0.alpha4'
@@ -29,7 +30,6 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'letter_opener'
   gem 'pry-byebug'
-  gem 'renogen', '1.2.0', require: false
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -37,6 +37,7 @@ end
 
 group :development, :test do
   gem 'factory_girl_rails'
+  gem 'renogen', '1.2.0', require: false
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

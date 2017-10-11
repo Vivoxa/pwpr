@@ -335,6 +335,7 @@ DEPENDENCIES
   pry-byebug
   rails (= 4.2.7)
   rails-assets-tether (>= 1.1.0)!
+  rake
   renogen (= 1.2.0)
   roo-xls (= 1.0.0)
   royce
@@ -354,4 +355,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.13.6
+   1.15.3

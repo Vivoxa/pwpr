@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LookupValues::FormLookups do
+RSpec.describe LookupValues::Forms::FormLookups do
   it 'expects valid settings to be returned' do
     form_lookups = described_class.for('salutations')
 

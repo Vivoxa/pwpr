@@ -11,7 +11,7 @@ def random_string(length)
   (0...length).map { (65 + rand(26)).chr }.join
 end
 
-seeder = LookupValues::Seeder.new
+seeder = LookupValues::DbLookupTables::Seeder.new
 seeder.populate_lookup_tables
 
 sic = SicCode.first
@@ -323,3 +323,14 @@ end
     co_user.add_role permission if has[:checked]
   end
 end
+
+  email_content = EmailContent.new
+  email_content.email_content_type_id = EmailContentType.id_from_setting('default')
+  email_content.email_name_id = EmailName.id_from_setting('registration_email')
+  email_content.intro = 'Dear <first_name>'
+  email_content.title = 'Registration form <year>'
+  email_content.body = "The attached Registration Details Form includes the information that we currently hold for your company.\r\n\r\n We will use this information to register you with the Environment Agency.\r\n\r\nCould you please check these details carefully, amend where necessary and return a signed copy of this form to <scheme_name> by 28th February <year>. Please return a signed copy, even if there are no changes.\r\n\r\nWe are introducing this additional check to help maintain the accuracy of the data held by <scheme_name> and further ensure the compliance of our members. Any subsequent changes to company details, which come to light during the course of the year, could result in Environment Agency resubmission charges."
+  email_content.address = "The Mill House\r\nMarket Place\r\nHoughton le Spring\r\nTyne and Wear\r\nDH5 8AH\r\n\r\nTel: 0191 512 6677\nCo Reg No: 04835772"
+  email_content.footer = 'Please contact The Scheme at thescheme@app-pwpr.com'
+  email_content.save!
+

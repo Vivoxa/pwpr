@@ -1,0 +1,34 @@
+<div class="container" style='margin-top:30px'>
+  <div class="row">
+    <div class="card">
+
+      <div class="card-block">
+
+        <div class="col-xs-12 col-md-2 col-lg-12">
+          <div class="card">
+            <div class="card-block">
+              <div class="row">
+                <div class="col-xs-12 col-md-2 col-lg-2"><strong>Email content Type</strong></div>
+                <div class="col-xs-12 col-md-2 col-lg-2"></div>
+
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-2 col-lg-2"><%= @email_content_type.name %></div>
+                <div class="col-xs-12 col-md-2 col-lg-2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <% if can? :update, @email_content_type %>
+            <%= link_to 'Edit', edit_email_content_type_path(@email_content_type), class: ['btn btn-sm btn-warning'] %>
+        <% end %>
+        <% if can? :read, EmailContentType %>
+            <%= link_to 'All Email Contents', email_content_types_path, class: ['btn btn-sm btn-outline-primary'] %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,16 +3,54 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "b3b21f67039bbd31409f6832cded27d890e84dfefb4b9bbba03f64a746f97ae3",
+      "fingerprint": "53a1c5f9cf88938ad3e988831e6c3cd5e8df9915440c5059f2b0804985cac42e",
       "message": "Possible SQL injection",
-      "file": "lib/lookup_values/seeder.rb",
+      "file": "lib/lookup_values/db_lookup_tables/seeder.rb",
+      "line": 62,
+      "link": "http://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.execute(\"DELETE FROM  #{table_name} \")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "LookupValues::DbLookupTables::Seeder",
+        "method": "truncate_table"
+      },
+      "user_input": "table_name",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "86632f368679fb8a7310931ce3dfe7175874e351c8355d5a9daeeca820c9099f",
+      "message": "Possible SQL injection",
+      "file": "lib/lookup_values/db_lookup_tables/seeder.rb",
       "line": 70,
       "link": "http://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "ActiveRecord::Base.connection.execute(\"INSERT INTO #{table_name} (#{columns.each.map do\n x[\"title\"]\n end.join(\",\")}, created_at, updated_at) VALUES #{values};\")",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "LookupValues::Seeder",
+        "class": "LookupValues::DbLookupTables::Seeder",
+        "method": "populate_table"
+      },
+      "user_input": "table_name",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "b3b21f67039bbd31409f6832cded27d890e84dfefb4b9bbba03f64a746f97ae3",
+      "message": "Possible SQL injection",
+      "file": "lib/lookup_values/db_lookup_tables/seeder.rb",
+      "line": 70,
+      "link": "http://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.execute(\"INSERT INTO #{table_name} (#{columns.each.map do\n x[\"title\"]\n end.join(\",\")}, created_at, updated_at) VALUES #{values};\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "LookupValues::DbLookupTables::Seeder",
         "method": "populate_table"
       },
       "user_input": "table_name",
@@ -25,10 +63,10 @@
       "fingerprint": "bf738404439580513b375530cb273ba4c40ecca1dc323a248bdf5f455ea63f65",
       "message": "Unsafe reflection method const_get called with model attribute",
       "file": "app/views/agency_template_uploads/index.html.erb",
-      "line": 24,
+      "line": 25,
       "link": "http://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "Object.const_get((Unresolved Model).new.uploaded_by_type)",
-      "render_path": [{"type":"controller","class":"AgencyTemplateUploadsController","method":"index","line":9,"file":"app/controllers/agency_template_uploads_controller.rb"}],
+      "render_path": [{"type":"controller","class":"AgencyTemplateUploadsController","method":"index","line":11,"file":"app/controllers/agency_template_uploads_controller.rb"}],
       "location": {
         "type": "template",
         "template": "agency_template_uploads/index"
@@ -42,14 +80,14 @@
       "warning_code": 0,
       "fingerprint": "e5249c9d47cbcbec26f196c1d2256814d8ebb0ea254027216dadc15fc3a8b9dd",
       "message": "Possible SQL injection",
-      "file": "lib/lookup_values/seeder.rb",
+      "file": "lib/lookup_values/db_lookup_tables/seeder.rb",
       "line": 62,
       "link": "http://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "ActiveRecord::Base.connection.execute(\"DELETE FROM  #{table_name} \")",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "LookupValues::Seeder",
+        "class": "LookupValues::DbLookupTables::Seeder",
         "method": "truncate_table"
       },
       "user_input": "table_name",
@@ -57,6 +95,6 @@
       "note": ""
     }
   ],
-  "updated": "2016-12-10 10:34:08 +0000",
+  "updated": "2017-02-11 14:35:44 +0000",
   "brakeman_version": "3.3.2"
 }

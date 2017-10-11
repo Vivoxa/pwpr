@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LookupValues::Email::EmailSettings do
+RSpec.describe LookupValues::Email::Settings do
   it 'expects valid settings to be returned' do
     email_settings = described_class.for('registration_email')
 

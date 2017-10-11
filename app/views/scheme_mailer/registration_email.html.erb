@@ -1,36 +1,24 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
-</head>
-<body>
-<p>Dear <%= @contact.first_name %> </p>
-<h3><%= @year %> Packaging Regulations Compliance – Registration Details Check</h3>
-<p>
-  We would like to inform you of a change to our registration process for the <%= @year %> packaging compliance year.
-</p>
-<p>
-  The attached Registration Details Form includes the information that we currently hold for your company. We will use this information to register you with the Environment Agency. Could you please check these details carefully, amend where necessary and return a signed copy of this form to <%= @scheme.name %> by 28th February <%= @year %>. Please return a signed copy, even if there are no changes.
-</p>
-<p>
-  We are introducing this additional check to help maintain the accuracy of the data held by <%= @scheme.name %> and further ensure the compliance of our members. Any subsequent changes to company details, which come to light during the course of the year, could result in Environment Agency resubmission charges.
-</p>
-<p>
-  Please note this new form does not replace the <%= @scheme.name %> Annual Data Form, which you will still receive, to complete your submission of packaging data. However, this year’s Annual Data Form has been amended, to prevent replication of the information now recorded on the new Registration Details Form.
-</p>
-<p>
-  If you have any questions regarding the introduction of this new form, or wish to discuss any other aspect of your <%= @scheme.name %> membership, please get in touch with your usual contact, or reply directly to packaging.team@synergycompliance.co.uk.
-</p>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  </head>
+  <body>
 
-<p>Synergy Compliance Ltd</br>
-The Mill House</br>
-Market Place </br>
-Houghton le Spring</br>
-Tyne and Wear</br>
-DH5 8AH</p>
+    <p><%= @intro %></p>
 
-<p>Tel: 0191 512 6677</br>
-Co Reg No: 04835772</p>
+    <h3><%= @title %></h3>
 
-</body>
+    <% @body_lines.each do |line| %>
+      <p><%= line %></p>
+    <% end %>
+
+    <p>
+    <% @address_details.each do |line| %>
+      <%= line %></br>
+    <% end %>
+    </p>
+
+    <p><%= @footer %></p>
+  </body>
 </html>

@@ -1,0 +1,56 @@
+<div class="container" style='margin-top:30px'>
+  <div class="row">
+    <div class="card">
+
+      <div class="card-block">
+        <% if @scheme_name %>
+            <p>
+              <strong>Scheme:</strong>
+              <%= @scheme_name %>
+            </p>
+        <% end %>
+        <% unless @email_content.email_content_type_id == 1 %>
+            <p>
+              <strong>Email content type:</strong>
+              <%= @email_content.email_content_type.name %>
+            </p>
+        <% end %>
+        <p>
+          <strong>Email name:</strong>
+          <%= @email_content.email_name.name %>
+        </p>
+
+        <p>
+          <strong>Intro:</strong>
+          <%= @email_content.intro %>
+        </p>
+
+        <p>
+          <strong>Title:</strong>
+          <%= @email_content.title %>
+        </p>
+
+        <p>
+          <strong>Body:</strong>
+          <%= @email_content.body %>
+        </p>
+
+        <p>
+          <strong>Address:</strong>
+          <%= @email_content.address %>
+        </p>
+
+        <p>
+          <strong>Footer:</strong>
+          <%= @email_content.footer %>
+        </p>
+
+        <div class="centre">
+          <%= link_to 'All Email Contents', email_contents_path, class: ['btn btn-sm btn-outline-primary'] %>
+          <%= link_to 'Edit', edit_email_content_path(@email_content, scheme_id: @email_content.scheme_id), class: ['btn btn-sm btn-primary'] %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

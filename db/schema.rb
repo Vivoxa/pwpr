@@ -205,6 +205,34 @@ ActiveRecord::Schema.define(version: 20170211213112) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "email_content_types", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "email_contents", force: :cascade do |t|
+    t.integer  "scheme_id",             limit: 4
+    t.integer  "email_content_type_id", limit: 4
+    t.integer  "email_name_id",         limit: 4
+    t.string   "intro",                 limit: 255,   null: false
+    t.string   "title",                 limit: 255,   null: false
+    t.text     "body",                  limit: 65535, null: false
+    t.text     "address",               limit: 65535, null: false
+    t.string   "footer",                limit: 255,   null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "email_contents", ["email_content_type_id"], name: "index_email_contents_on_email_content_type_id", using: :btree
+  add_index "email_contents", ["email_name_id"], name: "index_email_contents_on_email_name_id", using: :btree
+
+  create_table "email_names", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "emailed_reports", force: :cascade do |t|
     t.string   "report_name",       limit: 255
     t.string   "year",              limit: 255
@@ -593,6 +621,8 @@ ActiveRecord::Schema.define(version: 20170211213112) do
   add_foreign_key "contacts", "businesses"
   add_foreign_key "contacts_addresses", "addresses"
   add_foreign_key "contacts_addresses", "contacts"
+  add_foreign_key "email_contents", "email_content_types"
+  add_foreign_key "email_contents", "email_names"
   add_foreign_key "emailed_reports", "businesses"
   add_foreign_key "emailed_reports", "emailed_statuses"
   add_foreign_key "joiners", "agency_template_uploads", on_delete: :cascade

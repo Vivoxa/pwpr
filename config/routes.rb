@@ -49,6 +49,10 @@ Rails.application.routes.draw do
     get '/reports/report_data' => 'reports/report_data', as: 'report_data'
   end
 
+  resources :email_contents
+  resources :email_content_types
+  resources :email_names
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

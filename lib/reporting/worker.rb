@@ -5,6 +5,7 @@ module Reporting
     def process(event)
       logger.tagged('Reporting Worker::process(event)') do
         event_data = ReportEventDatum.find(event)
+
         report_instance = report(event_data)
 
         business_ids = []

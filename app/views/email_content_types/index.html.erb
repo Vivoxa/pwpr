@@ -1,0 +1,47 @@
+<div class="container" style='margin-top:30px'>
+  <h1>Listing Email Content Types</h1>
+
+  <div class="row">
+    <div class="card">
+      <div class="card-block">
+        <div class="card-title">
+          <% if can? :create, EmailContentType %>
+              <%= link_to 'New Email Content Type', new_email_content_type_path, class: ['btn btn-sm btn-primary'] %>
+          <% end %>
+        </div>
+      </div>
+      <% @email_content_types.each do |email_content_type| %>
+          <div class="card-block">
+
+            <div class="col-xs-12 col-md-2 col-lg-12">
+              <div class="card">
+                <div class="card-block">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-2 col-lg-7"><strong>Email Content Type</strong></div>
+
+                    <div class="col-xs-12 col-md-2 col-lg-5"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-2 col-lg-7"><%= email_content_type.name %></div>
+
+                    <div class="col-xs-12 col-md-2 col-lg-5">
+                      <% if can? :read, EmailContentType %>
+                          <%= link_to 'Show', email_content_type_path(id: email_content_type.id), class: ['btn btn-sm btn-primary'] %>
+                      <% end %>
+                      <% if can? :update, EmailContentType %>
+                          <%= link_to 'Edit', edit_email_content_type_path(id: email_content_type.id), class: ['btn btn-sm btn-warning'] %>
+                      <% end %>
+                      <% if can? :destroy, EmailContentType %>
+                          <%= link_to 'Destroy', email_content_type, method: :delete, data: {confirm: 'Are you sure?'}, class: ['btn btn-sm btn-danger'] %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+<div class="container" style='margin-top:30px'>
+  <div class="row">
+    <div class="card">
+      <div class="card-block">
+        <div class="col-xs-12 col-md-2 col-lg-12">
+
+          <%= form_for(@email_content) do |f| %>
+              <% if @email_content.errors.any? %>
+                  <div id="error_explanation">
+                    <h2><%= pluralize(@email_content.errors.count, "error") %> prohibited this email_content from being
+                      saved:</h2>
+                    <ul>
+                      <% @email_content.errors.full_messages.each do |message| %>
+                          <li><%= message %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+              <% end %>
+              <div class="row">
+
+                <div class="row">
+                  <div class="col-xs-12 col-md-2 col-lg-4">
+                    <% if current_admin %>
+                        <div class="field">
+                          <strong> <%= f.label :email_content_type_id, class: "devise-lgn form-control" %></strong>
+                        </div>
+                    <% end %>
+                  </div>
+                  <div class="col-xs-12 col-md-2 col-lg-8">
+                    <% if current_admin %>
+                        <div class="field">
+                          <%= f.collection_select :email_content_type_id, EmailContentType.all, :id, :name, {}, {onchange: "return emailContentTypeChanged(this)", class: "devise-lgn form-control"} %>
+                        </div>
+                    <% else %>
+                        <div class="field">
+                          <%= f.hidden_field :email_content_type_id, value: EmailContentType.id_from_setting('scheme') %>
+                        </div>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 col-md-2 col-lg-4">
+                    <% unless params[:scheme_id] %>
+                        <div class="field">
+                          <strong><%= f.label :scheme_id, class: "devise-lgn form-control" %></strong>
+                        </div>
+                    <% end %>
+                  </div>
+                  <div class="col-xs-12 col-md-2 col-lg-8">
+                    <% if params[:scheme_id] %>
+                        <div class="field">
+                          <%= f.hidden_field :scheme_id, value: params[:scheme_id] %>
+                        </div>
+                    <% else %>
+                        <div class="field">
+                          <%= f.collection_select :scheme_id, @current_user.schemes.where(active: true).order(:name), :id, :name, {prompt: true, prompt: 'Select a Scheme'}, {id: 'scheme_select', class: "devise-lgn form-control"} %>
+                        </div>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 col-md-2 col-lg-4">
+                    <div class="field">
+                      <strong><%= f.label :email_name_id, class: "devise-lgn form-control" %></strong>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-2 col-lg-8">
+                    <div class="field">
+                      <%= f.collection_select :email_name_id, @remaining_email_contents, :id, :name, {prompt: true, prompt: 'Select an Email'}, {class: "devise-lgn form-control"} %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <strong> <%= f.label :intro %></strong><br>
+                <%= f.text_field :intro, placeholder: 'Dear Mr Smith', style: "min-width:800px" %>
+              </div>
+              <div class="field">
+                <strong><%= f.label :title %></strong><br>
+                <strong><%= f.text_field :title, placeholder: 'Title', style: "min-width:800px" %></strong>
+              </div>
+              <div class="field">
+                <strong><%= f.label :body %></strong><br>
+                <%= f.text_area :body, placeholder: 'Body', size: "130x30" %>
+              </div>
+              <div class="field">
+                <strong><%= f.label :address %></strong><br>
+                <%= f.text_area :address, placeholder: 'Address and contact details', size: "30x10" %>
+              </div>
+              <div class="field">
+                <strong><%= f.label :footer %></strong><br>
+                <%= f.text_field :footer, placeholder: 'Please reply to my-email@address.com', style: "min-width:800px" %>
+              </div>
+              <div class="action">
+                <%= f.submit class: 'btn btn-primary devise-btn' %>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

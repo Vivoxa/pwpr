@@ -1,0 +1,43 @@
+class EmailContent < ActiveRecord::Base
+  belongs_to :email_content_type
+  belongs_to :email_name
+
+  validates_presence_of :email_content_type_id, :email_name_id, :intro, :title, :body, :address, :footer
+  validate :default_email_type
+  validate :scheme_email_type
+
+  scope :pro_scheme, -> (scheme, email_name) {
+    where(email_content_type_id: EmailContentType.id_from_setting('scheme'),
+          email_name_id:         EmailName.id_from_setting(email_name),
+          scheme_id:             scheme.id)
+  }
+
+  scope :default, -> (email_name) {
+    where(email_content_type_id: EmailContentType.id_from_setting('default'),
+          email_name_id:         EmailName.id_from_setting(email_name))
+  }
+
+  def self.for_scheme(scheme, email_name)
+    h = pro_scheme(scheme, email_name)
+    h = default(email_name) if h.empty?
+    h.first
+  end
+
+  def default_email_type
+    return unless email_content_type_id == EmailContentType.id_from_setting('default') && scheme_id.present?
+    errors.add(:email_content_type_id, 'is Default, cannot set a scheme id')
+  end
+
+  def scheme_email_type
+    return unless email_content_type_id == EmailContentType.id_from_setting('scheme') && scheme_id.nil?
+    errors.add(:scheme_id, 'is required')
+  end
+
+  def body_lines
+    body.split(/\r\n|\n/)
+  end
+
+  def address_lines
+    address.split(/\r\n|\n/)
+  end
+end

@@ -12,6 +12,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20170211213112) do
+
   create_table "address_types", force: :cascade do |t|
     t.string   "title",       limit: 255, null: false
     t.string   "description", limit: 255

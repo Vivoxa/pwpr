@@ -16,12 +16,12 @@ class AgencyTemplateUpload < ActiveRecord::Base
   validate :record_valid_for_year?
 
   scope :for_previous_year, lambda { |scheme_id, current_year|
-                            where(scheme_id: scheme_id, year: (current_year.to_i - 1))
-                          }
+                              where(scheme_id: scheme_id, year: (current_year.to_i - 1))
+                            }
 
   scope :for_current_year, lambda { |scheme_id, current_year|
-                           where(scheme_id: scheme_id, year: (current_year.to_i))
-                         }
+                             where(scheme_id: scheme_id, year: current_year.to_i)
+                           }
 
   def record_valid_for_year?
     AgencyTemplateUpload.where(scheme_id: scheme_id, year: year).empty?

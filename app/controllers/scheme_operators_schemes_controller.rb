@@ -8,15 +8,15 @@ class SchemeOperatorsSchemesController < ApplicationController
   # GET /scheme_operators_schemes.json
   def index
     @scheme = Scheme.find(params[:scheme_id].to_i)
-    @scheme_operators_schemes = SchemeOperatorsScheme.where(scheme_id: @scheme.id);
+    @scheme_operators_schemes = SchemeOperatorsScheme.where(scheme_id: @scheme.id)
   end
 
   # GET /scheme_operators_schemes/new
   def new
-    currentOperators = SchemeOperatorsScheme.where(scheme_id: params[:scheme_id].to_i).flat_map(&:scheme_operator);
+    current_operators = SchemeOperatorsScheme.where(scheme_id: params[:scheme_id].to_i).flat_map(&:scheme_operator)
     @scheme_operators_scheme = SchemeOperatorsScheme.new
     @scheme = Scheme.find(params[:scheme_id].to_i)
-    @scheme_operators = current_user.schemes.flat_map(&:scheme_operators) - currentOperators
+    @scheme_operators = current_user.schemes.flat_map(&:scheme_operators) - current_operators
   end
 
   # POST /scheme_operators_schemes

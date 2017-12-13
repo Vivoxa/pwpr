@@ -1,5 +1,3 @@
-require 'pdf-forms'
-
 module Reporting
   module Reports
     class RegistrationForm < Reporting::Reports::BaseReport
@@ -20,15 +18,16 @@ module Reporting
             local_file_path = tmp_filename(year, business)
 
             logger.info 'process_report() = Filling in RegistrationForm PDF with data'
-
-            pdftk.fill_form(template, local_file_path, form_values_hash(template, year, business))
+            values = form_values_hash(template, year, business)
+            upload_filled_pdf_form_S3(values,year, business.NPWD)
+            #pdftk.fill_form(template, local_file_path, values)
 
             logger.info 'process_report() = Uploading RegistrationForm PDF to S3'
-            upload_to_S3(year, business)
+            #upload_to_S3(year, business)
 
-            logger.info 'process_report() = Emailing RegistrationForm PDF'
-            email_business(business, build_filename(report_type, year, business), local_file_path, year, current_user)
-            cleanup(year, business)
+            #logger.info 'process_report() = Emailing RegistrationForm PDF'
+            #email_business(business, build_filename(report_type, year, business), local_file_path, year, current_user)
+            #cleanup(year, business)
           rescue => e
             @errors << e.message
             logger.error "process_report() ERROR: #{e.message}"
@@ -38,6 +37,16 @@ module Reporting
       end
 
       private
+
+      def upload_filled_pdf_form_S3(values, year, business_npwd)
+          params = {}
+          params['values'] = values.to_json
+          params['year'] = year
+          params['business_npwd'] = business_npwd
+          params['report_type'] = report_type
+          uri = URI(PDF_SERVER_URL + PDF_SERVER_FILL_FORM_ENDPOINT)
+          res = Net::HTTP.post_form(uri, params)
+      end
 
       def email_business(business, filename, file_path, year, current_user)
         success = SchemeMailer.registration_email(business, filename, file_path, year, business.correspondence_contact).deliver_now

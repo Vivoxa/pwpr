@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.7'
-
+gem 'puma'
 # UI gems
 gem 'bootstrap', '~> 4.0.0.alpha4'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
@@ -76,8 +76,5 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
-
-gem 'pdftk'
-gem 'pdf-forms'
 
 gem 'prawn'

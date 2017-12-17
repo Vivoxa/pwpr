@@ -19,15 +19,10 @@ module Reporting
 
             logger.info 'process_report() = Filling in RegistrationForm PDF with data'
             values = form_values_hash(template, year, business)
-            upload_filled_pdf_form_S3(values,year, business.NPWD)
-            #pdftk.fill_form(template, local_file_path, values)
-
+            res = upload_filled_pdf_form_S3(values, year, business.NPWD)
             logger.info 'process_report() = Uploading RegistrationForm PDF to S3'
-            #upload_to_S3(year, business)
-
             #logger.info 'process_report() = Emailing RegistrationForm PDF'
             #email_business(business, build_filename(report_type, year, business), local_file_path, year, current_user)
-            #cleanup(year, business)
           rescue => e
             @errors << e.message
             logger.error "process_report() ERROR: #{e.message}"
@@ -39,13 +34,17 @@ module Reporting
       private
 
       def upload_filled_pdf_form_S3(values, year, business_npwd)
-          params = {}
-          params['values'] = values.to_json
-          params['year'] = year
-          params['business_npwd'] = business_npwd
-          params['report_type'] = report_type
-          uri = URI(PDF_SERVER_URL + PDF_SERVER_FILL_FORM_ENDPOINT)
-          res = Net::HTTP.post_form(uri, params)
+        params = {}
+        params['values'] = values.to_json
+        params['year'] = year
+        params['business_npwd'] = business_npwd
+        params['report_type'] = report_type
+        Clients::V1::PdfServiceClient.new.create_pdf(params)
+      end
+
+      def get_form_fields
+        result = Clients::V1::PdfServiceClient.new.get_form_fields('registration_form')
+        JSON.parse(result.body)
       end
 
       def email_business(business, filename, file_path, year, current_user)
@@ -63,19 +62,19 @@ module Reporting
       end
 
       def form_values_hash(template, year, business)
-        pdf_fields = pdftk.get_fields(template)
+        pdf_fields = get_form_fields #pdftk.get_fields(template)
 
         maps = load_mappings
         value_pairs = {}
 
-        pdf_fields.each do |pdf_field|
-          next if excluded_fields.include?(pdf_field.name)
-          report_field_config = maps['fields'][pdf_field.name]
+        pdf_fields.each do |pdf_field_name, field_hash|
+          next if excluded_fields.include?(pdf_field_name)
+          report_field_config = maps['fields'][pdf_field_name]
 
           begin
-            assign_value_pairs(business, pdf_field, report_field_config, value_pairs, year)
+            assign_value_pairs(business, field_hash, report_field_config, value_pairs, year)
           rescue => e
-            logger.error "process_report() pdf-field: #{pdf_field.name} ERROR: #{e.message}"
+            logger.error "process_report() pdf-field: #{pdf_field_name} ERROR: #{e.message}"
           end
         end
         value_pairs['tb_year_title'] = year
@@ -86,23 +85,23 @@ module Reporting
         case report_field_config['model_name']
         when 'business'
           value = process_business_attribute(report_field_config, business)
-          value_pairs[pdf_field.name] = configure_field_format(pdf_field, value)
+          value_pairs[pdf_field['name']] = configure_field_format(pdf_field, value)
 
         when 'address'
-          value_pairs[pdf_field.name] = process_address_attribute(report_field_config, business)
+          value_pairs[pdf_field['name']] = process_address_attribute(report_field_config, business)
 
         when 'registration'
           value = process_registration_attribute(report_field_config, business, year)
-          value_pairs[pdf_field.name] = configure_field_format(pdf_field, value)
+          value_pairs[pdf_field['name']] = configure_field_format(pdf_field, value)
 
         when 'contact'
           value = process_contact_attribute(report_field_config, business)
-          value_pairs[pdf_field.name] = configure_field_format(pdf_field, value)
+          value_pairs[pdf_field['name']] = configure_field_format(pdf_field, value)
         end
       end
 
       def configure_field_format(pdf_field, value)
-        case pdf_field.type
+        case pdf_field['type']
         when 'Text'
           value
         when 'Button'

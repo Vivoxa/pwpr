@@ -7,9 +7,6 @@ module Reporting
     class BaseReport
       SERVER_TMP_FILE_DIR = 'public'.freeze
       DEFAULT_FILE_EXT = 'pdf'.freeze
-      PDFTK_LIB_LOCATION = ENV.fetch('PDFTK_LOCATION', '/usr/bin/pdftk')
-      PDF_SERVER_URL = 'http://pdf_server:2030/'
-      PDF_SERVER_FILL_FORM_ENDPOINT = 'fill_pdf_form'
 
       def report_bucket_name
         "#{Rails.env}-pwpr-reports"
@@ -31,10 +28,6 @@ module Reporting
       end
 
       protected
-
-      def pdftk
-        @pdftk ||= PdfForms.new(PDFTK_LIB_LOCATION)
-      end
 
       def cleanup(year, business)
         path_to_save_file = tmp_filename(year, business)

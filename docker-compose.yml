@@ -31,6 +31,9 @@ services:
       - APP_CO_SIGN_IN_URL=http://192.168.99.100:3000/company_operators/sign_in
       - BUNNY_USERNAME=guest
       - BUNNY_PASSWORD=guest
+      - SERVICE_NAME=pwpr_app
+      - API_KEY=435jhadsfgkuy9863234ertfgjkljgkasdtigkkjfhjkdh
+      - PDF_SERVER_URL=http://pdf_server:2030/
     volumes:
       - ../pwpr:/pwpr
     ports:
@@ -64,8 +67,8 @@ services:
         - "1080:80"
         - "1025:25"
   pdf_server:
-    image: 054960824384.dkr.ecr.eu-west-1.amazonaws.com/pre-pdf_server:test_11
-    command: bash -c "rackup config.ru -p 2030 -o '0.0.0.0'"
+    image: 054960824384.dkr.ecr.eu-west-1.amazonaws.com/pre-pdf_server:v1.0.0
+    command: bash -c "bundle exec rackup config.ru -p 2030 -o '0.0.0.0'"
     container_name: pdf_server
     tty: true
     stdin_open: true
@@ -75,7 +78,8 @@ services:
       - AWS_ACCESS_KEY_ID=AKIAIEYHGYE3AVY27YHQ
       - AWS_SECRET_ACCESS_KEY=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
       - AWS_REGION=eu-west-1
-      - DOCKER_DB_HOST=pwpr_db_1      
+      - DOCKER_DB_HOST=pwpr_db_1
+      - PWPR_API_KEY=435jhadsfgkuy9863234ertfgjkljgkasdtigkkjfhjkdh
     volumes:
       - ../pdf_server:/pdf_server
     ports:

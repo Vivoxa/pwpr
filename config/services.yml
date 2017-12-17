@@ -1,0 +1,14 @@
+services:
+  pdf_server:
+    development:
+      v1:
+        url: http://pdf_server:2030/api/v1/
+    preprod:
+      v1:
+        url: http://pdf_server:2030/api/v1/
+    production:
+      v1:
+        url: http://pdf_server:2030/api/v1/
+    endpoints:
+      post_create_pdf: create/pdf/
+      get_form_fields: form_fields/

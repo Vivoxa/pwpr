@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.7'
+gem 'rails', '4.2.10'
+gem 'tzinfo-data'
 gem 'puma'
 # UI gems
 gem 'bootstrap', '~> 4.0.0.alpha4'
@@ -78,3 +79,5 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'prawn'
+
+

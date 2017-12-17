@@ -7,6 +7,12 @@ class SchemesController < BaseController
   # GET /schemes.json
   def index
     @schemes = current_user.schemes.order(:name)
+    get_form_fields
+  end
+
+  def get_form_fields
+    url = ENV.fetch('PDF_SERVER_URL') + SERVICE_CONFIG['services']['pdf_server']['development']['endpoints']['get_form_fields']
+    Clients::V1::PdfServiceClient.get_request(url, 'registration_form')
   end
 
   # GET /schemes/1

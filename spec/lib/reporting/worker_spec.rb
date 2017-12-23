@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Reporting::Worker do
   subject(:worker) { described_class.new('q_name', 'q_host', 'log/file.log') }
-  let(:template) { File.join(File.dirname(__FILE__), 'default_registration_form.pdf') }
   let(:report_type) { 'Reporting::Reports::RegistrationForm' }
   let(:year) { 2016 }
   let(:scheme_operator) { SchemeOperator }
@@ -21,8 +20,7 @@ RSpec.describe Reporting::Worker do
                                 business_ids:      business_ids)
       end
       it 'when all values are correct' do
-        allow(Reporting::ReportTemplateHelper).to receive(:get_default_template).and_return(template)
-        expect_any_instance_of(Reporting::Reports::RegistrationForm).to receive(:process_report).with(1, year.to_s, SchemeOperator.find(1), template).and_return true
+        expect_any_instance_of(Reporting::Reports::RegistrationForm).to receive(:process_report).with(1, year.to_s, SchemeOperator.find(1)).and_return true
         expect_any_instance_of(SchemeMailer).to receive(:scheme_director_info).exactly(1).times
         worker.process(report_event_datum.id)
       end
@@ -37,8 +35,7 @@ RSpec.describe Reporting::Worker do
                                 business_ids:      business_ids)
       end
       it 'when all values are correct' do
-        allow(Reporting::ReportTemplateHelper).to receive(:get_default_template).and_return(template)
-        expect_any_instance_of(Reporting::Reports::RegistrationForm).to receive(:process_report).with(1, year.to_s, Admin.find(1), template).and_return true
+        expect_any_instance_of(Reporting::Reports::RegistrationForm).to receive(:process_report).with(1, year.to_s, Admin.find(1)).and_return true
         expect_any_instance_of(SchemeMailer).to receive(:scheme_director_info).exactly(1).times
         worker.process(report_event_datum.id)
       end
@@ -53,8 +50,7 @@ RSpec.describe Reporting::Worker do
                                 business_ids:      business_ids)
       end
       it 'when all values are correct' do
-        allow(Reporting::ReportTemplateHelper).to receive(:get_default_template).and_return(template)
-        expect_any_instance_of(Reporting::Reports::RegistrationForm).to receive(:process_report).with(1, year.to_s, CompanyOperator.find(1), template).and_return true
+        expect_any_instance_of(Reporting::Reports::RegistrationForm).to receive(:process_report).with(1, year.to_s, CompanyOperator.find(1)).and_return true
         expect_any_instance_of(SchemeMailer).to receive(:scheme_director_info).exactly(1).times
         worker.process(report_event_datum.id)
       end

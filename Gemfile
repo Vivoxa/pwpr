@@ -19,7 +19,8 @@ gem 'royce'
 
 # worker gems
 gem 'bunny', require: false
-gem 'aws-sdk', '~> 2'
+#gem 'aws-sdk', '~> 2'
+gem 'aws_gateway', git: 'git@github.com:Vivoxa/aws_gateway.git', tag: 'v0.0.9'
 gem 'roo-xls', '1.0.0', require: false
 
 # DB gems

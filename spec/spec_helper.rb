@@ -9,6 +9,7 @@ require_relative './features/spec/support/shared_examples/valid_sign_in'
 require_relative './features/spec/support/shared_examples/invalid_sign_in'
 require_relative './features/spec/support/shared_examples/field_placeholder'
 require_relative './features/spec/support/shared_examples/button_present'
+require_relative 'support/auth_helper'
 
 SimpleCov.start 'rails' do
   add_filter '/spec/'
@@ -18,7 +19,7 @@ SimpleCov.start 'rails' do
   add_group 'Library', 'app/lib'
 end
 
-SimpleCov.minimum_coverage 97.7
+SimpleCov.minimum_coverage 96.49
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)

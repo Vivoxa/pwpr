@@ -5,24 +5,23 @@ module Reporting
 
       REPORT_TYPE = name.demodulize.underscore.freeze
 
-      def process_report(business_id, year, current_user, template)
-        raise 'Report template not supplied and is required!' if template.nil?
-
+      def process_report(business_id, year, current_user)
         logger.tagged("RegistrationForm for business with id #{business_id}, #{year}") do
           @errors = []
           begin
             logger.info 'process_report() = finding business'
             business = Business.find(business_id)
             logger.info 'process_report() = FOUND business'
-
-            local_file_path = tmp_filename(year, business)
-
             logger.info 'process_report() = Filling in RegistrationForm PDF with data'
-            values = form_values_hash(template, year, business)
-            res = upload_filled_pdf_form_S3(values, year, business.NPWD)
+            values = form_values_hash(year, business)
+            upload_filled_pdf_form_s3(values, year, business.NPWD)
+
             logger.info 'process_report() = Uploading RegistrationForm PDF to S3'
-            #logger.info 'process_report() = Emailing RegistrationForm PDF'
-            #email_business(business, build_filename(report_type, year, business), local_file_path, year, current_user)
+            filepath = get_report(year, business.NPWD, report_type)
+
+            logger.info 'process_report() = Emailing RegistrationForm PDF'
+            email_business(business, build_filename(report_type, year, business), filepath, year, current_user)
+            cleanup(filepath)
           rescue => e
             @errors << e.message
             logger.error "process_report() ERROR: #{e.message}"
@@ -33,17 +32,14 @@ module Reporting
 
       private
 
-      def upload_filled_pdf_form_S3(values, year, business_npwd)
-        params = {}
-        params['values'] = values.to_json
-        params['year'] = year
-        params['business_npwd'] = business_npwd
-        params['report_type'] = report_type
-        Clients::V1::PdfServiceClient.new.create_pdf(params)
+      def get_report(year, business_npwd, report_type, ext = DEFAULT_FILE_EXT)
+        response = s3_report_helper.get_report(year, business_npwd, report_type, ext)
+        response[:target]
       end
 
-      def get_form_fields
-        result = Clients::V1::PdfServiceClient.new.get_form_fields('registration_form')
+      def form_fields
+        client = Clients::V1::PdfServiceClient.new
+        result = client.get_form_fields('registration_form')
         JSON.parse(result.body)
       end
 
@@ -61,8 +57,8 @@ module Reporting
         success
       end
 
-      def form_values_hash(template, year, business)
-        pdf_fields = get_form_fields #pdftk.get_fields(template)
+      def form_values_hash(year, business)
+        pdf_fields = form_fields
 
         maps = load_mappings
         value_pairs = {}

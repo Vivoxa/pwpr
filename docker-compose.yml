@@ -7,14 +7,14 @@ services:
      - "15672:15672"
   app:
     image: pwpr:latest
-    command: bash -c "RAILS_ENV=development bundle exec rake db:drop db:create db:migrate db:seed && RAILS_ENV=development bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "RAILS_ENV=preprod bundle exec rake db:drop db:create db:migrate db:seed && RAILS_ENV=preprod bundle exec rails s -p 3000 -b '0.0.0.0'"
     container_name: pwpr_app
     tty: true
     stdin_open: true
     environment:
       - PDFTK_LOCATION=/usr/bin/pdftk
       - DOCKER_DB_HOST=pwpr_db_1
-      - DOCKER_IP=192.168.99.100
+      - DOCKER_IP=pwpr_mail #192.168.99.100
       - SECRET_KEY_BASE=0c64deb461266abb601d62b86780c92e8220f1e80fcaa2faa48a8005b7c4cf5dba4f921f5be0e288558a0c3f10ce23302bb54f593a19e7b6260cdd29ebb04760
       - AWS_ACCESS_KEY_ID=AKIAIEYHGYE3AVY27YHQ
       - AWS_SECRET_ACCESS_KEY=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
@@ -27,8 +27,8 @@ services:
       - REPORTS_WORKER_LOG_PATH=log/reports_email_worker.log
       - FROM_EMAIL=notifications@app-pwpr.com
       - SES_ENDPOINT=email-smtp.us-east-1.amazonaws.com
-      - APP_SO_SIGN_IN_URL=http://192.168.99.100:3000/scheme_operators/sign_in
-      - APP_CO_SIGN_IN_URL=http://192.168.99.100:3000/company_operators/sign_in
+      - APP_SO_SIGN_IN_URL=http://0.0.0.0:3000/scheme_operators/sign_in
+      - APP_CO_SIGN_IN_URL=http://0.0.0.0:3000/company_operators/sign_in
       - BUNNY_USERNAME=guest
       - BUNNY_PASSWORD=guest
       - SERVICE_NAME=pwpr_app
@@ -67,7 +67,7 @@ services:
         - "1080:80"
         - "1025:25"
   pdf_server:
-    image: 054960824384.dkr.ecr.eu-west-1.amazonaws.com/pre-pdf_server:v1.0.0
+    image: pdf_service:latest #054960824384.dkr.ecr.eu-west-1.amazonaws.com/pre-pdf_server:v1.0.0
     command: bash -c "bundle exec rackup config.ru -p 2030 -o '0.0.0.0'"
     container_name: pdf_server
     tty: true
@@ -78,7 +78,6 @@ services:
       - AWS_ACCESS_KEY_ID=AKIAIEYHGYE3AVY27YHQ
       - AWS_SECRET_ACCESS_KEY=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
       - AWS_REGION=eu-west-1
-      - DOCKER_DB_HOST=pwpr_db_1
       - PWPR_API_KEY=435jhadsfgkuy9863234ertfgjkljgkasdtigkkjfhjkdh
     volumes:
       - ../pdf_server:/pdf_server

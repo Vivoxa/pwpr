@@ -1,10 +1,9 @@
+require 'net/http'
+require 'uri'
+
 module Clients
   module V1
     class PdfServiceClient
-      def initialise
-
-      end
-
       def create_pdf(params)
         url = server_location + SERVICE_CONFIG['services']['pdf_server']['endpoints']['post_create_pdf']
         uri = URI(url)
@@ -25,6 +24,8 @@ module Clients
           return http.request request # Net::HTTPResponse object
         end
       end
+
+      private
 
       def basic_auth
         {account: ENV.fetch('SERVICE_NAME'), password: ENV.fetch('API_KEY')}

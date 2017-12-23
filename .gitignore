@@ -20,6 +20,8 @@ coverage
 !/log/.keep
 /tmp
 /.idea/
+/id_rsa
+/*.swp
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

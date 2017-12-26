@@ -1,7 +1,7 @@
 GIT
   remote: git@github.com:Vivoxa/aws_gateway.git
   revision: c50836e745d5d52a48dc3af5d38b006dccf43ca3
-  tag: v0.0.13
+  tag: v1.0.0
   specs:
     aws_gateway (1.0.0)
       aws-sdk (~> 2)

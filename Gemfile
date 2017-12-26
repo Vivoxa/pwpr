@@ -20,7 +20,7 @@ gem 'royce'
 # worker gems
 gem 'bunny', require: false
 
-gem 'aws_gateway', git: 'git@github.com:Vivoxa/aws_gateway.git', tag: 'v0.0.13'
+gem 'aws_gateway', git: 'git@github.com:Vivoxa/aws_gateway.git', tag: 'v1.0.0'
 gem 'roo-xls', '1.0.0', require: false
 
 # DB gems

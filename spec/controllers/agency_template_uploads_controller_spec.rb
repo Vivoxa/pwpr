@@ -6,6 +6,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
   let(:co_marti) { SchemeOperator.new }
   let(:role_permissions) { ::PermissionsForRole::SchemeOperatorDefinitions.new }
   let(:sc_director_roles) { role_permissions.permissions_for_role('sc_director').keys }
+  let(:server_location) { InputOutput::ServerFileHandler::SERVER_TMP_FILE_DIR }
 
   before do
     co_marti.email = 'jennifer@back_to_the_future.com'
@@ -95,7 +96,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
     let(:filename) { double('file', original_filename: 'my original filename.xls', tempfile: double('tempfile', path: 'my temp file.xls')) }
 
     before do
-      allow(FileUtils).to receive(:cp).with('my temp file.xls', 'public/my original filename.xls')
+      allow(FileUtils).to receive(:cp).with('my temp file.xls', "#{server_location}/my original filename.xls")
       allow(File).to receive(:exist?).and_return true
       ENV['AWS_REGION'] = 'eu-west-1'
     end
@@ -103,7 +104,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
     context 'when a user is uploading for year that has an upload already' do
       before do
         @request.env['HTTP_REFERER'] = '/'
-        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename.xls').and_return(true)
+        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with("#{server_location}/my original filename.xls").and_return(true)
         allow(subject).to receive(:upload_params).and_return(year: 2015, filename: filename)
       end
       context 'when the user does NOT give permission to overwrite' do
@@ -124,7 +125,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
     end
     context 'when correct values are present' do
       before do
-        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename.xls').and_return(true)
+        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with("#{server_location}/my original filename.xls").and_return(true)
         allow(subject).to receive(:upload_params).and_return(year: 2015, filename: filename)
         expect { post :create, agency_template_upload: {year: 2015, filename: 'feef.xls'}, scheme_id: 1 }.to change { AgencyTemplateUpload.count }.by(1)
       end
@@ -167,7 +168,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
 
     context 'when the upload is NOT successful' do
       before do
-        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename.xls').and_return(false)
+        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with("#{server_location}/my original filename.xls").and_return(false)
         allow(subject).to receive(:upload_params).and_return(year: 2015, filename: filename)
       end
       it 'expects the user to see a flash message' do
@@ -191,7 +192,7 @@ RSpec.describe AgencyTemplateUploadsController, type: :controller do
       let(:invalid_filename) { double('file', original_filename: 'my original filename.abc', tempfile: double('tempfile', path: 'my temp file.abc')) }
 
       before do
-        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with('public/my original filename.abc').and_return(false)
+        allow_any_instance_of(Aws::S3::Object).to receive(:upload_file).with("#{server_location}/my original filename.abc").and_return(false)
         allow(subject).to receive(:upload_params).and_return(year: 2015, filename: invalid_filename)
       end
       it 'expects the user to see a flash message' do

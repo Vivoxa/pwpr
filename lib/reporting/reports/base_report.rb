@@ -5,10 +5,8 @@ module Reporting
   module Reports
     class BaseReport
       DEFAULT_FILE_EXT = 'pdf'.freeze
-      SERVER_TMP_FILE_DIR = 'tmp'.freeze
 
       def upload_filled_pdf_form_s3(values, year, business_npwd)
-        binding.pry
         params = {}
         params['values'] = values.to_json
         params['year'] = year
@@ -20,7 +18,7 @@ module Reporting
       protected
 
       def s3_report_helper
-        @s3_report_helper ||= AwsGateway::S3ReportHelper.new(SERVER_TMP_FILE_DIR)
+        @s3_report_helper ||= AwsGateway::S3ReportHelper.new(InputOutput::ServerFileHandler::SERVER_TMP_FILE_DIR)
       end
 
       def cleanup(filepath)

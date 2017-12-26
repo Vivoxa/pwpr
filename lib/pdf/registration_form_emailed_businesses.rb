@@ -15,7 +15,7 @@ module Pdf
     end
 
     def self.file_path(scheme, year)
-      "public/regForm_#{scheme.id}_#{year}.pdf"
+      "#{InputOutput::ServerFileHandler::SERVER_TMP_FILE_DIR}/regForm_#{scheme.id}_#{year}.pdf"
     end
 
     def self.cleanup(scheme, year)

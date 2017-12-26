@@ -7,7 +7,7 @@ RSpec.describe Pdf::RegistrationFormEmailedBusinesses do
 
     it 'expects the file_path to be correctly formatted' do
       filename = described_class.file_path(Scheme.find(1), 2010)
-      expect(filename).to eq('public/regForm_1_2010.pdf')
+      expect(filename).to eq('tmp/regForm_1_2010.pdf')
     end
 
     it 'expects the tmp file to be removed' do

@@ -79,6 +79,7 @@ services:
       - AWS_SECRET_ACCESS_KEY=r9I/xu8gqamD7E9Yvwc6CKCn+Wvci7neBng5O5Uh
       - AWS_REGION=eu-west-1
       - PWPR_API_KEY=435jhadsfgkuy9863234ertfgjkljgkasdtigkkjfhjkdh
+      - ENV=preprod
     volumes:
       - ../pdf_server:/pdf_server
     ports:

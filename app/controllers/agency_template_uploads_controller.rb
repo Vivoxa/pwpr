@@ -103,8 +103,13 @@ class AgencyTemplateUploadsController < ApplicationController
   end
 
   def upload_to_s3(upload)
-    agency_template_handler = S3::AgencyTemplateAwsHandler.new
-    if agency_template_handler.put(upload)
+    agency_template_handler = AwsGateway::S3AgencyTemplateHelper.new
+    file_path = InputOutput::ServerFileHandler.server_file_path_for(upload.filename)
+    year = upload.year
+    filename = upload.filename
+    scheme_id = upload.scheme_id
+
+    if agency_template_handler.put(year, scheme_id, filename, file_path)
       message = "'#{upload.filename}' uploaded successfully! "
       message << 'Processing of this template will be done in the background. '
       message << 'The status of the Agency Template Upload will be updated when processing is complete.'
@@ -121,7 +126,7 @@ class AgencyTemplateUploadsController < ApplicationController
   end
 
   def path_to_save_file
-    File.join('public', upload_params[:filename].original_filename)
+    InputOutput::ServerFileHandler.server_file_path_for(upload_params[:filename].original_filename)
   end
 
   def assign_upload_filename!(upload)

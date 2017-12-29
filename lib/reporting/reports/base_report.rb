@@ -1,38 +1,28 @@
+require 'json'
+require 'aws_gateway'
+
 module Reporting
   module Reports
     class BaseReport
-      SERVER_TMP_FILE_DIR = 'public'.freeze
       DEFAULT_FILE_EXT = 'pdf'.freeze
-      PDFTK_LIB_LOCATION = ENV.fetch('PDFTK_LOCATION', '/usr/bin/pdftk')
 
-      def report_bucket_name
-        "#{Rails.env}-pwpr-reports"
-      end
-
-      def template_bucket_name
-        "#{Rails.env}-pwpr-templates"
-      end
-
-      def upload_to_S3(year, business, ext = DEFAULT_FILE_EXT)
-        s3 = Aws::S3::Resource.new
-
-        # Create the object to upload
-        s3_desired_filename = build_filename(report_type, year, business, ext)
-        obj = s3.bucket(report_bucket_name).object(s3_desired_filename)
-
-        # Upload it
-        obj.upload_file(tmp_filename(year, business, ext))
+      def upload_filled_pdf_form_s3(values, year, business_npwd)
+        params = {}
+        params['values'] = values.to_json
+        params['year'] = year
+        params['business_npwd'] = business_npwd
+        params['report_type'] = report_type
+        Clients::V1::PdfServiceClient.new.create_pdf(params)
       end
 
       protected
 
-      def pdftk
-        @pdftk ||= PdfForms.new(PDFTK_LIB_LOCATION)
+      def s3_report_helper
+        @s3_report_helper ||= AwsGateway::S3ReportHelper.new(InputOutput::ServerFileHandler::SERVER_TMP_FILE_DIR)
       end
 
-      def cleanup(year, business)
-        path_to_save_file = tmp_filename(year, business)
-        FileUtils.rm [path_to_save_file], force: true
+      def cleanup(filepath)
+        FileUtils.rm [filepath], force: true
       end
 
       def report_type
@@ -41,12 +31,6 @@ module Reporting
 
       def build_filename(report_type, year, business, ext = DEFAULT_FILE_EXT)
         "#{report_type}_#{year}_#{business.NPWD}.#{ext}"
-      end
-
-      private
-
-      def tmp_filename(year, business, ext = DEFAULT_FILE_EXT)
-        "#{BaseReport::SERVER_TMP_FILE_DIR}/#{report_type}_#{year}_#{business.NPWD}.#{ext}"
       end
     end
   end

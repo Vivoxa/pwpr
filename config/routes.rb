@@ -49,6 +49,14 @@ Rails.application.routes.draw do
     get '/reports/report_data' => 'reports/report_data', as: 'report_data'
   end
 
+  #api
+  namespace :api do
+    namespace :v1 do
+      resources :businesses, only: [:index, :create, :show, :update, :destroy]
+      resources :addresses, only: [:index, :create, :show, :update, :destroy]
+      resources :contacts, only: [:index, :create, :show, :update, :destroy]
+    end
+  end
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module InputOutput
   class ServerFileHandler
-    SERVER_TMP_FILE_DIR = 'public'.freeze
+    SERVER_TMP_FILE_DIR = 'tmp'
 
     def self.server_file_path_for(file_name)
       "#{SERVER_TMP_FILE_DIR}/#{file_name}"

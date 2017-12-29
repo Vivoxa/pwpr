@@ -1,31 +1,31 @@
-FROM ruby:2.3.0
+FROM alpine:3.7
 
 ARG APP_DIR
 ENV APP_DIR $APP_DIR
 
-ENV PDFTK_VERSION 2.02
-
-ADD https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk-${PDFTK_VERSION}-src.zip /tmp/
-
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs ruby-mysql2 && \
-    apt-get install -y --no-install-recommends unzip build-essential gcj-jdk && \
-    apt-get clean && \
-    unzip /tmp/pdftk-${PDFTK_VERSION}-src.zip -d /tmp && \
-    sed -i 's/VERSUFF=-4.6/VERSUFF=-4.9/g' /tmp/pdftk-${PDFTK_VERSION}-dist/pdftk/Makefile.Debian && \
-    cd /tmp/pdftk-${PDFTK_VERSION}-dist/pdftk && \
-    make -f Makefile.Debian && \
-    make -f Makefile.Debian install && \
-    mkdir /$APP_DIR && \
-    rm -Rf /tmp/pdftk-*
+RUN mkdir /$APP_DIR
 
 WORKDIR /$APP_DIR
 
-COPY . /$APP_DIR
+COPY Gemfile Gemfile.lock . /$APP_DIR/
+COPY id_rsa /root/.ssh/id_rsa
 
-RUN bundle install --system
+#add ruby and bundler
+RUN apk --update add --no-cache bash ruby ruby-bigdecimal ruby-irb ruby-bundler \
+grep less curl zlib openssh git \
+&& rm -rf /var/cache/apk/* \
+&& gem install -N rake -v 10.4.2 -- --use-system-libraries \
+&& set -ex \
+&& apk --update add nodejs mariadb-client-libs mariadb-client mariadb-libs vim \
+&& apk --update add --virtual build-dependencies \
+build-base ruby-dev mariadb-dev \
+libffi-dev libc-dev linux-headers \
+&& ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts \
+&& chown 0400 /root/.ssh/id_rsa \
+&& bundle install --system --retry 4 \
+&& apk del build-dependencies
 
 ARG COMMAND
 ENV COMMAND ${COMMAND}
-
 EXPOSE 3000
 CMD bash -c "${COMMAND}"

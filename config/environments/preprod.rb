@@ -19,15 +19,15 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
   config.serve_static_files = true
   if ENV['DOCKER_IP']
-    config.action_mailer.default_url_options = {host: ENV['DOCKER_IP']}
+    config.action_mailer.default_url_options = {host: 'localhost', port: 3000}
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
       address:             ENV['DOCKER_IP'],
       openssl_verify_mode: 'none',
-      port:                1025
+      port:                25
     }
   end
 

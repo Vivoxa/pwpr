@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.7'
-
+gem 'rails', '4.2.10'
+gem 'tzinfo-data'
+gem 'puma'
 # UI gems
 gem 'bootstrap', '~> 4.0.0.alpha4'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
@@ -18,7 +19,8 @@ gem 'royce'
 
 # worker gems
 gem 'bunny', require: false
-gem 'aws-sdk', '~> 2'
+
+gem 'aws_gateway', git: 'git@github.com:Vivoxa/aws_gateway.git', tag: 'v1.0.0'
 gem 'roo-xls', '1.0.0', require: false
 
 # DB gems
@@ -54,7 +56,7 @@ group :development, :test do
   gem 'ruby2ruby'
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem "chromedriver-helper"
+  gem 'chromedriver-helper'
 end
 
 group :test do
@@ -77,7 +79,6 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'pdftk'
-gem 'pdf-forms'
-
 gem 'prawn'
+
+

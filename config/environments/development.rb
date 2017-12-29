@@ -26,10 +26,11 @@ Rails.application.configure do
     config.action_mailer.default_url_options = {host: ENV['DOCKER_IP'], port: 3000}
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-      address:             ENV['DOCKER_IP'],
-      openssl_verify_mode: 'none',
-      port:                1025
+        address:             ENV['DOCKER_IP'],
+        openssl_verify_mode: 'none',
+        port:                25
     }
+    # openssl_verify_mode: 'none',
   else
     config.action_mailer.default_url_options = {host: 'localhost', port: 3000}
     config.action_mailer.delivery_method = :letter_opener

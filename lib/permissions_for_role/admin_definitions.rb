@@ -42,13 +42,18 @@ module PermissionsForRole
         businesses_e: {checked: true, locked: true},
         businesses_w: {checked: true, locked: true},
         businesses_d: {checked: true, locked: true},
+
         uploads_r:    {checked: true, locked: true},
         uploads_w:    {checked: true, locked: true},
 
         contacts_r:   {checked: true, locked: true},
         contacts_w:   {checked: true, locked: true},
         contacts_e:   {checked: true, locked: true},
-        contacts_d:   {checked: true, locked: true}
+        contacts_d:   {checked: true, locked: true},
+
+        link_to_scheme_r: {checked: true, locked: true},
+        link_to_scheme_w: {checked: true, locked: true},
+        link_to_scheme_d: {checked: true, locked: false}
       }
     end
 
@@ -80,7 +85,11 @@ module PermissionsForRole
         contacts_r:   {checked: true, locked: true},
         contacts_w:   {checked: true, locked: true},
         contacts_e:   {checked: true, locked: true},
-        contacts_d:   {checked: false, locked: false}
+        contacts_d:   {checked: false, locked: false},
+
+        link_to_scheme_r: {checked: true, locked: true},
+        link_to_scheme_w: {checked: true, locked: false},
+        link_to_scheme_d: {checked: false, locked: true}
       }
     end
 
@@ -111,7 +120,11 @@ module PermissionsForRole
         contacts_r:   {checked: true, locked: true},
         contacts_w:   {checked: false, locked: false},
         contacts_e:   {checked: false, locked: false},
-        contacts_d:   {checked: false, locked: true}
+        contacts_d:   {checked: false, locked: true},
+
+        link_to_scheme_r: {checked: true, locked: false},
+        link_to_scheme_w: {checked: false, locked: true},
+        link_to_scheme_d: {checked: false, locked: true}
       }
     end
   end

@@ -22,23 +22,17 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
     end
 
     context 'when scheme operator is signed in' do
-      let(:co_marti) { SchemeOperator.new }
+      let(:so_marti) { FactoryGirl.create(:scheme_operator) }
+
       before do
-        co_marti.email = 'jennifer@back_to_the_future.com'
-        co_marti.first_name = 'Jennifer'
-        co_marti.last_name = 'Smith'
-        co_marti.password = 'mypassword'
-        co_marti.confirmed_at = DateTime.now
-        co_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
-        co_marti.approved = true
-        co_marti.save
       end
       context 'when SchemeOperator does NOT have the director role' do
         before do
-          co_marti.role_list.each do |role|
-            co_marti.remove_role role
-          end
-          sign_in co_marti
+          sign_in so_marti
+        end
+
+        after do
+          sign_out so_marti
         end
 
         context 'when calling new' do
@@ -51,20 +45,14 @@ RSpec.describe CompanyOperators::InvitationsController, type: :controller do
       end
 
       context 'when SchemeOperator has co_director role' do
-        before do
-          sign_out co_marti
-          co_marti.role_list.each do |role|
-            co_marti.remove_role role
-          end
-          co_marti.add_role :sc_director
-          co_marti.add_role :co_users_w
+        let(:so_marti) { FactoryGirl.create(:scheme_operator_with_director) }
 
-          co_marti.save
-          sign_in co_marti
+        before do
+          sign_in so_marti
         end
 
         after do
-          sign_out co_marti
+          sign_out so_marti
         end
 
         context 'when calling create' do

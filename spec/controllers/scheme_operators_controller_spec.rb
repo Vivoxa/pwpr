@@ -1,26 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe SchemeOperatorsController, type: :controller do
+  let(:scheme_operator_with_director) { FactoryGirl.create(:scheme_operator_with_director) }
   context 'when SchemeOperator has sc_director role' do
-    let(:sc_marti) { SchemeOperator.new }
     before do
-      sc_marti.email = 'jennifer@back_to_the_future.com'
-      sc_marti.first_name = 'Jennifer'
-      sc_marti.last_name = 'Smith'
-      sc_marti.password = 'mypassword'
-      sc_marti.confirmed_at = DateTime.now
-      sc_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
-      sc_marti.add_role :sc_director
-      sc_marti.add_role :sc_users_r
-      sc_marti.approved = true
-      sc_marti.save
-      sign_in sc_marti
+      sign_in scheme_operator_with_director
     end
 
     after do
-      sc_marti.remove_role :sc_users_r
-      sc_marti.remove_role :sc_director
-      sign_out sc_marti
+      sign_out scheme_operator_with_director
     end
 
     context 'when an invitation has not been accepted' do
@@ -30,7 +18,6 @@ RSpec.describe SchemeOperatorsController, type: :controller do
                                                 approved: true,
                                                 email: 'invited@pwpr.com',
                                                 password: 'my_password',
-                                                schemes: sc_marti.schemes,
                                                 invitation_sent_at: DateTime.now)
         get 'invited_not_accepted'
         object = assigns(:scheme_operators).where(id: scheme_operator.id).first
@@ -95,47 +82,23 @@ RSpec.describe SchemeOperatorsController, type: :controller do
   end
 
   context 'when scheme operator is signed in' do
-    let(:sc_marti) { SchemeOperator.new }
     before do
-      sc_marti.email = 'jennifer@back_to_the_future.com'
-      sc_marti.first_name = 'Jennifer'
-      sc_marti.last_name = 'Smith'
-      sc_marti.password = 'mypassword'
-      sc_marti.confirmed_at = DateTime.now
-      sc_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
-      sc_marti.save
-      sc_marti.approved = true
-      sc_marti.save
+      sign_in scheme_operator_with_director
     end
 
     after do
-      sign_out sc_marti
+      sign_out scheme_operator_with_director
     end
 
     describe '#approve' do
       before do
-        sc_marti.add_role :sc_director
-        PermissionsForRole::SchemeOperatorDefinitions.new.permissions_for_role(:sc_director).each do |permission, has|
-          sc_marti.add_role permission if has[:checked]
-        end
-        sign_in sc_marti
+        sign_in scheme_operator_with_director
       end
 
       after do
-        sign_out sc_marti
+        sign_out scheme_operator_with_director
       end
-      let(:scheme_operator) do
-        SchemeOperator.create(first_name: 'rspec owner',
-                              last_name: 'last',
-                              email: 'invited@pwpr.com',
-                              password: 'my_password',
-                              scheme_ids: [sc_marti.schemes.first.id],
-                              invitation_sent_at: DateTime.now - 5.days,
-                              invitation_accepted_at: DateTime.now,
-                              confirmation_sent_at: DateTime.now - 5.days,
-                              confirmed_at: DateTime.now,
-                              approved: false)
-      end
+      let(:scheme_operator) { FactoryGirl.create(:not_approved_scheme_operator) }
       it 'expects the scheme operator to be approved' do
         get :approve, scheme_operator_id: scheme_operator.id
         expect(response.status).to eq 302
@@ -146,15 +109,13 @@ RSpec.describe SchemeOperatorsController, type: :controller do
     end
 
     context 'when SchemeOperator does NOT have a role' do
+      let(:scheme_operator_with_sc_user) { FactoryGirl.create(:scheme_operator_with_sc_user) }
       before do
-        sc_marti.roles.each do |role|
-          sc_marti.remove_role role
-        end
-        sign_in sc_marti
+        sign_in scheme_operator_with_sc_user
       end
 
       after do
-        sign_out sc_marti
+        sign_out scheme_operator_with_sc_user
       end
 
       context 'when calling index' do
@@ -167,7 +128,7 @@ RSpec.describe SchemeOperatorsController, type: :controller do
 
       context 'when calling show' do
         it 'expects a CanCan AccessDenied error to be raised' do
-          get :show, id: sc_marti.id
+          get :show, id: scheme_operator_with_director.id
           expect(flash[:alert]).to be_present
           expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
@@ -175,7 +136,7 @@ RSpec.describe SchemeOperatorsController, type: :controller do
 
       context 'when calling update' do
         it 'expects a CanCan AccessDenied error to be raised' do
-          put :update, id: sc_marti.id
+          put :update, id: scheme_operator_with_director.id
           expect(flash[:alert]).to be_present
           expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
@@ -183,7 +144,7 @@ RSpec.describe SchemeOperatorsController, type: :controller do
 
       context 'when calling destroy' do
         it 'expects a CanCan AccessDenied error to be raised' do
-          put :update, id: sc_marti.id
+          put :update, id: scheme_operator_with_director.id
           expect(flash[:alert]).to be_present
           expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
@@ -207,33 +168,16 @@ RSpec.describe SchemeOperatorsController, type: :controller do
     end
 
     context 'when SchemeOperator has sc_director role' do
-      let!(:scheme_operator) do
-        SchemeOperator.create!(first_name: 'rspec owner',
-                              last_name: 'last',
-                              email: 'invited@pwpr.com',
-                              password: 'my_password',
-                              scheme_ids: [sc_marti.schemes.first.id],
-                              invitation_sent_at: DateTime.now - 5.days,
-                              invitation_accepted_at: DateTime.now,
-                              confirmation_sent_at: DateTime.now - 5.days,
-                              confirmed_at: DateTime.now,
-                              approved: false)
-      end
+      let(:scheme_operator) { FactoryGirl.create(:not_approved_scheme_operator) }
 
       before do
-        sign_out sc_marti
-        sc_marti.sc_director!
-        sc_marti.remove_role :sc_user
-
-        PermissionsForRole::SchemeOperatorDefinitions.new.permissions_for_role(:sc_director).each do |permission, has|
-          sc_marti.add_role permission if has[:checked]
-        end
-        sc_marti.save
-        sign_in sc_marti
+        scheme_operator.schemes << scheme_operator_with_director.schemes
+        scheme_operator.save!
+        sign_in scheme_operator_with_director
       end
 
       after do
-        sign_out sc_marti
+        sign_out scheme_operator_with_director
       end
 
       context 'when an invitation HAS been accepted but not approved' do
@@ -254,7 +198,7 @@ RSpec.describe SchemeOperatorsController, type: :controller do
         end
         context 'when trying to update own permissions' do
           it 'expects the permissions NOT to be updated' do
-            expect(put(:update_permissions, scheme_operator_id: sc_marti.id)).to redirect_to 'http://test.host/'
+            expect(put(:update_permissions, scheme_operator_id: scheme_operator_with_director.id)).to redirect_to 'http://test.host/'
             expect(flash[:alert]).to eq 'You are not authorized to access this page.'
             expect(response.status).to eq 302
           end
@@ -270,13 +214,13 @@ RSpec.describe SchemeOperatorsController, type: :controller do
         it 'sets @scheme_operators to correct value' do
           get 'index'
           assigns(:schemes).each do |_s, h|
-            expect(h[:users]).not_to include(sc_marti)
+            expect(h[:users]).not_to include(scheme_operator_with_director)
           end
         end
       end
 
       it 'expects the sc_director NOT to have access to the show page' do
-        expect(get(:show, id: sc_marti.id)).to redirect_to 'http://test.host/'
+        expect(get(:show, id: scheme_operator_with_director.id)).to redirect_to 'http://test.host/'
         expect(response.status).to eq 302
       end
 
@@ -305,6 +249,7 @@ RSpec.describe SchemeOperatorsController, type: :controller do
       end
 
       context 'when calling permissions' do
+        let(:scheme_operator) { FactoryGirl.create(:scheme_operator_with_super_user) }
         it 'expects the sc_director to have access to the permissions action' do
           get :permissions, scheme_operator_id: scheme_operator
           expect(response.status).to eq 200

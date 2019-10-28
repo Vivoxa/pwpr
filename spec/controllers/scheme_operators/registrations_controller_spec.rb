@@ -18,32 +18,16 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
   end
 
   context 'when scheme operator is signed in' do
-    let(:co_marti) { SchemeOperator.new }
-    before do
-      co_marti.email = 'jennifer@back_to_the_future.com'
-      co_marti.first_name = 'Jennifer'
-      co_marti.last_name = 'Smith'
-      co_marti.password = 'mypassword'
-      co_marti.confirmed_at = DateTime.now
-      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
-      co_marti.approved = true
-      co_marti.save
-    end
+    let(:so_marti_director) { FactoryGirl.create(:scheme_operator_with_director) }
+
     context 'when SchemeOperator has not been approved' do
+      let(:so_marti_not_approved) { FactoryGirl.create(:not_approved_scheme_operator) }
       before do
-        co_marti.approved = false
-        co_marti.sc_users_w!
-        co_marti.co_users_w!
-        co_marti.save
-        sign_in co_marti
+        sign_in so_marti_not_approved
       end
 
       after do
-        co_marti.approved = true
-        co_marti.remove_role :sc_users_w
-        co_marti.remove_role :co_users_w
-        co_marti.save
-        sign_out co_marti
+        sign_out so_marti_not_approved
       end
 
       context 'when calling new' do
@@ -58,13 +42,15 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
         end
       end
     end
+
     context 'when SchemeOperator does NOT have the director role' do
+      let(:so_marti) { FactoryGirl.create(:scheme_operator) }
       before do
-        sign_in co_marti
+        sign_in so_marti
       end
 
       after do
-        sign_out co_marti
+        sign_out so_marti
       end
 
       context 'when calling new' do
@@ -80,20 +66,13 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
       end
     end
 
-    context 'when SchemeOperator has co_director role' do
+    context 'when SchemeOperator has sc_director role' do
       before do
-        sign_out co_marti
-        co_marti.add_role :sc_director
-        co_marti.sc_users_w!
-        co_marti.co_users_w!
-        co_marti.save
-        sign_in co_marti
+        sign_in so_marti_director
       end
 
       after do
-        co_marti.remove_role :sc_director
-        co_marti.remove_role :sc_users_w
-        sign_out co_marti
+        sign_out so_marti_director
       end
 
       context 'when calling create' do
@@ -106,8 +85,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
                                           invitation_sent_at:     DateTime.now,
                                           confirmed_at:           DateTime.now,
                                           invitation_accepted_at: DateTime.now,
-                                          approved:               true,
-                                          scheme_ids:             [Scheme.last]}
+                                          approved:               true}
         end
 
         it 'expects to be redirected with A 302' do
@@ -122,6 +100,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
           expect(so_user.first_name).to eq 'freddy'
         end
       end
+
       context 'when creating a confirmed user' do
         let(:so_user) { SchemeOperator.find_by_email('confirmed@pwpr.com') }
         context 'when calling create' do
@@ -130,7 +109,6 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
                                             first_name:   'confirmed',
                                             last_name:    'at last',
                                             password:     'my_password',
-                                            scheme_ids:   [Scheme.last.id],
                                             confirmed_at: DateTime.now}
           end
           it 'expects a SchemeOperator to be created' do
@@ -165,7 +143,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
 
     context 'when calling create' do
       it 'expects a 200 response status' do
-        post :create, scheme_operator: {email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'Kruger', password: 'my_password', scheme_ids: [Scheme.last.id]}
+        post :create, scheme_operator: {email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'Kruger', password: 'my_password'}
         expect(response.status).to eq 302
       end
     end
@@ -177,7 +155,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
           expect_any_instance_of(DeviseController).to receive(:set_minimum_password_length)
           post :create, scheme_operator: {email:        'confirmed@pwpr.com',
                                           first_name:   'confirmed',
-                                          last_name:    'at',
+                                          last_name:    nil,
                                           password:     'my_password',
                                           confirmed_at: DateTime.now}
         end

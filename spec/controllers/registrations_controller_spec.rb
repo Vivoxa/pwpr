@@ -14,70 +14,61 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
   end
 
   context 'when scheme operator is signed in' do
-    let(:co_marti) { SchemeOperator.new }
-    before do
-      co_marti.email = 'jennifer@back_to_the_future.com'
-      co_marti.first_name = 'Jennifer'
-      co_marti.last_name = 'Smith'
-      co_marti.password = 'mypassword'
-      co_marti.confirmed_at = DateTime.now
-      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
-      co_marti.approved = true
-      co_marti.save
-    end
+    let(:scheme_operator_with_director) { FactoryGirl.create(:scheme_operator_with_director) }
+
     context 'when SchemeOperator has not been approved' do
+      let(:not_approved_scheme_operator) { FactoryGirl.create(:not_approved_scheme_operator) }
       before do
-        co_marti.approved = false
-        co_marti.save
-        sign_in co_marti
+        sign_in not_approved_scheme_operator
       end
 
       after do
-        co_marti.approved = true
-        co_marti.save
-        sign_out co_marti
+        sign_out not_approved_scheme_operator
       end
 
       context 'when calling new' do
         it 'expects an error to be raised' do
-          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'Smith', password: 'my_password', schemes: [Scheme.last]
+          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'Smith', password: 'my_password'
           expect(flash[:alert]).to be_present
           expect(flash[:alert]).to eq 'Your account has not been approved by your administrator yet.'
         end
       end
     end
     context 'when SchemeOperator does NOT have the director role' do
+      let(:scheme_operator_with_sc_user) { FactoryGirl.create(:scheme_operator_with_sc_user) }
+
       before do
-        sign_in co_marti
+        sign_in scheme_operator_with_sc_user
       end
 
       after do
-        sign_out co_marti
+        sign_out scheme_operator_with_sc_user
       end
 
       context 'when calling new' do
         it 'expects a CanCan AccessDenied error to be raised' do
-          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'Smith', password: 'my_password', schemes: [Scheme.last]
+          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'Smith', password: 'my_password'
           expect(flash[:alert]).to be_present
           expect(flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
     end
 
-    context 'when SchemeOperator has co_director role' do
+    context 'when SchemeOperator has sc_director role' do
+      let(:scheme_operator_with_director) { FactoryGirl.create(:scheme_operator_with_director) }
       before do
-        sign_out co_marti
-        co_marti.add_role :sc_director
-        co_marti.sc_users_w!
-        co_marti.co_users_w!
-        co_marti.save
-        sign_in co_marti
+        sign_out scheme_operator_with_director
+        scheme_operator_with_director.add_role :sc_director
+        scheme_operator_with_director.sc_users_w!
+        scheme_operator_with_director.co_users_w!
+        scheme_operator_with_director.save
+        sign_in scheme_operator_with_director
       end
 
       after do
-        co_marti.remove_role :sc_director
-        co_marti.remove_role :sc_users_w
-        sign_out co_marti
+        scheme_operator_with_director.remove_role :sc_director
+        scheme_operator_with_director.remove_role :sc_users_w
+        sign_out scheme_operator_with_director
       end
 
       context 'when calling create' do
@@ -89,8 +80,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
                                           invitation_sent_at:     DateTime.now,
                                           confirmed_at:           DateTime.now,
                                           invitation_accepted_at: DateTime.now,
-                                          approved:               true,
-                                          scheme_ids:             [Scheme.last]}
+                                          approved:               true}
           expect(response.status).to eq 302
           so_user = SchemeOperator.find_by_email('freddy@pwpr.com')
           expect(so_user).to be_a(SchemeOperator)
@@ -104,7 +94,6 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
                                           first_name:   'confirmed',
                                           last_name:    'Smith',
                                           password:     'my_password',
-                                          scheme_ids:   [Scheme.last.id],
                                           confirmed_at: DateTime.now}
           expect(response.status).to eq 302
           so_user = SchemeOperator.find_by_email('confirmed@pwpr.com')
@@ -133,7 +122,7 @@ RSpec.describe SchemeOperators::RegistrationsController, type: :controller do
 
     context 'when calling create' do
       it 'expects a 200 response status' do
-        post :create, scheme_operator: {email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'Smith', password: 'my_password', scheme_ids: [Scheme.last.id]}
+        post :create, scheme_operator: {email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'Smith', password: 'my_password'}
         expect(response.status).to eq 302
       end
     end
@@ -156,45 +145,15 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
   end
 
   context 'when scheme operator is signed in' do
-    let(:co_marti) { SchemeOperator.new }
-    before do
-      co_marti.email = 'jennifer@back_to_the_future.com'
-      co_marti.first_name = 'Jennifer'
-      co_marti.last_name = 'Smith'
-      co_marti.password = 'mypassword'
-      co_marti.confirmed_at = DateTime.now
-      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
-      co_marti.approved = true
-      co_marti.save
-    end
-    context 'when SchemeOperator has not been approved' do
-      before do
-        co_marti.approved = false
-        co_marti.save
-        sign_in co_marti
-      end
+    let(:scheme_operator_with_sc_user) { FactoryGirl.create(:scheme_operator_with_sc_user) }
 
-      after do
-        co_marti.approved = true
-        co_marti.save
-        sign_out co_marti
-      end
-
-      context 'when calling new' do
-        it 'expects an error to be raised' do
-          post :create, email: 'freddy@pwpr.com', first_name: 'freddy', last_name: 'Smith', password: 'my_password', business: Business.last
-          expect(flash[:alert]).to be_present
-          expect(flash[:alert]).to eq 'Your account has not been approved by your administrator yet.'
-        end
-      end
-    end
     context 'when SchemeOperator does NOT have the director role' do
       before do
-        sign_in co_marti
+        sign_in scheme_operator_with_sc_user
       end
 
       after do
-        sign_out co_marti
+        sign_out scheme_operator_with_sc_user
       end
 
       context 'when calling new' do
@@ -207,20 +166,13 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
     end
 
     context 'when SchemeOperator has co_director role' do
+      let(:scheme_operator_with_director) { FactoryGirl.create(:scheme_operator_with_director) }
       before do
-        sign_out co_marti
-        co_marti.add_role :sc_director
-        co_marti.sc_users_w!
-        co_marti.co_users_w!
-        co_marti.save
-        sign_in co_marti
+        sign_in scheme_operator_with_director
       end
 
       after do
-        co_marti.remove_role :sc_director
-        co_marti.remove_role :sc_users_w
-        co_marti.remove_role :co_users_w
-        sign_out co_marti
+        sign_out scheme_operator_with_director
       end
 
       context 'when calling create' do

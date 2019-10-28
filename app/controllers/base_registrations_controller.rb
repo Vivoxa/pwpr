@@ -11,6 +11,7 @@ class BaseRegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
     resource.save
+
     yield resource if block_given?
     if resource.persisted?
       assign_schemes(resource)
@@ -39,13 +40,12 @@ class BaseRegistrationsController < Devise::RegistrationsController
   protected
 
   def assign_schemes(resource)
-    resource.schemes = Scheme.where(id: params['scheme_operator']['scheme_ids']) if resource.is_a? SchemeOperator
+    resource.schemes = Scheme.where(id: params['scheme_id']) if resource.is_a? SchemeOperator
   end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) do |user_params|
       user_params.permit({scheme_ids: []},
-                         :scheme_id,
                          :email,
                          :password,
                          :password_confirmation,

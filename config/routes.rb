@@ -24,8 +24,6 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'visitors#index'
 
-  resources :schemes
-
   resources :businesses do
     resources :contacts
     get 'scheme_businesses', action: :scheme_businesses
@@ -43,11 +41,14 @@ Rails.application.routes.draw do
   end
 
   resources :schemes do
+    resources :scheme_operators_schemes, only: [:index, :new, :create, :destroy]
     get '/agency_template_uploads/previous_upload_for_year' => 'agency_template_uploads/previous_upload_for_year', as: 'previous_upload_for_year'
     resources :agency_template_uploads, only: [:index, :show, :new, :create]
     resources :reports, only: [:index, :create]
     get '/reports/report_data' => 'reports/report_data', as: 'report_data'
   end
+
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

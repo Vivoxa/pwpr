@@ -19,28 +19,15 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
   end
 
   context 'when scheme operator is signed in' do
-    let(:co_marti) { SchemeOperator.new }
-    before do
-      co_marti.email = 'jennifer@back_to_the_future.com'
-      co_marti.first_name = 'Jennifer'
-      co_marti.last_name = 'Smith'
-      co_marti.password = 'mypassword'
-      co_marti.confirmed_at = DateTime.now
-      co_marti.schemes = [Scheme.create(name: 'test scheme', active: true, scheme_country_code_id: 1)]
-      co_marti.approved = true
-      co_marti.save
-    end
+    let(:so_marti) { FactoryGirl.create(:not_approved_scheme_operator) }
+
     context 'when SchemeOperator has not been approved' do
       before do
-        co_marti.approved = false
-        co_marti.save
-        sign_in co_marti
+        sign_in so_marti
       end
 
       after do
-        co_marti.approved = true
-        co_marti.save
-        sign_out co_marti
+        sign_out so_marti
       end
 
       context 'when calling new' do
@@ -57,12 +44,13 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
       end
     end
     context 'when SchemeOperator does NOT have the director role' do
+      let(:so_marti_no_role) { FactoryGirl.create(:scheme_operator) }
       before do
-        sign_in co_marti
+        sign_in so_marti_no_role
       end
 
       after do
-        sign_out co_marti
+        sign_out so_marti_no_role
       end
 
       context 'when calling new' do
@@ -80,20 +68,13 @@ RSpec.describe CompanyOperators::RegistrationsController, type: :controller do
     end
 
     context 'when SchemeOperator has co_director role' do
+      let(:so_marti) { FactoryGirl.create(:scheme_operator_with_director) }
       before do
-        sign_out co_marti
-        co_marti.add_role :sc_director
-        co_marti.sc_users_w!
-        co_marti.co_users_w!
-        co_marti.save
-        sign_in co_marti
+        sign_in so_marti
       end
 
       after do
-        co_marti.remove_role :sc_director
-        co_marti.remove_role :sc_users_w
-        co_marti.remove_role :co_users_w
-        sign_out co_marti
+        sign_out so_marti
       end
 
       context 'when calling create' do
